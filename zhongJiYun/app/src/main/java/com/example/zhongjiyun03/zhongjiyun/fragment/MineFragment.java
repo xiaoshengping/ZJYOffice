@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -59,6 +60,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private TextView phoneText;
     @ViewInject(R.id.sting_layout)
     private LinearLayout stingLayout;
+    @ViewInject(R.id.rating_bar)
+    private RatingBar ratingBar;
 
 
 
@@ -129,6 +132,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             }
             if (!TextUtils.isEmpty(phone)){
                 phoneText.setText(phone);
+            }
+            if (!TextUtils.isEmpty(StarRate)){
+                ratingBar.setRating(Integer.parseInt(StarRate));
             }
 
         }else {

@@ -24,6 +24,7 @@ public class SekkMachinisDataBean implements Serializable {
     private List<WorkInfoItemDtosBean> WorkInfoItemDtos;//	object	工作经验
     private String WorkInfoStatusStr;//	string	找工作状态（1=正在找工作，2=已找到工作，3=失效）
     private String WorkingAge;//	string	工龄
+    private String DriverPhoneNumber;
 
 
     public String getCity() {
@@ -154,6 +155,14 @@ public class SekkMachinisDataBean implements Serializable {
         WorkingAge = workingAge;
     }
 
+    public String getDriverPhoneNumber() {
+        return DriverPhoneNumber;
+    }
+
+    public void setDriverPhoneNumber(String driverPhoneNumber) {
+        DriverPhoneNumber = driverPhoneNumber;
+    }
+
     @Override
     public String toString() {
         return "SekkMachinisDataBean{" +
@@ -173,6 +182,7 @@ public class SekkMachinisDataBean implements Serializable {
                 ", WorkInfoItemDtos=" + WorkInfoItemDtos +
                 ", WorkInfoStatusStr='" + WorkInfoStatusStr + '\'' +
                 ", WorkingAge='" + WorkingAge + '\'' +
+                ", DriverPhoneNumber='" + DriverPhoneNumber + '\'' +
                 '}';
     }
 }

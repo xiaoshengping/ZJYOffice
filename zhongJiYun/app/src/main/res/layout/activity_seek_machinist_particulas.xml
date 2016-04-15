@@ -27,7 +27,7 @@
            android:scaleType="centerCrop"
            android:src="@mipmap/ic_launcher"
            android:layout_width="match_parent"
-           android:layout_height="300dp" />
+           android:layout_height="260dp" />
 
       <RelativeLayout
 
@@ -37,13 +37,13 @@
           <com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.view.CircleImageView
 
               android:id="@+id/usericon_background_iv"
-              android:layout_width="100dp"
-              android:layout_height="100dp"
+              android:layout_width="80dp"
+              android:layout_height="80dp"
               android:background="@mipmap/driver_avatar"
               android:scaleType="centerCrop"
               android:layout_centerHorizontal="true"
               android:layout_marginLeft="18dp"
-              android:layout_marginTop="40dp"
+              android:layout_marginTop="30dp"
               />
           <TextView
               android:id="@+id/name_text"
@@ -57,20 +57,21 @@
               android:layout_height="wrap_content" />
           <TextView
               android:id="@+id/work_experience_text"
-              android:layout_marginLeft="60dp"
               android:layout_marginTop="10dp"
               android:textColor="@color/ic_white"
               android:textSize="@dimen/home_Size_18"
               android:layout_below="@+id/name_text"
+              android:layout_toLeftOf="@+id/work_experience_image"
               android:text="3年工作经验"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content" />
           <ImageView
+
               android:id="@+id/work_experience_image"
               android:layout_marginTop="15dp"
               android:layout_marginLeft="10dp"
               android:layout_below="@+id/name_text"
-              android:layout_toRightOf="@+id/work_experience_text"
+              android:layout_centerHorizontal="true"
               android:src="@color/ic_white"
               android:layout_width="2dp"
               android:layout_height="15dp" />
@@ -115,10 +116,11 @@
 
       </RelativeLayout>
 
+
+
       <RelativeLayout
           android:id="@+id/message_rlauout"
           android:background="@color/ic_white"
-
           android:layout_below="@+id/bar_image"
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
@@ -154,12 +156,20 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content" />
       </RelativeLayout>
-    <RelativeLayout
 
+         <!-- <LinearLayout
+              android:layout_marginTop="10dp"
+              android:background="@color/ic_white"
+              android:layout_marginBottom="20dp"
+              android:orientation="vertical"
+              android:layout_below="@+id/message_rlauout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">-->
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/message_rlauout"
         android:id="@+id/work_experience_layout"
         android:background="@color/ic_white"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/message_rlauout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -167,6 +177,7 @@
             android:id="@+id/work_experience_text_view"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:textColor="@color/tailt_dark"
             android:textSize="@dimen/home_Size_18"
             android:text="工作经验"
@@ -180,7 +191,6 @@
             android:layout_marginTop="10dp"
             android:textColor="@color/tailt_dark"
             android:textSize="@dimen/home_Size_18"
-
             android:layout_width="match_parent"
             android:layout_height="50dp" />
         <RelativeLayout
@@ -268,6 +278,53 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content" />
           </RelativeLayout>
+          <ImageView
+              android:visibility="gone"
+              android:layout_below="@+id/work_experience_layout_one"
+              android:id="@+id/image_lini_one"
+              android:background="@color/background"
+              android:layout_width="match_parent"
+              android:layout_height="1dp" />
+          <RelativeLayout
+              android:id="@+id/work_experience_layout_two"
+              android:background="@color/ic_white"
+              android:visibility="gone"
+              android:layout_below="@+id/image_lini_one"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+
+
+              <TextView
+                  android:id="@+id/work_time_text_two"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginTop="5dp"
+                  android:textSize="@dimen/home_Size_16"
+                  android:text="工作时间:2001年03月-2004年05月"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
+
+              <TextView
+                  android:layout_below="@+id/work_time_text_two"
+                  android:id="@+id/pety_text_two"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginTop="5dp"
+                  android:textSize="@dimen/home_Size_16"
+                  android:text="钻机机型:三一重工SR80"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
+              <TextView
+                  android:layout_marginBottom="10dp"
+                  android:layout_below="@+id/pety_text_two"
+                  android:id="@+id/miaoshi_text_two"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginTop="5dp"
+                  android:textSize="@dimen/home_Size_16"
+                  android:text="工作描述:三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
+          </RelativeLayout>
+     <!-- </LinearLayout>-->
       </RelativeLayout>
        </ScrollView>
 </RelativeLayout>

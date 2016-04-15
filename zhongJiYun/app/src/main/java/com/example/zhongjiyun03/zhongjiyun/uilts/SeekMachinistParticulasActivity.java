@@ -3,9 +3,11 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -101,8 +103,21 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     private RelativeLayout messageRlauout;
     @ViewInject(R.id.image_lini)
     private ImageView imageLini;
+    @ViewInject(R.id.work_time_text_two)
+    private TextView workTimeTextTwo;
+    @ViewInject(R.id.pety_text_two)
+    private TextView petyTextTwo;
+    @ViewInject(R.id.miaoshi_text_two)
+    private TextView miaoshiTextTwo;
+    @ViewInject(R.id.work_experience_layout_two)
+    private RelativeLayout workExperienceLayoutTwo;
+    @ViewInject(R.id.image_lini_one)
+    private ImageView imageLiniOne;
+
+
     @ViewInject(R.id.work_experience_no)
     private TextView workExperienceNo;
+    private SekkMachinisDataBean seekMachinisDataBean;
 
 
 
@@ -124,7 +139,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
 
     private void initSeekData() {
 
-        SekkMachinisDataBean seekMachinisDataBean= (SekkMachinisDataBean) getIntent().getSerializableExtra("seekData");
+        seekMachinisDataBean= (SekkMachinisDataBean) getIntent().getSerializableExtra("seekData");
         //Log.e("城市",seekMachinisDataBean.getCity());
         if (seekMachinisDataBean!=null){
             MyAppliction.imageLoader.displayImage(seekMachinisDataBean.getDriverHeader(),circleImageView,MyAppliction.options);
@@ -163,6 +178,20 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                 }else {
                     workExperienceLayoutOne.setVisibility(View.GONE);
                     imageLini.setVisibility(View.GONE);
+                }
+                if (seekMachinisDataBean.getWorkInfoItemDtos().size()>2){
+                    workExperienceLayoutTwo.setVisibility(View.VISIBLE);
+                    imageLiniOne.setVisibility(View.VISIBLE);
+                    workTimeTextTwo.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"年"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"月-"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear()+"年"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth()+"月");
+                    petyTextTwo.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture()+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture());
+                    miaoshiTextTwo.setText("工作描述:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing());
+                }else {
+                    workExperienceLayoutTwo.setVisibility(View.GONE);
+                    imageLiniOne.setVisibility(View.GONE);
                 }
 
             }else {
@@ -213,6 +242,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
         titleNemeTv.setText("机主主页");
         retrunText.setOnClickListener(this);
         handler=new Handler();
+        phoneTell.setOnClickListener(this);
 
 
     }
@@ -220,10 +250,23 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
             case R.id.retrun_text_view:
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                break;
+            case R.id.phone_tell:
+                if (!TextUtils.isEmpty(seekMachinisDataBean.getDriverPhoneNumber())){
+                    //意图：打电话
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_DIAL);
+                    //url:统一资源定位符
+                    //uri:统一资源标示符（更广）
+                    intent.setData(Uri.parse("tel:" + seekMachinisDataBean.getDriverPhoneNumber()));
+                    //开启系统拨号器
+                    startActivity(intent);
+                }else {
+                    MyAppliction.showToast("该机手没有联系方式");
+                }
                 break;
 
 

@@ -145,13 +145,13 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/Boss/MyProjectReply" ;
 
     }
-    //关注的列表
+    //关注钻机列表
     public static String getAttentionExtrunListData(){
         //  appapi/Common/GetCollectList
         return BaseUrl+"appapi/Common/GetCollectList" ;
 
     }
-    //关注的列表
+    //关注项目列表
     public static String getFacillyData(){
         //   appapi/JsonData/Device
         return BaseUrl+"appapi/JsonData/Device" ;
@@ -165,8 +165,8 @@ public class AppUtilsUrl {
     }
     //意见反馈
     public static String getIdeaFeedBackData(){
-        //   appapi/user/SubmitFeedBack
-        return BaseUrl+"appapi/user/SubmitFeedBack" ;
+        //   appapi/system/SubmitFeedBack
+        return BaseUrl+"appapi/system/SubmitFeedBack" ;
 
     }
     //关注
@@ -182,6 +182,8 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/Common/CancelCollect" ;
 
     }
+
+
 
 
 }

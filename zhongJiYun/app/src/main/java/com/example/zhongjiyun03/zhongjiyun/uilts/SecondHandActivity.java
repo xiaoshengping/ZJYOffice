@@ -196,6 +196,39 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         secondHandListview.setRefreshing();
 
     }
+    private void intiListView(final List<SecondHandBean> secondHandBeen) {
+
+        HomeSecondHandListAdapter homeSecondHandListAdapter = new HomeSecondHandListAdapter(secondHandBeen, this);
+        secondHandListview.setAdapter(homeSecondHandListAdapter);
+        homeSecondHandListAdapter.notifyDataSetChanged();
+        secondHandListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(SecondHandActivity.this,ExturderParticularsActivity.class);
+                intent.putExtra("secondHandData",secondHandBeen.get(position-1).getId());
+                startActivity(intent);
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.shard_tv:
+                showShare();
+
+                break;
+            case R.id.retrun_text_view:
+                finish();
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                break;
+
+
+        }
+    }
     private void initListData(int pageIndex,String type,String city,String year,String order ) {
         HttpUtils httpUtils=new HttpUtils();
         final RequestParams requestParams=new RequestParams();
@@ -780,39 +813,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
 
 
-    private void intiListView(final List<SecondHandBean> secondHandBeen) {
 
-        HomeSecondHandListAdapter homeSecondHandListAdapter = new HomeSecondHandListAdapter(secondHandBeen, this);
-        secondHandListview.setAdapter(homeSecondHandListAdapter);
-        homeSecondHandListAdapter.notifyDataSetChanged();
-        secondHandListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(SecondHandActivity.this,ExturderParticularsActivity.class);
-                intent.putExtra("secondHandData",secondHandBeen.get(position-1).getId());
-                startActivity(intent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
-            }
-        });
-
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.shard_tv:
-                showShare();
-
-                break;
-            case R.id.retrun_text_view:
-                finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
-                break;
-
-
-        }
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
