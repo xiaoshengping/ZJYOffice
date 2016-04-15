@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/window_background"
+    android:orientation="vertical">
+
+    <include layout="@layout/header_title_layout"></include>
+
+    <GridView
+        android:id="@+id/imagesGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp"
+        android:horizontalSpacing="10dp"
+        android:listSelector="#00000000"
+        android:numColumns="3"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp" />
+
+    <FrameLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="-60dp">
+
+        <LinearLayout
+            android:focusable="true"
+            android:clickable="true"
+            android:id="@+id/selectImagesFromFolder"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/imagesFolderName"
+                style="@style/text_19_black_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_images" />
+
+            <ImageView
+                android:clickable="true"
+                android:duplicateParentState="true"
+                android:id="@+id/triangleImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/triangle_down_black_white" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

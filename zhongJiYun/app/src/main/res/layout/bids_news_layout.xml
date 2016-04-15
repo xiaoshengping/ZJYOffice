@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/ic_white"
+    android:orientation="vertical" >
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:layout_marginRight="2dp"
+        android:dividerHeight="3dp"
+        android:divider="@color/background"
+        android:id="@+id/bids_news_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

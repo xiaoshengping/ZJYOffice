@@ -1,0 +1,118 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HomeActivity">
+
+    <RelativeLayout
+        android:id="@+id/home_title_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/red_light">
+
+        <TextView
+            android:id="@+id/home_title_neme_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="首页"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="19dp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/home_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_above="@+id/home_rido_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dadada"/>
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/home_rido_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#f6f6f6"
+        android:orientation="vertical"
+        android:paddingTop="7dp"
+        android:paddingBottom="6dp">
+
+        <RadioGroup
+            android:id="@+id/home_rg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/home_artist_rb"
+
+                style="@style/paren_radiogrud"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:checked="true"
+                android:drawableTop="@drawable/home_artist_selector"
+                android:text="首页"
+
+                android:textColor="@color/home_color_seletor"
+                android:textSize="@dimen/home_Size_15" />
+
+            <RadioButton
+                style="@style/paren_radiogrud"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:drawableTop="@drawable/home_recruitment_selector"
+                android:gravity="center"
+                android:text="找项目"
+                android:textColor="@color/home_color_seletor"
+                android:textSize="@dimen/home_Size_15"
+
+                />
+
+            <RadioButton
+                style="@style/paren_radiogrud"
+                android:layout_weight="1"
+                android:background="#00000000"
+                android:drawableTop="@drawable/home_talents_selector"
+                android:gravity="center"
+                android:text="找机手"
+                android:textColor="@color/home_color_seletor"
+                android:textSize="@dimen/home_Size_15"
+
+                />
+
+            <RadioButton
+                style="@style/paren_radiogrud"
+                android:layout_weight="1"
+                android:background="#00000000"
+
+                android:drawableTop="@drawable/home_mine_selector"
+                android:gravity="center"
+                android:text="我的"
+                android:textColor="@color/home_color_seletor"
+                android:textSize="@dimen/home_Size_15"
+
+                />
+
+        </RadioGroup>
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

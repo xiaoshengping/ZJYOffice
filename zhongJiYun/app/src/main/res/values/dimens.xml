@@ -1,0 +1,15 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="home_Size_14">14sp</dimen>
+    <dimen name="home_Size_15">15sp</dimen>
+    <dimen name="home_Size_16">16sp</dimen>
+    <dimen name="home_Size_17">17sp</dimen>
+    <dimen name="home_Size_18">18sp</dimen>
+    <dimen name="home_Size_19">19sp</dimen>
+    <dimen name="home_Size_20">20sp</dimen>
+    <dimen name="home_Size_21">21sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="home_viewpager_height">173dp</dimen>
+</resources>

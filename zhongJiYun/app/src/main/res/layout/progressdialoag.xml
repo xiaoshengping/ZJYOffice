@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/myProgressDialoag"
+    android:layout_width="match_parent"
+    android:background="@color/statusvar_0"
+    android:layout_height="match_parent">
+
+    <com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.view.SpinnerLoader
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        app:point_color="@color/statusbar_bg" />
+</FrameLayout>

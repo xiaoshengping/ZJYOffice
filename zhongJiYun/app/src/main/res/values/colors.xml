@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="red_light">#ca141d</color>
+    <color name="green_light">#ff99cc00</color>
+    <color name="orange_light">#ffffbb33</color>
+    <color name="blue_light">#ff33b5e5</color>
+    <color name="tailt_dark">#333333</color>
+    <color name="content_color">#555555</color>
+
+
+
+    <color name="canlendar_text_color">#CED0D5</color>
+
+    <color name="ic_white">#ffffff</color>
+
+    <color name="title_c">#50000000</color>
+
+    <color name="editText">#AAAAAA</color>
+    <color name="blue">#008dff</color>
+    <color name="gray">#bbbbbb</color>
+    <color name="background">#eaecef</color>
+    <color name="phont_background">#f3f3f3</color>
+
+<!--  popwin-->
+    <color name="popup_left_bg">#eee</color>
+    <color name="popup_right_bg">#ddd</color>
+    <color name="popup_right_bg_selected">#ccc</color>
+    <color name="div_gray">#ccc</color>
+    <color name="dark_bg">#8000</color>
+
+    <!--图片选择-->
+    <color name="statusbar_bg">#09A7F0</color>
+    <color name="statusvar_0">#00000000</color>
+    <color name="window_background">#FFF5F5F5</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="grey">#696969</color>
+    <color name="Semi_transparent">#50000000</color>
+    <color name="content_info_corlor">#979797</color>
+    <color name="video_price_color">#F69308</color>
+    <color name="video_free_corlor">#68D214</color>
+    <color name="course_details_root_im">#FF8901</color>
+    <color name="toast_bg_blue">#88188eee</color>
+    <color name="toast_bg_black">#77000000</color>
+    <color name="rating_color">#FAB271</color>
+    <color name="green">#96ee33</color>
+    <color name="setting_list_bg">#f0f0f0</color>
+    <color name="light_blue">#1fbaf3</color>
+    <color name="light_gray">#E0E0E1</color>
+    <color name="red">#EA0204</color>
+
+
+
+</resources>

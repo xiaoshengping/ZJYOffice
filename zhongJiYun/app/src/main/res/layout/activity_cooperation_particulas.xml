@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.CooperationParticulasActivity">
+     <include android:layout_width="match_parent"
+         android:layout_height="wrap_content" android:id="@+id/tailt_layout" layout="@layout/app_head_layout"/>
+     <ScrollView
+         android:background="@color/background"
+         android:layout_below="@+id/tailt_layout"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+         <LinearLayout
+             android:gravity="center_horizontal"
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content">
+             <ImageView
+                 android:scaleType="centerCrop"
+                 android:src="@mipmap/partner_logo"
+                 android:layout_marginTop="20dp"
+                 android:layout_width="120dp"
+                 android:layout_height="120dp" />
+             <TextView
+                 android:textColor="@color/tailt_dark"
+                 android:textSize="@dimen/home_Size_18"
+                 android:layout_marginTop="10dp"
+                 android:text="中国铁建集团有限公司"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content" />
+             <TextView
+                 android:layout_marginRight="10dp"
+                 android:layout_marginLeft="10dp"
+                 android:textSize="@dimen/home_Size_16"
+                 android:layout_marginTop="10dp"
+                 android:text="乾坤旱电视剧集辰时昌大结局大姐夫乾坤进进时有时无时蠕度假酒店复合肥回复甲方甲方超越乾坤朝日零零星星趠吐露很符合付款方式发货嘻嘻卡夫卡很符合付款试试附件客服甲方甲方甲方甲方姐姐附件附件乾坤朝野时时时时时时晶时时时日乾坤朝日乾坤乾坤乾坤亓军事打击发奖金附件附件附件附件甲方甲方姐姐附件附件查查颗颗颗颗蜥蜴世界军事计算机时间姐姐时间时间时间时间时间时间就是"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content" />
+               <RelativeLayout
+                   android:layout_marginTop="40dp"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <TextView
+                        android:id="@+id/text_view"
+                       android:textSize="@dimen/home_Size_18"
+
+                       android:layout_marginLeft="10dp"
+                       android:text="平台合作旋挖钻机:"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" />
+                   <TextView
+                       android:id="@+id/extuder_number_text"
+                       android:textColor="@color/red_light"
+                       android:layout_toRightOf="@+id/text_view"
+                       android:textSize="@dimen/home_Size_18"
+
+                       android:layout_marginLeft="10dp"
+                       android:text="16"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" />
+
+                   <TextView
+                       android:layout_toRightOf="@+id/extuder_number_text"
+                       android:textSize="@dimen/home_Size_18"
+                       android:layout_marginLeft="3dp"
+                       android:text="台"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" />
+
+
+               </RelativeLayout>
+
+
+         </LinearLayout>
+
+     </ScrollView>
+
+    <LinearLayout
+        android:background="@color/ic_white"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <Button
+
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/ic_white"
+            android:background="@drawable/loing_button_corners"
+            android:textSize="@dimen/home_Size_18"
+            android:text="进入官网" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

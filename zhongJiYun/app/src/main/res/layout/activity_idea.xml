@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.IdeaActivity">
+    <include android:id="@+id/tailt_layout" android:layout_width="match_parent"
+        android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
+    <EditText
+        android:id="@+id/text_edit"
+        android:textSize="@dimen/home_Size_15"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:gravity="clip_horizontal"
+        android:hint="请输入对中基云的建议,您的建议我们会积极采纳"
+        android:layout_below="@+id/tailt_layout"
+        android:background="@color/window_background"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+     <LinearLayout
+         android:layout_below="@+id/text_edit"
+         android:orientation="horizontal"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+         <com.example.zhongjiyun03.zhongjiyun.view.MyGridView
+             android:visibility="gone"
+             android:background="@color/white"
+             android:layout_marginRight="5dp"
+             android:layout_marginLeft="5dp"
+             android:layout_marginTop="10dp"
+             android:layout_marginBottom="10dp"
+             android:id="@+id/gridview"
+             android:verticalSpacing="5dp"
+             android:horizontalSpacing="5dp"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:numColumns="4" />
+         <ImageView
+             android:id="@+id/image_view"
+             android:layout_marginTop="10dp"
+             android:layout_marginLeft="10dp"
+             android:scaleType="centerCrop"
+             android:background="@mipmap/set_images_icon"
+             android:onClick="selectPicture"
+             android:layout_width="50dp"
+             android:layout_height="50dp" />
+     </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:background="@color/window_background"
+        android:gravity="center_vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+    <Button
+
+        android:layout_below="@+id/redpacket_layout"
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/ic_white"
+        android:background="@drawable/loing_button_corners"
+        android:textSize="@dimen/home_Size_18"
+        android:text="提交" />
+    </LinearLayout>
+</RelativeLayout>

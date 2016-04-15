@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/ic_white"
+    android:orientation="vertical"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.NewsListParticularsActivity">
+    <include android:id="@+id/tailt_layout" android:layout_width="match_parent" android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
+
+     <WebView
+         android:id="@+id/web_view"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"/>
+
+    <!--<ScrollView
+
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:background="@color/background"
+
+        android:id="@+id/tailt_rlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tailt_text"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/tailt_dark"
+            android:textSize="@dimen/home_Size_18"
+            android:text="河北黄石一采石场发生大面积山体滑坡"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/time_text"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="@dimen/home_Size_14"
+            android:text="2016-01-19"
+            android:layout_below="@+id/tailt_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+
+
+    
+    <ImageView
+        android:id="@+id/image_tailt"
+        android:scaleType="centerCrop"
+        android:layout_below="@+id/tailt_rlayout"
+        android:src="@mipmap/new_particulars_icon"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+
+        android:layout_marginLeft="10dp"
+        android:id="@+id/content_text"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="@dimen/home_Size_16"
+        android:text="摘要：中基云（微信公众号：zhongjiyun-cn）是专业的基础工程行业B2B移动互联网平台。我们拥有全国海量的基础工程机械、业主，以及项目的实时数据和讯息资源，是中国唯一的完全免费为业主和机主搭建业务桥梁的互联网+平台。中基云凭借自我的高技术研发团队以及具有国际水平的服务团队，致力为中国基础工程行业打造公平、公正、公开的交易生态系统。中基云（微信公众号：zhongjiyun-cn）是专业的基础工程行业B2B移动互联网平台。我们拥有全国海量的基础工程机械、业主，以及项目的实时数据和讯息资源，是中国唯一的完全免费为业主和机主搭建业务桥梁的互联网+平台。中基云凭借自我的高技术研发团队以及具有国际水平的服务团队，致力为中国基础工程行业打造公平、公正、公开的交易生态系统。中基云（微信公众号：zhongjiyun-cn）是专业的基础工程行业B2B移动互联网平台。我们拥有全国海量的基础工程机械、业主，以及项目的实时数据和讯息资源，是中国唯一的完全免费为业主和机主搭建业务桥梁的互联网+平台。中基云凭借自我的高技术研发团队以及具有国际水平的服务团队，致力为中国基础工程行业打造公平、公正、公开的交易生态系统。"
+        android:layout_below="@+id/image_tailt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+   </RelativeLayout>
+</ScrollView>-->
+
+</LinearLayout>

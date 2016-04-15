@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.ExturderParticularsActivity">
+    <RelativeLayout
+        android:id="@+id/home_title_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/red_light">
+        <TextView
+            android:id="@+id/retrun_tv"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="13dp"
+            android:layout_height="22dp"
+            android:background="@mipmap/return_icon"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <TextView
+
+            android:id="@+id/retrun_text_view"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/title_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登陆"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_20"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:background="@mipmap/share_icon"
+            android:id="@+id/shard_tv"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/checkBox_check"
+            android:layout_width="18dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <CheckBox
+            android:button="@null"
+            android:background="@drawable/check_collect_selector"
+            android:id="@+id/checkBox_check"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="18dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <RelativeLayout
+              android:id="@+id/advertisement_rlayout"
+              android:layout_width="match_parent"
+              android:layout_height="173dp"
+              >
+
+              <com.example.zhongjiyun03.zhongjiyun.widget.AutoScrollViewPager
+                  android:id="@+id/home_banner_viewpager"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent" />
+
+              <LinearLayout
+                  android:id="@+id/home_dot_ll"
+                  android:layout_above="@+id/home_banner_viewpager"
+                  android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:layout_alignParentBottom="true"
+                  android:layout_centerHorizontal="true"></LinearLayout>
+
+          </RelativeLayout>
+           <RelativeLayout
+               android:id="@+id/extruder_jies_layout"
+               android:background="@color/ic_white"
+               android:layout_below="@+id/advertisement_rlayout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+               <RelativeLayout
+                   android:id="@+id/leixing_rlayout"
+                   android:layout_marginRight="5dp"
+                   android:layout_marginLeft="20dp"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content">
+                   <TextView
+                       android:layout_marginTop="4dp"
+                       android:id="@+id/tailt_text_view"
+                       android:textSize="@dimen/home_Size_16"
+                       android:text="三一重工SR...."
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" />
+                   <TextView
+                       android:id="@+id/date_text_view"
+                       android:textSize="@dimen/home_Size_14"
+                       android:layout_marginTop="5dp"
+                       android:layout_below="@+id/tailt_text_view"
+                       android:text="出厂时间:"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" />
+                   <TextView
+                       android:layout_marginLeft="5dp"
+                       android:layout_toRightOf="@+id/date_text_view"
+                       android:id="@+id/time_text_view"
+                       android:textSize="@dimen/home_Size_14"
+                       android:layout_marginTop="5dp"
+                       android:layout_below="@+id/tailt_text_view"
+                       android:text="2015年"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content" />
+
+               </RelativeLayout>
+               <TextView
+                   android:layout_below="@+id/leixing_rlayout"
+                   android:layout_marginBottom="5dp"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginTop="2dp"
+                   android:textColor="@color/red_light"
+                   android:id="@+id/price_text_view"
+                   android:textSize="@dimen/home_Size_18"
+                   android:text="88万"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+                 <ImageView
+                     android:layout_marginTop="10dp"
+                     android:layout_marginRight="10dp"
+                     android:layout_toLeftOf="@+id/phone_text_view"
+                     android:src="@color/background"
+                     android:layout_width="2dp"
+                     android:layout_height="55dp" />
+               <TextView
+
+                   android:drawablePadding="10dp"
+                   android:drawableTop="@mipmap/tel_red"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginBottom="5dp"
+                   android:layout_marginRight="20dp"
+                   android:textColor="@color/red_light"
+                   android:id="@+id/phone_text_view"
+                   android:textSize="@dimen/home_Size_18"
+                   android:text="联系机主"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+
+           </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/boss_layout"
+                android:orientation="horizontal"
+                android:background="@color/ic_white"
+                android:layout_below="@+id/extruder_jies_layout"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/box_name_text"
+                    android:gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/boss_icon"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="20dp"
+                    android:drawablePadding="10dp"
+                    android:textSize="@dimen/home_Size_18"
+                    android:text="李老板"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/work_time_text"
+                    android:gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/time_icon"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="20dp"
+                    android:drawablePadding="10dp"
+                    android:textSize="@dimen/home_Size_18"
+                    android:text="8888小时"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/brand_text"
+                    android:gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:drawableTop="@mipmap/number_icon"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="20dp"
+                    android:drawablePadding="10dp"
+                    android:textSize="@dimen/home_Size_18"
+                    android:text="XUG0360"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+          <RelativeLayout
+              android:id="@+id/extruder_content_rlayout"
+              android:background="@color/ic_white"
+              android:layout_marginTop="10dp"
+              android:layout_below="@+id/boss_layout"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+              <TextView
+                  android:layout_marginBottom="5dp"
+                  android:layout_marginLeft="20dp"
+                  android:layout_marginTop="10dp"
+                  android:textColor="@color/tailt_dark"
+                  android:id="@+id/extruder_shuju_text"
+                  android:textSize="@dimen/home_Size_18"
+                  android:text="钻机基础数据"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/extruder_shuju_image"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@+id/extruder_shuju_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp" />
+                <LinearLayout
+                    android:layout_below="@+id/extruder_shuju_image"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/chassis_type_text"
+                            android:textColor="@color/tailt_dark"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="卡特336D"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="底盘型号"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/reverse_text"
+                            android:textColor="@color/tailt_dark"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="280(kN.m)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="最大扭转"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/drill_speed_text"
+                            android:textColor="@color/tailt_dark"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="5.3-22.8(rpm)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="钻孔速度"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/engine_type_text"
+                            android:textColor="@color/tailt_dark"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="卡特皮特CATC9HHP"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="发动机型号"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/engine_power_text"
+                            android:textColor="@color/tailt_dark"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="261/2100"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="发动机额定功率"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/work_weight_text"
+                            android:textColor="@color/tailt_dark"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="7400(kg)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="整机工作重量"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/elevating_power_text"
+                            android:textColor="@color/tailt_dark"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="300"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="主卷扬提升力"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/dirll_diameter_text"
+                            android:textColor="@color/tailt_dark"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="2500(mm)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="最大成孔直径"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/dirll_depth_text"
+                            android:textColor="@color/tailt_dark"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="84(m)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="@dimen/home_Size_18"
+                            android:text="最大成孔深度"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
+
+
+
+
+          </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/infomation_rlayout"
+                android:layout_marginTop="10dp"
+                android:background="@color/ic_white"
+                android:layout_below="@+id/extruder_content_rlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+              <ImageView
+                  android:scaleType="centerCrop"
+                  android:src="@mipmap/driver_avatar"
+                  android:id="@+id/txiang_image"
+                  android:layout_marginTop="10dp"
+                  android:layout_marginLeft="20dp"
+                  android:layout_width="80dp"
+                  android:layout_height="80dp" />
+
+                <TextView
+                    android:textColor="@color/tailt_dark"
+                    android:id="@+id/tailt_text"
+                    android:layout_toRightOf="@+id/txiang_image"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="@dimen/home_Size_18"
+                    android:text="机主邓先生自述"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/address_text"
+                    android:drawablePadding="6dp"
+                    android:drawableLeft="@mipmap/location_gray_icon"
+                    android:layout_below="@+id/tailt_text"
+                    android:layout_toRightOf="@+id/txiang_image"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/home_Size_16"
+                    android:text="广东省广州市天河区天河北路"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/shui_ming_text"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@+id/txiang_image"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="@dimen/home_Size_16"
+                    android:text="广东省广州市天河区天河北路是的好得很好得很好得很电话电话还是好的好的等会等会等会打道回府好好发挥发货"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+          <ImageView
+              android:id="@+id/image_view"
+              android:layout_marginBottom="20dp"
+              android:layout_marginTop="10dp"
+              android:scaleType="centerCrop"
+              android:src="@mipmap/home_used_rig_img"
+              android:layout_marginRight="20dp"
+              android:layout_marginLeft="20dp"
+              android:layout_below="@+id/infomation_rlayout"
+              android:layout_width="match_parent"
+              android:layout_height="200dp" />
+
+
+
+
+      </RelativeLayout>
+
+
+
+
+    </ScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.zhongjiyun03.zhongjiyun">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
+    <!-- 友盟消息推送 -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- shareSDK分享 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <!-- 添加可以向外拨打电话的权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 拨打电话end -->
+    <!-- GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- 联网:开始 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 访问WIFi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 访问网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 联网:开始 -->
+
+
+    <!-- 文件相关:开始 -->
+    <!-- 在SDCard中创建与删除文件权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 往SDCard写入数据权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 从SDcard读出数据权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 文件相关:结束 -->
+
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!--
+     To retrieve OAuth 2.0 tokens or invalidate tokens to disconnect a user. This disconnect
+     option is required to comply with the Google+ Sign-In developer policies
+    -->
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <!-- To retrieve the account name (email) as part of sign-in: -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- Required -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <application
+        android:name=".http.MyAppliction"
+        android:allowBackup="true"
+        android:icon="@mipmap/logo_icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- 友盟stat -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="56df88df67e58e7334001ef1" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="acfb262e645f28d398915be79d0c99ca" />
+        <!-- 友盟end -->
+        <!-- shareSDK分享start -->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- 微信分享回调 -->
+        <activity
+            android:name="cn.sharesdk.demo.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- shareSDK分享end -->
+
+        <activity
+            android:name=".uilts.PingPayActivity"
+            android:label="@string/title_activity_ping_pay"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.NewsCenterActivity"
+            android:label="@string/title_activity_news_center"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.CooperationActivity"
+            android:label="@string/title_activity_cooperation"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.ServiceProviderActivity"
+            android:label="@string/title_activity_service_provider"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.ServiceParticularsActivity"
+            android:label="@string/title_activity_service_particulars"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.MyExtruderActivity"
+            android:label="@string/title_activity_my_extruder"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.AddExtruderActivity"
+            android:label="@string/title_activity_add_extruder"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.RentOutExtruderActivity"
+            android:label="@string/title_activity_sell_extruder"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.SellExtruderActivity"
+            android:label="@string/title_activity_sell_extruder"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.MyExtruderParticularsActivity"
+            android:label="@string/title_activity_extruder_particulars"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.SecondHandActivity"
+            android:label="@string/title_activity_second_hand"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.AttentionProjectActivity"
+            android:label="@string/title_activity_attention_project"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.AttentionExtrunActivity"
+            android:label="@string/title_activity_attention_extrun"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.MyCompetitveTenderActivity"
+            android:label="@string/title_activity_my_competitve_tender"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.MessageActivity"
+            android:label="@string/title_activity_message"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.MyRedPacketActivity"
+            android:label="@string/title_activity_my_red_packet"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.PersonageInformationActivity"
+            android:label="@string/title_activity_perdonal_daata"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.CooperationParticulasActivity"
+            android:label="@string/title_activity_cooperation_particulas"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.ExturderParticularsActivity"
+            android:label="@string/title_activity_exturder_particulars"
+            android:theme="@style/AppTheme" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".uilts.SeekMachinistParticulasActivity"
+            android:label="@string/title_activity_seek_machinist_particulas"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.SeekProjectParticularsActivity"
+            android:label="@string/title_activity_seek_project_particulars"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.HomeMoreProjectActivity"
+            android:label="@string/title_activity_home_more_project"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.NewsListParticularsActivity"
+            android:label="@string/title_activity_news_list_particulars"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".uilts.selectPicture.SelectPictureActivity" />
+        <activity
+            android:name=".uilts.RegisterFishActivity"
+            android:label="@string/title_activity_register_fish"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.HomeMarketActivity"
+            android:label="@string/title_activity_home_market"
+            android:theme="@style/AppTheme" />
+        <!-- 图片选择 -->
+        <activity android:name=".uilts.selectPicture.activity.ClippingPageActivity" />
+        <activity android:name=".uilts.selectPicture.activity.SelectImagesFromLocalActivity" />
+        <activity
+            android:name=".uilts.StingActivity"
+            android:label="@string/title_activity_sting"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.ModificationPhoneActivity"
+            android:label="@string/title_activity_modification_phone"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.IdeaActivity"
+            android:label="@string/title_activity_idea"
+            android:theme="@style/AppTheme"></activity>
+    </application>
+
+</manifest>

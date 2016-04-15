@@ -1,0 +1,340 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.fragment.MineFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/message_houbao_rl"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/loing_layout"
+            android:background="@color/ic_white"
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <ImageView
+                android:layout_centerVertical="true"
+                android:id="@+id/loing_user"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/default_avatar"
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
+             <TextView
+                 android:layout_centerVertical="true"
+                 android:layout_toRightOf="@+id/loing_user"
+                 android:textColor="@color/red_light"
+                 android:textSize="@dimen/home_Size_18"
+                 android:layout_marginLeft="10dp"
+                 android:text="登陆注册"
+                 android:layout_alignParentRight="@+id/loing_user"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="20dp"
+                    android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/gray_arrow_icon"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/loing_xshi_layout"
+            android:background="@color/ic_white"
+
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <ImageView
+
+                android:scaleType="centerCrop"
+                android:layout_centerVertical="true"
+                android:id="@+id/loing_xshi_user"
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/default_avatar"
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
+            <TextView
+                android:id="@+id/name_text"
+                android:layout_toRightOf="@+id/loing_xshi_user"
+                android:textColor="@color/tailt_dark"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:text="李少锋"
+                android:layout_alignParentRight="@+id/loing_xshi_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/phone_text"
+                android:layout_below="@+id/name_text"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/loing_xshi_user"
+                android:textColor="@color/tailt_dark"
+                android:textSize="@dimen/home_Size_14"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@mipmap/login_phone"
+                android:drawablePadding="5dp"
+                android:text="18819220688"
+                android:layout_alignParentRight="@+id/loing_xshi_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/dengji_text"
+                android:layout_below="@+id/phone_text"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/loing_xshi_user"
+                android:textColor="@color/tailt_dark"
+                android:textSize="@dimen/home_Size_14"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="星级"
+                android:layout_alignParentRight="@+id/loing_xshi_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+               <RatingBar
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginTop="7dp"
+                   style="?android:attr/ratingBarStyleSmall"
+                   android:layout_toRightOf="@+id/dengji_text"
+                   android:layout_below="@+id/phone_text"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+            <ImageView
+
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/redpacket_layout"
+                android:background="@color/ic_white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:layout_marginLeft="20dp"
+                    android:src="@mipmap/my_reward_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+                <TextView
+                    android:textSize="@dimen/home_Size_16"
+                     android:layout_marginLeft="10dp"
+                    android:text="我的红包"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="20dp"
+                    android:drawableRight="@mipmap/gray_arrow_icon"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <ImageView
+                android:layout_below="@+id/redpacket_layout"
+                android:id="@+id/message_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+            <LinearLayout
+                android:id="@+id/message_layout"
+                 android:layout_below="@+id/message_imageview"
+                android:background="@color/ic_white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:id="@+id/message_iv"
+                    android:layout_marginLeft="20dp"
+                    android:src="@mipmap/my_inof_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+                <TextView
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginLeft="10dp"
+                    android:text="消息"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="20dp"
+                    android:drawableRight="@mipmap/gray_arrow_icon"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/jibiao_xiangmu_rl"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/message_houbao_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/competitive_layout"
+                android:background="@color/ic_white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+
+                    android:layout_marginLeft="20dp"
+                    android:src="@mipmap/my_bid_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+                <TextView
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginLeft="10dp"
+                    android:text="我的竞标"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="20dp"
+                    android:drawableRight="@mipmap/gray_arrow_icon"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <ImageView
+                android:layout_below="@+id/competitive_layout"
+                android:id="@+id/competitive_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+            <LinearLayout
+                android:id="@+id/attention_layout"
+                android:layout_below="@+id/competitive_imageview"
+                android:background="@color/ic_white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:id="@+id/attention_iv"
+                    android:layout_marginLeft="20dp"
+                    android:src="@mipmap/new_pro_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+                <TextView
+
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginLeft="10dp"
+                    android:text="关注的项目"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="20dp"
+                    android:drawableRight="@mipmap/gray_arrow_icon"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <ImageView
+                android:layout_below="@+id/attention_layout"
+                android:id="@+id/attention_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+            <LinearLayout
+                android:layout_below="@+id/attention_imageview"
+                android:id="@+id/extruder_layout"
+                android:background="@color/ic_white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+
+                    android:layout_marginLeft="20dp"
+                    android:src="@mipmap/my_rig_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+                <TextView
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginLeft="10dp"
+                    android:text="关注的砖机"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="20dp"
+                    android:drawableRight="@mipmap/gray_arrow_icon"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/sting_layout"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/jibiao_xiangmu_rl"
+            android:background="@color/ic_white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/my_setting_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginLeft="10dp"
+                android:text="设置"
+                android:layout_alignParentRight="@+id/loing_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:paddingRight="20dp"
+                android:drawableRight="@mipmap/gray_arrow_icon"
+                android:layout_alignParentRight="@+id/loing_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>
+
+</FrameLayout>

@@ -1,0 +1,196 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.fragment.HomeFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        >
+
+        <com.example.zhongjiyun03.zhongjiyun.widget.AutoScrollViewPager
+            android:id="@+id/home_banner_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/home_dot_ll"
+            android:layout_above="@+id/home_banner_viewpager"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"></LinearLayout>
+
+    </RelativeLayout>
+    <com.example.zhongjiyun03.zhongjiyun.view.MyGridView
+        android:background="@color/ic_white"
+        android:id="@+id/home_gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="4"
+        android:columnWidth="90dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        >
+
+    </com.example.zhongjiyun03.zhongjiyun.view.MyGridView>
+    <RelativeLayout
+        android:background="@color/ic_white"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/image_view"
+            android:src="@color/red_light"
+            android:layout_width="2dp"
+            android:layout_height="20dp" />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/used_recommend"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_toRightOf="@+id/image_view"
+            android:text="二手机推荐"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/more_text_view"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/red_light"
+            android:layout_marginRight="15dp"
+            android:textSize="@dimen/home_Size_14"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="3dp"
+            android:text="更多"
+            android:drawableRight="@mipmap/right_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_marginBottom="10dp"
+            android:id="@+id/image_ligin"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/image_view"
+            android:src="@color/background"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <HorizontalScrollView
+            android:background="@color/white"
+            android:layout_below="@+id/image_ligin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+            <FrameLayout android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="140dp">
+                <LinearLayout
+                    android:layout_width="700dip"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    >
+                    <GridView
+                        android:numColumns="6"
+                        android:background="@color/white"
+                        android:id="@+id/project_gridview"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        />
+                </LinearLayout>
+            </FrameLayout>
+        </HorizontalScrollView>
+
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:background="@color/ic_white"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/project_image_view"
+                android:src="@color/red_light"
+                android:layout_width="2dp"
+                android:layout_height="20dp" />
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/project_recommend"
+                android:textSize="@dimen/home_Size_18"
+                android:layout_toRightOf="@+id/project_image_view"
+                android:text="项目推荐"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/project_more_text"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/red_light"
+                android:layout_marginRight="20dp"
+                android:textSize="@dimen/home_Size_14"
+                android:layout_alignParentRight="true"
+                android:drawablePadding="3dp"
+                android:text="更多"
+                android:drawableRight="@mipmap/right_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/project_image"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_below="@+id/project_image_view"
+                android:src="@color/background"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+
+            <com.example.zhongjiyun03.zhongjiyun.view.CustomHomeScrollListView
+                android:id="@+id/project_list_view"
+                android:layout_marginTop="10dp"
+                android:divider="#00000000"
+                android:layout_below="@+id/project_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </com.example.zhongjiyun03.zhongjiyun.view.CustomHomeScrollListView>
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+</ScrollView>

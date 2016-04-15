@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:background="@color/background"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+
+            android:id="@+id/tailt_text"
+            android:textColor="@color/tailt_dark"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="茂名碧桂园学府1号桩基础工程"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_below="@+id/tailt_text"
+            android:id="@+id/phone_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:text="联系人"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_toRightOf="@+id/phone_text"
+            android:layout_below="@+id/tailt_text"
+            android:id="@+id/phone_content_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:text="王先生"
+            android:textColor="@color/tailt_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_below="@+id/phone_text"
+            android:id="@+id/date_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:text="发布时间"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_toRightOf="@+id/date_text"
+            android:layout_below="@+id/phone_text"
+            android:id="@+id/date_content_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:text="2016-08-07"
+            android:textColor="@color/tailt_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_below="@+id/date_text"
+            android:id="@+id/address_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:text="所在地"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_toRightOf="@+id/address_text"
+            android:layout_below="@+id/date_text"
+            android:id="@+id/address_content_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:text="广东省茂名市"
+            android:textColor="@color/tailt_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_below="@+id/address_text"
+            android:id="@+id/company_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:text="发布公司"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_toRightOf="@+id/company_text"
+            android:layout_below="@+id/address_text"
+            android:id="@+id/company_content_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:text="哈尔滨君豪建设基础工程有限公司"
+            android:textColor="@color/tailt_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <TextView
+        android:drawablePadding="5dp"
+        android:drawableLeft="@mipmap/project_info"
+        android:id="@+id/project_text"
+        android:textColor="@color/red_light"
+        android:textSize="@dimen/home_Size_18"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:text="项目信息"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/content_rlayout"
+        android:layout_below="@+id/project_text"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+
+                android:id="@+id/work_date_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="工期"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_toRightOf="@+id/work_date_text"
+
+                android:id="@+id/work_date_content_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="3个月"
+                android:textColor="@color/tailt_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+
+                android:layout_below="@+id/work_date_text"
+                android:id="@+id/diameter_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="直径"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_toRightOf="@+id/diameter_text"
+                android:layout_below="@+id/work_date_content_text"
+                android:id="@+id/diameter_content_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="8555米"
+                android:textColor="@color/tailt_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+
+                android:id="@+id/goncheng_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+
+                android:text="工程量"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_toRightOf="@+id/goncheng_text"
+                android:layout_marginRight="50dp"
+
+                android:id="@+id/goncheng_content_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="32222米"
+                android:textColor="@color/tailt_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_below="@+id/goncheng_text"
+                android:id="@+id/pile_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:text="桩深"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginRight="50dp"
+                android:layout_below="@+id/goncheng_content_text"
+                android:layout_toRightOf="@+id/pile_text"
+                android:id="@+id/pile_content_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="40dp"
+                android:text="30米"
+                android:textColor="@color/tailt_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/image_ligin"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/content_rlayout"
+        android:src="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+        <TextView
+
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/image_ligin"
+            android:id="@+id/leixing_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginLeft="20dp"
+            android:text="需要机主类型"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_toRightOf="@+id/leixing_text"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/image_ligin"
+            android:id="@+id/leixing_content_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginLeft="20dp"
+            android:text="提供三证"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:drawablePadding="5dp"
+            android:drawableLeft="@mipmap/project_intro"
+            android:id="@+id/project_introduce_text"
+            android:textColor="@color/red_light"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:text="项目介绍"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/project_introduce_text"
+            android:id="@+id/project_introduce_content"
+            android:textColor="@color/tailt_dark"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="时间合适的活动的活动活动活动和丰厚的好多好多好多的好多好多好多好杀杀杀急啊急啊急啊急啊东海大河大河嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕的德国德国"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:drawablePadding="5dp"
+            android:drawableLeft="@mipmap/project_rig"
+            android:id="@+id/extruder_text"
+            android:textColor="@color/red_light"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:text="钻机要求描述"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/extruder_text"
+            android:id="@+id/extruder_conten_text"
+            android:textColor="@color/tailt_dark"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="时间合适的活动的活动活动活动和丰厚的好多好多好多的好多好多好多好杀杀杀急啊急啊急啊急啊东海大河大河嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕的德国德国"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
+    </RelativeLayout>
+        <RelativeLayout
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/ic_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:drawablePadding="5dp"
+                android:drawableLeft="@mipmap/project_description"
+                android:id="@+id/address_text_view"
+                android:textColor="@color/red_light"
+                android:textSize="@dimen/home_Size_18"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="地址描述"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+              />
+
+            <TextView
+
+                android:layout_below="@+id/address_text_view"
+                android:id="@+id/address_content_text_view"
+                android:textColor="@color/tailt_dark"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="时间合适的活动的活动活动活动和丰厚的好多好多好多的好多好多好多好杀杀杀急啊急啊急啊急啊东海大河大河嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕的德国德国"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+
+                android:layout_below="@+id/address_content_text_view"
+
+                android:textColor="@color/tailt_dark"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

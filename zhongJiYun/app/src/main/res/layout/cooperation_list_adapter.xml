@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/image_view"
+        android:src="@mipmap/partner_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+    <TextView
+        android:id="@+id/tailt_text_view"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/image_view"
+        android:textColor="@color/tailt_dark"
+        android:textSize="@dimen/home_Size_18"
+        android:text="中国铁建（集团）"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/abstract_text"
+        android:layout_below="@+id/tailt_text_view"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/image_view"
+        android:textColor="@color/content_color"
+        android:textSize="@dimen/home_Size_15"
+        android:text="说好的下午茶又没有，你是不是抗我哈，我要下午茶，下午茶，下午茶，最要的事说三遍了......."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

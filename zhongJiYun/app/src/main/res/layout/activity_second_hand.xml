@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.SecondHandActivity">
+
+    <RelativeLayout
+        android:id="@+id/home_title_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/red_light">
+        <TextView
+            android:id="@+id/retrun_tv"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="13dp"
+            android:layout_height="22dp"
+            android:background="@mipmap/return_icon"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <TextView
+
+            android:id="@+id/retrun_text_view"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/title_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登陆"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_20"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:background="@mipmap/share_icon"
+            android:id="@+id/shard_tv"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="18dp"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_marginBottom="5dp"
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:drawableRight="@mipmap/select_arrow"
+            android:id="@+id/facilly_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:text="品牌筛选"
+            android:maxEms="4"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:gravity="center" />
+        <ImageView
+            android:layout_marginTop="8dp"
+            android:background="@color/div_gray"
+            android:layout_width="1dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:drawableRight="@mipmap/select_arrow"
+            android:maxEms="5"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:id="@+id/main_tab1"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:text="区域筛选"
+            android:gravity="center" />
+        <ImageView
+            android:layout_marginTop="8dp"
+            android:background="@color/div_gray"
+            android:layout_width="1dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:drawableRight="@mipmap/select_arrow"
+            android:maxEms="6"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:id="@+id/evolve_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:text="时间筛选"
+            android:gravity="center" />
+        <ImageView
+            android:layout_marginTop="8dp"
+            android:background="@color/div_gray"
+            android:layout_width="1dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:drawableRight="@mipmap/select_arrow"
+            android:maxEms="4"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:id="@+id/time_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:textSize="15sp"
+            android:text="排序"
+            android:gravity="center" />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/main_div_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/div_gray"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- your views...-->
+        <!-- <TextView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="This is a test." />-->
+
+        <!--使背景变灰-->
+        <View
+            android:id="@+id/main_darkview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dark_bg"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:divider="@color/background"
+        android:dividerHeight="5dp"
+        android:id="@+id/second_hand_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

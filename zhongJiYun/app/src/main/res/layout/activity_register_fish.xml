@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.RegisterFishActivity">
+
+    <include layout="@layout/app_head_layout"/>
+   <ImageView
+       android:id="@+id/tailt_image"
+       android:layout_marginTop="100dp"
+       android:layout_centerHorizontal="true"
+       android:src="@mipmap/waiting_img"
+       android:layout_width="100dp"
+       android:layout_height="100dp" />
+    <TextView
+        android:textSize="@dimen/home_Size_16"
+        android:id="@+id/text_one"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tailt_image"
+        android:text="资料已提交,请耐心等待"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:textSize="@dimen/home_Size_16"
+        android:id="@+id/text_two"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/text_one"
+        android:text="如您有关于注册方面的问题,可点击下方"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/text_three"
+        android:textSize="@dimen/home_Size_16"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/text_two"
+        android:text="的‘人工服务’按钮,拨打我们的客服热线,谢谢"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+     <LinearLayout
+         android:id="@+id/call_phone_layout"
+         android:layout_marginTop="20dp"
+         android:layout_centerHorizontal="true"
+         android:background="@drawable/text_register_call_corners"
+         android:layout_below="@+id/text_three"
+         android:gravity="center_vertical|center"
+         android:orientation="horizontal"
+         android:layout_width="230dp"
+         android:layout_height="45dp">
+         <ImageView
+             android:src="@mipmap/phone_write"
+             android:layout_width="25dp"
+             android:layout_height="25dp" />
+
+         <TextView
+
+             android:id="@+id/mTogBtn"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+
+             android:textColor="@color/ic_white"
+             android:textSize="@dimen/home_Size_18"
+             android:layout_marginLeft="10dp"
+             android:gravity="center"
+
+             android:text="立即拨打"
+             />
+
+     </LinearLayout>
+
+
+
+
+
+
+
+</RelativeLayout>

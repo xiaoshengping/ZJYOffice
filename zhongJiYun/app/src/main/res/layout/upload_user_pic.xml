@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:gravity="bottom|center_horizontal"
+        android:text="@string/upload_pic"
+        style="@style/text_19_black"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray" />
+
+    <TextView
+        android:clickable="true"
+        android:id="@+id/Photograph"
+        android:gravity="center"
+        android:text="@string/Photograph"
+        style="@style/first_page_text_other"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray" />
+    <TextView
+        android:clickable="true"
+        android:id="@+id/selectImage_from_local"
+        android:gravity="center"
+        android:text="@string/select_local_img"
+        style="@style/first_page_text_other"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray" />
+
+    <TextView
+        android:clickable="true"
+        android:id="@+id/dimiss_dialoag"
+        android:gravity="center"
+        android:text="@string/cancel"
+        style="@style/first_page_text_other"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+
+</LinearLayout>

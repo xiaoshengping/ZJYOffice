@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/ic_white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_marginBottom="10dp"
+        android:id="@+id/news_icon"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/new_list_icon"
+        android:layout_width="70dp"
+        android:layout_height="70dp" />
+     <TextView
+         android:id="@+id/tailt_text"
+         android:textColor="@color/tailt_dark"
+         android:textSize="@dimen/home_Size_18"
+         android:singleLine="true"
+         android:ellipsize="end"
+         android:layout_marginTop="10dp"
+         android:layout_marginLeft="10dp"
+         android:layout_toRightOf="@+id/news_icon"
+         android:text="深圳平安金融中心钢结构....."
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" />
+
+    <TextView
+        android:lines="2"
+        android:ellipsize="end"
+        android:id="@+id/content_text"
+        android:layout_below="@+id/tailt_text"
+        android:textSize="@dimen/home_Size_16"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@+id/news_icon"
+        android:text="受到很大很大的好多好多好多的活动实施的活动活动活动活动活动实施的大好打好大号....."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

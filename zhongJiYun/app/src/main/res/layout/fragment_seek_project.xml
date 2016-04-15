@@ -1,0 +1,106 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:drawableRight="@mipmap/select_arrow"
+            android:id="@+id/main_tab1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:text="@string/main_tab1"
+            android:maxEms="4"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:gravity="center" />
+        <ImageView
+            android:layout_marginTop="8dp"
+            android:background="@color/div_gray"
+            android:layout_width="1dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:drawableRight="@mipmap/select_arrow"
+            android:maxEms="4"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:id="@+id/evolve_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:text="@string/main_tab2"
+            android:gravity="center" />
+        <ImageView
+            android:layout_marginTop="8dp"
+            android:background="@color/div_gray"
+            android:layout_width="1dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:drawableRight="@mipmap/select_arrow"
+            android:maxEms="4"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:id="@+id/time_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:text="@string/main_tab3"
+            android:gravity="center" />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/main_div_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/div_gray"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- your views...-->
+       <!-- <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="This is a test." />-->
+
+        <!--使背景变灰-->
+        <View
+            android:id="@+id/main_darkview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dark_bg"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/project_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- 退出游戏的背景图 -->
+    <!--<ImageView android:id="@+id/exitGameBackground"
+        android:layout_centerInParent="true"
+        android:layout_height="150dp"
+        android:layout_width="300dp"
+        android:src="#1b052b" />-->
+    <ImageView android:id="@+id/exitGameBackground"
+        android:layout_centerInParent="true"
+        android:layout_height="130dp"
+        android:layout_width="300dp"
+        android:src="#ffffff" />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/tv"
+        android:text="提示"
+        android:layout_alignLeft="@+id/exitGameBackground"
+        android:layout_alignParentTop="@+id/exitGameBackground"
+       android:textSize="@dimen/home_Size_18"
+        android:gravity="center"
+        android:textColor="@color/tailt_dark"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:layout_alignTop="@+id/exitGameBackground"
+        />
+       <TextView
+           android:textSize="@dimen/home_Size_16"
+           android:id="@+id/tailte_tv"
+           android:layout_alignLeft="@+id/exitGameBackground"
+           android:layout_alignParentTop="@+id/exitGameBackground"
+           android:layout_marginTop="45dp"
+           android:gravity="center"
+           android:layout_width="300dp"
+           android:layout_height="wrap_content"
+           android:layout_alignTop="@+id/exitGameBackground"
+           />
+    <ImageView
+        android:id="@+id/line_image"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/tailte_tv"
+        android:background="@color/background"
+        android:layout_width="300dp"
+        android:layout_height="1dp" />
+
+    <!-- 取消按钮 -->
+    <TextView
+        android:layout_below="@+id/line_image"
+        android:text="取消"
+        android:textSize="@dimen/home_Size_16"
+        android:layout_alignLeft="@+id/exitGameBackground"
+
+        android:layout_marginLeft="35dp"
+        android:textColor="@color/blue"
+        android:id="@+id/btn_cancel"
+       android:gravity="center"
+        android:layout_height="40dp"
+        android:layout_width="90dp"
+         />
+
+    <ImageView
+        android:layout_centerHorizontal="true"
+
+        android:id="@+id/line_image_one"
+
+        android:layout_below="@+id/line_image"
+        android:background="@color/background"
+        android:layout_width="1dp"
+        android:layout_height="50dp" />
+    <!-- 确认按钮 -->
+    <TextView
+        android:textSize="@dimen/home_Size_16"
+        android:text="确定"
+        android:layout_below="@+id/line_image"
+        android:id="@+id/btn_ok"
+        android:layout_marginRight="35dp"
+        android:gravity="center"
+        android:textColor="@color/blue"
+        android:layout_alignRight="@+id/exitGameBackground"
+        android:layout_height="40dp"
+        android:layout_width="90dp"
+         />
+</RelativeLayout>

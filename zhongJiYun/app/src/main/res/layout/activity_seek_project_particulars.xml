@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+
+    android:background="@color/ic_white"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.SeekProjectParticularsActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/home_title_bar_rl"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/red_light">
+            <TextView
+                android:id="@+id/retrun_tv"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentLeft="true"
+                android:layout_width="13dp"
+                android:layout_height="22dp"
+                android:background="@mipmap/return_icon"
+                android:gravity="center"
+                android:textColor="@color/ic_white"
+                android:textSize="@dimen/home_Size_18"
+                android:layout_centerInParent="true"/>
+            <TextView
+
+                android:id="@+id/retrun_text_view"
+                android:layout_marginLeft="15dp"
+                android:layout_alignParentLeft="true"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:textColor="@color/ic_white"
+                android:textSize="@dimen/home_Size_18"
+                android:layout_centerInParent="true"/>
+            <TextView
+                android:id="@+id/title_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登陆"
+                android:gravity="center"
+                android:textColor="@color/ic_white"
+                android:textSize="@dimen/home_Size_20"
+                android:layout_centerInParent="true"/>
+            <TextView
+                android:background="@mipmap/share_icon"
+                android:id="@+id/shard_tv"
+                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/checkBox_check"
+                android:layout_width="18dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:textColor="@color/ic_white"
+                android:textSize="@dimen/home_Size_18"
+                android:layout_centerInParent="true"/>
+            <CheckBox
+                android:button="@null"
+                android:background="@drawable/check_collect_selector"
+                android:id="@+id/checkBox_check"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_width="18dp"
+                android:layout_height="20dp"
+                android:gravity="center"
+                android:textColor="@color/ic_white"
+                android:textSize="@dimen/home_Size_18"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:background="@color/ic_white"
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/home_Size_16"
+            android:gravity="center"
+            android:text="项目概况"
+            android:textColor="#222222" />
+        <ImageView
+            android:src="@color/background"
+            android:layout_width="1dp"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:background="@color/ic_white"
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/home_Size_16"
+            android:gravity="center"
+            android:text="配置设施"
+            android:textColor="#222222" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:background="@color/ic_white"
+        android:layout_marginLeft="50dp"
+        android:id="@+id/cursor"
+        android:layout_width="80dp"
+        android:layout_height="2dp"
+        android:scaleType="matrix"
+        android:src="@color/red_light" />
+   <ImageView
+    android:src="@color/background"
+    android:layout_width="match_parent"
+    android:layout_height="1dp" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+
+    <Button
+        android:layout_alignParentBottom="true"
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/ic_white"
+        android:background="@drawable/loing_button_corners"
+        android:textSize="@dimen/home_Size_18"
+        android:text="我要竞标" />
+
+</RelativeLayout>

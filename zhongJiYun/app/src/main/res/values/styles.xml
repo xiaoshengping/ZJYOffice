@@ -1,0 +1,103 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- radiogrud-->
+    <style name="radiogroy_paren_layout_match">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="paren_radiogrud" parent="radiogroy_paren_layout_match">
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawablePadding">2dp</item>
+    </style>
+
+    <!--<style name="TextField" parent="@android:style/Widget.EditText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/editText</item>
+        <item name="android:background">@drawable/edit_text_holo_dark</item>
+    </style>-->
+
+    <style name="BoaderButton" parent="@android:style/Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="GrayBoaderButton" parent="BoaderButton">
+        <item name="android:background">@drawable/gray_btn</item>
+    </style>
+    <!-- 图片选择-->
+    <style name="transparentFrameWindowStyle" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/photo_choose_bg</item>
+    </style>
+
+    <style name="main_menu_animstyle">
+        <item name="android:windowEnterAnimation">@anim/photo_dialog_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/photo_dialog_out_anim</item>
+    </style>
+
+    <!--图片选择-->
+    <style name="first_page_text_other">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/first_text_color</item>
+    </style>
+
+    <style name="text_19_black">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="text_15_gray">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/content_info_corlor</item>
+    </style>
+
+    <!--popuwindow从底部弹出动画-->
+    <style name="popuwindow_from_bottom">
+        <item name="android:windowEnterAnimation">@anim/popu_show_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/popu_hiden_from_top</item>
+
+    </style>
+
+    <style name="text_19_black_white">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/text_white_black</item>
+    </style>
+
+    <!--标题栏标题-->
+    <style name="title_text">
+
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+
+</resources>

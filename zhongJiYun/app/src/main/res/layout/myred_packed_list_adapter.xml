@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/ic_white"
+
+    android:layout_height="match_parent">
+
+
+        <ImageView
+            android:layout_marginBottom="10dp"
+            android:id="@+id/red_pack_image"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/my_reward_cur"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="50dp"
+            android:layout_height="70dp" />
+
+        <RelativeLayout
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@+id/red_pack_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                        <TextView
+
+                            android:id="@+id/tailt_text"
+                            android:textColor="@color/tailt_dark"
+                            android:textSize="@dimen/home_Size_18"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="15dp"
+                            android:text="注册大派送"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+
+                            android:layout_below="@+id/tailt_text"
+                            android:id="@+id/data_text"
+                            android:textSize="@dimen/home_Size_16"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:text="有效期至:2015-11-18"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp">
+
+                        <ImageView
+                            android:visibility="gone"
+                            android:id="@+id/lingqu_image"
+                            android:layout_marginLeft="20dp"
+                            android:layout_alignParentRight="true"
+                            android:src="@mipmap/receive_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textColor="@color/red_light"
+                            android:drawablePadding="10dp"
+                            android:drawableLeft="@mipmap/yunbi_icon"
+                            android:layout_alignParentRight="true"
+                            android:layout_below="@+id/lingqu_image"
+                            android:id="@+id/number_text"
+                            android:textSize="@dimen/home_Size_18"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="5dp"
+                            android:text="13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+</RelativeLayout>
