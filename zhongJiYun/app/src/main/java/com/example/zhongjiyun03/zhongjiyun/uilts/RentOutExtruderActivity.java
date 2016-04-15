@@ -33,7 +33,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.RentOutExtruderDeviceBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.RentOutExtruderDeviceDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
@@ -293,14 +293,22 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             requestParams.addBodyParameter("Image5ServerId","phont.png");
 
 
-                        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
+                                        final String finalUid = uid;
+                                        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(ResponseInfo<String> responseInfo) {
                                 Log.e("出租",responseInfo.result);
                                 if (!TextUtils.isEmpty(responseInfo.result)){
-                                    AppBean<RentOutExtruderDeviceBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceBean>>(){});
+                                    AppBean<RentOutExtruderDeviceDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceDataBean>>(){});
                                     if (appBean.getResult().equals("success")){
-                                       intiPhontData0(appBean.getData().getId(),"11",phoneListPath.get(0));
+                                        //Log.e("出租id",appBean.getData().getOwnId());
+                                        if (appBean.getData()!=null){
+                                            RentOutExtruderDeviceDataBean rentOutExtruderDeviceDataBean=appBean.getData();
+                                            if (rentOutExtruderDeviceDataBean!=null){
+                                                intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getDevice().getOwnId());
+                                            }
+                                        }
+
 
                                     }else {
                                       MyAppliction.showToast(appBean.getMsg());
@@ -371,7 +379,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
     }
 
-    private void intiPhontData0(final String id, String imageType, String imagePath) {
+    private void intiPhontData0(final String id, String imageType, String imagePath, final String ownId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
         requwstParams.addBodyParameter("Id",id);
@@ -379,9 +387,8 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","4");
         requwstParams.addBodyParameter("File", new File(imagePath));
-       /* if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
-            requwstParams.addBodyParameter("OwnId",myExtruderBean.getHistoryList().get(0).getId());
-        }*/
+
+            requwstParams.addBodyParameter("OwnId",ownId);
 
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
@@ -397,7 +404,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                         }else if (phoneListPath.size()==4){
                             mSVProgressHUD.showWithStatus("上传照片中(3)...");
                         }
-                        intiPhontData1(id,"12",phoneListPath.get(1));
+                        intiPhontData1(id,"12",phoneListPath.get(1),ownId);
 
 
                     }else {
@@ -419,7 +426,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
 
     }
-    private void intiPhontData1(final String id, String iamgeType, String imagePath) {
+    private void intiPhontData1(final String id, String iamgeType, String imagePath, final String ownId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
         requwstParams.addBodyParameter("Id",id);
@@ -427,9 +434,9 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","4");
         requwstParams.addBodyParameter("File", new File(imagePath));
-        if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
-            requwstParams.addBodyParameter("OwnId",myExtruderBean.getHistoryList().get(0).getId());
-        }
+
+            requwstParams.addBodyParameter("OwnId",ownId);
+
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
@@ -444,7 +451,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                         }else if (phoneListPath.size()==4){
                             mSVProgressHUD.showWithStatus("上传照片中(2)...");
                         }
-                        intiPhontData2(id,"13",phoneListPath.get(2));
+                        intiPhontData2(id,"13",phoneListPath.get(2),ownId);
 
 
 
@@ -469,7 +476,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
 
     }
-    private void intiPhontData2(final String id, String imageType, String imagePath) {
+    private void intiPhontData2(final String id, String imageType, String imagePath, final String ownId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
         requwstParams.addBodyParameter("Id",id);
@@ -477,9 +484,9 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","4");
         requwstParams.addBodyParameter("File", new File(imagePath));
-        if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
-            requwstParams.addBodyParameter("OwnId",myExtruderBean.getHistoryList().get(0).getId());
-        }
+
+            requwstParams.addBodyParameter("OwnId",ownId);
+
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -494,7 +501,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             mSVProgressHUD.showWithStatus("上传照片中(1)...");
                         }
                         if (panoramaPath.length()>3){
-                            intiPhontData3(id,"14",phoneListPath.get(3));
+                            intiPhontData3(id,"14",phoneListPath.get(3),ownId);
                         }
 
 
@@ -521,7 +528,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
 
     }
-    private void intiPhontData3(final String id, String imageType, String imagePath) {
+    private void intiPhontData3(final String id, String imageType, String imagePath, final String ownId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
         requwstParams.addBodyParameter("Id",id);
@@ -529,9 +536,9 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","3");
         requwstParams.addBodyParameter("File", new File(imagePath));
-        if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
-            requwstParams.addBodyParameter("OwnId",myExtruderBean.getHistoryList().get(0).getId());
-        }
+
+            requwstParams.addBodyParameter("OwnId",ownId);
+
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -547,7 +554,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                         }
                         if (phoneListPath!=null&&phoneListPath.size()==5){
 
-                            intiPhontData4(id,"15",phoneListPath.get(4));
+                            intiPhontData4(id,"15",phoneListPath.get(4),ownId);
                         }else {
                             MyAppliction.showToast("添加钻机成功");
                             mSVProgressHUD.dismiss();
@@ -575,7 +582,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
 
     }
-    private void intiPhontData4(final String id, String userType, String imagePath) {
+    private void intiPhontData4(final String id, String userType, String imagePath,String ownId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
         requwstParams.addBodyParameter("Id",id);
@@ -583,9 +590,9 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","3");
         requwstParams.addBodyParameter("File", new File(imagePath));
-        if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
-            requwstParams.addBodyParameter("OwnId",myExtruderBean.getHistoryList().get(0).getId());
-        }
+
+            requwstParams.addBodyParameter("OwnId",ownId);
+
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {

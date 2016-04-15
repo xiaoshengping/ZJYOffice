@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.CommitCashDepositActivity">
+
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+
+
+    <include android:id="@+id/head_layout" android:layout_width="match_parent"
+        android:layout_height="wrap_content" layout="@layout/app_head_layout" />
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/head_layout"
+        android:id="@+id/work_experience_layout"
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/work_experience_text_view"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+
+            android:textColor="@color/tailt_dark"
+            android:textSize="@dimen/home_Size_18"
+            android:text="工作经验"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/work_experience_text_view"
+            android:id="@+id/image_ligin"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/background"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <RelativeLayout
+            android:id="@+id/message_rlayout"
+            android:layout_below="@+id/image_ligin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+
+                android:id="@+id/work_time_text"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/home_Size_16"
+                android:text="支付主体：北京中基云互联网科技有限公司"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_below="@+id/work_time_text"
+                android:id="@+id/pety_text"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/home_Size_16"
+                android:text="用途：项目保证金"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/pety_text"
+                android:id="@+id/miaoshi_text"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/home_Size_16"
+                android:text="金额："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="@color/red"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/pety_text"
+                android:layout_toRightOf="@+id/miaoshi_text"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/home_Size_18"
+                android:text="￥1000.00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+        </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/zfu_state_layout"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/work_experience_layout"
+        android:background="@color/ic_white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginLeft="20dp"
+            android:text="支付说明"
+            android:layout_alignParentRight="@+id/loing_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:paddingRight="35dp"
+            android:drawableRight="@mipmap/gray_arrow_icon"
+            android:layout_alignParentRight="@+id/loing_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/zfu_layout"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/zfu_state_layout"
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <RelativeLayout
+
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:gravity="center_vertical"
+               android:layout_height="50dp">
+               <ImageView
+                   android:id="@+id/zfb_image"
+                   android:layout_marginLeft="20dp"
+                   android:src="@mipmap/zfb_icon"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp" />
+               <TextView
+                   android:layout_toRightOf="@+id/zfb_image"
+                   android:textColor="@color/tailt_dark"
+                   android:textSize="@dimen/home_Size_15"
+                   android:layout_marginTop="4dp"
+                   android:id="@+id/text_view"
+                   android:layout_marginLeft="10dp"
+                   android:text="支付宝支付"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+
+
+
+           </RelativeLayout>
+           <ImageView
+               android:src="@color/background"
+
+               android:layout_width="match_parent"
+               android:layout_height="1dp" />
+           <RelativeLayout
+
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:gravity="center_vertical"
+               android:layout_height="50dp">
+               <ImageView
+                   android:id="@+id/weixin_image"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginTop="3dp"
+                   android:src="@mipmap/wx_icopn"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp" />
+               <TextView
+                   android:layout_toRightOf="@+id/weixin_image"
+                   android:textSize="@dimen/home_Size_15"
+                   android:textColor="@color/tailt_dark"
+                   android:layout_marginTop="5dp"
+                   android:layout_marginLeft="10dp"
+                   android:text="微信支付"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+
+
+
+           </RelativeLayout>
+
+           <ImageView
+               android:src="@color/background"
+
+               android:layout_width="match_parent"
+               android:layout_height="1dp" />
+           <RelativeLayout
+
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:gravity="center_vertical"
+               android:layout_height="50dp">
+               <ImageView
+                   android:id="@+id/zhuanz_image"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginTop="4dp"
+                   android:src="@mipmap/zhuan_zhang_icon"
+                   android:layout_width="30dp"
+                   android:layout_height="30dp" />
+               <TextView
+                   android:layout_toRightOf="@+id/zhuanz_image"
+                   android:textSize="@dimen/home_Size_15"
+                   android:textColor="@color/tailt_dark"
+                   android:layout_marginTop="5dp"
+                   android:layout_marginLeft="10dp"
+                   android:text="转帐汇款"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+
+           </RelativeLayout>
+           <ImageView
+               android:src="@color/background"
+               android:layout_width="match_parent"
+               android:layout_height="1dp" />
+       </LinearLayout>
+        <RadioGroup
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:layout_marginTop="18dp"
+                android:id="@+id/contract_check"
+                android:button="@null"
+                android:layout_marginRight="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/exturnd_check_selector"
+                android:layout_alignParentRight="true"
+
+                android:gravity="center_vertical|right"
+                android:textSize="@dimen/home_Size_14"
+
+
+                />
+            <RadioButton
+                android:layout_marginTop="28dp"
+                android:id="@+id/invoice_check"
+                android:layout_marginRight="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/exturnd_check_selector"
+                android:button="@null"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical|right"
+                android:textSize="@dimen/home_Size_14"
+
+
+                />
+            <RadioButton
+                android:layout_marginTop="31dp"
+                android:layout_marginRight="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/exturnd_check_selector"
+                android:button="@null"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical|right"
+                android:textSize="@dimen/home_Size_14"
+
+
+                />
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_below="@+id/zfu_layout"
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/ic_white"
+        android:background="@drawable/loing_button_corners"
+        android:textSize="@dimen/home_Size_18"
+        android:text="立即支付" />
+
+   </RelativeLayout>
+
+</ScrollView>

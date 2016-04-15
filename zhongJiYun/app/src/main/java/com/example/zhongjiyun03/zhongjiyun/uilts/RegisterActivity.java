@@ -40,8 +40,11 @@ import com.example.zhongjiyun03.zhongjiyun.adapter.MyAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppUserDataBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.ProvinceBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.RegisterBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.ClippingPageActivity;
@@ -1259,17 +1262,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     //个人注册地址联动
     private void intiPvTime() {
-        final ArrayList<ProvinceBean> options1Items = new ArrayList<ProvinceBean>();
+        final ArrayList<String> options1Items = new ArrayList<String>();
         final ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
-        final ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
+        //final ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
+
+        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
+        if (provinceCityDataBean!=null){
+            ArrayList<ProvinceCityBean>  options1Itemss= (ArrayList<ProvinceCityBean>) provinceCityDataBean.getProvinceCity();
+            for (int i = 0; i <options1Itemss.size() ; i++) {
+                options1Items.add(options1Itemss.get(i).getName());
+            }
+            for (int i = 0; i <options1Items.size() ; i++) {
+                ArrayList<ProvinceCityChildsBean> provinceCity=  options1Itemss.get(i).getProvinceCityChilds();
+                ArrayList<String> arrayList=new ArrayList<>();
+                for (int J = 0; J <provinceCity.size() ; J++) {
+                    arrayList.add(provinceCity.get(J).getName());
+                }
+                options2Items.add(arrayList);
+
+            }
 
 
+
+        }
         //选项选择器
         pvOptions = new OptionsPickerView(RegisterActivity.this);
 
 
 
-        //选项1
+        /*//选项1
         options1Items.add(new ProvinceBean(0,"广东"));
         options1Items.add(new ProvinceBean(1,"湖南"));
         options1Items.add(new ProvinceBean(3,"广西"));
@@ -1352,9 +1373,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         options3Items.add(options3Items_03);
 
         //三级联动效果
-        pvOptions.setPicker(options1Items, options2Items, options3Items, true);
+        pvOptions.setPicker(options1Items, options2Items, options3Items, true);*/
         //设置选择的三级单位
 //        pwOptions.setLabels("省", "市", "区");
+        pvOptions.setPicker(options1Items, options2Items,true);
         pvOptions.setTitle("选择城市");
         pvOptions.setCyclic(false, true, true);
         //设置默认选中的三级项目
@@ -1365,9 +1387,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).getPickerViewText()
-                        + options2Items.get(options1).get(option2)
-                        + options3Items.get(options1).get(option2).get(options3);
+                String tx = options1Items.get(options1)
+                        + options2Items.get(options1).get(option2);
+                        /*+ options3Items.get(options1).get(option2).get(options3);*/
                 addressTextView.setText(tx);
                 vMasker.setVisibility(View.GONE);
             }
@@ -1383,16 +1405,36 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
     //企业注册地址联动
     private void intiPvCompanyTime() {
-        final ArrayList<ProvinceBean> options1Items = new ArrayList<ProvinceBean>();
+        final ArrayList<String> options1Items = new ArrayList<String>();
         final ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
-        final ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
+        //final ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
 
 
+
+
+        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
+        if (provinceCityDataBean!=null){
+            ArrayList<ProvinceCityBean>  options1Itemss= (ArrayList<ProvinceCityBean>) provinceCityDataBean.getProvinceCity();
+            for (int i = 0; i <options1Itemss.size() ; i++) {
+                options1Items.add(options1Itemss.get(i).getName());
+            }
+            for (int i = 0; i <options1Items.size() ; i++) {
+                ArrayList<ProvinceCityChildsBean> provinceCity=  options1Itemss.get(i).getProvinceCityChilds();
+                ArrayList<String> arrayList=new ArrayList<>();
+                for (int J = 0; J <provinceCity.size() ; J++) {
+                    arrayList.add(provinceCity.get(J).getName());
+                }
+                options2Items.add(arrayList);
+
+            }
+
+
+
+        }
         //选项选择器
         pvOptionsCompany = new OptionsPickerView(RegisterActivity.this);
 
-
-
+        /*
         //选项1
         options1Items.add(new ProvinceBean(0,"广东"));
         options1Items.add(new ProvinceBean(1,"湖南"));
@@ -1476,8 +1518,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         options3Items.add(options3Items_03);
 
         //三级联动效果
-        pvOptionsCompany.setPicker(options1Items, options2Items, options3Items, true);
+        pvOptionsCompany.setPicker(options1Items, options2Items, options3Items, true);*/
         //设置选择的三级单位
+        pvOptionsCompany.setPicker(options1Items, options2Items,true);
 //        pwOptions.setLabels("省", "市", "区");
         pvOptionsCompany.setTitle("选择城市");
         pvOptionsCompany.setCyclic(false, true, true);
@@ -1489,9 +1532,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).getPickerViewText()
-                        + options2Items.get(options1).get(option2)
-                        + options3Items.get(options1).get(option2).get(options3);
+                String tx = options1Items.get(options1)
+                        + options2Items.get(options1).get(option2);
+
                 companyAddressTextView.setText(tx);
                 vMaskerCompany.setVisibility(View.GONE);
             }

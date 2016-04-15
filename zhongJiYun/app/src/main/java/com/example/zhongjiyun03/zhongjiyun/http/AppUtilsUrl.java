@@ -182,6 +182,13 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/Common/CancelCollect" ;
 
     }
+    //取消关注
+    public static String getCompetitiveDescribeData(){
+        //   appapi/boss/SubmitReplyProject
+        return BaseUrl+"appapi/boss/SubmitReplyProject" ;
+
+    }
+
 
 
 

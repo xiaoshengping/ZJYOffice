@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.PaymentStateActivity">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <include  android:id="@+id/head_layout" android:layout_width="match_parent"
+        android:layout_height="wrap_content" layout="@layout/app_head_layout" />
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/head_layout"
+        android:id="@+id/bank_layout"
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/bank_text_view"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/tailt_dark"
+            android:textSize="@dimen/home_Size_18"
+            android:text="银行账户信息："
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:id="@+id/message_rlayout"
+            android:layout_below="@+id/bank_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+
+                android:id="@+id/work_time_text"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/home_Size_16"
+                android:text="开户支行：招商银行佛山分行北滘支行"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_below="@+id/work_time_text"
+                android:id="@+id/pety_text"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/home_Size_16"
+                android:text="银行账户：757902870110601"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/pety_text"
+                android:id="@+id/miaoshi_text"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/home_Size_16"
+                android:text="账户主体："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/pety_text"
+                android:layout_toRightOf="@+id/miaoshi_text"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/home_Size_16"
+                android:text="北京中基云互联网科技有限公司"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/bank_image"
+        android:layout_below="@+id/bank_layout"
+        android:layout_marginTop="10dp"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <TextView
+        android:layout_below="@+id/bank_image"
+        android:id="@+id/cash_text_view"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/tailt_dark"
+        android:textSize="@dimen/home_Size_18"
+        android:text="保证金说明："
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_below="@+id/cash_text_view"
+        android:id="@+id/cash_comtent_text_view"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/home_Size_16"
+        android:layout_marginRight="20dp"
+        android:text="敬的用户，发布二手机需要缴纳每台 1000 元的保证金，二手机信息会在平台上发布一个月，如二手机 销售不成功，保证金全额退还。如二手机销售成功，买卖双方各自需要上传销售合同或协议 等证据，平台审核成功后会全额退还保证金并给买方赠送 500 元平台代金券（5000 云币），平台同时会根据卖方的机主星级赠送相对应的奖励。"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginBottom="20dp"
+        android:layout_below="@+id/cash_comtent_text_view"
+        android:id="@+id/cash_xingji_text"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/red"
+        android:textSize="@dimen/home_Size_16"
+        android:text="四星级以上机主用户无需缴纳保证金"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    </RelativeLayout>
+</ScrollView>

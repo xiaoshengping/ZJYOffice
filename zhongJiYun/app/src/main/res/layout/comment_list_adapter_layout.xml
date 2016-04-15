@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_marginRight="1dp"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/image_view"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:scaleType="centerCrop"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:id="@id/name_text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="18dp"
+        android:textSize="@dimen/home_Size_16"
+        android:text="李东林"
+        android:layout_toRightOf="@+id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="18dp"
+        android:textSize="@dimen/home_Size_15"
+        android:text="2015-05-08"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@id/image_ligin"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/background"
+        android:layout_below="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+    <TextView
+        android:id="@+id/comment_tailt_text"
+        android:layout_below="@id/image_ligin"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/home_Size_16"
+        android:text="综合评价"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <RatingBar
+        android:layout_below="@id/image_ligin"
+        android:id="@+id/rating_bar"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="7dp"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_toRightOf="@+id/comment_tailt_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/comment_content_text"
+        android:layout_below="@id/comment_tailt_text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/home_Size_15"
+        android:text="角色等级分级方法解放军解放的经济数据技术监督局借款贷款带宽可达科大"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_below="@id/comment_content_text"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/home_Size_15"
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+
+</RelativeLayout>

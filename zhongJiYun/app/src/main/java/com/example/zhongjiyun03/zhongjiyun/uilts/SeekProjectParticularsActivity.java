@@ -18,6 +18,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -108,6 +109,8 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     private CheckBox checkBoxCheck;
     private SeekProjectBean seekProjectBean;
     private SVProgressHUD mSVProgressHUD;//loding
+    @ViewInject(R.id.competitive_button)
+    private Button competitiveButton; //竞标按钮
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,6 +234,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         titleNemeTv.setText("项目详情");
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
+        competitiveButton.setOnClickListener(this);
         checkBoxCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -247,6 +251,52 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         });
 
     }
+
+    @Override
+    public void onClick(View v) {
+        SQLhelper sqLhelper=new SQLhelper(SeekProjectParticularsActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        switch (v.getId()){
+
+            case R.id.retrun_text_view:
+                finish();
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                break;
+            case R.id.shard_tv:
+                showShare();
+
+                break;
+            case R.id.competitive_button:
+                if (!TextUtils.isEmpty(uid)){
+                    Intent intent=new Intent(SeekProjectParticularsActivity.this,CompetitiveDescribeActivity.class);
+                    intent.putExtra("ProjectId",seekProjectBean.getId());
+                    startActivity(intent);
+                }else {
+                    Intent loginIntent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
+                    startActivity(loginIntent);
+                }
+
+
+
+                break;
+
+
+
+
+        }
+
+
+
+
+    }
+
     private void isNoCheckedRequest() {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
@@ -333,28 +383,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
         }
 
-
-
-
-
-    }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-
-            case R.id.retrun_text_view:
-                finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
-                break;
-            case R.id.shard_tv:
-                showShare();
-
-                break;
-
-
-
-
-        }
 
 
 

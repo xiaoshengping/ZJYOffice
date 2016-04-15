@@ -2950,6 +2950,10 @@
     <string name="title_activity_sting">StingActivity</string>
     <string name="title_activity_modification_phone">ModificationPhoneActivity</string>
     <string name="title_activity_idea">IdeaActivity</string>
+    <string name="title_activity_competitive_describe">CompetitiveDescribeActivity</string>
+    <string name="title_activity_commit_cash_deposit">CommitCashDepositActivity</string>
+    <string name="title_activity_payment_state">PaymentStateActivity</string>
+    <string name="title_activity_comment">CommentActivity</string>
 
 
 </resources>

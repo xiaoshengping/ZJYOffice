@@ -21,6 +21,7 @@ import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.AttentionExtrunActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.AttentionProjectActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.CommentActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.LoginActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MessageActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MyCompetitveTenderActivity;
@@ -62,6 +63,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private LinearLayout stingLayout;
     @ViewInject(R.id.rating_bar)
     private RatingBar ratingBar;
+    @ViewInject(R.id.comment_layout)
+    private LinearLayout commentLayout;
 
 
 
@@ -76,7 +79,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_mine, container, false);
+        View view =inflater.inflate(R.layout.fragment_mine,container, false);
         ViewUtils.inject(this,view);
 
            init();
@@ -98,6 +101,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         loginLayout.setOnClickListener(this);
         loingXshiLayout.setOnClickListener(this);
         stingLayout.setOnClickListener(this);
+        commentLayout.setOnClickListener(this);
 
 
     }
@@ -226,6 +230,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.sting_layout:
                 Intent stingIntent=new Intent(getActivity(), StingActivity.class);
                 startActivity(stingIntent);
+                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                break;
+            case R.id.comment_layout:
+                Intent commentIntent=new Intent(getActivity(), CommentActivity.class);
+                startActivity(commentIntent);
                 getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
 

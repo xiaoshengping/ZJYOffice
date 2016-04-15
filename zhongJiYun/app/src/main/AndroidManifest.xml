@@ -266,6 +266,22 @@
         <activity
             android:name=".uilts.IdeaActivity"
             android:label="@string/title_activity_idea"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.CompetitiveDescribeActivity"
+            android:label="@string/title_activity_competitive_describe"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.CommitCashDepositActivity"
+            android:label="@string/title_activity_commit_cash_deposit"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.PaymentStateActivity"
+            android:label="@string/title_activity_payment_state"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.CommentActivity"
+            android:label="@string/title_activity_comment"
             android:theme="@style/AppTheme"></activity>
     </application>
 

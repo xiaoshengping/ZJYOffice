@@ -281,7 +281,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                                 if (!TextUtils.isEmpty(responseInfo.result)){
                                     AppBean<RentOutExtruderDeviceBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceBean>>(){});
                                     if (appBean.getResult().equals("success")){
-                                        intiPhontData0(appBean.getData().getId(),"11",phoneListPath.get(0));
+                                        intiPhontData0(appBean.getData().getOwnId(),"11",phoneListPath.get(0));
 
                                     }else {
                                         MyAppliction.showToast(appBean.getMsg());
