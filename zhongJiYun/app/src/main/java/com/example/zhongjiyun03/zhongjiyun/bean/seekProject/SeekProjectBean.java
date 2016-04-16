@@ -33,6 +33,7 @@ public class SeekProjectBean implements Serializable  {
     private String IsCallOwnerFlag;//	string	是否可以呼叫业主
     private String IsAcceptReply;//	string	是否允许投标
     private int PayMarginStatus;//	int	支付保证金状态,业务逻辑先不管
+    private int IsCollection;
 
 
     public String getId() {
@@ -243,6 +244,14 @@ public class SeekProjectBean implements Serializable  {
         PayMarginStatus = payMarginStatus;
     }
 
+    public int getIsCollection() {
+        return IsCollection;
+    }
+
+    public void setIsCollection(int isCollection) {
+        IsCollection = isCollection;
+    }
+
     @Override
     public String toString() {
         return "SeekProjectBean{" +
@@ -272,6 +281,7 @@ public class SeekProjectBean implements Serializable  {
                 ", IsCallOwnerFlag='" + IsCallOwnerFlag + '\'' +
                 ", IsAcceptReply='" + IsAcceptReply + '\'' +
                 ", PayMarginStatus=" + PayMarginStatus +
+                ", IsCollection=" + IsCollection +
                 '}';
     }
 }

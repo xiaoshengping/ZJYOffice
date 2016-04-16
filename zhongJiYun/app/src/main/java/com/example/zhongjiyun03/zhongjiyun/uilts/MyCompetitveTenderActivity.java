@@ -1,5 +1,6 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -14,9 +15,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.MyCompetitveTenderListAdapter;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.ProjectlistBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.ProjectlistDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -75,23 +78,33 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 Log.e("我的竞标",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
-                    ProjectlistBean projectlistBean= JSONObject.parseObject(responseInfo.result,new TypeReference<ProjectlistBean>(){});
-                    if (( projectlistBean.getResult()).equals("success")){
-                      List<ProjectlistDataBean> projectlistDataBeanList=  projectlistBean.getProjectlist();
-                        if (projectlistDataBeanList!=null){
-                            projectlistDataBeanLists.addAll(projectlistDataBeanList);
+                    AppBean<ProjectlistBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ProjectlistBean>>(){});
+                    if (( appBean.getResult()).equals("success")){
+                        ProjectlistBean projectlistBean=  appBean.getData();
+                        if (projectlistBean!=null){
+                            projectlistDataBeanLists.addAll(projectlistBean.getPagerData());
                             competitveTenderLsitview.onRefreshComplete();
                         }
 
+                    }else if (( appBean.getResult()).equals("nomore")){
+                        MyAppliction.showToast("已到最底了");
+                        competitveTenderLsitview.onRefreshComplete();
+                    }else if ((appBean.getResult()).equals("empty")){
+                        //secondHandBeen.clear();
+                        competitveTenderLsitview.onRefreshComplete();
+                        MyAppliction.showToast("没有更多数据");
                     }
 
 
+                }else {
+                    competitveTenderLsitview.onRefreshComplete();
                 }
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-
+                Log.e("我的竞标",s);
+                competitveTenderLsitview.onRefreshComplete();
             }
         });
 
@@ -111,10 +124,10 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
         competitveTenderLsitview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*Intent intent=new Intent(MyCompetitveTenderActivity.this, SeekProjectParticularsActivity.class);
-                intent.putExtra("seekProjectData",projectlistDataBeanList.get(position-1));
+                Intent intent=new Intent(MyCompetitveTenderActivity.this, SeekProjectParticularsActivity.class);
+                intent.putExtra("seekProjectId",projectlistDataBeanLists.get(position-1).getProjectId());
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);*/
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
             }
         });
 

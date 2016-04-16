@@ -46,6 +46,6 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Moments-2.7.0.jar')
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.bigkoo:svprogresshud:1.0.2'
-
+    compile 'com.commit451:PhotoView:1.2.4'
 
 }

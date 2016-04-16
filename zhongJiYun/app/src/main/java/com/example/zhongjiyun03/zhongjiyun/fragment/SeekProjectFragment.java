@@ -246,12 +246,11 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     private void initListView() {
         HomeProjectListAdapter homeProjectlsitAdapter=new HomeProjectListAdapter(seekProjectBeens,getActivity());
         projectListView.setAdapter(homeProjectlsitAdapter);
-        homeProjectlsitAdapter.notifyDataSetChanged();
         projectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(getActivity(), SeekProjectParticularsActivity.class);
-                intent.putExtra("seekProjectData",seekProjectBeens.get(position-1));
+                intent.putExtra("seekProjectId",seekProjectBeens.get(position-1).getId());
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
             }

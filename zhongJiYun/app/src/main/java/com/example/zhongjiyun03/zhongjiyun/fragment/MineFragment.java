@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.AttentionExtrunActivity;
@@ -28,7 +29,13 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.MyCompetitveTenderActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MyRedPacketActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.PersonageInformationActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.StingActivity;
+import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
@@ -147,11 +154,33 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
 
         }
+        initSystenMessage(uid); //获得系统消息提醒
 
 
 
     }
 
+    private void initSystenMessage(String uid) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        if (!TextUtils.isEmpty(uid)){
+            requestParams.addBodyParameter("id",uid);
+        }
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSystemMessageRemindData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+
+            }
+        });
+
+
+
+    }
 
 
     @Override

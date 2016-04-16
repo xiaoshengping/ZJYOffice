@@ -105,7 +105,7 @@
                     android:layout_height="1dp" />
             </LinearLayout>
             <ImageView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="3dp"
                 android:src="@color/background"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
@@ -233,7 +233,7 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="3dp"
                 android:src="@color/background"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
@@ -331,7 +331,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_toRightOf="@+id/invoice_textview"
                     android:layout_marginBottom="20dp"
-
+                    android:id="@id/contract_layout"
                     android:background="@color/window_background"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -360,7 +360,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginBottom="20dp"
-
                     android:background="@color/window_background"
                     android:gravity="center"
                     android:orientation="vertical"
@@ -382,23 +381,7 @@
 
 
                 </LinearLayout>
-              <!--  <LinearLayout
-                    android:layout_toRightOf="@+id/qualified_layout"
-                    android:layout_below="@+id/invoice_textview"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
-                    <TextView
-                        android:text="备注:1.设备出厂牌，设备编号为必填;2.设备发票和合同照必须上传一张照片3.合格证为选填"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
 
-
-
-                </LinearLayout>-->
             </RelativeLayout>
         </LinearLayout>
 

@@ -291,10 +291,16 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             requestParams.addBodyParameter("Image3ServerId","phont.png");
                             requestParams.addBodyParameter("Image4ServerId","phont.png");
                             requestParams.addBodyParameter("Image5ServerId","phont.png");
+                            if (phoneListPath.size()==5){
+                                 mSVProgressHUD.showWithStatus("上传照片中(5张)...");
+                            } else if (phoneListPath.size()==4){
+                               mSVProgressHUD.showWithStatus("上传照片中(4张)...");
+                            }else if (phoneListPath.size()==3){
+                              mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                            }
 
-
-                                        final String finalUid = uid;
-                                        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
+                            final String finalUid = uid;
+                            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(ResponseInfo<String> responseInfo) {
                                 Log.e("出租",responseInfo.result);
@@ -321,6 +327,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             @Override
                             public void onFailure(HttpException e, String s) {
                                 Log.e("出租",s);
+                                MyAppliction.showToast("网络异常，请稍后重试");
                             }
                         });
 
@@ -400,9 +407,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                     if (appBean.getResult().equals("success")){
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(4)...");
-                        }else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(3)...");
+                            mSVProgressHUD.showWithStatus("上传照片中(4张)...");
+                        } else if (phoneListPath.size()==4){
+                            mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                        }else if (phoneListPath.size()==3){
+                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
                         }
                         intiPhontData1(id,"12",phoneListPath.get(1),ownId);
 
@@ -447,9 +456,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                     if (appBean.getResult().equals("success")){
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(3)...");
-                        }else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(2)...");
+                            mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                        } else if (phoneListPath.size()==4){
+                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
+                        }else if (phoneListPath.size()==3){
+                            mSVProgressHUD.showWithStatus("上传照片中(1张)...");
                         }
                         intiPhontData2(id,"13",phoneListPath.get(2),ownId);
 
@@ -496,9 +507,13 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                     if (appBean.getResult().equals("success")){
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(2)...");
-                        }else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(1)...");
+                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
+                        } else if (phoneListPath.size()==4){
+                            mSVProgressHUD.showWithStatus("上传照片中(1张)...");
+                        }else if (phoneListPath.size()==3){
+                            mSVProgressHUD.dismiss();
+                            mSVProgressHUD.showSuccessWithStatus("出租钻机成功");
+                            finish();
                         }
                         if (panoramaPath.length()>3){
                             intiPhontData3(id,"14",phoneListPath.get(3),ownId);
@@ -550,15 +565,13 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                         if (phoneListPath.size()==5){
                             mSVProgressHUD.showWithStatus("上传照片中(1)...");
                         }else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(0)...");
+                            mSVProgressHUD.dismiss();
+                            mSVProgressHUD.showSuccessWithStatus("出租钻机成功");
+                            finish();
                         }
                         if (phoneListPath!=null&&phoneListPath.size()==5){
 
                             intiPhontData4(id,"15",phoneListPath.get(4),ownId);
-                        }else {
-                            MyAppliction.showToast("添加钻机成功");
-                            mSVProgressHUD.dismiss();
-                            finish();
                         }
 
 
@@ -602,8 +615,8 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                     if (appBean.getResult().equals("success")){
 
-                        MyAppliction.showToast("添加钻机成功");
                         mSVProgressHUD.dismiss();
+                        mSVProgressHUD.showSuccessWithStatus("出租钻机成功");
                         finish();
 
 

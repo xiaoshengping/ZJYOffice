@@ -62,24 +62,19 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> impl
                 MyAppliction.imageLoader.displayImage(data.get(position).getThumbnail(),viewHold.imageView,MyAppliction.options);
 
             }
-
             viewHold.tailtTextView.setText(data.get(position).getManufacture()+data.get(position).getNoOfManufacture());
-            if (data.get(position).getHistoryList()!=null){
-
+            if (data.get(position).getHistoryList()==null || (data.get(position).getHistoryList()!=null&&data.get(position).getHistoryList().size()==0)){
+                viewHold.sellTextView.setText("我要出售");
+                viewHold.rentOutTextView.setText("我要出租");
+            }else {
                /* if (data.get(position).getHistoryList().get(position).getSecondHandType()==0){
                     viewHold.sellTextView.setText("撤销出租");
                 }else if (data.get(position).getHistoryList().get(position).getSecondHandType()==1){
                     viewHold.rentOutTextView.setText("撤销出售");
                 }*/
-            }else {
-                viewHold.sellTextView.setText("我要出租");
-                viewHold.rentOutTextView.setText("我要出售");
+
             }
-
-
-
         }
-
         viewHold.rentOutTextView.setOnClickListener(this);
         viewHold.sellTextView.setOnClickListener(this);
     }

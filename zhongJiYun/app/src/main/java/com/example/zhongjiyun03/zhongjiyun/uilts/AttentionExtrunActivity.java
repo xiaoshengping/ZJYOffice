@@ -76,7 +76,6 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("Id","3aef950d-8b27-46a7-a04b-3329faf5e9f6");
-        requestParams.addBodyParameter("collectType","5");
         requestParams.addBodyParameter("pageIndex",pageIndex+"");
         requestParams.addBodyParameter("pageSize","10");
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionExtrunListData(),requestParams, new RequestCallBack<String>() {

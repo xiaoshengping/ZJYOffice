@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
@@ -55,8 +56,18 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
                 viewHold.addressText.setText("所在地:"+data.get(position).getProvince());
             }
             if (!TextUtils.isEmpty(data.get(position).getCreateDateStr())){
-                viewHold.companyText.setText(data.get(position).getCreateDateStr());
+                viewHold.dataText.setText(data.get(position).getCreateDateStr());
             }
+            if (data.get(position).getStatus()==1){
+                viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_one);
+            }else if (data.get(position).getStatus()==2){
+                viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_two);
+            }else if (data.get(position).getStatus()==3){
+                viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_three);
+            }
+
+
+
         }
 
 
@@ -74,6 +85,8 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
         private TextView addressText;
         @ViewInject(R.id.data_text)
         private TextView dataText;
+        @ViewInject(R.id.zhong_biao_image)
+        private ImageView zhongBiaoImage;
 
 
         public ViewHold(View view) {

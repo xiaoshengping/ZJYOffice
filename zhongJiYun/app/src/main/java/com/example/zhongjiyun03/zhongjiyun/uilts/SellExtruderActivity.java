@@ -33,7 +33,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.RentOutExtruderDeviceBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.RentOutExtruderDeviceDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
@@ -46,6 +46,8 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.Clipping
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.SelectImagesFromLocalActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.constants.ConstantSet;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.utils.SDCardUtils;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -97,7 +99,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
 
     private SVProgressHUD mSVProgressHUD;//loding
-    private List<String> phoneListPath=new ArrayList<>();
+    private List<String> phoneListPath = new ArrayList<>();
     private File file;
     private Uri imageUri;
     private static final String IMAGE_FILE_LOCATION = ConstantSet.LOCALFILE;//temp file
@@ -127,6 +129,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private String contractPath;//全景照4路径
     private String qualifiedPath;//全景照5路径
     private MyExtruderBean myExtruderBean;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
@@ -137,7 +144,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         ViewUtils.inject(this);
         inti();
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
     private void inti() {
         initView();
 
@@ -149,38 +160,39 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         titleNemeTv.setText("钻机管理");
         retrunText.setOnClickListener(this);
         sellSaveButton.setOnClickListener(this);
-       myExtruderBean= (MyExtruderBean) getIntent().getSerializableExtra("data");
+        mSVProgressHUD = new SVProgressHUD(this);
+        myExtruderBean = (MyExtruderBean) getIntent().getSerializableExtra("data");
         intiPvAddress();
         contractCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    invoiceTage=1;
+                if (isChecked) {
+                    invoiceTage = 1;
 
-                }else {
-                    invoiceTage=0;
+                } else {
+                    invoiceTage = 0;
                 }
             }
         });
         invoiceCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    contractTage=1;
+                if (isChecked) {
+                    contractTage = 1;
 
-                }else {
-                    contractTage=0;
+                } else {
+                    contractTage = 0;
                 }
             }
         });
 
         file = new File(IMAGE_FILE_LOCATION);
-        if(!file.exists()){
+        if (!file.exists()) {
 
             SDCardUtils.makeRootDirectory(IMAGE_FILE_LOCATION);
         }
 
-        file=new File(IMAGE_FILE_LOCATION+ConstantSet.USERTEMPPIC);
+        file = new File(IMAGE_FILE_LOCATION + ConstantSet.USERTEMPPIC);
         imageUri = Uri.fromFile(file);//The Uri t
         panoramaLayout.setOnClickListener(this);
         invoiceLayout.setOnClickListener(this);
@@ -189,12 +201,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         leaveFactoryLayout.setOnClickListener(this);
 
 
-
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.retrun_text_view:
                 finish();
@@ -210,160 +221,196 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
                 break;
             case R.id.leave_factory_textview:
-                showDialog(ConstantSet.TAKEPICTURE,ConstantSet.SELECTPICTURE,imageUri);
+                showDialog(ConstantSet.TAKEPICTURE, ConstantSet.SELECTPICTURE, imageUri);
 
                 break;
             case R.id.panorama_text_view:
-                showDialog(ConstantSet.TAKEPICTURE0,ConstantSet.SELECTPICTURE0,imageUri);
+                showDialog(ConstantSet.TAKEPICTURE0, ConstantSet.SELECTPICTURE0, imageUri);
                 break;
             case R.id.invoice_textview:
-                showDialog(ConstantSet.TAKEPICTURE1,ConstantSet.SELECTPICTURE1,imageUri);
+                showDialog(ConstantSet.TAKEPICTURE1, ConstantSet.SELECTPICTURE1, imageUri);
                 break;
             case R.id.contract_layout:
-                showDialog(ConstantSet.TAKEPICTURE2,ConstantSet.SELECTPICTURE2,imageUri);
+                showDialog(ConstantSet.TAKEPICTURE2, ConstantSet.SELECTPICTURE2, imageUri);
 
                 break;
             case R.id.qualified_layout:
-                showDialog(ConstantSet.TAKEPICTURE3,ConstantSet.SELECTPICTURE3,imageUri);
+                showDialog(ConstantSet.TAKEPICTURE3, ConstantSet.SELECTPICTURE3, imageUri);
                 break;
-
 
 
         }
 
 
-
-
     }
 
     private void sellSaveData() {
-        if (!TextUtils.isEmpty(parkAddressEdit.getText().toString())){
-            if (!TextUtils.isEmpty(particluarsAddressEdit.getText().toString())){
-                if (!TextUtils.isEmpty(priceEdit.getText().toString())){
-                    if (!TextUtils.isEmpty(jzhuMiaosEdit.getText().toString())){
-                        SQLhelper sqLhelper=new SQLhelper(SellExtruderActivity.this);
-                        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-                        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-                        String uid=null;  //用户id
+        if (!TextUtils.isEmpty(parkAddressEdit.getText().toString())) {
+            if (!TextUtils.isEmpty(particluarsAddressEdit.getText().toString())) {
+                if (!TextUtils.isEmpty(priceEdit.getText().toString())) {
+                    if (!TextUtils.isEmpty(jzhuMiaosEdit.getText().toString())) {
+                        if (!TextUtils.isEmpty(leavePath)){
+                            phoneListPath.add(leavePath);
+                            if (!TextUtils.isEmpty(panoramaPath)){
+                                phoneListPath.add(panoramaPath);
+                                if (!TextUtils.isEmpty(invoicePath)){
+                                    phoneListPath.add(invoicePath);
+                                    if (!TextUtils.isEmpty(contractPath)) {
+                                        phoneListPath.add(contractPath);
+                                    }
+                                    if (!TextUtils.isEmpty(qualifiedPath)){
+                                        phoneListPath.add(qualifiedPath);
+                                    }
+                        SQLhelper sqLhelper = new SQLhelper(SellExtruderActivity.this);
+                        SQLiteDatabase db = sqLhelper.getWritableDatabase();
+                        Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
+                        String uid = null;  //用户id
                         while (cursor.moveToNext()) {
-                            uid=cursor.getString(0);
+                            uid = cursor.getString(0);
                         }
-                        HttpUtils httpUtils=new HttpUtils();
-                        RequestParams requestParams=new RequestParams();
-                        requestParams.addBodyParameter("Id",uid);
-                        requestParams.addBodyParameter("DeviceId",((MyExtruderBean) getIntent().getSerializableExtra("data")).getId());
+                        HttpUtils httpUtils = new HttpUtils();
+                        RequestParams requestParams = new RequestParams();
+                        requestParams.addBodyParameter("Id", uid);
+                        requestParams.addBodyParameter("DeviceId", ((MyExtruderBean) getIntent().getSerializableExtra("data")).getId());
                         //requestParams.addBodyParameter("DeviceHistoryId","");
-                        requestParams.addBodyParameter("SecondHandType","0");
-                        if (!TextUtils.isEmpty(Province)){
-                            requestParams.addBodyParameter("Province",Province);
+                        requestParams.addBodyParameter("SecondHandType", "0");
+                        if (!TextUtils.isEmpty(Province)) {
+                            requestParams.addBodyParameter("Province", Province);
                         }
-                        if (!TextUtils.isEmpty(City)){
-                            requestParams.addBodyParameter("City",City);
+                        if (!TextUtils.isEmpty(City)) {
+                            requestParams.addBodyParameter("City", City);
                         }
-                        requestParams.addBodyParameter("Address",particluarsAddressEdit.getText().toString());
+                        requestParams.addBodyParameter("Address", particluarsAddressEdit.getText().toString());
                         //requestParams.addBodyParameter("Tenancy",rentTenancyTerm.getText().toString());
-                        requestParams.addBodyParameter("Price",priceEdit.getText().toString());
-                        requestParams.addBodyParameter("IsShowContract",contractTage+"");
+                        requestParams.addBodyParameter("Price", priceEdit.getText().toString());
+                        requestParams.addBodyParameter("IsShowContract", contractTage + "");
 
-                        requestParams.addBodyParameter("IsShowInvoice",invoiceTage+"");
-                        requestParams.addBodyParameter("Describing",jzhuMiaosEdit.getText().toString());
-                        requestParams.addBodyParameter("Image1ServerId","phont.png");
-                        requestParams.addBodyParameter("Image2ServerId","phont.png");
-                        requestParams.addBodyParameter("Image3ServerId","phont.png");
-                        requestParams.addBodyParameter("Image4ServerId","phont.png");
-                        requestParams.addBodyParameter("Image5ServerId","phont.png");
+                        requestParams.addBodyParameter("IsShowInvoice", invoiceTage + "");
+                        requestParams.addBodyParameter("Describing", jzhuMiaosEdit.getText().toString());
+                        requestParams.addBodyParameter("Image1ServerId", "phont.png");
+                        requestParams.addBodyParameter("Image2ServerId", "phont.png");
+                        requestParams.addBodyParameter("Image3ServerId", "phont.png");
+                        requestParams.addBodyParameter("Image4ServerId", "phont.png");
+                        requestParams.addBodyParameter("Image5ServerId", "phont.png");
+                        if (phoneListPath.size()==5){
+                            mSVProgressHUD.showWithStatus("上传照片中(5张)...");
+                        } else if (phoneListPath.size()==4){
+                            mSVProgressHUD.showWithStatus("上传照片中(4张)...");
+                        }else if (phoneListPath.size()==3){
+                            mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                        }
 
-
-                        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
+                        final String finalUid = uid;
+                        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(), requestParams, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(ResponseInfo<String> responseInfo) {
-                                Log.e("出售",responseInfo.result);
+                                Log.e("出售", responseInfo.result);
                                 if (!TextUtils.isEmpty(responseInfo.result)){
-                                    AppBean<RentOutExtruderDeviceBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceBean>>(){});
+                                    AppBean<RentOutExtruderDeviceDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceDataBean>>(){});
                                     if (appBean.getResult().equals("success")){
-                                        intiPhontData0(appBean.getData().getOwnId(),"11",phoneListPath.get(0));
+                                        //Log.e("出租id",appBean.getData().getOwnId());
+                                        if (appBean.getData()!=null){
+                                            RentOutExtruderDeviceDataBean rentOutExtruderDeviceDataBean=appBean.getData();
+                                            if (rentOutExtruderDeviceDataBean!=null){
+                                                intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getDevice().getOwnId());
+                                            }
+                                        }
+
 
                                     }else {
+                                        mSVProgressHUD.dismiss();
                                         MyAppliction.showToast(appBean.getMsg());
                                     }
+                                }else {
+                                    mSVProgressHUD.dismiss();
                                 }
 
                             }
 
                             @Override
                             public void onFailure(HttpException e, String s) {
-                                Log.e("出售",s);
+                                Log.e("出售", s);
+                                mSVProgressHUD.dismiss();
+                                MyAppliction.showToast("网络异常，请稍后重试");
                             }
                         });
 
+                                }else {
 
-                    }else {
+                                    MyAppliction.showToast("请选择全景图片3");
+                                }
+
+
+                            }else {
+
+                                MyAppliction.showToast("请选择全景图片2");
+                            }
+
+
+                        }else {
+
+                            MyAppliction.showToast("请选择全景图片1");
+                        }
+                    } else {
                         MyAppliction.showToast("请输入描述");
 
                     }
 
 
-
-                }else {
+                } else {
                     MyAppliction.showToast("请输入价格");
 
                 }
 
 
-
-            }else {
+            } else {
                 MyAppliction.showToast("请输入详细地址");
 
             }
 
 
-
-        }else {
+        } else {
             MyAppliction.showToast("请输入停放地");
 
         }
 
 
-
-
-
-
     }
 
-    private void intiPhontData0(final String id, String imageType, String imagePath) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",imageType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","4");
+    private void intiPhontData0(final String id, String imageType, String imagePath, final String OwnId) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requwstParams = new RequestParams();
+        requwstParams.addBodyParameter("Id", id);
+        requwstParams.addBodyParameter("ImageType", imageType);
+        requwstParams.addBodyParameter("UserType", "boss");
+        requwstParams.addBodyParameter("SourceType", "4");
         requwstParams.addBodyParameter("File", new File(imagePath));
-       /* if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
-            requwstParams.addBodyParameter("OwnId",myExtruderBean.getHistoryList().get(0).getId());
-        }*/
-
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
+        requwstParams.addBodyParameter("OwnId", OwnId);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
+                Log.e("照片请求", responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)) {
+                    AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
+                    });
 
-                    if (appBean.getResult().equals("success")){
+                    if (appBean.getResult().equals("success")) {
+
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(4)...");
-                        }else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(3)...");
+                            mSVProgressHUD.showWithStatus("上传照片中(4张)...");
+                        } else if (phoneListPath.size()==4){
+                            mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                        }else if (phoneListPath.size()==3){
+                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
                         }
-                        intiPhontData1(id,"12",phoneListPath.get(1));
+                        intiPhontData1(id, "12", phoneListPath.get(1), OwnId);
 
 
-                    }else {
+                    } else {
                         MyAppliction.showToast("上传照片失败");
                         mSVProgressHUD.dismiss();
-                    }
 
+                    }
 
 
                 }
@@ -371,49 +418,48 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
+                Log.e("照片请求", s);
                 mSVProgressHUD.dismiss();
             }
         });
 
 
     }
-    private void intiPhontData1(final String id, String iamgeType, String imagePath) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",iamgeType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","4");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
-            requwstParams.addBodyParameter("OwnId",myExtruderBean.getHistoryList().get(0).getId());
-        }
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
+    private void intiPhontData1(final String id, String iamgeType, String imagePath, final String OwnId) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requwstParams = new RequestParams();
+        requwstParams.addBodyParameter("Id", id);
+        requwstParams.addBodyParameter("ImageType", iamgeType);
+        requwstParams.addBodyParameter("UserType", "boss");
+        requwstParams.addBodyParameter("SourceType", "4");
+        requwstParams.addBodyParameter("File", new File(imagePath));
+        requwstParams.addBodyParameter("OwnId", OwnId);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
+                Log.e("照片请求", responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)) {
+                    AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
+                    });
 
-                    if (appBean.getResult().equals("success")){
+                    if (appBean.getResult().equals("success")) {
+
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(3)...");
-                        }else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(2)...");
+                            mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                        } else if (phoneListPath.size()==4){
+                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
+                        }else if (phoneListPath.size()==3){
+                            mSVProgressHUD.showWithStatus("上传照片中(1张)...");
                         }
-                        intiPhontData2(id,"13",phoneListPath.get(2));
+                        intiPhontData2(id, "13", phoneListPath.get(2),OwnId);
 
 
-
-
-                    }else {
+                    } else {
                         mSVProgressHUD.dismiss();
                         MyAppliction.showToast("上传照片失败");
 
                     }
-
 
 
                 }
@@ -421,150 +467,143 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
+                Log.e("照片请求", s);
                 mSVProgressHUD.dismiss();
             }
         });
 
 
     }
-    private void intiPhontData2(final String id, String imageType, String imagePath) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",imageType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","4");
+
+    private void intiPhontData2(final String id, String imageType, String imagePath, final String OwnId) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requwstParams = new RequestParams();
+        requwstParams.addBodyParameter("Id", id);
+        requwstParams.addBodyParameter("ImageType", imageType);
+        requwstParams.addBodyParameter("UserType", "boss");
+        requwstParams.addBodyParameter("SourceType", "4");
         requwstParams.addBodyParameter("File", new File(imagePath));
-        if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
-            requwstParams.addBodyParameter("OwnId",myExtruderBean.getHistoryList().get(0).getId());
-        }
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
+        requwstParams.addBodyParameter("OwnId", OwnId);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
+                Log.e("照片请求", responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)) {
+                    AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
+                    });
 
-                    if (appBean.getResult().equals("success")){
-                        if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(2)...");
-                        }else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(1)...");
+                    if (appBean.getResult().equals("success")) {
+                        if (phoneListPath.size() == 5) {
+                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
+                        } else if (phoneListPath.size() == 4) {
+                            mSVProgressHUD.showWithStatus("上传照片中(1张)...");
+                        }else if (phoneListPath.size()==3){
+                            mSVProgressHUD.dismiss();
+                            mSVProgressHUD.showSuccessWithStatus("出售钻机成功");
+                            finish();
                         }
-                        if (panoramaPath.length()>3){
-                            intiPhontData3(id,"14",phoneListPath.get(3));
+
+                        if (phoneListPath.size() > 3) {
+                            intiPhontData3(id, "14", phoneListPath.get(3),OwnId);
                         }
 
 
-
-
-
-
-                    }else {
+                    } else {
                         MyAppliction.showToast(appBean.getMsg());
                         mSVProgressHUD.dismiss();
                     }
 
 
-
                 }
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
+                Log.e("照片请求", s);
                 mSVProgressHUD.dismiss();
             }
         });
 
 
     }
-    private void intiPhontData3(final String id, String imageType, String imagePath) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",imageType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","3");
+
+    private void intiPhontData3(final String id, String imageType, String imagePath, final String OwnId) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requwstParams = new RequestParams();
+        requwstParams.addBodyParameter("Id", id);
+        requwstParams.addBodyParameter("ImageType", imageType);
+        requwstParams.addBodyParameter("UserType", "boss");
+        requwstParams.addBodyParameter("SourceType", "3");
         requwstParams.addBodyParameter("File", new File(imagePath));
-        if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
-            requwstParams.addBodyParameter("OwnId",myExtruderBean.getHistoryList().get(0).getId());
-        }
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
+        requwstParams.addBodyParameter("OwnId", OwnId);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
+                Log.e("照片请求", responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)) {
+                    AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
+                    });
 
-                    if (appBean.getResult().equals("success")){
-                        if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(1)...");
-                        }else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(0)...");
-                        }
-                        if (phoneListPath!=null&&phoneListPath.size()==5){
-
-                            intiPhontData4(id,"15",phoneListPath.get(4));
-                        }else {
-                            MyAppliction.showToast("添加钻机成功");
+                    if (appBean.getResult().equals("success")) {
+                        if (phoneListPath.size() == 5) {
+                            mSVProgressHUD.showWithStatus("上传照片中(1张)...");
+                        } else if (phoneListPath.size() == 4) {
                             mSVProgressHUD.dismiss();
+                            mSVProgressHUD.showSuccessWithStatus("出售钻机成功");
                             finish();
                         }
+                        if (phoneListPath != null && phoneListPath.size() == 5) {
+
+                            intiPhontData4(id, "15", phoneListPath.get(4),OwnId);
+                        }
 
 
-
-                    }else {
+                    } else {
                         MyAppliction.showToast("上传照片失败");
                         mSVProgressHUD.dismiss();
                     }
 
 
-
                 }
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
+                Log.e("照片请求", s);
                 mSVProgressHUD.dismiss();
             }
         });
 
 
     }
-    private void intiPhontData4(final String id, String userType, String imagePath) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",userType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","3");
+
+    private void intiPhontData4(final String id, String userType, String imagePath,String OwnId) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requwstParams = new RequestParams();
+        requwstParams.addBodyParameter("Id", id);
+        requwstParams.addBodyParameter("ImageType", userType);
+        requwstParams.addBodyParameter("UserType", "boss");
+        requwstParams.addBodyParameter("SourceType", "3");
         requwstParams.addBodyParameter("File", new File(imagePath));
-        if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
-            requwstParams.addBodyParameter("OwnId",myExtruderBean.getHistoryList().get(0).getId());
-        }
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
+        requwstParams.addBodyParameter("OwnId", OwnId);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
+                Log.e("照片请求", responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)) {
+                    AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
+                    });
 
-                    if (appBean.getResult().equals("success")){
-
-                        MyAppliction.showToast("添加钻机成功");
+                    if (appBean.getResult().equals("success")) {
                         mSVProgressHUD.dismiss();
+                        mSVProgressHUD.showSuccessWithStatus("出售钻机成功");
                         finish();
 
 
-
-                    }else {
+                    } else {
                         MyAppliction.showToast("上传照片失败");
                         mSVProgressHUD.dismiss();
                     }
-
 
 
                 }
@@ -572,7 +611,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
+                Log.e("照片请求", s);
                 mSVProgressHUD.dismiss();
             }
         });
@@ -602,16 +641,16 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         // 设置点击外围解散
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
-        Button pictureDialogButton= (Button) view.findViewById(R.id.picture_dialog_button);
-        Button photographDialogButton= (Button) view.findViewById(R.id.photograph_dialog_button);
-        Button cancelDialogButton= (Button) view.findViewById(R.id.cancel_dialog_button);
+        Button pictureDialogButton = (Button) view.findViewById(R.id.picture_dialog_button);
+        Button photographDialogButton = (Button) view.findViewById(R.id.photograph_dialog_button);
+        Button cancelDialogButton = (Button) view.findViewById(R.id.cancel_dialog_button);
         pictureDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 指定调用相机拍照后照片的储存路径
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//action is capture
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                startActivityForResult(intent,captureIndext );//or TAKE_SMALL_PICTURE
+                startActivityForResult(intent, captureIndext);//or TAKE_SMALL_PICTURE
                 dialog.dismiss();
             }
         });
@@ -619,7 +658,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View v) {
                 Intent sintent = new Intent(SellExtruderActivity.this, SelectImagesFromLocalActivity.class);
-                startActivityForResult(sintent,pickIndext );
+                startActivityForResult(sintent, pickIndext);
                 dialog.dismiss();
 
 
@@ -802,16 +841,16 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     /**
      * 根据byte数组，生成文件
      */
-    public static File  getFile(byte[] bfile, String filePath,String fileName) {
+    public static File getFile(byte[] bfile, String filePath, String fileName) {
         BufferedOutputStream bos = null;
         FileOutputStream fos = null;
         File file = null;
         try {
             File dir = new File(filePath);
-            if(!dir.exists()&&dir.isDirectory()){//判断文件目录是否存在
+            if (!dir.exists() && dir.isDirectory()) {//判断文件目录是否存在
                 dir.mkdirs();
             }
-            file = new File(filePath+fileName);
+            file = new File(filePath + fileName);
             fos = new FileOutputStream(file);
             bos = new BufferedOutputStream(fos);
             bos.write(bfile);
@@ -844,22 +883,22 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         final ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
 
 
-        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
-        if (provinceCityDataBean!=null){
-            ArrayList<ProvinceCityBean>  options1Itemss= (ArrayList<ProvinceCityBean>) provinceCityDataBean.getProvinceCity();
-            for (int i = 0; i <options1Itemss.size() ; i++) {
+        ProvinceCityDataBean provinceCityDataBean = JSONObject.parseObject(SelectData.selectCityData + SelectData.selectCityDataOne + SelectData.selectCityDataTwo, new TypeReference<ProvinceCityDataBean>() {
+        });
+        if (provinceCityDataBean != null) {
+            ArrayList<ProvinceCityBean> options1Itemss = (ArrayList<ProvinceCityBean>) provinceCityDataBean.getProvinceCity();
+            for (int i = 0; i < options1Itemss.size(); i++) {
                 options1Items.add(options1Itemss.get(i).getName());
             }
-            for (int i = 0; i <options1Items.size() ; i++) {
-                ArrayList<ProvinceCityChildsBean> provinceCity=  options1Itemss.get(i).getProvinceCityChilds();
-                ArrayList<String> arrayList=new ArrayList<>();
-                for (int J = 0; J <provinceCity.size() ; J++) {
+            for (int i = 0; i < options1Items.size(); i++) {
+                ArrayList<ProvinceCityChildsBean> provinceCity = options1Itemss.get(i).getProvinceCityChilds();
+                ArrayList<String> arrayList = new ArrayList<>();
+                for (int J = 0; J < provinceCity.size(); J++) {
                     arrayList.add(provinceCity.get(J).getName());
                 }
                 options2Items.add(arrayList);
 
             }
-
 
 
         }
@@ -868,7 +907,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
        /* //三级联动效果
         pvOptions.setPicker(options1Items, options2Items, options3Items, true);*/
         //二级联动
-        pvOptions.setPicker(options1Items, options2Items,  true);
+        pvOptions.setPicker(options1Items, options2Items, true);
         //设置选择的三级单位
 //        pwOptions.setLabels("省", "市", "区");
         pvOptions.setTitle("选择城市");
@@ -887,8 +926,8 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                 //返回的分别是两个级别的选中位置
                 String tx = options1Items.get(options1)
                         + options2Items.get(options1).get(option2);
-                Province=options1Items.get(options1);
-                City=options2Items.get(options1).get(option2);
+                Province = options1Items.get(options1);
+                City = options2Items.get(options1).get(option2);
                 parkAddressEdit.setText(tx);
                 vMasker.setVisibility(View.GONE);
             }
@@ -914,4 +953,6 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         }
         return true;
     }
+
+
 }

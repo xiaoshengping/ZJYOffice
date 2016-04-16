@@ -288,7 +288,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                  Intent intent=new Intent(getActivity(), SeekProjectParticularsActivity.class);
-                 intent.putExtra("seekProjectData",seekProjectBean.get(position));
+                 intent.putExtra("seekProjectId",seekProjectBean.get(position).getId());
                  startActivity(intent);
             }
         });

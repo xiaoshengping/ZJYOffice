@@ -139,16 +139,27 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/project/list" ;
 
     }
+    //项目详情
+    public static String getProjecctParticularsData(){
+        //   appapi/project/detail
+        return BaseUrl+"appapi/project/detail" ;
+
+    }
     //我的竞标
     public static String getCompetitvetListData(){
         //  appapi/Boss/MyProjectReply
         return BaseUrl+"appapi/Boss/MyProjectReply" ;
 
     }
-    //关注钻机列表
+    //关注项目列表
+    public static String getAttentionProjectListData(){
+        // appapi/Common/GetProjectCollectList
+        return BaseUrl+"appapi/Common/GetProjectCollectList" ;
+
+    }//关注的钻机
     public static String getAttentionExtrunListData(){
-        //  appapi/Common/GetCollectList
-        return BaseUrl+"appapi/Common/GetCollectList" ;
+        // appapi/Common/GetDeviceSecondHandCollectList
+        return BaseUrl+"appapi/Common/GetDeviceSecondHandCollectList" ;
 
     }
     //关注项目列表
@@ -186,6 +197,18 @@ public class AppUtilsUrl {
     public static String getCompetitiveDescribeData(){
         //   appapi/boss/SubmitReplyProject
         return BaseUrl+"appapi/boss/SubmitReplyProject" ;
+
+    }
+    //我的评论
+    public static String getMineCommentData(){
+        //  appapi/boss/getmyevaluate
+        return BaseUrl+"appapi/boss/getmyevaluate" ;
+
+    }
+    //获得系统消息提醒
+    public static String getSystemMessageRemindData(){
+        //  appapi/system/getnewdatastate
+        return BaseUrl+"appapi/system/getnewdatastate" ;
 
     }
 

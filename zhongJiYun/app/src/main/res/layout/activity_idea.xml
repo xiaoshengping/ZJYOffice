@@ -40,8 +40,8 @@
 
             android:background="@mipmap/set_images_icon"
 
-            android:layout_width="25dp"
-            android:layout_height="25dp" />
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
         <TextView
             android:textColor="@color/tailt_dark"
             android:textSize="@dimen/home_Size_18"

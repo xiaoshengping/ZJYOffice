@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -48,6 +49,9 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
     @ViewInject(R.id.edit_code)
     private EditText editCode;
     private SVProgressHUD mSVProgressHUD;//loding
+    @ViewInject(R.id.code_button)
+    private Button codeButton;
+    private TimeCount time;
 
 
     @Override
@@ -91,6 +95,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
         retrunText.setOnClickListener(this);
         modifyPhoneButton.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
+        time = new TimeCount(60000, 1000);//构造CountDownTimer对象
 
     }
 
@@ -105,12 +110,73 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                     saveData();
 
                     break;
+                case R.id.code_button:
+                    intiVcodeData();
+                    break;
 
 
 
             }
     }
+    private void intiVcodeData() {
+        String phone=phoneEdit.getText().toString();
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        requestParams.addBodyParameter("PhoneNumber",phone);
+        requestParams.addBodyParameter("SmsType","1");
+        if (!TextUtils.isEmpty(phone)&&phone.length()==11) {
+            time.start();
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCodeData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        Log.e("登录验证码",responseInfo.result);
+                        AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
+                        if ((appDataBean.getResult()).equals("success")){
+                            MyAppliction.showToast("验证码已发送成功");
 
+                        }else {
+                            MyAppliction.showToast(appDataBean.getMsg());
+                        }
+
+
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    //MyAppliction.showToast(s);
+                    MyAppliction.showToast("网络异常,请稍后重试");
+                }
+            });
+        }else {
+            MyAppliction.showToast("您输入的手机号码有误");
+
+
+        }
+
+    }
+
+    class TimeCount extends CountDownTimer {
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);//参数依次为总时长,和计时的时间间隔
+        }
+
+        @Override
+        public void onFinish() {//计时完毕时触发
+            codeButton.setText("重新验证");
+            codeButton.setClickable(true);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {//计时过程显示
+            codeButton.setClickable(false);
+            codeButton.setText("请稍后"+millisUntilFinished / 1000 + "秒");
+        }
+
+    }
     private void saveData() {
 
         SQLhelper sqLhelper=new SQLhelper(this);

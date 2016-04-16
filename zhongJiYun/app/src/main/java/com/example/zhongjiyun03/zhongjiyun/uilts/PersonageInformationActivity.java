@@ -40,6 +40,7 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.Clipping
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.SelectImagesFromLocalActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.constants.ConstantSet;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.utils.SDCardUtils;
+import com.example.zhongjiyun03.zhongjiyun.uilts.showPicture.ImagePagerActivity;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -95,6 +96,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
     @ViewInject(R.id.layout)
     private LinearLayout layout;
     private String uids;  //用户id
+    private PersonageInformationBean personageInformation;
 
 
 
@@ -146,7 +148,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                         if (appBean.getResult().equals("success")){
                             layout.setVisibility(View.VISIBLE);
                             AppUserDataBean appUserDataBean=  appBean.getData();
-                            PersonageInformationBean personageInformation= (PersonageInformationBean) appUserDataBean.getUser();
+                            personageInformation= (PersonageInformationBean) appUserDataBean.getUser();
                             if (personageInformation!=null){
                                 if (!TextUtils.isEmpty(personageInformation.getHeadthumb())){
                                     MyAppliction.imageLoader.displayImage(personageInformation.getHeadthumb(),imageView,MyAppliction.options);
@@ -230,10 +232,13 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
 
             SDCardUtils.makeRootDirectory(IMAGE_FILE_LOCATION);
         }
-
+        idcardFrontIamge.setOnClickListener(this);
+        idcardVersoIamge.setOnClickListener(this);
+        personageImage.setOnClickListener(this);
         file=new File(IMAGE_FILE_LOCATION+ConstantSet.USERTEMPPIC);
         imageUri = Uri.fromFile(file);//The Uri t
         mSVProgressHUD = new SVProgressHUD(this);
+
 
 
     }
@@ -274,6 +279,15 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                 }
 
                 break;
+            case R.id.idcard_front_iamge:
+                imageBrower(0,personageInformation);
+                break;
+            case R.id.idcard_verso_iamge:
+                imageBrower(1,personageInformation);
+                break;
+            case R.id.personage_image:
+                imageBrower(2,personageInformation);
+                break;
 
 
 
@@ -282,6 +296,15 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
         }
 
 
+    }
+
+    private void imageBrower(int position,PersonageInformationBean urls) {
+        Intent intent = new Intent(PersonageInformationActivity.this, ImagePagerActivity.class);
+        // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        intent.putExtra("tage","personageInformation");
+        startActivity(intent);
     }
 
     private void updateImage(final String id, String userType, String imagePath) {
@@ -305,10 +328,9 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                             if (!TextUtils.isEmpty(modifatyHeadImage.getId())&&!TextUtils.isEmpty(modifatyHeadImage.getURL())){
                                 update(modifatyHeadImage.getId(),modifatyHeadImage.getURL());
                             }
-
                             mSVProgressHUD.dismiss();
-                            MyAppliction.showToast("修改资料成功");
-
+                            mSVProgressHUD.showSuccessWithStatus("修改资料成功");
+                            finish();
                         }else {
                             mSVProgressHUD.showErrorWithStatus(appBean.getMsg(), SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
 

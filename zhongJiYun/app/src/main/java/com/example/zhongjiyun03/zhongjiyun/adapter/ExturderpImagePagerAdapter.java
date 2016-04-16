@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.DeviceImagesBean;
-import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.widget.RecyclingPagerAdapter;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -71,7 +70,7 @@ public class ExturderpImagePagerAdapter extends RecyclingPagerAdapter implements
             holder = (ViewHolder) view.getTag();
         }
         holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        bitmapUtils.display(holder.imageView, AppUtilsUrl.BaseUrl+iamgeUrls.get(getPosition(position)).getUrl());
+        bitmapUtils.display(holder.imageView, iamgeUrls.get(getPosition(position)).getUrl());
         return view;
     }
 

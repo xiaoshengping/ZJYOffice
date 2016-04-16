@@ -57,12 +57,8 @@ public class HomeProjectListAdapter extends AppBaseAdapter<SeekProjectBean> {
             if (!TextUtils.isEmpty(data.get(position).getCreateDateStr())){
                 viewHold.timeText.setText(data.get(position).getCreateDateStr());
             }
-            if (data.get(position).getStatusStr().equals("1")){
-                viewHold.bidsTageText.setText("招标中");
-            }else if (data.get(position).getCreateDateStr().equals("2")){
-                viewHold.bidsTageText.setText("启动中");
-            }else if (data.get(position).getCreateDateStr().equals("3")){
-                viewHold.bidsTageText.setText("已关闭");
+            if (!TextUtils.isEmpty(data.get(position).getStatusStr())){
+                viewHold.bidsTageText.setText(data.get(position).getStatusStr());
             }
         }
 

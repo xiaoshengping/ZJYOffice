@@ -8,31 +8,30 @@ import java.util.List;
  */
 public class ProjectlistBean implements Serializable {
 
-             private String result;
-             private List<ProjectlistDataBean> projectlist;
+             private String Total;
+             private List<ProjectlistDataBean> PagerData;
 
-
-    public String getResult() {
-        return result;
+    public String getTotal() {
+        return Total;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setTotal(String total) {
+        Total = total;
     }
 
-    public List<ProjectlistDataBean> getProjectlist() {
-        return projectlist;
+    public List<ProjectlistDataBean> getPagerData() {
+        return PagerData;
     }
 
-    public void setProjectlist(List<ProjectlistDataBean> projectlist) {
-        this.projectlist = projectlist;
+    public void setPagerData(List<ProjectlistDataBean> pagerData) {
+        PagerData = pagerData;
     }
 
     @Override
     public String toString() {
         return "ProjectlistBean{" +
-                "result='" + result + '\'' +
-                ", projectlist=" + projectlist +
+                "Total='" + Total + '\'' +
+                ", PagerData=" + PagerData +
                 '}';
     }
 }

@@ -16,6 +16,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.uilts.showPicture.ImagePagerActivity;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -81,10 +82,19 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
     private ImageView qualifiedImage;   //合格证
     @ViewInject(R.id.qualified_layout)
     private LinearLayout qualifiedLayout;
+    @ViewInject(R.id.leave_factory_textview)
+    private LinearLayout leaveFactoryLayout;
+    @ViewInject(R.id.panorama_text_view)
+    private LinearLayout panoramaLayout;
+    @ViewInject(R.id.invoice_textview)
+    private LinearLayout invoiceLayout;
+    @ViewInject(R.id.contract_layout)
+    private LinearLayout contractLayout;
+
     @ViewInject(R.id.layout)
     private LinearLayout layout;
     private SVProgressHUD mSVProgressHUD;//loding
-
+    private MyExtruderBean myExtruderBean;
 
 
 
@@ -113,7 +123,7 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
 
     private void initData() {
         layout.setVisibility(View.GONE);
-        MyExtruderBean myExtruderBean= (MyExtruderBean) getIntent().getSerializableExtra("myExtruderData");
+        myExtruderBean= (MyExtruderBean) getIntent().getSerializableExtra("myExtruderData");
         mSVProgressHUD.showWithStatus("加载中...");
         if (myExtruderBean!=null){
             if (!TextUtils.isEmpty(myExtruderBean.getDeviceNo())){
@@ -172,7 +182,11 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
         titleNemeTv.setText("钻机详情");
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
-
+        qualifiedLayout.setOnClickListener(this);
+        leaveFactoryLayout.setOnClickListener(this);
+        panoramaLayout.setOnClickListener(this);
+        invoiceLayout.setOnClickListener(this);
+        contractLayout.setOnClickListener(this);
 
     }
 
@@ -184,6 +198,23 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
+            case R.id.leave_factory_textview:
+                imageBrower(0,myExtruderBean);
+                break;
+            case R.id.panorama_text_view:
+                imageBrower(1,myExtruderBean);
+                break;
+            case R.id.invoice_textview:
+                imageBrower(2,myExtruderBean);
+
+                break;
+            case R.id.contract_layout:
+                imageBrower(3,myExtruderBean);
+                break;
+            case R.id.qualified_layout:
+                imageBrower(4,myExtruderBean);
+                break;
+
 
 
 
@@ -194,6 +225,16 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
 
 
     }
+
+    private void imageBrower(int position,MyExtruderBean urls) {
+        Intent intent = new Intent(MyExtruderParticularsActivity.this, ImagePagerActivity.class);
+        // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        intent.putExtra("tage","MyExtruderBean");
+        startActivity(intent);
+    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

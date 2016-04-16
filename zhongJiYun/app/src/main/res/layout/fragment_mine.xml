@@ -146,6 +146,11 @@
                     android:layout_alignParentRight="@+id/loing_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/circle_tip_icon"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
                 <TextView
                     android:paddingRight="20dp"
                     android:drawableRight="@mipmap/gray_arrow_icon"
@@ -180,6 +185,11 @@
                     android:layout_alignParentRight="@+id/loing_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/circle_tip_icon"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
                 <TextView
                     android:paddingRight="20dp"
                     android:drawableRight="@mipmap/gray_arrow_icon"
@@ -219,6 +229,11 @@
                     android:layout_alignParentRight="@+id/loing_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/circle_tip_icon"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
                 <TextView
                     android:paddingRight="20dp"
                     android:drawableRight="@mipmap/gray_arrow_icon"
@@ -322,6 +337,11 @@
                     android:layout_alignParentRight="@+id/loing_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+                <ImageView
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/circle_tip_icon"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
                 <TextView
                     android:paddingRight="20dp"
                     android:drawableRight="@mipmap/gray_arrow_icon"

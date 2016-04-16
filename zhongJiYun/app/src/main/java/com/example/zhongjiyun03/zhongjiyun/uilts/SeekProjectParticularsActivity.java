@@ -29,9 +29,11 @@ import com.alibaba.fastjson.TypeReference;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.MyAdapter;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -107,10 +109,12 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     private  View matingFacilyView;
     @ViewInject(R.id.checkBox_check)
     private CheckBox checkBoxCheck;
-    private SeekProjectBean seekProjectBean;
+    private String seekProjectId;
     private SVProgressHUD mSVProgressHUD;//loding
     @ViewInject(R.id.competitive_button)
     private Button competitiveButton; //竞标按钮
+    private SeekProjectBean seekProjectBean;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,11 +138,59 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
     private void initData() {
 
-               seekProjectBean= (SeekProjectBean) getIntent().getSerializableExtra("seekProjectData");
-               if (seekProjectBean!=null){
-                   initProjectView(seekProjectBean);
-                   initMatingFacliyView(seekProjectBean);
-           }
+        seekProjectId= getIntent().getStringExtra("seekProjectId");
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        if (!TextUtils.isEmpty(seekProjectId)){
+            SQLhelper sqLhelper=new SQLhelper(SeekProjectParticularsActivity.this);
+            SQLiteDatabase db= sqLhelper.getWritableDatabase();
+            Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+            String uid=null;  //用户id
+
+            while (cursor.moveToNext()) {
+                uid=cursor.getString(0);
+
+            }
+            requestParams.addBodyParameter("OwnId",seekProjectId);
+            requestParams.addBodyParameter("id",uid);
+            mSVProgressHUD.showWithStatus("加载中...");
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctParticularsData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    Log.e("项目详情",responseInfo.result);
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        AppBean<SeekProjectBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SeekProjectBean>>(){});
+                        if (appBean.getResult().equals("success")){
+                            seekProjectBean=appBean.getData();
+                            if (seekProjectBean!=null){
+                                initProjectView(seekProjectBean);
+                                mSVProgressHUD.dismiss();
+                            }
+
+
+                        }else {
+                            mSVProgressHUD.dismiss();
+                        }
+
+                    }else {
+                        mSVProgressHUD.dismiss();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    Log.e("项目详情",s);
+                    mSVProgressHUD.dismiss();
+                }
+            });
+        }else {
+            MyAppliction.showToast("数据加载失败");
+        }
+
+
+                   //initMatingFacliyView(seekProjectBean);
+
 
 
 
@@ -158,7 +210,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     }
     //项目概况数据展示
 
-    private void initProjectView(SeekProjectBean seekProjectBean) {
+    private void initProjectView(final SeekProjectBean seekProjectBean) {
 
         TextView tailtText= (TextView) projectParticularsView.findViewById(R.id.tailt_text);
         TextView phoneContentText= (TextView) projectParticularsView.findViewById(R.id.phone_content_text);
@@ -221,10 +273,14 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         if (!TextUtils.isEmpty(seekProjectBean.getDeviceRequirement())){
 
             extruderContenText.setText(seekProjectBean.getDeviceRequirement());
-        } if (!TextUtils.isEmpty(seekProjectBean.getGeologicReport())){
+        }
+        if (!TextUtils.isEmpty(seekProjectBean.getGeologicReport())){
 
             addressContentTextView.setText(seekProjectBean.getGeologicReport());
         }
+         if (seekProjectBean.getIsCollection()==1){
+             checkBoxCheck.setChecked(true);
+         }
 
 
     }
@@ -239,7 +295,10 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
-                    isCheckedRequest();
+                    if (seekProjectBean.getIsCollection()!=1){
+                        isCheckedRequest();
+                    }
+
 
                 }else {
 
@@ -276,7 +335,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             case R.id.competitive_button:
                 if (!TextUtils.isEmpty(uid)){
                     Intent intent=new Intent(SeekProjectParticularsActivity.this,CompetitiveDescribeActivity.class);
-                    intent.putExtra("ProjectId",seekProjectBean.getId());
+                    intent.putExtra("ProjectId",seekProjectId);
                     startActivity(intent);
                 }else {
                     Intent loginIntent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
@@ -310,7 +369,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         }
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id",uid);
-            requestParams.addBodyParameter("collectId",seekProjectBean.getId());
+            requestParams.addBodyParameter("collectId",seekProjectId);
             requestParams.addBodyParameter("collectType","1");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionNoData(),requestParams, new RequestCallBack<String>() {
                 @Override
@@ -356,7 +415,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         }
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id",uid);
-            requestParams.addBodyParameter("collectId",seekProjectBean.getId());
+            requestParams.addBodyParameter("collectId",seekProjectId);
             requestParams.addBodyParameter("collectType","1");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionData(),requestParams, new RequestCallBack<String>() {
                 @Override

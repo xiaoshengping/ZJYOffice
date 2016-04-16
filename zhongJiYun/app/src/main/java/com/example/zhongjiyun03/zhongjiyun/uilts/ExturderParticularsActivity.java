@@ -185,7 +185,19 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
          if (!TextUtils.isEmpty(secondHandBeanId)){
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("id",secondHandBeanId);
+          SQLhelper sqLhelper=new SQLhelper(ExturderParticularsActivity.this);
+          SQLiteDatabase db= sqLhelper.getWritableDatabase();
+           Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+           String uid=null;  //用户id
+
+             while (cursor.moveToNext()) {
+                 uid=cursor.getString(0);
+
+             }
+          if (!TextUtils.isEmpty(uid)){
+          requestParams.addBodyParameter("userId",uid);
+          }
+        requestParams.addBodyParameter("deviceId",secondHandBeanId);
         mSVProgressHUD.showWithStatus("正在加载中...");
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderParticualsData(),requestParams, new RequestCallBack<String>() {
             @Override
@@ -202,10 +214,10 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                             timeTextView.setText(secondHandBean.getDeviceDto().getDateOfManufacture()+"年");
                             priceTextView.setText(secondHandBean.getPriceStr()+"万");
                             boxNameText.setText(secondHandBean.getDeviceDto().getBossName());
-                            if (!TextUtils.isEmpty(secondHandBean.getDeviceDto().getHourOfWork()+"")){
-                                workTimeText.setText(secondHandBean.getDeviceDto().getHourOfWork()+"");
+                            if (!TextUtils.isEmpty(secondHandBean.getDeviceDto().getHourOfWork())){
+                                workTimeText.setText(secondHandBean.getDeviceDto().getHourOfWork());
                             }else {
-                                workTimeText.setText("0");
+                                workTimeText.setText("0.00");
                             }
                              if (!TextUtils.isEmpty(secondHandBean.getDeviceDto().getDeviceNo())){
                                  brandText.setText(secondHandBean.getDeviceDto().getDeviceNo());
@@ -217,15 +229,31 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                              }else {
                                  chassisTypeText.setText("0");
                              }
+                              if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getWorkingWeight())){
+                                  workWeightTextl.setText(secondHandBean.getDeviceBaseDto().getWorkingWeight());
+                              }
+                              if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxTorque())){
+                                  reverseText.setText(secondHandBean.getDeviceBaseDto().getMaxTorque());
+                              }
+                              if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getDrillingSpeed())){
+                                  drillSpeedText.setText(secondHandBean.getDeviceBaseDto().getDrillingSpeed());
+                              }
+                              if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getEngineType())){
+                                  engineTypeText.setText(secondHandBean.getDeviceBaseDto().getEngineType());
+                              }
+                            if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getEnginePowerRating())){
+                                enginePowerText.setText(secondHandBean.getDeviceBaseDto().getEnginePowerRating());
+                              }
+                            if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMainHoistingForce())){
+                                elevatingPowerText.setText(secondHandBean.getDeviceBaseDto().getMainHoistingForce());
+                              }
+                            if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxHoleDiameter())){
+                                dirllDiameteText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDiameter());
+                              }
+                            if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxHoleDepth())){
+                                dirllDepthText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDepth());
+                              }
 
-                           /*  workWeightTextl.setText(secondHandBean.getDeviceBaseDto().getWorkingWeight());
-                           reverseText.setText(secondHandBean.getDeviceBaseDto().getMaxTorque());
-                            drillSpeedText.setText(secondHandBean.getDeviceBaseDto().getDrillingSpeed());
-                            engineTypeText.setText(secondHandBean.getDeviceBaseDto().getEngineType());
-                            enginePowerText.setText(secondHandBean.getDeviceBaseDto().getEnginePowerRating());
-                            elevatingPowerText.setText(secondHandBean.getDeviceBaseDto().getMainHoistingForce());
-                            dirllDiameteText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDiameter());
-                            dirllDepthText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDepth());*/
                             if (!TextUtils.isEmpty(secondHandBean.getProvince())&&!TextUtils.isEmpty(secondHandBean.getAddress())){
                              addressText.setText(secondHandBean.getProvince()+secondHandBean.getAddress());
                             }else if (!TextUtils.isEmpty(secondHandBean.getProvince())){
@@ -238,7 +266,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                                 shuiMingText.setVisibility(View.GONE);
                             }
                             tailtText.setText("机主"+secondHandBean.getDeviceDto().getBossName()+"自述");
-                            MyAppliction.imageLoader.displayImage(AppUtilsUrl.BaseUrl+secondHandBean.getDeviceDto().getBossHeadthumb(),imageView,MyAppliction.RoundedOptionsOne);
+                            MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceDto().getBossHeadthumb(),imageView,MyAppliction.RoundedOptionsOne);
                              if (secondHandBean.getDeviceBaseDto().getDeviceImages()!=null&&
                                      secondHandBean.getDeviceBaseDto().getDeviceImages().size()!=0){
                                  advertisementRlayout.setVisibility(View.VISIBLE);
@@ -247,6 +275,9 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                              }else {
                                  advertisementRlayout.setVisibility(View.GONE);
                              }
+                            if (secondHandBean.getIsCollection()==1){
+                                checkBoxCheck.setChecked(true);
+                            }
                             mSVProgressHUD.dismiss();
 
 
@@ -286,33 +317,44 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         shardText.setOnClickListener(this);
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
-        checkBoxCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+
+            checkBoxCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SQLhelper sqLhelper=new SQLhelper(ExturderParticularsActivity.this);
+                SQLiteDatabase db= sqLhelper.getWritableDatabase();
+                Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+                String uid=null;  //用户id
+                while (cursor.moveToNext()) {
+                    uid=cursor.getString(0);
+
+                }
+                if (!TextUtils.isEmpty(uid)){
                 if (isChecked){
-                    isCheckedRequest();
-
+                        if (secondHandBean.getIsCollection()!=1){
+                            isCheckedRequest(uid);
+                        }
                 }else {
-
-                    isNoCheckedRequest();
+                isNoCheckedRequest(uid);
+                }
+                }else {
+                    Intent intent=new Intent(ExturderParticularsActivity.this,LoginActivity.class);
+                    startActivity(intent);
                 }
             }
 
 
         });
 
+
     }
-    private void isNoCheckedRequest() {
+    private void isNoCheckedRequest(String uid) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(ExturderParticularsActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
 
-        }
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id",uid);
             requestParams.addBodyParameter("collectId",getIntent().getStringExtra("secondHandData"));
@@ -321,6 +363,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     if (!TextUtils.isEmpty(responseInfo.result)){
+                        Log.e("取消关注",responseInfo.result);
                         AppDataBean appDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                         if (appDataBean.getResult().equals("success")){
                             mSVProgressHUD.showSuccessWithStatus("您已取消关注！");
@@ -349,17 +392,10 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
 
 
     }
-    private void isCheckedRequest() {
+    private void isCheckedRequest(String uid) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(ExturderParticularsActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
 
-        }
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id",uid);
             requestParams.addBodyParameter("collectId",getIntent().getStringExtra("secondHandData"));
@@ -370,6 +406,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                     if (!TextUtils.isEmpty(responseInfo.result)){
                         AppDataBean appDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                         if (appDataBean.getResult().equals("success")){
+                            Log.e("关注",responseInfo.result);
                             mSVProgressHUD.showSuccessWithStatus("关注成功！");
                         }else {
                             mSVProgressHUD.showErrorWithStatus("噢噢,关注失败");

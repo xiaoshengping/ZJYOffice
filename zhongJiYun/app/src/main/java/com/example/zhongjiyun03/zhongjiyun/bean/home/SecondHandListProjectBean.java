@@ -27,6 +27,7 @@ public class SecondHandListProjectBean implements Serializable {
     private String StatusStr;//	string	二手机状态图片
     private int Tenancy;//	int	租期
     private String UpdateDateStr;//	string	更新时间
+    private int IsCollection;
 
     public String getAddress() {
         return Address;
@@ -172,6 +173,14 @@ public class SecondHandListProjectBean implements Serializable {
         UpdateDateStr = updateDateStr;
     }
 
+    public int getIsCollection() {
+        return IsCollection;
+    }
+
+    public void setIsCollection(int isCollection) {
+        IsCollection = isCollection;
+    }
+
     @Override
     public String toString() {
         return "SecondHandListProjectBean{" +
@@ -193,6 +202,7 @@ public class SecondHandListProjectBean implements Serializable {
                 ", StatusStr='" + StatusStr + '\'' +
                 ", Tenancy=" + Tenancy +
                 ", UpdateDateStr='" + UpdateDateStr + '\'' +
+                ", IsCollection=" + IsCollection +
                 '}';
     }
 }

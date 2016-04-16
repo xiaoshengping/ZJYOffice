@@ -1,12 +1,16 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,10 +19,23 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.CommentListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.adapter.MyAdapter;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.main.CommentDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.main.CommentPagerDataBean;
+import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
+import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -49,6 +66,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)
     private TextView retrunText;     //头部左边
+    private List<CommentPagerDataBean> commentPagerDataBeens=new ArrayList<>();
 
 
     @Override
@@ -65,6 +83,62 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         initViewPager();
         initCommentMine();//评论我的
         initMineComment();//我的评论
+        initMineCommentData();
+
+    }
+
+    private void initMineCommentData() {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        SQLhelper sqLhelper=new SQLhelper(CommentActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        requestParams.addBodyParameter("Id","8207dd25-4c63-4a17-85db-0d669601d2ab");
+        requestParams.addBodyParameter("PageIndex","1");
+        requestParams.addBodyParameter("PageSize","10");
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMineCommentData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    Log.e("我的评论",responseInfo.result);
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        AppBean<CommentDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<CommentDataBean>>(){});
+                        if (appBean.getResult().equals("success")){
+                           CommentDataBean commentDataBean= appBean.getData();
+                            if (commentDataBean!=null){
+                                List<CommentPagerDataBean> commentPagerDataBean=commentDataBean.getPagerData();
+                                if (commentPagerDataBean!=null){
+                                    commentPagerDataBeens.addAll(commentPagerDataBean);
+                                }
+
+                            }
+
+
+                        }
+
+
+                    }
+
+                }else {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("我的评论",s);
+            }
+        });
+
+
 
     }
 
@@ -74,7 +148,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         for (int i = 0; i <10 ; i++) {
             list.add("李东林");
         }
-
         ListView mineCommentListView= (ListView) mineCommentView.findViewById(R.id.mine_comment_listview);
         CommentListAdapter commentListAdapter=new CommentListAdapter(list,CommentActivity.this);
         mineCommentListView.setAdapter(commentListAdapter);

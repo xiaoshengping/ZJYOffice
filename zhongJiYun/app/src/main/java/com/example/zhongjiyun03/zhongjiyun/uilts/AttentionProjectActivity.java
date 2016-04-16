@@ -87,7 +87,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
         requestParams.addBodyParameter("PageIndex",pageIndex+"");
         requestParams.addBodyParameter("PageSize","10");
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionExtrunListData(),requestParams, new RequestCallBack<String>() {
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionProjectListData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 Log.e("关注项目",responseInfo.result);
@@ -131,8 +131,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(AttentionProjectActivity.this, SeekProjectParticularsActivity.class);
-                intent.putExtra("seekProjectData",seekProjectBean.get(position));
-                intent.putExtra("tage","attention");
+                intent.putExtra("seekProjectId",seekProjectBean.get(position-1).getId());
                 startActivity(intent);
             }
         });
