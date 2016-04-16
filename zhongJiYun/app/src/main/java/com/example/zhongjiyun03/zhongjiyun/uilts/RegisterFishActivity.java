@@ -62,6 +62,7 @@ public class RegisterFishActivity extends AppCompatActivity implements View.OnCl
             case R.id.retrun_text_view:
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                RegisterFishActivity.this.setResult(30, getIntent());
                 break;
 
 
@@ -69,7 +70,60 @@ public class RegisterFishActivity extends AppCompatActivity implements View.OnCl
         }
 
     }
+    /*//拍照和相册弹出框
+    private void showDialog(final int captureIndext, final int pickIndext, final Uri uri) {
+        View view = getLayoutInflater().inflate(R.layout.photo_choose_dialog, null);
+        final Dialog dialog = new Dialog(RegisterFishActivity.this, R.style.transparentFrameWindowStyle);
+        dialog.setContentView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        Window window = dialog.getWindow();
+        // 设置显示动画
+        window.setWindowAnimations(R.style.main_menu_animstyle);
+        WindowManager.LayoutParams wl = window.getAttributes();
+        wl.x = 0;
+        wl.y = getWindowManager().getDefaultDisplay().getHeight();
+        // 以下这两句是为了保证按钮可以水平满屏
+        wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
 
+        // 设置显示位置
+        dialog.onWindowAttributesChanged(wl);
+        // 设置点击外围解散
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        Button pictureDialogButton= (Button) view.findViewById(R.id.picture_dialog_button);
+        Button photographDialogButton= (Button) view.findViewById(R.id.photograph_dialog_button);
+        Button cancelDialogButton= (Button) view.findViewById(R.id.cancel_dialog_button);
+        pictureDialogButton.setText();
+        pictureDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 指定调用相机拍照后照片的储存路径
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//action is capture
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+                startActivityForResult(intent,captureIndext );//or TAKE_SMALL_PICTURE
+                dialog.dismiss();
+            }
+        });
+        photographDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sintent = new Intent(RegisterFishActivity.this, SelectImagesFromLocalActivity.class);
+                startActivityForResult(sintent,pickIndext );
+                dialog.dismiss();
+
+
+            }
+        });
+        cancelDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+    }*/
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 // KeyEvent.KEYCODE_BACK代表返回操作.

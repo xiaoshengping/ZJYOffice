@@ -195,7 +195,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                     HttpUtils httpUtils=new HttpUtils();
                     RequestParams requestParams=new RequestParams();
                     if (!TextUtils.isEmpty(uid)){
-                        requestParams.addBodyParameter("Id",uid);
+                        requestParams.addBodyParameter("id",uid);
                     }
                     requestParams.addBodyParameter("PhoneNumber",phoneEdit.getText().toString());
                     requestParams.addBodyParameter("SmsCode",editCode.getText().toString());
@@ -212,6 +212,9 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                                     mSVProgressHUD.dismiss();
                                     mSVProgressHUD.showSuccessWithStatus("恭喜，修改成功！");
                                     finish();
+                                }else {
+                                    mSVProgressHUD.dismiss();
+                                    mSVProgressHUD.showErrorWithStatus(appDataBean.getMsg());
                                 }
                             }else {
                                 mSVProgressHUD.dismiss();

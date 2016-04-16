@@ -208,7 +208,7 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
                         if (appBean.getResult().equals("success")){
                             FeedBackDataBean feedBackDataBean=appBean.getData();
                             if (feedBackDataBean!=null){
-                                intiPhontData0(uid,"17",selectedPicture.get(0),feedBackDataBean.getOwnId());
+                                intiPhontData0(uid,"17",selectedPicture.get(0),feedBackDataBean.getId());
                             }
 
                         }else {
@@ -265,9 +265,9 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
                             intiPhontData1(id,"17",selectedPicture.get(1),OwnId);
                         }else if (selectedPicture.size()==1){
                             mSVProgressHUD.dismiss();
-                            mSVProgressHUD.showSuccessWithStatus("提交成功");
                             finish();
                             overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                            mSVProgressHUD.showSuccessWithStatus("提交成功");
                         }
 
 

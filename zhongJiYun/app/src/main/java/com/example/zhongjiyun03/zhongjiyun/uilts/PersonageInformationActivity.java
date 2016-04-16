@@ -30,7 +30,6 @@ import com.alibaba.fastjson.TypeReference;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.AppUserDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.ModifatyHeadImage;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.PersonageInformationBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
@@ -144,11 +143,10 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     if (!TextUtils.isEmpty(responseInfo.result)){
-                        AppBean<AppUserDataBean<PersonageInformationBean>> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppUserDataBean<PersonageInformationBean>>>(){});
+                        AppBean<PersonageInformationBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<PersonageInformationBean>>(){});
                         if (appBean.getResult().equals("success")){
                             layout.setVisibility(View.VISIBLE);
-                            AppUserDataBean appUserDataBean=  appBean.getData();
-                            personageInformation= (PersonageInformationBean) appUserDataBean.getUser();
+                            personageInformation=  appBean.getData();
                             if (personageInformation!=null){
                                 if (!TextUtils.isEmpty(personageInformation.getHeadthumb())){
                                     MyAppliction.imageLoader.displayImage(personageInformation.getHeadthumb(),imageView,MyAppliction.options);
@@ -186,6 +184,8 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                                 }
                                 mSVProgressHUD.dismiss();
 
+                            }else {
+                                mSVProgressHUD.dismiss();
                             }
 
                         }else {

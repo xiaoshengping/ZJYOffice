@@ -269,9 +269,9 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             RequestParams requestParams=new RequestParams();
                             requestParams.addBodyParameter("Id",uid);
                             requestParams.addBodyParameter("DeviceId",myExtruderBean.getId());
-                            if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
+                            /*if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
                                 requestParams.addBodyParameter("DeviceHistoryId",myExtruderBean.getHistoryList().get(0).getId());
-                            }
+                            }*/
                             requestParams.addBodyParameter("SecondHandType","1");
                             if (!TextUtils.isEmpty(Province)){
                                 requestParams.addBodyParameter("Province",Province);

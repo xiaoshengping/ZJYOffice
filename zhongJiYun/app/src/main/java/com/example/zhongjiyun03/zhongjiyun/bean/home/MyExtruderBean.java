@@ -1,7 +1,6 @@
 package com.example.zhongjiyun03.zhongjiyun.bean.home;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by ZHONGJIYUN03 on 2016/4/1.
@@ -23,7 +22,9 @@ public class MyExtruderBean implements Serializable {
     private String DeviceContractPhoto	;//string	设备合同照片
     private String DeviceCertificatePhoto	;//string	设备合格证照片
     private int AuditStutas	;//int	审核状态：1，通过，2，不通过，0，未审核
-    private List<MyExtruderHistoryList> HistoryList;//	Array	钻机二手机历史列表，结果状态为success返回，fail返回null
+    private int SecondHandState;
+    private int SecondHandType;
+    private String SecondHandId;
 
     public String getId() {
         return Id;
@@ -153,12 +154,30 @@ public class MyExtruderBean implements Serializable {
         AuditStutas = auditStutas;
     }
 
-    public List<MyExtruderHistoryList> getHistoryList() {
-        return HistoryList;
+
+
+    public String getSecondHandId() {
+        return SecondHandId;
     }
 
-    public void setHistoryList(List<MyExtruderHistoryList> historyList) {
-        HistoryList = historyList;
+    public void setSecondHandId(String secondHandId) {
+        SecondHandId = secondHandId;
+    }
+
+    public int getSecondHandState() {
+        return SecondHandState;
+    }
+
+    public void setSecondHandState(int secondHandState) {
+        SecondHandState = secondHandState;
+    }
+
+    public int getSecondHandType() {
+        return SecondHandType;
+    }
+
+    public void setSecondHandType(int secondHandType) {
+        SecondHandType = secondHandType;
     }
 
     @Override
@@ -180,7 +199,9 @@ public class MyExtruderBean implements Serializable {
                 ", DeviceContractPhoto='" + DeviceContractPhoto + '\'' +
                 ", DeviceCertificatePhoto='" + DeviceCertificatePhoto + '\'' +
                 ", AuditStutas=" + AuditStutas +
-                ", HistoryList=" + HistoryList +
+                ", SecondHandState='" + SecondHandState + '\'' +
+                ", SecondHandType='" + SecondHandType + '\'' +
+                ", SecondHandId='" + SecondHandId + '\'' +
                 '}';
     }
 }

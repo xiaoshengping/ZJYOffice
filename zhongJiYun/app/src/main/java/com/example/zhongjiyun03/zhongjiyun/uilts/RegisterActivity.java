@@ -39,7 +39,6 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.MyAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.AppUserDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.RegisterBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
@@ -131,6 +130,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Uri imageUri ;   //拍照uri
     private File fileVeson;
     private Uri vesonUri;
+    private String province;
+    private String city;
 
 
     /*
@@ -166,6 +167,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String companyTradingPath;    //营业执照照片路径
     private String companyStatusPath;      //证书照片路径
     private List<String> companyListPath=new ArrayList<>();//企业注册照片路径集合
+    private  String companyProvince;
+    private String companyCity;
 
 
 
@@ -209,9 +212,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (appBean.getResult().equals("success")){
                         if (tage.equals("1")){
                             mSVProgressHUD.dismiss();
-                            MyAppliction.showToast("上传照片成功");
+                            mSVProgressHUD.showSuccessWithStatus("恭喜,已提交数据成功");
                             Intent intent=new Intent(RegisterActivity.this,RegisterFishActivity.class);
-                            startActivity(intent);
+                            startActivityForResult(intent,30);
                         }else {
                             mSVProgressHUD.showWithStatus("上传照片中(2)...");
                             intiPhontData3(id,"2",companyListPath.get(3),"2");
@@ -389,9 +392,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     if (appBean.getResult().equals("success")){
                         if (tage.equals("2")){
-
-                            MyAppliction.showToast("恭喜,注册成功");
                             mSVProgressHUD.dismiss();
+                            mSVProgressHUD.showSuccessWithStatus("恭喜,已提交数据成功");
                             Intent intent=new Intent(RegisterActivity.this,RegisterFishActivity.class);
                             startActivity(intent);
                         }
@@ -893,6 +895,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     companyStatusPath=fileStatus.getPath();
                 }
                 break;
+            case 30:
+                finish();
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+
+                break;
+
 
 
         }
@@ -934,15 +942,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                             companyListPath.add(companyStatusPath);
                                                             HttpUtils httpUtils=new HttpUtils();
                                                             RequestParams requestParams=new RequestParams();
-                                                            requestParams.addBodyParameter("PhoneNumber",companyPhoneEdit.getText().toString());
-                                                            requestParams.addBodyParameter("SmsCode",companyCodeEdit.getText().toString());
-                                                            requestParams.addBodyParameter("Name",companyNameEdit.getText().toString());
-                                                            requestParams.addBodyParameter("IdCard",companyIdCardEdit.getText().toString());
+                                                            requestParams.addBodyParameter("phoneNumber",companyPhoneEdit.getText().toString());
+                                                            requestParams.addBodyParameter("smsCode",companyCodeEdit.getText().toString());
+                                                            requestParams.addBodyParameter("name",companyNameEdit.getText().toString());
+                                                            requestParams.addBodyParameter("idCard",companyIdCardEdit.getText().toString());
                                                             if (!TextUtils.isEmpty(recommentEdit.getText().toString())){
-                                                                requestParams.addBodyParameter("Province",recommentEdit.getText().toString());
+                                                                requestParams.addBodyParameter("referralPhone",recommentEdit.getText().toString());
                                                             }
-                                                            requestParams.addBodyParameter("Province","广东省");
-                                                            requestParams.addBodyParameter("City",companyAddressTextView.getText().toString());
+                                                            requestParams.addBodyParameter("province",companyProvince);
+                                                            requestParams.addBodyParameter("city",companyCity);
                                                             requestParams.addBodyParameter("Summary",companyIntroduceEdit.getText().toString());
                                                             requestParams.addBodyParameter("BossType","2");
                                                             requestParams.addBodyParameter("IdCardImage1","photo.jpg");
@@ -956,10 +964,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                                 public void onSuccess(ResponseInfo<String> responseInfo) {
 
                                                                     //Log.e("企业注册",responseInfo.result);
-                                                                    AppBean<AppUserDataBean<RegisterBean>> appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppUserDataBean<RegisterBean>>>(){});
+                                                                    AppBean<RegisterBean> appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RegisterBean>>(){});
                                                                     if ((appDataBean.getResult()).equals("success")){
-                                                                        AppUserDataBean appUserDataBean=   appDataBean.getData();
-                                                                        RegisterBean registerBean= (RegisterBean) appUserDataBean.getUser();
+                                                                        RegisterBean registerBean=   appDataBean.getData();
                                                                           Log.e("id",registerBean.getId());
                                                                        if (companyListPath!=null&&companyListPath.size()==5){
                                                                             if (!TextUtils.isEmpty(registerBean.getId())){
@@ -1099,34 +1106,37 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                              HttpUtils httpUtils=new HttpUtils();
                                              RequestParams requestParams=new RequestParams();
-                                             requestParams.addBodyParameter("PhoneNumber",phoneEdit.getText().toString());
-                                             requestParams.addBodyParameter("SmsCode",codeEdit.getText().toString());
-                                             requestParams.addBodyParameter("Name",nameEdit.getText().toString());
-                                             requestParams.addBodyParameter("IdCard",idCardEdit.getText().toString());
+                                             requestParams.addBodyParameter("phoneNumber",phoneEdit.getText().toString());
+                                             requestParams.addBodyParameter("smsCode",codeEdit.getText().toString());
+                                             requestParams.addBodyParameter("name",nameEdit.getText().toString());
+                                             requestParams.addBodyParameter("idCard",idCardEdit.getText().toString());
                                              if (!TextUtils.isEmpty(recommentEdit.getText().toString())){
-                                                 requestParams.addBodyParameter("Province",recommentEdit.getText().toString());
+                                                 requestParams.addBodyParameter("referralPhone",recommentEdit.getText().toString());
                                              }
-                                             requestParams.addBodyParameter("Province","广东省");
-                                             requestParams.addBodyParameter("City",addressTextView.getText().toString());
-                                             requestParams.addBodyParameter("Summary",abstractEdit.getText().toString());
-                                             requestParams.addBodyParameter("BossType","1");
-                                             requestParams.addBodyParameter("IdCardImage1","photo.jpg");
-                                             requestParams.addBodyParameter("IdCardImage2","photo.jpg");
-                                             requestParams.addBodyParameter("Photo","photo.jpg");
+                                             requestParams.addBodyParameter("province",province);
+                                             requestParams.addBodyParameter("city",city);
+                                             requestParams.addBodyParameter("summary",abstractEdit.getText().toString());
+                                             requestParams.addBodyParameter("bossType","1");
+                                             requestParams.addBodyParameter("idCardImage1","photo.jpg");
+                                             requestParams.addBodyParameter("idCardImage2","photo.jpg");
+                                             requestParams.addBodyParameter("photo","photo.jpg");
                                                  mSVProgressHUD.showWithStatus("上传照片中(3)...");
                                              httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegisterData(), requestParams,new RequestCallBack<String>() {
                                                  @Override
                                                  public void onSuccess(ResponseInfo<String> responseInfo) {
                                                      //Log.e("注册信息",responseInfo.result);
-                                                     AppBean<AppUserDataBean<RegisterBean>> appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppUserDataBean<RegisterBean>>>(){});
+                                                     AppBean<RegisterBean> appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RegisterBean>>(){});
                                                      if ((appDataBean.getResult()).equals("success")){
-                                                         AppUserDataBean appUserDataBean=   appDataBean.getData();
-                                                         RegisterBean registerBean= (RegisterBean) appUserDataBean.getUser();
-
+                                                         RegisterBean registerBean=   appDataBean.getData();
                                                          if (imagePathList!=null&&imagePathList.size()==3){
                                                             if (!TextUtils.isEmpty(registerBean.getId())){
                                                                 intiPhontData1(registerBean.getId(), "1", imagePathList.get(0),"1");
+                                                            }else {
+                                                                mSVProgressHUD.dismiss();
                                                             }
+
+                                                         }else {
+                                                             mSVProgressHUD.dismiss();
                                                          }
 
 
@@ -1390,6 +1400,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String tx = options1Items.get(options1)
                         + options2Items.get(options1).get(option2);
                         /*+ options3Items.get(options1).get(option2).get(options3);*/
+                province=options1Items.get(options1);
+                city=options2Items.get(options1).get(option2);
                 addressTextView.setText(tx);
                 vMasker.setVisibility(View.GONE);
             }
@@ -1534,7 +1546,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 //返回的分别是三个级别的选中位置
                 String tx = options1Items.get(options1)
                         + options2Items.get(options1).get(option2);
-
+             companyProvince=options1Items.get(options1);
+             companyCity= options2Items.get(options1).get(option2);
                 companyAddressTextView.setText(tx);
                 vMaskerCompany.setVisibility(View.GONE);
             }

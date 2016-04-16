@@ -6,20 +6,19 @@ import java.io.Serializable;
  * Created by ZHONGJIYUN03 on 2016/4/15.
  */
 public class FeedBackDataBean implements Serializable {
-    private String OwnId;
+    private String Id;
 
-    public String getOwnId() {
-        return OwnId;
+    public String getId() {
+        return Id;
     }
 
-    public void setOwnId(String ownId) {
-        OwnId = ownId;
+    public void setId(String id) {
+        Id = id;
     }
-
     @Override
     public String toString() {
         return "FeedBackDataBean{" +
-                "OwnId='" + OwnId + '\'' +
+                "Id='" + Id + '\'' +
                 '}';
     }
 }

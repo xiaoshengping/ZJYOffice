@@ -63,15 +63,34 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> impl
 
             }
             viewHold.tailtTextView.setText(data.get(position).getManufacture()+data.get(position).getNoOfManufacture());
-            if (data.get(position).getHistoryList()==null || (data.get(position).getHistoryList()!=null&&data.get(position).getHistoryList().size()==0)){
+            if (data.get(position).getAuditStutas()==1){
+                viewHold.auditStateImage.setBackgroundResource(R.mipmap.attestation_icon);
+
+            }else if (data.get(position).getAuditStutas()==0){
+                viewHold.auditStateImage.setBackgroundResource(R.mipmap.examine_icon);
+            }
+            if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
+                  if (data.get(position).getSecondHandState()==1){
+                      viewHold.imageChuzTage.setBackgroundResource(R.mipmap.leave_state);
+                      if (data.get(position).getSecondHandType()==0){
+                          viewHold.sellTextView.setText("修改出售信息");
+                      }else if (data.get(position).getSecondHandType()==1){
+                          viewHold.rentOutTextView.setText("撤销出租");
+                      }
+
+                  }else if (data.get(position).getSecondHandState()==0){
+                      viewHold.imageChuzTage.setBackgroundResource(R.mipmap.audit_ing_icon);
+                      if (data.get(position).getSecondHandType()==0){
+                          viewHold.sellTextView.setText("缴纳保证金");
+                      }else if (data.get(position).getSecondHandType()==1){
+                          viewHold.rentOutTextView.setText("撤销出租");
+                      }
+                  }
+
+
+            }else {
                 viewHold.sellTextView.setText("我要出售");
                 viewHold.rentOutTextView.setText("我要出租");
-            }else {
-               /* if (data.get(position).getHistoryList().get(position).getSecondHandType()==0){
-                    viewHold.sellTextView.setText("撤销出租");
-                }else if (data.get(position).getHistoryList().get(position).getSecondHandType()==1){
-                    viewHold.rentOutTextView.setText("撤销出售");
-                }*/
 
             }
         }
@@ -114,6 +133,10 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> impl
         private TextView neirongTextView;
         @ViewInject(R.id.image_view)
         private ImageView imageView;
+        @ViewInject(R.id.image_state)
+        private ImageView auditStateImage;
+        @ViewInject(R.id.image_chuz_tage)
+        private ImageView imageChuzTage;
 
         public ViewHold(View view) {
             ViewUtils.inject(this, view);
