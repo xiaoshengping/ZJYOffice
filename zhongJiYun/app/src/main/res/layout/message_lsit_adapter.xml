@@ -8,21 +8,23 @@
         android:textColor="@color/tailt_dark"
         android:textSize="@dimen/home_Size_18"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:text="审核通知"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
+        android:layout_marginBottom="15dp"
        android:layout_alignParentRight="true"
         android:id="@+id/data_text"
         android:textSize="@dimen/home_Size_14"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:text="2014-05-06"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <TextView
+   <!-- <TextView
       android:layout_below="@+id/tailt_text"
         android:id="@+id/content_text"
         android:textSize="@dimen/home_Size_16"
@@ -32,7 +34,7 @@
         android:layout_marginTop="5dp"
         android:text="大旱朝野是时时旱防静电发奖金方法回复觉得觉得方法 降幅达回复好地方的甲方回复觉得附件地方呵呵 防静电肺结核附件"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" />-->
     <ImageView
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"

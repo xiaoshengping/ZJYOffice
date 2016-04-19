@@ -1,6 +1,8 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -19,6 +21,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.SecondHandBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -75,36 +78,50 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     private void intiListData(int pageIndex) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("Id","3aef950d-8b27-46a7-a04b-3329faf5e9f6");
-        requestParams.addBodyParameter("pageIndex",pageIndex+"");
-        requestParams.addBodyParameter("pageSize","10");
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionExtrunListData(),requestParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("关注钻机",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<SecondHandBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<SecondHandBean>>(){});
-                    if ((appListDataBean.getResult()).equals("success")){
-                     List<SecondHandBean> secondHandBeen=  appListDataBean.getData();
-                         if (secondHandBeen!=null){
-                             initListView(secondHandBeen);
-                             attentionExtrunLsitview.onRefreshComplete();
-                         }
+        SQLhelper sqLhelper=new SQLhelper(AttentionExtrunActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
 
-                    }else if ((appListDataBean.getResult()).equals("nomore")){
-                        attentionExtrunLsitview.onRefreshComplete();
-                        MyAppliction.showToast("已到最底了");
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        if (!TextUtils.isEmpty(uid)){
+            requestParams.addBodyParameter("Id",uid);
+            requestParams.addBodyParameter("pageIndex",pageIndex+"");
+            requestParams.addBodyParameter("pageSize","10");
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionExtrunListData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    Log.e("关注钻机",responseInfo.result);
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        AppListDataBean<SecondHandBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<SecondHandBean>>(){});
+                        if ((appListDataBean.getResult()).equals("success")){
+                            List<SecondHandBean> secondHandBeen=  appListDataBean.getData();
+                            if (secondHandBeen!=null){
+                                initListView(secondHandBeen);
+                                attentionExtrunLsitview.onRefreshComplete();
+                            }
+
+                        }else if ((appListDataBean.getResult()).equals("nomore")){
+                            attentionExtrunLsitview.onRefreshComplete();
+                            MyAppliction.showToast("已到最底了");
+                        }
+
                     }
 
                 }
 
-            }
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    Log.e("关注钻机",s);
+                }
+            });
+        }else {
+            MyAppliction.showToast("加载数据失败");
+        }
 
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("关注钻机",s);
-            }
-        });
 
 
 

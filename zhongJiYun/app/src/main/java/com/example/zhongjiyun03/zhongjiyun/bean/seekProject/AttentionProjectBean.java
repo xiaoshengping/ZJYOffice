@@ -18,9 +18,9 @@ public class AttentionProjectBean implements Serializable {
     private String City;//	string	城市
     private int TimeLimit;//	string	工期(月)
     private String GeologicReport;//	string	地质报告、地质状况 图片地址
-    private int WorkAmount	;//string	工程量（方/米）
-    private int Diameter;//	string	直径
-    private int PileDepth;//	string	桩深
+    private String WorkAmount	;//string	工程量（方/米）
+    private String Diameter;//	string	直径
+    private String PileDepth;//	string	桩深
     private int ProjectRequirementType;//	int	需要机主类型
     private String ProjectRequirementTypeStr;//	string	需要机主类型
     private int AuditStutas;
@@ -32,7 +32,7 @@ public class AttentionProjectBean implements Serializable {
     private String StatusStr;//	string	项目状态
     private int ReplyStatus;//	string	回复状态（1=已投标，2=已确认，3=已中标，4=已评价）
     private boolean IsCallOwnerFlag;//	string	是否可以呼叫业主
-    private boolean IsAcceptReply;//	string	是否允许投标
+    private int IsAcceptReply;//	string	是否允许投标
     private int PayMarginStatus;//	int	支付保证金状态,业务逻辑先不管
 
     public String getId() {
@@ -123,29 +123,7 @@ public class AttentionProjectBean implements Serializable {
         GeologicReport = geologicReport;
     }
 
-    public int getWorkAmount() {
-        return WorkAmount;
-    }
 
-    public void setWorkAmount(int workAmount) {
-        WorkAmount = workAmount;
-    }
-
-    public int getDiameter() {
-        return Diameter;
-    }
-
-    public void setDiameter(int diameter) {
-        Diameter = diameter;
-    }
-
-    public int getPileDepth() {
-        return PileDepth;
-    }
-
-    public void setPileDepth(int pileDepth) {
-        PileDepth = pileDepth;
-    }
 
     public int getProjectRequirementType() {
         return ProjectRequirementType;
@@ -235,12 +213,36 @@ public class AttentionProjectBean implements Serializable {
         IsCallOwnerFlag = callOwnerFlag;
     }
 
-    public boolean isAcceptReply() {
+    public String getDiameter() {
+        return Diameter;
+    }
+
+    public void setDiameter(String diameter) {
+        Diameter = diameter;
+    }
+
+    public String getWorkAmount() {
+        return WorkAmount;
+    }
+
+    public void setWorkAmount(String workAmount) {
+        WorkAmount = workAmount;
+    }
+
+    public String getPileDepth() {
+        return PileDepth;
+    }
+
+    public void setPileDepth(String pileDepth) {
+        PileDepth = pileDepth;
+    }
+
+    public int getIsAcceptReply() {
         return IsAcceptReply;
     }
 
-    public void setAcceptReply(boolean acceptReply) {
-        IsAcceptReply = acceptReply;
+    public void setIsAcceptReply(int isAcceptReply) {
+        IsAcceptReply = isAcceptReply;
     }
 
     public int getPayMarginStatus() {
@@ -265,9 +267,9 @@ public class AttentionProjectBean implements Serializable {
                 ", City='" + City + '\'' +
                 ", TimeLimit=" + TimeLimit +
                 ", GeologicReport='" + GeologicReport + '\'' +
-                ", WorkAmount=" + WorkAmount +
-                ", Diameter=" + Diameter +
-                ", PileDepth=" + PileDepth +
+                ", WorkAmount='" + WorkAmount + '\'' +
+                ", Diameter='" + Diameter + '\'' +
+                ", PileDepth='" + PileDepth + '\'' +
                 ", ProjectRequirementType=" + ProjectRequirementType +
                 ", ProjectRequirementTypeStr='" + ProjectRequirementTypeStr + '\'' +
                 ", AuditStutas=" + AuditStutas +

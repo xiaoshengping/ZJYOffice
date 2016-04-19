@@ -50,7 +50,7 @@ import java.util.List;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
-public class SeekProjectParticularsActivity extends AppCompatActivity implements View.OnClickListener {
+public class SeekProjectParticularsActivity extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
 
 
     @ViewInject(R.id.shard_tv)
@@ -199,6 +199,24 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
       //配置设施
     private void initMatingFacliyView(SeekProjectBean seekProjectBean) {
 
+            HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        if (!TextUtils.isEmpty(seekProjectBean.getId())){
+            requestParams.addBodyParameter("projectId",seekProjectBean.getId());
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjectTroundData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    MyAppliction.showToast("网络异常,请稍后重试");
+                }
+            });
+        }else {
+            MyAppliction.showToast("获取数据失败");
+        }
 
 
 
@@ -278,9 +296,24 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
             addressContentTextView.setText(seekProjectBean.getGeologicReport());
         }
+
          if (seekProjectBean.getIsCollection()==1){
              checkBoxCheck.setChecked(true);
          }
+        if (seekProjectBean.getStatusStr().equals("招标中")){
+
+            if (seekProjectBean.getReplyStatus().equals("1")){
+                competitiveButton.setText("已投标待业主选标");
+            }else if (seekProjectBean.getReplyStatus().equals("3")){
+                competitiveButton.setText("电话联系业主");
+            }else {
+                competitiveButton.setText("我要竞标");
+            }
+
+        }else if (seekProjectBean.getStatusStr().equals("已启动")){
+            competitiveButton.setText("本项目已启动");
+
+        }
 
 
     }
@@ -291,23 +324,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
         competitiveButton.setOnClickListener(this);
-        checkBoxCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    if (seekProjectBean.getIsCollection()!=1){
-                        isCheckedRequest();
-                    }
-
-
-                }else {
-
-                    isNoCheckedRequest();
-                }
-            }
-
-
-        });
+        checkBoxCheck.setOnCheckedChangeListener(this);
 
     }
 
@@ -317,9 +334,11 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
         String uid=null;  //用户id
+        String states=null;  //用户星级
 
         while (cursor.moveToNext()) {
             uid=cursor.getString(0);
+            states=cursor.getString(3);
 
         }
         switch (v.getId()){
@@ -334,9 +353,35 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 break;
             case R.id.competitive_button:
                 if (!TextUtils.isEmpty(uid)){
-                    Intent intent=new Intent(SeekProjectParticularsActivity.this,CompetitiveDescribeActivity.class);
-                    intent.putExtra("ProjectId",seekProjectId);
-                    startActivity(intent);
+                    if (seekProjectBean.getStatusStr().equals("招标中")){
+                        if (seekProjectBean.getIsAcceptReply()==1){
+                            if (seekProjectBean.getReplyStatus().equals("1")){
+                                competitiveButton.setText("已投标待业主选标");
+                            }else if (seekProjectBean.getReplyStatus().equals("3")){
+                                competitiveButton.setText("电话联系业主");
+
+
+                            }else {
+                                Intent intent=new Intent(SeekProjectParticularsActivity.this,CompetitiveDescribeActivity.class);
+                                intent.putExtra("ProjectId",seekProjectId);
+                                startActivity(intent);
+                            }
+
+
+
+                        }else if (seekProjectBean.getIsAcceptReply()==0){
+                            MyAppliction.showToast("该项目不允许投标");
+
+                        }
+
+
+
+                    }else if (seekProjectBean.getStatusStr().equals("已启动")){
+                        MyAppliction.showToast("本项目已启动，不能再投标");
+
+                    }
+
+
                 }else {
                     Intent loginIntent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
                     startActivity(loginIntent);
@@ -356,17 +401,10 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
     }
 
-    private void isNoCheckedRequest() {
+    private void isNoCheckedRequest(String uid) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(SeekProjectParticularsActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
 
-        }
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id",uid);
             requestParams.addBodyParameter("collectId",seekProjectId);
@@ -402,17 +440,10 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
 
     }
-    private void isCheckedRequest() {
+    private void isCheckedRequest(String uid) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(SeekProjectParticularsActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
 
-        }
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id",uid);
             requestParams.addBodyParameter("collectId",seekProjectId);
@@ -664,4 +695,29 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         oks.show(this);
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        SQLhelper sqLhelper=new SQLhelper(SeekProjectParticularsActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        if (!TextUtils.isEmpty(uid)){
+            if (isChecked){
+                if (seekProjectBean.getIsCollection()!=1){
+                    isCheckedRequest(uid);
+                }
+            }else {
+                isNoCheckedRequest(uid);
+            }
+        }else {
+            Intent intent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
+            startActivity(intent);
+
+        }
+    }
 }

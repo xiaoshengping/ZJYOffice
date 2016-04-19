@@ -287,6 +287,10 @@
         <activity
             android:name=".uilts.CommentOwnerActivity"
             android:label="@string/title_activity_comment_owner"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.MessageParticularsActivity"
+            android:label="@string/title_activity_message_particulars"
             android:theme="@style/AppTheme"></activity>
     </application>
 

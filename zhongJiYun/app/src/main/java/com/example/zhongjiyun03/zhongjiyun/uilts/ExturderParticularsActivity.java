@@ -212,7 +212,16 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
 
                             tailtTextView.setText(secondHandBean.getDeviceDto().getManufacture()+secondHandBean.getDeviceDto().getNoOfManufacture());
                             timeTextView.setText(secondHandBean.getDeviceDto().getDateOfManufacture()+"年");
-                            priceTextView.setText(secondHandBean.getPriceStr()+"万");
+
+                            if (!TextUtils.isEmpty(secondHandBean.getPriceStr())){
+                                if (secondHandBean.getPriceStr().equals("面议")){
+                                    priceTextView.setText("面议");
+                                }else {
+                                    priceTextView.setText(secondHandBean.getPriceStr()+"万");
+                                }
+
+                            }
+
                             boxNameText.setText(secondHandBean.getDeviceDto().getBossName());
                             if (!TextUtils.isEmpty(secondHandBean.getDeviceDto().getHourOfWork())){
                                 workTimeText.setText(secondHandBean.getDeviceDto().getHourOfWork());
@@ -224,35 +233,38 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                              }else {
                                  brandText.setText("0");
                              }
-                             if (TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getChassisMode()+"")){
-                                 chassisTypeText.setText(secondHandBean.getDeviceBaseDto().getChassisMode()+"");
-                             }else {
-                                 chassisTypeText.setText("0");
-                             }
-                              if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getWorkingWeight())){
-                                  workWeightTextl.setText(secondHandBean.getDeviceBaseDto().getWorkingWeight());
-                              }
-                              if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxTorque())){
-                                  reverseText.setText(secondHandBean.getDeviceBaseDto().getMaxTorque());
-                              }
-                              if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getDrillingSpeed())){
-                                  drillSpeedText.setText(secondHandBean.getDeviceBaseDto().getDrillingSpeed());
-                              }
-                              if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getEngineType())){
-                                  engineTypeText.setText(secondHandBean.getDeviceBaseDto().getEngineType());
-                              }
-                            if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getEnginePowerRating())){
-                                enginePowerText.setText(secondHandBean.getDeviceBaseDto().getEnginePowerRating());
-                              }
-                            if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMainHoistingForce())){
-                                elevatingPowerText.setText(secondHandBean.getDeviceBaseDto().getMainHoistingForce());
-                              }
-                            if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxHoleDiameter())){
-                                dirllDiameteText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDiameter());
-                              }
-                            if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxHoleDepth())){
-                                dirllDepthText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDepth());
-                              }
+                            if (secondHandBean.getDeviceBaseDto()!=null){
+                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getChassisMode()+"")){
+                                    chassisTypeText.setText(secondHandBean.getDeviceBaseDto().getChassisMode()+"");
+                                }else {
+                                    chassisTypeText.setText("0");
+                                }
+                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getWorkingWeight())){
+                                    workWeightTextl.setText(secondHandBean.getDeviceBaseDto().getWorkingWeight());
+                                }
+                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxTorque())){
+                                    reverseText.setText(secondHandBean.getDeviceBaseDto().getMaxTorque());
+                                }
+                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getDrillingSpeed())){
+                                    drillSpeedText.setText(secondHandBean.getDeviceBaseDto().getDrillingSpeed());
+                                }
+                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getEngineType())){
+                                    engineTypeText.setText(secondHandBean.getDeviceBaseDto().getEngineType());
+                                }
+                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getEnginePowerRating())){
+                                    enginePowerText.setText(secondHandBean.getDeviceBaseDto().getEnginePowerRating());
+                                }
+                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMainHoistingForce())){
+                                    elevatingPowerText.setText(secondHandBean.getDeviceBaseDto().getMainHoistingForce());
+                                }
+                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxHoleDiameter())){
+                                    dirllDiameteText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDiameter());
+                                }
+                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxHoleDepth())){
+                                    dirllDepthText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDepth());
+                                }
+                            }
+
 
                             if (!TextUtils.isEmpty(secondHandBean.getProvince())&&!TextUtils.isEmpty(secondHandBean.getAddress())){
                              addressText.setText(secondHandBean.getProvince()+secondHandBean.getAddress());

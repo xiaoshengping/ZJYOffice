@@ -11,6 +11,15 @@ public class CommentPagerDataBean implements Serializable {
              private String Score;
              private String Content;
              private String Id;
+             private String Headthumb;
+
+    public String getHeadthumb() {
+        return Headthumb;
+    }
+
+    public void setHeadthumb(String headthumb) {
+        Headthumb = headthumb;
+    }
 
     public String getName() {
         return Name;
@@ -60,6 +69,7 @@ public class CommentPagerDataBean implements Serializable {
                 ", Score='" + Score + '\'' +
                 ", Content='" + Content + '\'' +
                 ", Id='" + Id + '\'' +
+                ", Headthumb='" + Headthumb + '\'' +
                 '}';
     }
 }

@@ -2955,6 +2955,7 @@
     <string name="title_activity_payment_state">PaymentStateActivity</string>
     <string name="title_activity_comment">CommentActivity</string>
     <string name="title_activity_comment_owner">CommentOwnerActivity</string>
+    <string name="title_activity_message_particulars">MessageParticularsActivity</string>
 
 
 </resources>

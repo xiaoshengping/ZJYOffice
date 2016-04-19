@@ -1,18 +1,26 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.MessageListAdapter;
+import com.example.zhongjiyun03.zhongjiyun.bean.MessageDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -41,6 +49,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     private ListView messageListView;
     /*@ViewInject(R.id.web_view)
     private WebView webView;*/
+    private List<MessageDataBean> list=new ArrayList<>();
 
 
     @Override
@@ -53,13 +62,14 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void init() {
-        InitListView();
+
         initView();
         intiData();
+
     }
 
     private void intiData() {
-        HttpUtils httpUtils=new HttpUtils();
+       /* HttpUtils httpUtils=new HttpUtils();
         SQLhelper sqLhelper=new SQLhelper(MessageActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
@@ -71,10 +81,10 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         }
         RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("Id","77c504bd-b212-4822-bf5f-9909e593ece3");
-       /* //步骤1：创建一个SharedPreferences接口对象
+       *//* //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
         //步骤2：获取文件中的值
-        String value = read.getString("code","");*/
+        String value = read.getString("code","");*//*
         Log.e("value",sesstionid);
 
         requestParams.setHeader("Cookie","ASP.NET_SessionId="+sesstionid);
@@ -93,9 +103,9 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             public void onFailure(HttpException e, String s) {
                 Log.e("系统消息列表",s);
             }
-        });
-        /*HttpUtils httpUtils=new HttpUtils();
-        *//*SQLhelper sqLhelper=new SQLhelper(MessageActivity.this);
+        });*/
+        HttpUtils httpUtils=new HttpUtils();
+        SQLhelper sqLhelper=new SQLhelper(MessageActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
         String sesstionid=null;  //用户id
@@ -103,20 +113,25 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         while (cursor.moveToNext()) {
             sesstionid=cursor.getString(6);
 
-        }*//*
+        }
         RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("Id","77c504bd-b212-4822-bf5f-9909e593ece3");
-       *//* //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String value = read.getString("code","");
-        Log.e("value",value);
-        requestParams.setHeader("Cookie","ASP.NET_SessionId="+value);*//*
-
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMessageListData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 Log.e("系统消息列表",responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    AppListDataBean<MessageDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<MessageDataBean>>(){});
+                    if (appListDataBean.getResult().equals("success")){
+                      List<MessageDataBean> messageDataBeen=  appListDataBean.getData();
+                        if (messageDataBeen!=null){
+                           list.addAll(messageDataBeen);
+                            Log.e("title",list.get(0).getTitle());
+                            InitListView(messageDataBeen);
+                        }
+
+                    }
+                }
 
 
 
@@ -126,20 +141,25 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("系统消息列表",s);
+                MyAppliction.showToast("网络异常,请稍后重试");
             }
-        });*/
+        });
 
 
     }
 
-    private void InitListView() {
-        List<String> arrayList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            arrayList.add("审核通知");
-        }
-        MessageListAdapter messageListAdapter = new MessageListAdapter(arrayList, this);
+    private void InitListView(final List<MessageDataBean> messageDataBean) {
+        MessageListAdapter messageListAdapter = new MessageListAdapter(messageDataBean, this);
         messageListView.setAdapter(messageListAdapter);
         messageListAdapter.notifyDataSetChanged();
+        messageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(MessageActivity.this,MessageParticularsActivity.class);
+                intent.putExtra("id",messageDataBean.get(position).getId());
+                startActivity(intent);
+            }
+        });
 
 
     }

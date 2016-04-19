@@ -1,6 +1,8 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -18,6 +20,8 @@ import com.example.zhongjiyun03.zhongjiyun.adapter.AttentionProjectAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.AttentionProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -82,39 +86,53 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
     private void initListData(int pageIndex) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("Id","3aef950d-8b27-46a7-a04b-3329faf5e9f6");
-        requestParams.addBodyParameter("collectType","1");
-        requestParams.addBodyParameter("PageIndex",pageIndex+"");
-        requestParams.addBodyParameter("PageSize","10");
+        SQLhelper sqLhelper=new SQLhelper(AttentionProjectActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionProjectListData(),requestParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("关注项目",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<AttentionProjectBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<AttentionProjectBean>>(){});
-                    if ((appBean.getResult()).equals("success")){
-                        List<AttentionProjectBean> attentionProjectBeen=appBean.getData();
-                        if (attentionProjectBeen!=null){
-                            initListView(attentionProjectBeen);
-                            attentionProjectListview.onRefreshComplete();
+        }
+        if (!TextUtils.isEmpty(uid)){
+            requestParams.addBodyParameter("Id",uid);
+            requestParams.addBodyParameter("collectType","1");
+            requestParams.addBodyParameter("PageIndex",pageIndex+"");
+            requestParams.addBodyParameter("PageSize","10");
+
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionProjectListData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    Log.e("关注项目",responseInfo.result);
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        AppListDataBean<AttentionProjectBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<AttentionProjectBean>>(){});
+                        if ((appBean.getResult()).equals("success")){
+                            List<AttentionProjectBean> attentionProjectBeen=appBean.getData();
+                            if (attentionProjectBeen!=null){
+                                initListView(attentionProjectBeen);
+                                attentionProjectListview.onRefreshComplete();
+                            }else {
+                                attentionProjectListview.onRefreshComplete();
+                            }
                         }else {
                             attentionProjectListview.onRefreshComplete();
                         }
-                    }else {
-                        attentionProjectListview.onRefreshComplete();
+
+
                     }
-
-
                 }
-            }
 
-            @Override
-            public void onFailure(HttpException e, String s) {
-                attentionProjectListview.onRefreshComplete();
-                Log.e("找项目",s);
-            }
-        });
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    attentionProjectListview.onRefreshComplete();
+                    Log.e("找项目",s);
+                }
+            });
+
+        }else {
+            MyAppliction.showToast("数据加载失败");
+            finish();
+        }
 
 
 

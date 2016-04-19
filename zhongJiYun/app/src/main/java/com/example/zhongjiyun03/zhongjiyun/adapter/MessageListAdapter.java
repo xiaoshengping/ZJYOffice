@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.bean.MessageDataBean;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -15,11 +16,11 @@ import java.util.List;
 /**
  * Created by ZHONGJIYUN03 on 2016/3/12.
  */
-public class MessageListAdapter extends AppBaseAdapter<String> {
+public class MessageListAdapter extends AppBaseAdapter<MessageDataBean> {
       private ViewHold viewHold;
 
 
-    public MessageListAdapter(List<String> data, Context context) {
+    public MessageListAdapter(List<MessageDataBean> data, Context context) {
         super(data, context);
     }
 
@@ -40,9 +41,10 @@ public class MessageListAdapter extends AppBaseAdapter<String> {
     }
 
     private void inti(int position) {
-        viewHold.tailtTextView.setText(data.get(position));
-        /*viewHold.dataText.setText();
-        viewHold.contentText.setText();*/
+
+        viewHold.tailtTextView.setText(data.get(position).getTitle());
+        viewHold.dataText.setText(data.get(position).getBeginDate());
+        /*viewHold.contentText.setText();*/
 
 
     }
@@ -54,8 +56,7 @@ public class MessageListAdapter extends AppBaseAdapter<String> {
         private TextView tailtTextView;
         @ViewInject(R.id.data_text)
         private TextView dataText;
-        @ViewInject(R.id.content_text)
-        private TextView contentText;
+
 
         public ViewHold(View view) {
             ViewUtils.inject(this, view);

@@ -31,7 +31,7 @@ public class SeekProjectBean implements Serializable  {
     private String StatusStr;//	string	项目状态
     private String ReplyStatus;//	string	回复状态（1=已投标，2=已确认，3=已中标，4=已评价）
     private String IsCallOwnerFlag;//	string	是否可以呼叫业主
-    private String IsAcceptReply;//	string	是否允许投标
+    private int IsAcceptReply;//	string	是否允许投标
     private int PayMarginStatus;//	int	支付保证金状态,业务逻辑先不管
     private int IsCollection;
 
@@ -228,11 +228,11 @@ public class SeekProjectBean implements Serializable  {
         IsCallOwnerFlag = isCallOwnerFlag;
     }
 
-    public String getIsAcceptReply() {
+    public int getIsAcceptReply() {
         return IsAcceptReply;
     }
 
-    public void setIsAcceptReply(String isAcceptReply) {
+    public void setIsAcceptReply(int isAcceptReply) {
         IsAcceptReply = isAcceptReply;
     }
 
@@ -279,7 +279,7 @@ public class SeekProjectBean implements Serializable  {
                 ", StatusStr='" + StatusStr + '\'' +
                 ", ReplyStatus='" + ReplyStatus + '\'' +
                 ", IsCallOwnerFlag='" + IsCallOwnerFlag + '\'' +
-                ", IsAcceptReply='" + IsAcceptReply + '\'' +
+                ", IsAcceptReply=" + IsAcceptReply +
                 ", PayMarginStatus=" + PayMarginStatus +
                 ", IsCollection=" + IsCollection +
                 '}';

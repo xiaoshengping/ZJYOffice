@@ -1,6 +1,8 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -20,6 +22,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.main.ProjectlistBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.ProjectlistDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -70,43 +73,60 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
     private void initListData(int pageIndex) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("Id","3aef950d-8b27-46a7-a04b-3329faf5e9f6");
-        requestParams.addBodyParameter("pageIndex",pageIndex+"");
-        requestParams.addBodyParameter("pageSize","10");
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCompetitvetListData(),requestParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("我的竞标",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<ProjectlistBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ProjectlistBean>>(){});
-                    if (( appBean.getResult()).equals("success")){
-                        ProjectlistBean projectlistBean=  appBean.getData();
-                        if (projectlistBean!=null){
-                            projectlistDataBeanLists.addAll(projectlistBean.getPagerData());
+        SQLhelper sqLhelper=new SQLhelper(MyCompetitveTenderActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+
+        if (!TextUtils.isEmpty(uid)){
+            requestParams.addBodyParameter("Id",uid);
+            requestParams.addBodyParameter("pageIndex",pageIndex+"");
+            requestParams.addBodyParameter("pageSize","10");
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCompetitvetListData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    Log.e("我的竞标",responseInfo.result);
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        AppBean<ProjectlistBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ProjectlistBean>>(){});
+                        if (( appBean.getResult()).equals("success")){
+                            ProjectlistBean projectlistBean=  appBean.getData();
+                            if (projectlistBean!=null){
+                                projectlistDataBeanLists.addAll(projectlistBean.getPagerData());
+                                competitveTenderLsitview.onRefreshComplete();
+                            }
+
+                        }else if (( appBean.getResult()).equals("nomore")){
+                            MyAppliction.showToast("已到最底了");
                             competitveTenderLsitview.onRefreshComplete();
+                        }else if ((appBean.getResult()).equals("empty")){
+                            //secondHandBeen.clear();
+                            competitveTenderLsitview.onRefreshComplete();
+                            MyAppliction.showToast("没有更多数据");
                         }
 
-                    }else if (( appBean.getResult()).equals("nomore")){
-                        MyAppliction.showToast("已到最底了");
+
+                    }else {
                         competitveTenderLsitview.onRefreshComplete();
-                    }else if ((appBean.getResult()).equals("empty")){
-                        //secondHandBeen.clear();
-                        competitveTenderLsitview.onRefreshComplete();
-                        MyAppliction.showToast("没有更多数据");
                     }
+                }
 
-
-                }else {
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    Log.e("我的竞标",s);
                     competitveTenderLsitview.onRefreshComplete();
                 }
-            }
+            });
+        }else {
+            finish();
+            MyAppliction.showToast("数据加载失败");
+        }
 
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("我的竞标",s);
-                competitveTenderLsitview.onRefreshComplete();
-            }
-        });
+
 
 
 

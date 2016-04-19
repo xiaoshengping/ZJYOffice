@@ -109,7 +109,7 @@
             android:layout_weight="1"
             android:textSize="@dimen/home_Size_16"
             android:gravity="center"
-            android:text="配置设施"
+            android:text="配套设施"
             android:textColor="#222222" />
 
     </LinearLayout>

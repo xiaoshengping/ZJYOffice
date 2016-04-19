@@ -207,8 +207,14 @@ public class AppUtilsUrl {
     }
     //获得系统消息提醒
     public static String getSystemMessageRemindData(){
-        //  appapi/system/getnewdatastate
-        return BaseUrl+"appapi/system/getnewdatastate" ;
+        //  /appapi/common/GetSystemMessageList
+        return BaseUrl+"appapi/common/GetSystemMessageList" ;
+
+    }
+    //获取配套设施
+    public static String getProjectTroundData(){
+        //  appapi/project/getprojectroundsource
+        return BaseUrl+"appapi/project/getprojectroundsource" ;
 
     }
 
