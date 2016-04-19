@@ -257,8 +257,8 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                     requestParams.addBodyParameter("HourOfWork",workTimeEdit.getText().toString());
                                     requestParams.addBodyParameter("DateOfManufacture",DateOfManufacture);
                                     requestParams.addBodyParameter("DateMonthOfManufacture",DateMonthOfManufacture);
-                                    requestParams.addBodyParameter("Manufacture","Manufacture");
-                                    requestParams.addBodyParameter("NoOfManufacture","设备型号");
+                                    requestParams.addBodyParameter("Manufacture",Manufacture);
+                                    requestParams.addBodyParameter("NoOfManufacture",NoOfManufacture);
                                     requestParams.addBodyParameter("Province",Province);
                                     requestParams.addBodyParameter("City",City);
                                     requestParams.addBodyParameter("DeviceNoPhoto","photo.png");
@@ -279,9 +279,9 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                                 AppBean<ExtruderDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ExtruderDataBean>>(){});
                                                 if (appBean.getResult().equals("success")){
                                                     ExtruderDataBean extruderDataBean=appBean.getData();
-                                                    if (extruderDataBean!=null&&!TextUtils.isEmpty(extruderDataBean.getDevice().getId())){
+                                                    if (extruderDataBean!=null&&!TextUtils.isEmpty(extruderDataBean.getId())){
                                                         if (phoneListPath!=null&&phoneListPath.size()!=0) {
-                                                            intiPhontData0(uid, "6", phoneListPath.get(0), extruderDataBean.getDevice().getId());
+                                                            intiPhontData0(uid, "6", phoneListPath.get(0), extruderDataBean.getId());
 
                                                         }
                                                     }
@@ -869,7 +869,7 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
 
     }
     public  void timeData(){
-        //设备厂商
+        //时间
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("DeviceJsonType","3");

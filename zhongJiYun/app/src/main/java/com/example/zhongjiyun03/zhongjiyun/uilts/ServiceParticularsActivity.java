@@ -1,9 +1,12 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -17,10 +20,10 @@ import com.alibaba.fastjson.TypeReference;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.home.ServiceDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.ServiceParticualrsBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -109,7 +112,21 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
     private void initParticularsData() {
         HttpUtils htpUtils=new HttpUtils();
         RequestParams requestParms=new RequestParams();
+        SQLhelper sqLhelper=new SQLhelper(ServiceParticularsActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
         if (!TextUtils.isEmpty(getIntent().getStringExtra("ServiceProviderId"))){
+         if (!TextUtils.isEmpty(uid)){
+             requestParms.addBodyParameter("id",uid);
+         }else {
+             requestParms.addBodyParameter("id","");
+         }
 
         requestParms.addBodyParameter("ServiceProviderId",getIntent().getStringExtra("ServiceProviderId"));
             layout.setVisibility(View.GONE);
@@ -119,12 +136,11 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
             public void onSuccess(ResponseInfo<String> responseInfo) {
 
                 if (!TextUtils.isEmpty(responseInfo.result)){
-                    //Log.e("服务商详情",responseInfo.result);
-                    AppBean<ServiceDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ServiceDataBean>>(){});
+                    Log.e("服务商详情",responseInfo.result);
+                    AppBean<ServiceParticualrsBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ServiceParticualrsBean>>(){});
                     if ((appBean.getResult()).equals("success")){
                         layout.setVisibility(View.VISIBLE);
-                        ServiceDataBean serviceProvider=appBean.getData();
-                        ServiceParticualrsBean serviceProviderBean=  serviceProvider.getUser();
+                        ServiceParticualrsBean serviceProviderBean=  appBean.getData();
                         if (serviceProviderBean!=null){
                             MyAppliction.imageLoader.displayImage(serviceProviderBean.getThumbnail(),imageView,MyAppliction.RoundedOptionsOne);
                             nameTextView.setText(serviceProviderBean.getName());
@@ -146,6 +162,11 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
 
                         }
 
+                    }else {
+                        mSVProgressHUD.dismiss();
+                        mSVProgressHUD.showErrorWithStatus("获取数据失败,请稍后重试");
+                        finish();
+
                     }
                 }
 
@@ -154,7 +175,9 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
 
             @Override
             public void onFailure(HttpException e, String s) {
-
+                mSVProgressHUD.dismiss();
+                mSVProgressHUD.showErrorWithStatus("网络异常,请稍后重试");
+                finish();
             }
         });
 

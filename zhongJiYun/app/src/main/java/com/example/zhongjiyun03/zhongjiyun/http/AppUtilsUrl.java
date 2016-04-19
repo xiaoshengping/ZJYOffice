@@ -56,8 +56,8 @@ public class AppUtilsUrl {
     }
     //领取红包
     public static String getRedPacketData(){
-        // appapi/user/ReceiveGifts
-        return BaseUrl+"appapi/user/ReceiveGifts" ;
+        // appapi/shopapi/receivegifts
+        return BaseUrl+"appapi/shopapi/receivegifts" ;
 
     }
     //注册上传字符内容

@@ -151,7 +151,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 uid=cursor.getString(0);
 
             }
-            requestParams.addBodyParameter("OwnId",seekProjectId);
+            requestParams.addBodyParameter("projectId",seekProjectId);
             requestParams.addBodyParameter("id",uid);
             mSVProgressHUD.showWithStatus("加载中...");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctParticularsData(),requestParams, new RequestCallBack<String>() {

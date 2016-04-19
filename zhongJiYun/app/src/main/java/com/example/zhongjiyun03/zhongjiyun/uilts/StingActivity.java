@@ -2,7 +2,6 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -220,8 +219,8 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                    /* SharedPreferences.Editor editor = getSharedPreferences("lock", MODE_WORLD_WRITEABLE).edit();
                     editor.remove("code");
                     editor.commit();*/
-                    SharedPreferences.Editor editor = getSharedPreferences("lock", MODE_WORLD_WRITEABLE).edit();
-                    editor.clear().commit();
+                   /* SharedPreferences.Editor editor = getSharedPreferences("lock", MODE_WORLD_WRITEABLE).edit();
+                    editor.clear().commit();*/
                     finish();
                     overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 }else if (tage.equals("1")){

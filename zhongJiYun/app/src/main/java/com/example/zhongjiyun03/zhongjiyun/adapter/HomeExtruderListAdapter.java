@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.uilts.CommitCashDepositActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.RentOutExtruderActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.SellExtruderActivity;
 import com.lidroid.xutils.ViewUtils;
@@ -73,17 +75,50 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> impl
                   if (data.get(position).getSecondHandState()==1){
                       viewHold.imageChuzTage.setBackgroundResource(R.mipmap.leave_state);
                       if (data.get(position).getSecondHandType()==0){
-                          viewHold.sellTextView.setText("修改出售信息");
+
+                          viewHold.sellTextView.setText("撤销出售");
+                          Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
+                          drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                          viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
+                          Drawable drawableOne= context.getResources().getDrawable(R.mipmap.update_icon);
+                          drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
+                          viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );
+                          viewHold.rentOutTextView.setText("更新出售信息");
                       }else if (data.get(position).getSecondHandType()==1){
                           viewHold.rentOutTextView.setText("撤销出租");
+                          Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
+                          drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                          viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
+                          Drawable drawableOne= context.getResources().getDrawable(R.mipmap.update_icon);
+                          drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
+                          viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );
+                          viewHold.rentOutTextView.setText("更新出租信息");
                       }
 
                   }else if (data.get(position).getSecondHandState()==0){
                       viewHold.imageChuzTage.setBackgroundResource(R.mipmap.audit_ing_icon);
                       if (data.get(position).getSecondHandType()==0){
-                          viewHold.sellTextView.setText("缴纳保证金");
+                          viewHold.sellTextView.setText("撤销出售");
+                          Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
+                          drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                          viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
+                          Drawable drawableOne= context.getResources().getDrawable(R.drawable.used_rig_bond);
+                          drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
+                          viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );
+                          viewHold.rentOutTextView.setText("缴纳保证金");
+                          viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.yellow));
                       }else if (data.get(position).getSecondHandType()==1){
-                          viewHold.rentOutTextView.setText("撤销出租");
+                          viewHold.sellTextView.setText("撤销出租");
+                          Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
+                          drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                          viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
+                          Drawable drawableOne= context.getResources().getDrawable(R.drawable.used_rig_bond);
+                          drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
+                          viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );
+                          viewHold.rentOutTextView.setText("缴纳保证金");
+                          viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.yellow));
+
+
                       }
                   }
 
@@ -102,14 +137,44 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> impl
     public void onClick(View v) {
         switch (v.getId()){
             case  R.id.rent_out_textview:
-                Intent rentOutIntent=new Intent(context, RentOutExtruderActivity.class);
-                rentOutIntent.putExtra("data",data.get(positions));
-                context.startActivity(rentOutIntent);
+                 if (!TextUtils.isEmpty(data.get(positions).getSecondHandId())){
+                     if (data.get(positions).getSecondHandState()==1){
+                         Intent cashIntent=new Intent(context, CommitCashDepositActivity.class);
+                         context.startActivity(cashIntent);
+
+                     }else if (data.get(positions).getSecondHandState()==0){
+
+                     }
+                 }else {
+                     Intent rentOutIntent=new Intent(context, RentOutExtruderActivity.class);
+                     rentOutIntent.putExtra("data",data.get(positions));
+                     context.startActivity(rentOutIntent);
+                 }
+
                 break;
             case  R.id.sell_text_view:
-                Intent sellIntent=new Intent(context, SellExtruderActivity.class);
-                sellIntent.putExtra("data",data.get(positions));
-                context.startActivity(sellIntent);
+                if (!TextUtils.isEmpty(data.get(positions).getSecondHandId())){
+
+                    if (data.get(positions).getSecondHandState()==0){
+                        MyAppliction.showToast("已撤销出售");
+                        viewHold.sellTextView.setText("我要出售");
+                        Drawable drawable= context.getResources().getDrawable(R.mipmap.rig_sell);
+                        drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                        viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
+                    }else if (data.get(positions).getSecondHandState()==1){
+                        MyAppliction.showToast("已撤销出租");
+                        viewHold.sellTextView.setText("我要出售");
+                        Drawable drawable= context.getResources().getDrawable(R.mipmap.rig_sell);
+                        drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                        viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
+                    }
+
+                }else {
+                    Intent sellIntent=new Intent(context, SellExtruderActivity.class);
+                    sellIntent.putExtra("data",data.get(positions));
+                    context.startActivity(sellIntent);
+                }
+
                 break;
 
 

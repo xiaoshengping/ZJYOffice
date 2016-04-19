@@ -1,5 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.MessageListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -56,7 +59,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void intiData() {
-     /*   HttpUtils httpUtils=new HttpUtils();
+        HttpUtils httpUtils=new HttpUtils();
         SQLhelper sqLhelper=new SQLhelper(MessageActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
@@ -68,12 +71,13 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         }
         RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("Id","77c504bd-b212-4822-bf5f-9909e593ece3");
-        //步骤1：创建一个SharedPreferences接口对象
+       /* //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
         //步骤2：获取文件中的值
-        String value = read.getString("code","");
-        Log.e("value",value);
-            requestParams.setHeader("Cookie","ASP.NET_SessionId="+value);
+        String value = read.getString("code","");*/
+        Log.e("value",sesstionid);
+
+        requestParams.setHeader("Cookie","ASP.NET_SessionId="+sesstionid);
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMessageData(),requestParams, new RequestCallBack<String>() {
             @Override
@@ -89,9 +93,9 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             public void onFailure(HttpException e, String s) {
                 Log.e("系统消息列表",s);
             }
-        });*/
-        HttpUtils httpUtils=new HttpUtils();
-        /*SQLhelper sqLhelper=new SQLhelper(MessageActivity.this);
+        });
+        /*HttpUtils httpUtils=new HttpUtils();
+        *//*SQLhelper sqLhelper=new SQLhelper(MessageActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
         String sesstionid=null;  //用户id
@@ -99,15 +103,15 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         while (cursor.moveToNext()) {
             sesstionid=cursor.getString(6);
 
-        }*/
+        }*//*
         RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("Id","77c504bd-b212-4822-bf5f-9909e593ece3");
-       /* //步骤1：创建一个SharedPreferences接口对象
+       *//* //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
         //步骤2：获取文件中的值
         String value = read.getString("code","");
         Log.e("value",value);
-        requestParams.setHeader("Cookie","ASP.NET_SessionId="+value);*/
+        requestParams.setHeader("Cookie","ASP.NET_SessionId="+value);*//*
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMessageListData(),requestParams, new RequestCallBack<String>() {
             @Override
@@ -123,7 +127,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             public void onFailure(HttpException e, String s) {
                 Log.e("系统消息列表",s);
             }
-        });
+        });*/
 
 
     }

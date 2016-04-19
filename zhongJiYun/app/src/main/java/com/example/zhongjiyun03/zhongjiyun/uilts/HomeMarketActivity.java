@@ -14,7 +14,6 @@ public class HomeMarketActivity extends AppCompatActivity {
        @ViewInject(R.id.webview)
        private WebView webView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

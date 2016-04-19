@@ -94,11 +94,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                     List<RePackedListBean> listData= redPacketDataBean.getPagerData();
                     if (redPacketDataBean.getTotal()!=0){
                         getPackedButton.setVisibility(View.VISIBLE);
-                    }else {
-                        MyAppliction.showToast("您还没有收到红包哦");
-                        getPackedButton.setVisibility(View.GONE);
                     }
-
                     if (listData!=null){
                         initListView(listData);
 
@@ -108,9 +104,10 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                     mSVProgressHUD.dismiss();
 
 
-                }else {
+                }else if ((appBean.getResult()).equals("empty")){
                     mSVProgressHUD.dismiss();
-                    MyAppliction.showToast(appBean.getMsg());
+                    MyAppliction.showToast("您还没有收到红包哦");
+                    getPackedButton.setVisibility(View.GONE);
                 }
 
 

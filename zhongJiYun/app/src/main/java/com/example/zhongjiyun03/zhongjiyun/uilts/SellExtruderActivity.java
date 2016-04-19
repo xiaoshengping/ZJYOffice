@@ -33,7 +33,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.RentOutExtruderDeviceDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.RentOutExtruderDeviceBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
@@ -306,13 +306,13 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                             public void onSuccess(ResponseInfo<String> responseInfo) {
                                 Log.e("出售", responseInfo.result);
                                 if (!TextUtils.isEmpty(responseInfo.result)){
-                                    AppBean<RentOutExtruderDeviceDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceDataBean>>(){});
+                                    AppBean<RentOutExtruderDeviceBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceBean>>(){});
                                     if (appBean.getResult().equals("success")){
                                         //Log.e("出租id",appBean.getData().getOwnId());
                                         if (appBean.getData()!=null){
-                                            RentOutExtruderDeviceDataBean rentOutExtruderDeviceDataBean=appBean.getData();
+                                            RentOutExtruderDeviceBean rentOutExtruderDeviceDataBean=appBean.getData();
                                             if (rentOutExtruderDeviceDataBean!=null){
-                                                intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getDevice().getOwnId());
+                                                intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
                                             }
                                         }
 

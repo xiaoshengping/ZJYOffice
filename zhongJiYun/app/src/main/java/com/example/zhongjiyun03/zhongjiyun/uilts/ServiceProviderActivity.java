@@ -21,6 +21,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.ServiceDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.ServiceProviderBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -113,6 +114,14 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
                          serviceProviderBean.addAll(serviceProviderBeans);
                          serviceProviderListview.onRefreshComplete();
                         // mSVProgressHUD.dismiss();
+                     }else if ((appBean.getResult()).equals("nomore")){
+                         MyAppliction.showToast("已到最底了");
+                         serviceProviderListview.onRefreshComplete();
+
+                     }else if ((appBean.getResult()).equals("empty")){
+                         MyAppliction.showToast("没有更多数据");
+                         serviceProviderListview.onRefreshComplete();
+
                      }
 
 

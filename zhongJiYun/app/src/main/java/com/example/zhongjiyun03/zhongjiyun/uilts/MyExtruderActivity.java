@@ -82,6 +82,13 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
         intiListView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        extruderListView.setRefreshing();
+
+    }
+
     private void initData(int pageIndex) {
         SQLhelper sqLhelper=new SQLhelper(MyExtruderActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();

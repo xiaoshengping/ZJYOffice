@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.CommentOwnerActivity">
+    <include android:id="@+id/head_layout" android:layout_width="match_parent"
+        android:layout_height="wrap_content" layout="@layout/app_head_layout" />
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_below="@+id/head_layout"
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tailt_text"
+            android:textColor="@color/tailt_dark"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="碧桂园马来西亚桩基础工程"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_below="@+id/tailt_text"
+            android:id="@+id/company_text"
+            android:textSize="@dimen/home_Size_15"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:text="发布公司:碧桂园马来西亚"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="3dp"
+        android:background="@color/white"
+        android:layout_below="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/service_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginLeft="20dp"
+            android:text="服务态度"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RatingBar
+
+            android:id="@+id/rating_bar"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/phone_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/service_image"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/service_text"
+            android:background="@color/background"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <EditText
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:gravity="top"
+            android:textSize="@dimen/home_Size_15"
+            android:hint="写点评价吧!您的评价对于其他小伙伴很有帮助哦!"
+            android:background="@color/white"
+            android:layout_below="@+id/service_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:background="@color/window_background"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <Button
+            android:id="@+id/comit_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/ic_white"
+            android:background="@drawable/loing_button_corners"
+            android:textSize="@dimen/home_Size_18"
+            android:text="提交" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -6,21 +6,20 @@ import java.io.Serializable;
  * Created by ZHONGJIYUN03 on 2016/4/2.
  */
 public class ExtruderDataBean implements Serializable {
+        private String Id;
 
-    private ExtruderDeviceBean Device;
-
-    public ExtruderDeviceBean getDevice() {
-        return Device;
+    public String getId() {
+        return Id;
     }
 
-    public void setDevice(ExtruderDeviceBean device) {
-        Device = device;
+    public void setId(String id) {
+        Id = id;
     }
 
     @Override
     public String toString() {
         return "ExtruderDataBean{" +
-                "Device=" + Device +
+                "Id='" + Id + '\'' +
                 '}';
     }
 }

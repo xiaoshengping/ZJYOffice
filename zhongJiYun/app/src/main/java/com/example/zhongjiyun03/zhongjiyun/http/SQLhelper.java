@@ -13,6 +13,7 @@ public class SQLhelper extends SQLiteOpenHelper{
 	public static final String STARRATE="StarRate";
 	public static final String HEADTHUMB="Headthumb";
 	public static final String ROLE="Role";
+	public static final String ASPSESSTION="AspSesstion";
 
 
 
@@ -26,7 +27,7 @@ public class SQLhelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db){
 //		db.execSQL("create table if not exists "+tableName+"("+ID+" integer primary key,"+NAME+" varchar,"
 //				+ATT+" integer,"+AGI+" integer,"+INT+" integer)");		
-		db.execSQL("create table if not exists user(uid varchar pr imary key,PhoneNumber varchar,Name varchar,StarRate varchar,Headthumb varchar,Role varchar)");
+		db.execSQL("create table if not exists user(uid varchar pr imary key,PhoneNumber varchar,Name varchar,StarRate varchar,Headthumb varchar,Role varchar,AspSesstion varchar)");
 	}
 
 	@Override

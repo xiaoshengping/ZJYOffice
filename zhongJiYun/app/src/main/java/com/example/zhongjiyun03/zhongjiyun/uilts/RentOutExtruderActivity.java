@@ -33,7 +33,7 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.RentOutExtruderDeviceDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.RentOutExtruderDeviceBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
@@ -286,11 +286,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                             requestParams.addBodyParameter("IsShowInvoice",invoiceTage+"");
                             requestParams.addBodyParameter("Describing",rentDescribe.getText().toString());
-                            requestParams.addBodyParameter("Image1ServerId","phont.png");
-                            requestParams.addBodyParameter("Image2ServerId","phont.png");
-                            requestParams.addBodyParameter("Image3ServerId","phont.png");
-                            requestParams.addBodyParameter("Image4ServerId","phont.png");
-                            requestParams.addBodyParameter("Image5ServerId","phont.png");
+                            requestParams.addBodyParameter("Image1","phont.png");
+                            requestParams.addBodyParameter("Image2","phont.png");
+                            requestParams.addBodyParameter("Image3","phont.png");
+                            requestParams.addBodyParameter("Image4","phont.png");
+                            requestParams.addBodyParameter("Image5","phont.png");
                             if (phoneListPath.size()==5){
                                  mSVProgressHUD.showWithStatus("上传照片中(5张)...");
                             } else if (phoneListPath.size()==4){
@@ -305,18 +305,23 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             public void onSuccess(ResponseInfo<String> responseInfo) {
                                 Log.e("出租",responseInfo.result);
                                 if (!TextUtils.isEmpty(responseInfo.result)){
-                                    AppBean<RentOutExtruderDeviceDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceDataBean>>(){});
+                                    AppBean<RentOutExtruderDeviceBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceBean>>(){});
                                     if (appBean.getResult().equals("success")){
                                         //Log.e("出租id",appBean.getData().getOwnId());
                                         if (appBean.getData()!=null){
-                                            RentOutExtruderDeviceDataBean rentOutExtruderDeviceDataBean=appBean.getData();
+                                            RentOutExtruderDeviceBean rentOutExtruderDeviceDataBean=appBean.getData();
                                             if (rentOutExtruderDeviceDataBean!=null){
-                                                intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getDevice().getOwnId());
+                                                intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
+                                            }else {
+                                                mSVProgressHUD.dismiss();
                                             }
+                                        }else {
+                                            mSVProgressHUD.dismiss();
                                         }
 
 
                                     }else {
+                                      mSVProgressHUD.dismiss();
                                       MyAppliction.showToast(appBean.getMsg());
                                     }
                                 }
@@ -327,6 +332,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             @Override
                             public void onFailure(HttpException e, String s) {
                                 Log.e("出租",s);
+                                mSVProgressHUD.dismiss();
                                 MyAppliction.showToast("网络异常，请稍后重试");
                             }
                         });

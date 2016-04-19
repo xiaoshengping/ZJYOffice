@@ -249,7 +249,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent3);
                     getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 }
-
                 break;
             case R.id.loing_xshi_layout:
                 Intent personagerIntent=new Intent(getActivity(), PersonageInformationActivity.class);

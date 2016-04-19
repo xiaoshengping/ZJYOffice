@@ -1,6 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.ProjectlistDataBean;
+import com.example.zhongjiyun03.zhongjiyun.uilts.CommentOwnerActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.CommitCashDepositActivity;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -18,7 +21,7 @@ import java.util.List;
 /**
  * Created by ZHONGJIYUN03 on 2016/3/12.
  */
-public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDataBean> {
+public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDataBean> implements View.OnClickListener {
       private ViewHold viewHold;
 
 
@@ -59,19 +62,37 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
                 viewHold.dataText.setText(data.get(position).getCreateDateStr());
             }
             if (data.get(position).getStatus()==1){
+                viewHold.commentButton.setVisibility(View.GONE);
                 viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_one);
             }else if (data.get(position).getStatus()==2){
+                viewHold.commentButton.setVisibility(View.GONE);
                 viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_two);
             }else if (data.get(position).getStatus()==3){
+                viewHold.commentButton.setVisibility(View.VISIBLE);
                 viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_three);
             }
+        }
+        viewHold.commentButton.setOnClickListener(this);
+        viewHold.cashDepositButton.setOnClickListener(this);
 
 
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.cash_deposit_button:
+                Intent cashDepositIntent=new Intent(context, CommitCashDepositActivity.class);
+                context.startActivity(cashDepositIntent);
+               break;
+            case R.id.comment_button:
+                Intent commentIntent=new Intent(context, CommentOwnerActivity.class);
+                context.startActivity(commentIntent);
+                break;
 
         }
-
-
-
     }
 
 
@@ -87,6 +108,10 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
         private TextView dataText;
         @ViewInject(R.id.zhong_biao_image)
         private ImageView zhongBiaoImage;
+        @ViewInject(R.id.comment_button)
+        private TextView commentButton;
+        @ViewInject(R.id.cash_deposit_button)
+        private TextView cashDepositButton;
 
 
         public ViewHold(View view) {

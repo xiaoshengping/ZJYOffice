@@ -282,10 +282,12 @@
         <activity
             android:name=".uilts.CommentActivity"
             android:label="@string/title_activity_comment"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".uilts.showPicture.ImagePagerActivity" />
         <activity
-            android:name=".uilts.showPicture.ImagePagerActivity"
-           />
+            android:name=".uilts.CommentOwnerActivity"
+            android:label="@string/title_activity_comment_owner"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
