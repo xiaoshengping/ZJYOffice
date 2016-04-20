@@ -151,6 +151,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 uid=cursor.getString(0);
 
             }
+
             requestParams.addBodyParameter("projectId",seekProjectId);
             requestParams.addBodyParameter("id",uid);
             mSVProgressHUD.showWithStatus("加载中...");
@@ -164,6 +165,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                             seekProjectBean=appBean.getData();
                             if (seekProjectBean!=null){
                                 initProjectView(seekProjectBean);
+                                initMatingFacliyView(seekProjectBean);
                                 mSVProgressHUD.dismiss();
                             }
 
@@ -189,34 +191,18 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         }
 
 
-                   //initMatingFacliyView(seekProjectBean);
-
-
-
-
 
     }
       //配置设施
     private void initMatingFacliyView(SeekProjectBean seekProjectBean) {
-
-            HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
-        if (!TextUtils.isEmpty(seekProjectBean.getId())){
-            requestParams.addBodyParameter("projectId",seekProjectBean.getId());
-            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjectTroundData(),requestParams, new RequestCallBack<String>() {
-                @Override
-                public void onSuccess(ResponseInfo<String> responseInfo) {
-
-                }
-
-                @Override
-                public void onFailure(HttpException e, String s) {
-                    MyAppliction.showToast("网络异常,请稍后重试");
-                }
-            });
-        }else {
-            MyAppliction.showToast("获取数据失败");
-        }
+             TextView fuwuNumberText= (TextView) matingFacilyView.findViewById(R.id.fuwu_number_text);
+             TextView exturdNumberText= (TextView) matingFacilyView.findViewById(R.id.exturd_number_text);
+             TextView jshouNUmberText= (TextView) matingFacilyView.findViewById(R.id.jshou_number_text);
+             TextView peiJNumberText= (TextView) matingFacilyView.findViewById(R.id.peij_number_text);
+              fuwuNumberText.setText(seekProjectBean.getServiceProviderCount()+"");
+              exturdNumberText.setText(seekProjectBean.getDriverCount()+"");
+              fuwuNumberText.setText(seekProjectBean.getSecondHandCount()+"");
+              fuwuNumberText.setText(seekProjectBean.getDeviceCount()+"");
 
 
 
@@ -300,7 +286,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
          if (seekProjectBean.getIsCollection()==1){
              checkBoxCheck.setChecked(true);
          }
-        if (seekProjectBean.getStatusStr().equals("招标中")){
+        if (seekProjectBean.getCanReply().equals("招标中")){
 
             if (seekProjectBean.getReplyStatus().equals("1")){
                 competitiveButton.setText("已投标待业主选标");
@@ -353,35 +339,25 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 break;
             case R.id.competitive_button:
                 if (!TextUtils.isEmpty(uid)){
-                    if (seekProjectBean.getStatusStr().equals("招标中")){
-                        if (seekProjectBean.getIsAcceptReply()==1){
-                            if (seekProjectBean.getReplyStatus().equals("1")){
-                                competitiveButton.setText("已投标待业主选标");
-                            }else if (seekProjectBean.getReplyStatus().equals("3")){
-                                competitiveButton.setText("电话联系业主");
+                    if (seekProjectBean.getCanReply().equals("success")){
+                        Intent intent=new Intent(SeekProjectParticularsActivity.this,CompetitiveDescribeActivity.class);
+                        intent.putExtra("ProjectId",seekProjectId);
+                        startActivity(intent);
 
-
-                            }else {
-                                Intent intent=new Intent(SeekProjectParticularsActivity.this,CompetitiveDescribeActivity.class);
-                                intent.putExtra("ProjectId",seekProjectId);
-                                startActivity(intent);
+                    }else {
+                        if (seekProjectBean.getStatusStr().equals("招标中")){
+                            if (seekProjectBean.getIsAcceptReply()==1){
+                                if (seekProjectBean.getReplyStatus().equals("1")){
+                                    competitiveButton.setText("已投标待业主选标");
+                                }else if (seekProjectBean.getReplyStatus().equals("3")){
+                                    competitiveButton.setText("电话联系业主");
+                                }
                             }
-
-
-
-                        }else if (seekProjectBean.getIsAcceptReply()==0){
-                            MyAppliction.showToast("该项目不允许投标");
 
                         }
 
 
-
-                    }else if (seekProjectBean.getStatusStr().equals("已启动")){
-                        MyAppliction.showToast("本项目已启动，不能再投标");
-
                     }
-
-
                 }else {
                     Intent loginIntent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
                     startActivity(loginIntent);
@@ -428,12 +404,9 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                     Log.e("取消关注项目",s);
                 }
             });
-        }else {
-
-            Intent loginIntent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
-            startActivity(loginIntent);
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
         }
+
+
 
 
 
@@ -467,10 +440,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
                 }
             });
-        }else {
-            Intent loginIntent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
-            startActivity(loginIntent);
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
         }
 
 

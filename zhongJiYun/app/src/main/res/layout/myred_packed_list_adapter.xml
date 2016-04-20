@@ -10,7 +10,6 @@
             android:layout_marginBottom="10dp"
             android:id="@+id/red_pack_image"
             android:scaleType="centerCrop"
-            android:src="@mipmap/my_reward_cur"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_width="50dp"
@@ -64,7 +63,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
-                            android:textColor="@color/red_light"
                             android:drawablePadding="10dp"
                             android:drawableLeft="@mipmap/yunbi_icon"
                             android:layout_alignParentRight="true"

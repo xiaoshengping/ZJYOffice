@@ -10,7 +10,7 @@ public class RedPacketDataBean implements Serializable {
 
     private List<RePackedListBean> PagerData;
     private int Total;
-    private boolean HaveNext;
+
 
     public List<RePackedListBean> getPagerData() {
         return PagerData;
@@ -28,20 +28,11 @@ public class RedPacketDataBean implements Serializable {
         Total = total;
     }
 
-    public boolean isHaveNext() {
-        return HaveNext;
-    }
-
-    public void setHaveNext(boolean haveNext) {
-        HaveNext = haveNext;
-    }
-
     @Override
     public String toString() {
         return "RedPacketDataBean{" +
                 "PagerData=" + PagerData +
                 ", Total=" + Total +
-                ", HaveNext=" + HaveNext +
                 '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -84,6 +85,11 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
         }
 
         if (!TextUtils.isEmpty(uid)){
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
             requestParams.addBodyParameter("Id",uid);
             requestParams.addBodyParameter("pageIndex",pageIndex+"");
             requestParams.addBodyParameter("pageSize","10");

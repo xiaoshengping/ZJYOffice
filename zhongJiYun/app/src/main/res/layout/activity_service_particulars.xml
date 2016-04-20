@@ -24,6 +24,7 @@
 
 
     <LinearLayout
+
         android:gravity="center"
         android:orientation="vertical"
        android:layout_width="match_parent"
@@ -55,11 +56,15 @@
             android:layout_height="wrap_content" />
    </LinearLayout>
     <ImageView
+
+        android:layout_below="@+id/tailt_layout"
         android:layout_marginTop="10dp"
         android:src="#9d9d9d"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <LinearLayout
+
+
         android:background="@color/ic_white"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -134,13 +139,15 @@
     </LinearLayout>
 
     <ImageView
-
+        android:id="@+id/comtent_image"
+        android:layout_below="@+id/comtent_layout"
         android:src="#9d9d9d"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
    
     <LinearLayout
+        android:layout_below="@+id/comtent_image"
         android:layout_marginTop="10dp"
         android:background="@color/ic_white"
         android:layout_marginBottom="20dp"
@@ -168,7 +175,26 @@
 
     </LinearLayout>
 
+
     </LinearLayout>
 
 </ScrollView>
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:background="@color/window_background"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <Button
+            android:id="@+id/cell_service_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/ic_white"
+            android:background="@drawable/loing_button_corners"
+            android:textSize="@dimen/home_Size_18"
+            android:text="联系服务商" />
+    </LinearLayout>
 </RelativeLayout>

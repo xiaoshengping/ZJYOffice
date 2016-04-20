@@ -49,6 +49,8 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
        private String uids;
        @ViewInject(R.id.text_number)
        private TextView textNumber;
+       @ViewInject(R.id.about_layout)
+       private LinearLayout aboutLayout;
 
 
 
@@ -75,6 +77,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
         ideaLayout.setOnClickListener(this);
         exitButton.setOnClickListener(this);
         addExtruderTv.setVisibility(View.GONE);
+        aboutLayout.setOnClickListener(this);
         titleNemeTv.setText("设置");
         retrunText.setOnClickListener(this);
         File file=new File(String.valueOf((StingActivity.this).getExternalCacheDir()));
@@ -170,6 +173,11 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.retrun_text_view:
                 finish();
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                break;
+            case R.id.about_layout:
+                Intent aboutIntent=new Intent(StingActivity.this,CommentOwnerActivity.class);
+                startActivity(aboutIntent);
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
 

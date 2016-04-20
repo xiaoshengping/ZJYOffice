@@ -1,6 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
@@ -103,46 +104,56 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
         requestParams.addBodyParameter("PageIndex",pageIndex+"");
         requestParams.addBodyParameter("PageSize","10");
         requestParams.addBodyParameter("Id",uid);
-        //mSVProgressHUD.showWithStatus("加载中...");
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMyExtruderListData(),requestParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("我的钻机列表",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<MyExtruderDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<MyExtruderDataBean>>(){});
-                    if ((appBean.getResult()).equals("success")){
-                        MyExtruderDataBean myExtruderDataBean=appBean.getData();
-                       List<MyExtruderBean> myExtruderBeen= myExtruderDataBean.getPagerData();
-                        if (myExtruderBeen!=null){
-                            myExtruderBeens.addAll(myExtruderBeen);
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        if (!TextUtils.isEmpty(sesstionId)){
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMyExtruderListData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    Log.e("我的钻机列表",responseInfo.result);
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        AppBean<MyExtruderDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<MyExtruderDataBean>>(){});
+                        if ((appBean.getResult()).equals("success")){
+                            MyExtruderDataBean myExtruderDataBean=appBean.getData();
+                            List<MyExtruderBean> myExtruderBeen= myExtruderDataBean.getPagerData();
+                            if (myExtruderBeen!=null){
+                                myExtruderBeens.addAll(myExtruderBeen);
 
-                        }else {
-                            MyAppliction.showToast("您还没有添加钻机,请添加钻机");
+                            }else {
+                                MyAppliction.showToast("您还没有添加钻机,请添加钻机");
+                            }
+
+                            extruderListView.onRefreshComplete();
+                        }else if ((appBean.getResult()).equals("nomore")){
+                            MyAppliction.showToast("已到底部");
+                            extruderListView.onRefreshComplete();
+
+                        }else  if ((appBean.getResult()).equals("empty")){
+                            MyAppliction.showToast("没有更多数据");
+                            extruderListView.onRefreshComplete();
                         }
 
-                        extruderListView.onRefreshComplete();
-                    }else if ((appBean.getResult()).equals("nomore")){
-                        MyAppliction.showToast("已到底部");
-                        extruderListView.onRefreshComplete();
 
-                    }else  if ((appBean.getResult()).equals("empty")){
-                        MyAppliction.showToast("没有更多数据");
-                        extruderListView.onRefreshComplete();
                     }
 
 
                 }
 
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    extruderListView.onRefreshComplete();
+                    MyAppliction.showToast(s);
+                    Log.e("我的钻机列表",s);
+                }
+            });
+        }else {
+            MyAppliction.showToast("数据加载失败");
+        }
+        //mSVProgressHUD.showWithStatus("加载中...");
 
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                extruderListView.onRefreshComplete();
-                MyAppliction.showToast(s);
-                Log.e("我的钻机列表",s);
-            }
-        });
 
 
     }

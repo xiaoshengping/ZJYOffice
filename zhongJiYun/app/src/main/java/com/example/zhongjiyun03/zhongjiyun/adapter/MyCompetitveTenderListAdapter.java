@@ -23,6 +23,7 @@ import java.util.List;
  */
 public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDataBean> implements View.OnClickListener {
       private ViewHold viewHold;
+      private int positions;
 
 
     public MyCompetitveTenderListAdapter(List<ProjectlistDataBean> data, Context context) {
@@ -42,6 +43,7 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
 
           }
         inti(position);
+        positions=position;
         return convertView;
     }
 
@@ -89,6 +91,9 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
                break;
             case R.id.comment_button:
                 Intent commentIntent=new Intent(context, CommentOwnerActivity.class);
+                commentIntent.putExtra("ProjectTitle",data.get(positions).getProjectTitle());
+                commentIntent.putExtra("ProjectCompany",data.get(positions).getProjectCompany());
+                commentIntent.putExtra("projectId",data.get(positions).getProjectId());
                 context.startActivity(commentIntent);
                 break;
 

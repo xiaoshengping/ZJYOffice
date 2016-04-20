@@ -13,18 +13,18 @@ public class RePackedListBean implements Serializable {
    private String  Content; // string 礼包描述
    private String  BeginTime ;//string 开始时间
    private String  EndTime; // string 结束时间
-   private int  CloudMoney;// int 云币数量
-   private int  Mulriple; //  int 云币数量倍数
+   private String   CloudMoney;// int 云币数量
+   private String  Mulriple; //  int 云币数量倍数
    private int  StarLevel ; // int 礼包星级
    private int GiftBagType ; //int 礼包类型：云币：1，优惠券：！=1
-   private boolean  isGet; //是否领取
+   private int  isGet; //是否领取
 
-    public boolean isGet() {
+    public int getIsGet() {
         return isGet;
     }
 
-    public void setGet(boolean get) {
-        isGet = get;
+    public void setIsGet(int isGet) {
+        this.isGet = isGet;
     }
 
     public String getId() {
@@ -75,19 +75,19 @@ public class RePackedListBean implements Serializable {
         EndTime = endTime;
     }
 
-    public int getCloudMoney() {
+    public String getCloudMoney() {
         return CloudMoney;
     }
 
-    public void setCloudMoney(int cloudMoney) {
+    public void setCloudMoney(String cloudMoney) {
         CloudMoney = cloudMoney;
     }
 
-    public int getMulriple() {
+    public String getMulriple() {
         return Mulriple;
     }
 
-    public void setMulriple(int mulriple) {
+    public void setMulriple(String mulriple) {
         Mulriple = mulriple;
     }
 
@@ -116,8 +116,8 @@ public class RePackedListBean implements Serializable {
                 ", Content='" + Content + '\'' +
                 ", BeginTime='" + BeginTime + '\'' +
                 ", EndTime='" + EndTime + '\'' +
-                ", CloudMoney=" + CloudMoney +
-                ", Mulriple=" + Mulriple +
+                ", CloudMoney='" + CloudMoney + '\'' +
+                ", Mulriple='" + Mulriple + '\'' +
                 ", StarLevel=" + StarLevel +
                 ", GiftBagType=" + GiftBagType +
                 ", isGet=" + isGet +

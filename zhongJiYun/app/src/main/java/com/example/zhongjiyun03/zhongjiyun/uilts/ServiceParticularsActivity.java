@@ -3,6 +3,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -64,6 +66,9 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
     private LinearLayout layout;
     @ViewInject(R.id.immob_image)
     private ImageView immobImage;
+    @ViewInject(R.id.cell_service_button)
+    private Button cellServiceButton;
+    private ServiceParticualrsBean serviceProviderBean;
 
 
 
@@ -140,7 +145,7 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
                     AppBean<ServiceParticualrsBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ServiceParticualrsBean>>(){});
                     if ((appBean.getResult()).equals("success")){
                         layout.setVisibility(View.VISIBLE);
-                        ServiceParticualrsBean serviceProviderBean=  appBean.getData();
+                        serviceProviderBean=  appBean.getData();
                         if (serviceProviderBean!=null){
                             MyAppliction.imageLoader.displayImage(serviceProviderBean.getThumbnail(),imageView,MyAppliction.RoundedOptionsOne);
                             nameTextView.setText(serviceProviderBean.getName());
@@ -194,6 +199,7 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
         titleNemeTv.setText("个人资料");
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
+        cellServiceButton.setOnClickListener(this);
 
 
     }
@@ -206,6 +212,20 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
             case R.id.retrun_text_view:
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                break;
+            case R.id.cell_service_button:
+                if (!TextUtils.isEmpty(serviceProviderBean.getPhoneNumber())){
+                    //意图：打电话
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_DIAL);
+                    //url:统一资源定位符
+                    //uri:统一资源标示符（更广）
+                    intent.setData(Uri.parse("tel:" + serviceProviderBean.getPhoneNumber()));
+                    //开启系统拨号器
+                    startActivity(intent);
+                }else {
+                    MyAppliction.showToast("该服务商没有联系方式");
+                }
                 break;
 
 

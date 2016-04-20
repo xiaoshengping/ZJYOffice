@@ -1,14 +1,18 @@
 package com.example.zhongjiyun03.zhongjiyun.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectBean;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -60,6 +64,29 @@ public class HomeProjectListAdapter extends AppBaseAdapter<SeekProjectBean> {
             if (!TextUtils.isEmpty(data.get(position).getStatusStr())){
                 viewHold.bidsTageText.setText(data.get(position).getStatusStr());
             }
+            SQLhelper sqLhelper=new SQLhelper(context);
+            SQLiteDatabase db= sqLhelper.getWritableDatabase();
+            Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+            String uid=null;  //用户id
+
+            while (cursor.moveToNext()) {
+                uid=cursor.getString(0);
+
+            }
+            if (!TextUtils.isEmpty(uid)){
+                if (data.get(position).getReplyStatus().equals("1")){
+                    viewHold.successImage.setVisibility(View.VISIBLE);
+                    //MyAppliction.imageLoader.displayImage(data.get(position).getFlag(),viewHold.successImage,MyAppliction.options);
+                }else {
+                    viewHold.successImage.setVisibility(View.GONE);
+                }
+            }else {
+                viewHold.successImage.setVisibility(View.GONE);
+            }
+
+
+
+
         }
 
 
@@ -80,6 +107,8 @@ public class HomeProjectListAdapter extends AppBaseAdapter<SeekProjectBean> {
         private TextView timeText;
         @ViewInject(R.id.bids_tage_text)
         private TextView bidsTageText;
+        @ViewInject(R.id.success_image)
+        private ImageView successImage;
 
         public ViewHold(View view) {
             ViewUtils.inject(this, view);

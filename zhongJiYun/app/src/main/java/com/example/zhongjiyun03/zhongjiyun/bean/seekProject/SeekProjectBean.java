@@ -34,6 +34,13 @@ public class SeekProjectBean implements Serializable  {
     private int IsAcceptReply;//	string	是否允许投标
     private int PayMarginStatus;//	int	支付保证金状态,业务逻辑先不管
     private int IsCollection;
+    private  int ServiceProviderCount;// Int 项目附近资源数量信息-服务商数量
+    private int DriverCount;// Int 项目附近资源数量信息-机手数量
+    private int SecondHandCount;// Int 项目附近资源数量信息-二手机数量
+    private int DeviceCount;// Int 项目附近资源数量信息-钻机数量
+    private String CanReply;// String 能否投标
+
+
 
 
     public String getId() {
@@ -252,6 +259,46 @@ public class SeekProjectBean implements Serializable  {
         IsCollection = isCollection;
     }
 
+    public int getServiceProviderCount() {
+        return ServiceProviderCount;
+    }
+
+    public void setServiceProviderCount(int serviceProviderCount) {
+        ServiceProviderCount = serviceProviderCount;
+    }
+
+    public int getDriverCount() {
+        return DriverCount;
+    }
+
+    public void setDriverCount(int driverCount) {
+        DriverCount = driverCount;
+    }
+
+    public int getSecondHandCount() {
+        return SecondHandCount;
+    }
+
+    public void setSecondHandCount(int secondHandCount) {
+        SecondHandCount = secondHandCount;
+    }
+
+    public int getDeviceCount() {
+        return DeviceCount;
+    }
+
+    public void setDeviceCount(int deviceCount) {
+        DeviceCount = deviceCount;
+    }
+
+    public String getCanReply() {
+        return CanReply;
+    }
+
+    public void setCanReply(String canReply) {
+        CanReply = canReply;
+    }
+
     @Override
     public String toString() {
         return "SeekProjectBean{" +
@@ -282,6 +329,11 @@ public class SeekProjectBean implements Serializable  {
                 ", IsAcceptReply=" + IsAcceptReply +
                 ", PayMarginStatus=" + PayMarginStatus +
                 ", IsCollection=" + IsCollection +
+                ", ServiceProviderCount=" + ServiceProviderCount +
+                ", DriverCount=" + DriverCount +
+                ", SecondHandCount=" + SecondHandCount +
+                ", DeviceCount=" + DeviceCount +
+                ", CanReply='" + CanReply + '\'' +
                 '}';
     }
 }

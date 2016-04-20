@@ -411,7 +411,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.project_more_text:
                 Intent projectIntent=new Intent(getActivity(), HomeMoreProjectActivity.class);
                 startActivity(projectIntent);
-
                 break;
 
 

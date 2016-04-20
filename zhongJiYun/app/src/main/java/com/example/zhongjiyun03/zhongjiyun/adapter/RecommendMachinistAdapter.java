@@ -46,14 +46,15 @@ public class RecommendMachinistAdapter extends AppBaseAdapter<SecondHandBean> {
             if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getDevicePhoto())){
                 MyAppliction.imageLoader.displayImage(data.get(position).getDeviceDto().getDevicePhoto(),holderView.imageView,MyAppliction.options);
             }
-            if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getDateOfManufacture())&&!TextUtils.isEmpty(data.get(position).getDeviceDto().getDateMonthOfManufacture())){
-                holderView.dateTextVIew.setText(data.get(position).getDeviceDto().getDateOfManufacture()+"年"+
-                        data.get(position).getDeviceDto().getDateMonthOfManufacture()+"月");
-
-            }else {
+            if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getDateOfManufacture())){
                 holderView.dateTextVIew.setText(data.get(position).getDeviceDto().getDateOfManufacture()+"年");
             }
-            holderView.priceTextView.setText(data.get(position).getPriceStr()+"万");
+            if (data.get(position).getPriceStr().equals("面议")){
+                holderView.priceTextView.setText("面议");
+            }else {
+                holderView.priceTextView.setText(data.get(position).getPriceStr()+"万");
+            }
+
 
         }
 

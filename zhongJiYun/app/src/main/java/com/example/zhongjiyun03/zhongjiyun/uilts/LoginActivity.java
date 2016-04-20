@@ -2,7 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                    // mSVProgressHUD.showErrorWithStatus("不约，叔叔我们不约～", SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
                     mSVProgressHUD.showWithStatus("登录中...");
                    httpUtils.configCookieStore(MyCookieStore.cookieStore);
-                   SQLhelper sqLhelper=new SQLhelper(LoginActivity.this);
+                   /*SQLhelper sqLhelper=new SQLhelper(LoginActivity.this);
                    SQLiteDatabase db= sqLhelper.getWritableDatabase();
                    Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
                    String sesstionId=null;  //用户id
@@ -148,10 +148,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     while (cursor.moveToNext()) {
                         sesstionId=cursor.getString(6);
 
-                    }
-                    if (!TextUtils.isEmpty(sesstionId)){
-                        requestParams.setHeader("Cookie","PHPSESSID=" +  sesstionId );
-                        Log.e("jdfjfj",sesstionId);
+                    }*/
+                    //步骤1：创建一个SharedPreferences接口对象
+                    SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+                    //步骤2：获取文件中的值
+                    String value = read.getString("code","");
+                    if (!TextUtils.isEmpty(value)){
+                        requestParams.setHeader("Cookie","ASP.NET_SessionId=" +  value );
+                        Log.e("jdfjfj",value);
                     }
                    httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getLoginData(),requestParams, new RequestCallBack<String>() {
                         @Override
@@ -177,18 +181,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             break;
                                         }
                                     }
-                                    /*if (!TextUtils.isEmpty(aspSesstion)){
+                                    if (!TextUtils.isEmpty(aspSesstion)){
                                         //步骤2-1：创建一个SharedPreferences.Editor接口对象，lock表示要写入的XML文件名，MODE_WORLD_WRITEABLE写操作
                                         SharedPreferences.Editor editor = getSharedPreferences("lock", MODE_WORLD_WRITEABLE).edit();
                                         //步骤2-2：将获取过来的值放入文件
                                         editor.putString("code", aspSesstion);
                                         //步骤3：提交
                                         editor.commit();
-                                    }*/
+                                    }
 
                                     SQLhelper sqLhelper=new SQLhelper(LoginActivity.this);
                                     insertData(sqLhelper, loginDataBean.getId(), loginDataBean.getPhoneNumber(), loginDataBean.getName(), loginDataBean.getStarRate()+"",
-                                            loginDataBean.getHeadthumb(), loginDataBean.getRole(),aspSesstion);
+                                            loginDataBean.getHeadthumb(), loginDataBean.getRole());
 
 
                                     mSVProgressHUD.dismiss();
@@ -234,7 +238,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
     public void insertData(SQLhelper sqLhelper,String uid,String phoneNumber,
-                           String name,String StarRate,String Headthumb,String Role,String aspSesstion){
+                           String name,String StarRate,String Headthumb,String Role){
         SQLiteDatabase db=sqLhelper.getWritableDatabase();
         // db.execSQL("insert into user(uid,userName,userIcon,state) values('战士',3,5,7)");
         ContentValues values=new ContentValues();
@@ -244,7 +248,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         values.put(SQLhelper.STARRATE, StarRate);
         values.put(SQLhelper.HEADTHUMB, Headthumb);
         values.put(SQLhelper.ROLE, Role);
-        values.put(SQLhelper.ASPSESSTION, aspSesstion);
+
 
         db.insert(SQLhelper.tableName, SQLhelper.UID, values);
         db.close();

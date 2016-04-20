@@ -1,5 +1,6 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -67,7 +68,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)
     private TextView retrunText;     //头部左边
-    private List<CommentPagerDataBean> commentPagerDataBeens=new ArrayList<>();
+    private List<CommentPagerDataBean> mineCommentDataBeens=new ArrayList<>();
+    private List<CommentPagerDataBean> commentMineDataBeens=new ArrayList<>();
 
 
     @Override
@@ -75,16 +77,88 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
         ViewUtils.inject(this);
-        inti();
+        init();
 
     }
 
-    private void inti() {
+    private void init() {
         initView();
         initViewPager();
         initCommentMine();//评论我的
         initMineComment();//我的评论
-        initMineCommentData();
+        initMineCommentData(); //我的评论数据
+        initCommentMineData(); //评论我的数据
+
+    }
+
+    private void initCommentMineData() {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        SQLhelper sqLhelper=new SQLhelper(CommentActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionID = read.getString("code","");
+        if(!TextUtils.isEmpty(sesstionID)){
+
+
+            if (!TextUtils.isEmpty(uid)){
+                requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionID);
+                requestParams.addBodyParameter("Id",uid);
+                requestParams.addBodyParameter("PageIndex","1");
+                requestParams.addBodyParameter("PageSize","10");
+                httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCommentMineData(),requestParams, new RequestCallBack<String>() {
+                    @Override
+                    public void onSuccess(ResponseInfo<String> responseInfo) {
+
+                        if (!TextUtils.isEmpty(responseInfo.result)){
+                            Log.e("我的评论",responseInfo.result);
+                            if (!TextUtils.isEmpty(responseInfo.result)){
+                                AppBean<CommentDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<CommentDataBean>>(){});
+                                if (appBean.getResult().equals("success")){
+                                    CommentDataBean commentDataBean= appBean.getData();
+                                    if (commentDataBean!=null){
+                                        List<CommentPagerDataBean> commentPagerDataBean=commentDataBean.getPagerData();
+                                        if (commentPagerDataBean!=null){
+                                            commentMineDataBeens.addAll(commentPagerDataBean);
+                                        }
+
+                                    }
+                                }else if (appBean.getResult().equals("empty")){
+
+                                    MyAppliction.showToast("还没有业主评论您");
+
+                                }
+
+
+                            }
+
+                        }else {
+                            MyAppliction.showToast("加载数据失败");
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(HttpException e, String s) {
+                        Log.e("我的评论",s);
+                    }
+                });
+
+            }
+        }else {
+            MyAppliction.showToast("加载数据失败");
+
+        }
+
 
     }
 
@@ -100,7 +174,15 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
             uid=cursor.getString(0);
 
         }
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionID = read.getString("code","");
+        if(!TextUtils.isEmpty(sesstionID)){
+
+
         if (!TextUtils.isEmpty(uid)){
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionID);
             requestParams.addBodyParameter("Id",uid);
             requestParams.addBodyParameter("PageIndex","1");
             requestParams.addBodyParameter("PageSize","10");
@@ -117,15 +199,12 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                 if (commentDataBean!=null){
                                     List<CommentPagerDataBean> commentPagerDataBean=commentDataBean.getPagerData();
                                     if (commentPagerDataBean!=null){
-                                        commentPagerDataBeens.addAll(commentPagerDataBean);
+                                        mineCommentDataBeens.addAll(commentPagerDataBean);
                                     }
 
                                 }
-
-
                             }else if (appBean.getResult().equals("empty")){
-
-                                MyAppliction.showToast("你还没有评论");
+                                MyAppliction.showToast("你还没有评论业主");
 
                             }
 
@@ -144,11 +223,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 }
             });
 
+        }
         }else {
             MyAppliction.showToast("加载数据失败");
 
         }
-
 
 
 
@@ -158,7 +237,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private void initMineComment() {
 
         ListView mineCommentListView= (ListView) mineCommentView.findViewById(R.id.mine_comment_listview);
-        CommentListAdapter commentListAdapter=new CommentListAdapter(commentPagerDataBeens,CommentActivity.this);
+        CommentListAdapter commentListAdapter=new CommentListAdapter(mineCommentDataBeens,CommentActivity.this);
         mineCommentListView.setAdapter(commentListAdapter);
         commentListAdapter.notifyDataSetChanged();
 
@@ -167,16 +246,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     }
     //评论我的
     private void initCommentMine() {
-        List<String> list=new ArrayList<>();
-        for (int i = 0; i <10 ; i++) {
-            list.add("李东林");
-        }
-/*
-      ListView commentMineListView= (ListView) commentMineView.findViewById(R.id.comment_mine_listview);
 
-        CommentListAdapter commentListAdapter=new CommentListAdapter(list,CommentActivity.this);
+      ListView commentMineListView= (ListView) commentMineView.findViewById(R.id.comment_mine_listview);
+        CommentListAdapter commentListAdapter=new CommentListAdapter(commentMineDataBeens,CommentActivity.this);
         commentMineListView.setAdapter(commentListAdapter);
-        commentListAdapter.notifyDataSetChanged();*/
+        commentListAdapter.notifyDataSetChanged();
 
 
 

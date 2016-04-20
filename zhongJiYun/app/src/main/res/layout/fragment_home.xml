@@ -103,7 +103,7 @@
                 android:background="@color/white"
                 android:layout_height="140dp">
                 <LinearLayout
-                    android:layout_width="700dip"
+                    android:layout_width="740dip"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     >

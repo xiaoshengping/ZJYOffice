@@ -1,8 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -21,7 +20,6 @@ import com.example.zhongjiyun03.zhongjiyun.bean.MessageDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -69,53 +67,56 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void intiData() {
-       /* HttpUtils httpUtils=new HttpUtils();
-        SQLhelper sqLhelper=new SQLhelper(MessageActivity.this);
+        //HttpUtils httpUtils=new HttpUtils();
+       /* SQLhelper sqLhelper=new SQLhelper(MessageActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
         String sesstionid=null;  //用户id
+        String uid=null;  //用户id
 
         while (cursor.moveToNext()) {
             sesstionid=cursor.getString(6);
+            uid=cursor.getString(0);
 
-        }
-        RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("Id","77c504bd-b212-4822-bf5f-9909e593ece3");
-       *//* //步骤1：创建一个SharedPreferences接口对象
+        }*/
+      /*  RequestParams requestParams=new RequestParams();
+        //requestParams.addBodyParameter("Id",uid);
+        //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
         //步骤2：获取文件中的值
-        String value = read.getString("code","");*//*
-        Log.e("value",sesstionid);
-
-        requestParams.setHeader("Cookie","ASP.NET_SessionId="+sesstionid);
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMessageData(),requestParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("系统消息列表",responseInfo.result);
-
-
+        String value = read.getString("code","");
+        ///Log.e("value",sesstionid);
+        if (!TextUtils.isEmpty(value)){
+            requestParams.setHeader("Cookie","ASP.NET_SessionId="+value);
+            Log.e("value",value);
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMessageData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    Log.e("系统消息列表",responseInfo.result);
 
 
-            }
 
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("系统消息列表",s);
-            }
-        });*/
+
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    Log.e("系统消息列表",s);
+                }
+            });
+        }else {
+            MyAppliction.showToast("没有找到sesstionid");
+        }*/
+
+
+
         HttpUtils httpUtils=new HttpUtils();
-        SQLhelper sqLhelper=new SQLhelper(MessageActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String sesstionid=null;  //用户id
-
-        while (cursor.moveToNext()) {
-            sesstionid=cursor.getString(6);
-
-        }
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("Id","77c504bd-b212-4822-bf5f-9909e593ece3");
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMessageListData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {

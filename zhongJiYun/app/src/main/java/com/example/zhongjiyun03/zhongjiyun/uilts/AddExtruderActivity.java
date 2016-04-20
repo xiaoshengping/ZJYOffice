@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -252,6 +253,11 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                                 }
                                     HttpUtils httpUtils=new HttpUtils();
                                     RequestParams requestParams=new RequestParams();
+                                    //步骤1：创建一个SharedPreferences接口对象
+                                    SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+                                    //步骤2：获取文件中的值
+                                    String sesstionId = read.getString("code","");
+                                    requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
                                     requestParams.addBodyParameter("Id",uid);
                                     requestParams.addBodyParameter("DeviceNo",serialNumberEdit.getText().toString());
                                     requestParams.addBodyParameter("HourOfWork",workTimeEdit.getText().toString());
@@ -285,26 +291,14 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
 
                                                         }
                                                     }
-
-
-
                                                 }else {
                                                     MyAppliction.showToast(appBean.getMsg());
                                                     mSVProgressHUD.dismiss();
                                                 }
-
-
                                             }else {
 
                                                 mSVProgressHUD.dismiss();
                                             }
-
-
-
-
-
-
-
 
                                         }
 

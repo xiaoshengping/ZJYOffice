@@ -203,7 +203,6 @@ public class AppUtilsUrl {
     public static String getMineCommentData(){
         //  appapi/boss/getmyevaluate
         return BaseUrl+"appapi/boss/getmyevaluate" ;
-
     }
     //获得系统消息提醒
     public static String getSystemMessageRemindData(){
@@ -211,10 +210,16 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/common/GetSystemMessageList" ;
 
     }
-    //获取配套设施
-    public static String getProjectTroundData(){
-        //  appapi/project/getprojectroundsource
-        return BaseUrl+"appapi/project/getprojectroundsource" ;
+    //评论我的
+    public static String getCommentMineData(){
+        //  appapi/boss/getownerevaluate
+        return BaseUrl+"appapi/boss/getownerevaluate" ;
+
+    }
+    //评价业主
+    public static String getCommentOwnerData(){
+        //  appapi/boss/ownerevaluete
+        return BaseUrl+"appapi/boss/ownerevaluete" ;
 
     }
 
