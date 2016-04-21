@@ -121,6 +121,12 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/boss/RentOutOrSellDevice" ;
 
     }
+    //撤回出租出售
+    public static String getRecallRentOrSellData(){
+        // appapi/boss/canclerentoutorsell
+        return BaseUrl+"appapi/boss/canclerentoutorsell" ;
+
+    }
     //新闻列表
     public static String getNewsData(){
         //  appapi/Common/GetNewsListByType

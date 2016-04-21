@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -46,6 +48,7 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.Clipping
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.SelectImagesFromLocalActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.constants.ConstantSet;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.utils.SDCardUtils;
+import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.lidroid.xutils.HttpUtils;
@@ -270,10 +273,16 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                         }
                         HttpUtils httpUtils = new HttpUtils();
                         RequestParams requestParams = new RequestParams();
+                        //步骤1：创建一个SharedPreferences接口对象
+                        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+                        //步骤2：获取文件中的值
+                        String sesstionId = read.getString("code","");
+                        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
                         requestParams.addBodyParameter("Id", uid);
+
                         requestParams.addBodyParameter("DeviceId", ((MyExtruderBean) getIntent().getSerializableExtra("data")).getId());
                         //requestParams.addBodyParameter("DeviceHistoryId","");
-                        requestParams.addBodyParameter("SecondHandType", "0");
+                        requestParams.addBodyParameter("SecondHandType", "1");
                         if (!TextUtils.isEmpty(Province)) {
                             requestParams.addBodyParameter("Province", Province);
                         }
@@ -380,6 +389,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private void intiPhontData0(final String id, String imageType, String imagePath, final String OwnId) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams requwstParams = new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requwstParams.addBodyParameter("Id", id);
         requwstParams.addBodyParameter("ImageType", imageType);
         requwstParams.addBodyParameter("UserType", "boss");
@@ -429,6 +443,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private void intiPhontData1(final String id, String iamgeType, String imagePath, final String OwnId) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams requwstParams = new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requwstParams.addBodyParameter("Id", id);
         requwstParams.addBodyParameter("ImageType", iamgeType);
         requwstParams.addBodyParameter("UserType", "boss");
@@ -478,6 +497,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private void intiPhontData2(final String id, String imageType, String imagePath, final String OwnId) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams requwstParams = new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requwstParams.addBodyParameter("Id", id);
         requwstParams.addBodyParameter("ImageType", imageType);
         requwstParams.addBodyParameter("UserType", "boss");
@@ -500,7 +524,8 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                         }else if (phoneListPath.size()==3){
                             mSVProgressHUD.dismiss();
                             mSVProgressHUD.showSuccessWithStatus("出售钻机成功");
-                            finish();
+                            showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出售申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
+
                         }
 
                         if (phoneListPath.size() > 3) {
@@ -530,6 +555,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private void intiPhontData3(final String id, String imageType, String imagePath, final String OwnId) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams requwstParams = new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requwstParams.addBodyParameter("Id", id);
         requwstParams.addBodyParameter("ImageType", imageType);
         requwstParams.addBodyParameter("UserType", "boss");
@@ -550,7 +580,8 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                         } else if (phoneListPath.size() == 4) {
                             mSVProgressHUD.dismiss();
                             mSVProgressHUD.showSuccessWithStatus("出售钻机成功");
-                            finish();
+                            showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出售申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
+
                         }
                         if (phoneListPath != null && phoneListPath.size() == 5) {
 
@@ -580,6 +611,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private void intiPhontData4(final String id, String userType, String imagePath,String OwnId) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams requwstParams = new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requwstParams.addBodyParameter("Id", id);
         requwstParams.addBodyParameter("ImageType", userType);
         requwstParams.addBodyParameter("UserType", "boss");
@@ -597,7 +633,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                     if (appBean.getResult().equals("success")) {
                         mSVProgressHUD.dismiss();
                         mSVProgressHUD.showSuccessWithStatus("出售钻机成功");
-                        finish();
+                        showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出售申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
 
 
                     } else {
@@ -618,7 +654,39 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
 
     }
-
+    //对话框
+    private void showExitGameAlert(String text,String tailtText) {
+        final AlertDialog dlg = new AlertDialog.Builder(SellExtruderActivity.this).create();
+        dlg.show();
+        dlg.setCanceledOnTouchOutside(false);
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.commit_cash_deposit_layout);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        TextView tailtVt= (TextView) window.findViewById(R.id.tv);
+        tailtVt.setText(tailtText);
+        ok.setText("交纳保证金");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent=new Intent(SellExtruderActivity.this,CommitCashDepositActivity.class);
+                startActivity(intent);
+                dlg.cancel();
+            }
+        });
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+                finish();
+            }
+        });
+    }
 
     //拍照和相册弹出框
     private void showDialog(final int captureIndext, final int pickIndext, final Uri uri) {
@@ -955,4 +1023,43 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "SellExtruder Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.example.zhongjiyun03.zhongjiyun.uilts/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "SellExtruder Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.example.zhongjiyun03.zhongjiyun.uilts/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
 }

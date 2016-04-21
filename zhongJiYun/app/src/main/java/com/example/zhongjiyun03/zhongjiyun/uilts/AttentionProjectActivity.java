@@ -18,7 +18,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.AttentionProjectAdapter;
-import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.AttentionProjectDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.AttentionProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
@@ -111,10 +112,11 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     Log.e("关注项目",responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)){
-                        AppListDataBean<AttentionProjectBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<AttentionProjectBean>>(){});
+                        AppBean<AttentionProjectDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AttentionProjectDataBean>>(){});
                         if ((appBean.getResult()).equals("success")){
-                            List<AttentionProjectBean> attentionProjectBeen=appBean.getData();
-                            if (attentionProjectBeen!=null){
+                            AttentionProjectDataBean attentionProjectDataBean=appBean.getData();
+                            if (attentionProjectDataBean!=null){
+                                List<AttentionProjectBean> attentionProjectBeen=attentionProjectDataBean.getPagerData();
                                 initListView(attentionProjectBeen);
                                 attentionProjectListview.onRefreshComplete();
                             }else {

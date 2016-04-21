@@ -113,10 +113,6 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     private RelativeLayout workExperienceLayoutTwo;
     @ViewInject(R.id.image_lini_one)
     private ImageView imageLiniOne;
-
-
-    @ViewInject(R.id.work_experience_no)
-    private TextView workExperienceNo;
     private SekkMachinisDataBean seekMachinisDataBean;
 
 
@@ -150,7 +146,6 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
             payText.setText("期望月薪:"+seekMachinisDataBean.getWage()+"元");
 
             if (seekMachinisDataBean.getWorkInfoItemDtos()!=null&&seekMachinisDataBean.getWorkInfoItemDtos().size()!=0){
-                workExperienceNo.setVisibility(View.GONE);
                 if (seekMachinisDataBean.getWorkInfoItemDtos().size()>0){
                     messageRlauout.setVisibility(View.VISIBLE);
                     workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
@@ -195,7 +190,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                 }
 
             }else {
-                workExperienceNo.setVisibility(View.VISIBLE);
+
             }
 
 

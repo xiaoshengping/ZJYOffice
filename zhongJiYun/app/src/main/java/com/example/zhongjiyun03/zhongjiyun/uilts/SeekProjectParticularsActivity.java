@@ -1,11 +1,13 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -137,7 +139,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     }
 
     private void initData() {
-
         seekProjectId= getIntent().getStringExtra("seekProjectId");
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
@@ -203,13 +204,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
               exturdNumberText.setText(seekProjectBean.getDriverCount()+"");
               fuwuNumberText.setText(seekProjectBean.getSecondHandCount()+"");
               fuwuNumberText.setText(seekProjectBean.getDeviceCount()+"");
-
-
-
-
-
-
-
 
     }
     //项目概况数据展示
@@ -286,7 +280,17 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
          if (seekProjectBean.getIsCollection()==1){
              checkBoxCheck.setChecked(true);
          }
-        if (seekProjectBean.getCanReply().equals("招标中")){
+
+          if (seekProjectBean.getCanReply().equals("success")){
+              competitiveButton.setText("我要竞标");
+          }else {
+              competitiveButton.setTextColor(getResources().getColor(R.color.tailt_dark));
+              competitiveButton.setBackground(getResources().getDrawable(R.drawable.gray_button_corners));
+              competitiveButton.setText(seekProjectBean.getCanReply());
+          }
+
+
+        /*if (seekProjectBean.getCanReply().equals("招标中")){
 
             if (seekProjectBean.getReplyStatus().equals("1")){
                 competitiveButton.setText("已投标待业主选标");
@@ -299,7 +303,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         }else if (seekProjectBean.getStatusStr().equals("已启动")){
             competitiveButton.setText("本项目已启动");
 
-        }
+        }*/
 
 
     }
@@ -339,25 +343,31 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 break;
             case R.id.competitive_button:
                 if (!TextUtils.isEmpty(uid)){
-                    if (seekProjectBean.getCanReply().equals("success")){
-                        Intent intent=new Intent(SeekProjectParticularsActivity.this,CompetitiveDescribeActivity.class);
-                        intent.putExtra("ProjectId",seekProjectId);
-                        startActivity(intent);
+                    if (seekProjectBean.getIsCallOwnerFlag()==0){
+                        if (seekProjectBean.getCanReply().equals("success")){
+                            Intent intent=new Intent(SeekProjectParticularsActivity.this,CompetitiveDescribeActivity.class);
+                            intent.putExtra("ProjectId",seekProjectId);
+                            startActivity(intent);
 
+                        }else {
+                            MyAppliction.showToast(seekProjectBean.getCanReply());
+                        }
                     }else {
-                        if (seekProjectBean.getStatusStr().equals("招标中")){
-                            if (seekProjectBean.getIsAcceptReply()==1){
-                                if (seekProjectBean.getReplyStatus().equals("1")){
-                                    competitiveButton.setText("已投标待业主选标");
-                                }else if (seekProjectBean.getReplyStatus().equals("3")){
-                                    competitiveButton.setText("电话联系业主");
-                                }
-                            }
-
+                        if (!TextUtils.isEmpty(seekProjectBean.getPhone())){
+                            //意图：打电话
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_DIAL);
+                            //url:统一资源定位符
+                            //uri:统一资源标示符（更广）
+                            intent.setData(Uri.parse("tel:" + seekProjectBean.getPhone()));
+                            //开启系统拨号器
+                            startActivity(intent);
+                        }else {
+                            MyAppliction.showToast("该业主没有联系方式");
                         }
 
-
                     }
+
                 }else {
                     Intent loginIntent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
                     startActivity(loginIntent);
@@ -377,11 +387,12 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
     }
 
-    private void isNoCheckedRequest(String uid) {
+    private void isNoCheckedRequest(String uid,String sesstionId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
 
         if (!TextUtils.isEmpty(uid)){
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
             requestParams.addBodyParameter("Id",uid);
             requestParams.addBodyParameter("collectId",seekProjectId);
             requestParams.addBodyParameter("collectType","1");
@@ -413,11 +424,12 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
 
     }
-    private void isCheckedRequest(String uid) {
+    private void isCheckedRequest(String uid,String sesstionId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
 
         if (!TextUtils.isEmpty(uid)){
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
             requestParams.addBodyParameter("Id",uid);
             requestParams.addBodyParameter("collectId",seekProjectId);
             requestParams.addBodyParameter("collectType","1");
@@ -675,13 +687,17 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             uid=cursor.getString(0);
 
         }
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
         if (!TextUtils.isEmpty(uid)){
             if (isChecked){
                 if (seekProjectBean.getIsCollection()!=1){
-                    isCheckedRequest(uid);
+                    isCheckedRequest(uid,sesstionId);
                 }
             }else {
-                isNoCheckedRequest(uid);
+                isNoCheckedRequest(uid,sesstionId);
             }
         }else {
             Intent intent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);

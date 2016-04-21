@@ -504,6 +504,6 @@
         android:textColor="@color/ic_white"
         android:background="@drawable/loing_button_corners"
         android:textSize="@dimen/home_Size_18"
-        android:text="我要出租" />
+        android:text="我要出售" />
      </RelativeLayout>
 

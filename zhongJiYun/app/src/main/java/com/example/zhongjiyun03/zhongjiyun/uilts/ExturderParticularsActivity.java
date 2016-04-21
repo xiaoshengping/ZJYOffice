@@ -1,6 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -100,7 +101,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     private LinearLayout dotLL;
     private ExturderpImagePagerAdapter pagerAdapter;
     private ArrayList<DeviceImagesBean> imageUrls = new ArrayList<>();
-    private String url = "http://mobapi.meilishuo.com/2.0/activity/selected?imei=000000000000000&mac=08%3A00%3A27%3A51%3A2e%3Aaa&qudaoid=11601&access_token=d154111f2e870ea8e58198e0f8c59339";
+    //private String url = "http://mobapi.meilishuo.com/2.0/activity/selected?imei=000000000000000&mac=08%3A00%3A27%3A51%3A2e%3Aaa&qudaoid=11601&access_token=d154111f2e870ea8e58198e0f8c59339";
     private String[] iamgeString = {"R.drawable.ic_launcher",};
 
     //拨打电话
@@ -344,13 +345,17 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                     uid=cursor.getString(0);
 
                 }
+                //步骤1：创建一个SharedPreferences接口对象
+                SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+                //步骤2：获取文件中的值
+                String sesstionId = read.getString("code","");
                 if (!TextUtils.isEmpty(uid)){
                 if (isChecked){
                         if (secondHandBean.getIsCollection()!=1){
-                            isCheckedRequest(uid);
+                            isCheckedRequest(uid,sesstionId);
                         }
                 }else {
-                isNoCheckedRequest(uid);
+                isNoCheckedRequest(uid,sesstionId);
                 }
                 }else {
                     Intent intent=new Intent(ExturderParticularsActivity.this,LoginActivity.class);
@@ -363,11 +368,12 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
 
 
     }
-    private void isNoCheckedRequest(String uid) {
+    private void isNoCheckedRequest(String uid,String sesstionId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
 
         if (!TextUtils.isEmpty(uid)){
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
             requestParams.addBodyParameter("Id",uid);
             requestParams.addBodyParameter("collectId",getIntent().getStringExtra("secondHandData"));
             requestParams.addBodyParameter("collectType","5");
@@ -404,11 +410,12 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
 
 
     }
-    private void isCheckedRequest(String uid) {
+    private void isCheckedRequest(String uid,String sesstionId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
 
         if (!TextUtils.isEmpty(uid)){
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
             requestParams.addBodyParameter("Id",uid);
             requestParams.addBodyParameter("collectId",getIntent().getStringExtra("secondHandData"));
             requestParams.addBodyParameter("collectType","5");

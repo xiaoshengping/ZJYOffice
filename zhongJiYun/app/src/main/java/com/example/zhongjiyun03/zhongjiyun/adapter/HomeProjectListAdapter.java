@@ -45,6 +45,8 @@ public class HomeProjectListAdapter extends AppBaseAdapter<SeekProjectBean> {
         return convertView;
     }
 
+
+
     private void inti(int position) {
         if (data!=null){
             if (!TextUtils.isEmpty(data.get(position).getTitle())){
@@ -74,7 +76,7 @@ public class HomeProjectListAdapter extends AppBaseAdapter<SeekProjectBean> {
 
             }
             if (!TextUtils.isEmpty(uid)){
-                if (data.get(position).getReplyStatus().equals("1")){
+                if (data.get(position).getReplyStatus()>0){
                     viewHold.successImage.setVisibility(View.VISIBLE);
                     //MyAppliction.imageLoader.displayImage(data.get(position).getFlag(),viewHold.successImage,MyAppliction.options);
                 }else {

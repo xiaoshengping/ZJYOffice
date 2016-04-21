@@ -10,6 +10,8 @@
     <dimen name="home_Size_19">19sp</dimen>
     <dimen name="home_Size_20">20sp</dimen>
     <dimen name="home_Size_21">21sp</dimen>
+    <dimen name="home_Size_22">22sp</dimen>
+    <dimen name="home_Size_23">23sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="home_viewpager_height">173dp</dimen>
 </resources>

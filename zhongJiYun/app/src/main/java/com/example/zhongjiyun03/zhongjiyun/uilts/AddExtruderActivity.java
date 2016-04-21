@@ -258,6 +258,7 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                     //步骤2：获取文件中的值
                                     String sesstionId = read.getString("code","");
                                     requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+                                    Log.e("数字SesstionId",sesstionId);
                                     requestParams.addBodyParameter("Id",uid);
                                     requestParams.addBodyParameter("DeviceNo",serialNumberEdit.getText().toString());
                                     requestParams.addBodyParameter("HourOfWork",workTimeEdit.getText().toString());
@@ -372,6 +373,12 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
     private void intiPhontData0(final String id, String userType, String imagePath, final String OwnId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        Log.e("AddSesstionId",sesstionId);
         requwstParams.addBodyParameter("Id",id);
         requwstParams.addBodyParameter("ImageType",userType);
         requwstParams.addBodyParameter("UserType","boss");
@@ -417,6 +424,11 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
     private void intiPhontData1(final String id, String userType, String imagePath, final String OwnId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requwstParams.addBodyParameter("Id",id);
         requwstParams.addBodyParameter("ImageType",userType);
         requwstParams.addBodyParameter("UserType","boss");
@@ -465,6 +477,11 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
     private void intiPhontData2(final String id, String userType, String imagePath, final String OwnId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requwstParams.addBodyParameter("Id",id);
         requwstParams.addBodyParameter("ImageType",userType);
         requwstParams.addBodyParameter("UserType","boss");
@@ -512,6 +529,11 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
     private void intiPhontData3(final String id, String userType, String imagePath, final String OwnId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requwstParams.addBodyParameter("Id",id);
         requwstParams.addBodyParameter("ImageType",userType);
         requwstParams.addBodyParameter("UserType","boss");
@@ -564,6 +586,11 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
     private void intiPhontData4(final String id, String userType, String imagePath, final String OwnId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requwstParams.addBodyParameter("Id",id);
         requwstParams.addBodyParameter("ImageType",userType);
         requwstParams.addBodyParameter("UserType","boss");

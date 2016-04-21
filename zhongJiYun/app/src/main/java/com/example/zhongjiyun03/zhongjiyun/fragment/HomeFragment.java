@@ -25,6 +25,7 @@ import com.example.zhongjiyun03.zhongjiyun.adapter.HomeProjectListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.adapter.ImagePagerAdapter;
 import com.example.zhongjiyun03.zhongjiyun.adapter.RecommendMachinistAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.SecondHandDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AdvertisementBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.SecondHandBean;
@@ -179,10 +180,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 Log.e("推荐二手机",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<SecondHandBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<SecondHandBean>>(){});
+                    AppBean<SecondHandDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandDataBean>>(){});
                     if ((appListDataBean.getResult()).equals("success")){
-                    List<SecondHandBean>    secondHandBeen=  appListDataBean.getData();
-                        intiGridView(secondHandBeen);
+                        SecondHandDataBean    secondHandDataBean=appListDataBean.getData();
+                        if (secondHandDataBean!=null){
+                            List<SecondHandBean>    secondHandBeen=  secondHandDataBean.getPagerData();
+                            intiGridView(secondHandBeen);
+                        }
+
 
                     }else if ((appListDataBean.getResult()).equals("nomore")){
 

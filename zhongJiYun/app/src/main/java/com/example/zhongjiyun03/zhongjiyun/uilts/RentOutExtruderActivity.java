@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -9,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -267,12 +269,18 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                         }
                         HttpUtils httpUtils=new HttpUtils();
                             RequestParams requestParams=new RequestParams();
+                            //步骤1：创建一个SharedPreferences接口对象
+                            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+                            //步骤2：获取文件中的值
+                            String sesstionId = read.getString("code","");
+                            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+                            Log.e("数字SesstionId",sesstionId);
                             requestParams.addBodyParameter("Id",uid);
                             requestParams.addBodyParameter("DeviceId",myExtruderBean.getId());
                             /*if (!TextUtils.isEmpty(myExtruderBean.getHistoryList().get(0).getId())){
                                 requestParams.addBodyParameter("DeviceHistoryId",myExtruderBean.getHistoryList().get(0).getId());
                             }*/
-                            requestParams.addBodyParameter("SecondHandType","1");
+                            requestParams.addBodyParameter("SecondHandType","0");
                             if (!TextUtils.isEmpty(Province)){
                                 requestParams.addBodyParameter("Province",Province);
                             }
@@ -318,8 +326,6 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                         }else {
                                             mSVProgressHUD.dismiss();
                                         }
-
-
                                     }else {
                                       mSVProgressHUD.dismiss();
                                       MyAppliction.showToast(appBean.getMsg());
@@ -400,10 +406,13 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","4");
         requwstParams.addBodyParameter("File", new File(imagePath));
-
-            requwstParams.addBodyParameter("OwnId",ownId);
-
-
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        Log.e("AddSesstionId",sesstionId);
+        requwstParams.addBodyParameter("OwnId",ownId);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -449,10 +458,13 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","4");
         requwstParams.addBodyParameter("File", new File(imagePath));
-
-            requwstParams.addBodyParameter("OwnId",ownId);
-
-
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        Log.e("AddSesstionId1",sesstionId);
+        requwstParams.addBodyParameter("OwnId",ownId);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -469,10 +481,6 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             mSVProgressHUD.showWithStatus("上传照片中(1张)...");
                         }
                         intiPhontData2(id,"13",phoneListPath.get(2),ownId);
-
-
-
-
                     }else {
                         mSVProgressHUD.dismiss();
                         MyAppliction.showToast("上传照片失败");
@@ -502,6 +510,12 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("SourceType","4");
         requwstParams.addBodyParameter("File", new File(imagePath));
 
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        Log.e("AddSesstionId2",sesstionId);
             requwstParams.addBodyParameter("OwnId",ownId);
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
@@ -519,9 +533,10 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                         }else if (phoneListPath.size()==3){
                             mSVProgressHUD.dismiss();
                             mSVProgressHUD.showSuccessWithStatus("出租钻机成功");
-                            finish();
+                            showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出租申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
+
                         }
-                        if (panoramaPath.length()>3){
+                        if (phoneListPath.size()>3){
                             intiPhontData3(id,"14",phoneListPath.get(3),ownId);
                         }
 
@@ -557,8 +572,13 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","3");
         requwstParams.addBodyParameter("File", new File(imagePath));
-
-            requwstParams.addBodyParameter("OwnId",ownId);
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        Log.e("AddSesstionId3",sesstionId);
+        requwstParams.addBodyParameter("OwnId",ownId);
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
@@ -573,7 +593,8 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                         }else if (phoneListPath.size()==4){
                             mSVProgressHUD.dismiss();
                             mSVProgressHUD.showSuccessWithStatus("出租钻机成功");
-                            finish();
+                            showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出租申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
+
                         }
                         if (phoneListPath!=null&&phoneListPath.size()==5){
 
@@ -609,7 +630,12 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","3");
         requwstParams.addBodyParameter("File", new File(imagePath));
-
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        Log.e("AddSesstionId4",sesstionId);
             requwstParams.addBodyParameter("OwnId",ownId);
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
@@ -623,7 +649,8 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                         mSVProgressHUD.dismiss();
                         mSVProgressHUD.showSuccessWithStatus("出租钻机成功");
-                        finish();
+                        showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出租申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
+
 
 
 
@@ -646,7 +673,39 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
 
     }
-
+    //对话框
+    private void showExitGameAlert(String text,String tailtText) {
+        final AlertDialog dlg = new AlertDialog.Builder(RentOutExtruderActivity.this).create();
+        dlg.show();
+        dlg.setCanceledOnTouchOutside(false);
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.commit_cash_deposit_layout);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        TextView tailtVt= (TextView) window.findViewById(R.id.tv);
+        tailtVt.setText(tailtText);
+        ok.setText("交纳保证金");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent=new Intent(RentOutExtruderActivity.this,CommitCashDepositActivity.class);
+                startActivity(intent);
+                dlg.cancel();
+            }
+        });
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+                finish();
+            }
+        });
+    }
 
     //拍照和相册弹出框
     private void showDialog(final int captureIndext, final int pickIndext, final Uri uri) {

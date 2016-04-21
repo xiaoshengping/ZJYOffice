@@ -159,7 +159,6 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
                                 immobilizationTextView.setVisibility(View.GONE);
                                 immobImage.setVisibility(View.GONE);
                             }
-
                             addressTextView.setText(serviceProviderBean.getAddress());
                             chanceZhuText.setText(serviceProviderBean.getProviderTypeStr());
                             summaryText.setText(serviceProviderBean.getSummary());

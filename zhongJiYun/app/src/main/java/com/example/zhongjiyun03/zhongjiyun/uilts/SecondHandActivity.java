@@ -29,6 +29,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.HomeSecondHandListAdapter;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.SecondHandDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.SecondHandBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.FacillyChildsBean;
@@ -254,20 +256,20 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 Log.e("二手钻机",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<SecondHandBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<SecondHandBean>>(){});
+                    AppBean<SecondHandDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandDataBean>>(){});
                     if ((appListDataBean.getResult()).equals("success")){
-                        secondHandBeen=  appListDataBean.getData();
-                        intiListView(secondHandBeen);
-                        secondHandListview.onRefreshComplete();
+                        SecondHandDataBean secondHandDataBean=  appListDataBean.getData();
+                        if (secondHandDataBean!=null){
+                            secondHandBeen=  secondHandDataBean.getPagerData();
+                            intiListView(secondHandBeen);
+                        }
                     }else if ((appListDataBean.getResult()).equals("nomore")){
-                        secondHandListview.onRefreshComplete();
                         MyAppliction.showToast("已到最底了");
                     }else if ((appListDataBean.getResult()).equals("empty")){
                         //secondHandBeen.clear();
-                        secondHandListview.onRefreshComplete();
                         MyAppliction.showToast("没有更多数据");
                     }
-
+                    secondHandListview.onRefreshComplete();
                 }
 
             }

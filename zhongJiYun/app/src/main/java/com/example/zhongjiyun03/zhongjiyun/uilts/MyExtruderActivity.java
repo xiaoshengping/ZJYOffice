@@ -162,7 +162,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
 
     private void intiListView() {
 
-        HomeExtruderListAdapter homeExtruderAdapter=new HomeExtruderListAdapter(myExtruderBeens,this);
+        HomeExtruderListAdapter homeExtruderAdapter=new HomeExtruderListAdapter(myExtruderBeens,this,extruderListView);
         extruderListView.setAdapter(homeExtruderAdapter);
         //homeExtruderAdapter.notifyDataSetChanged();
         extruderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

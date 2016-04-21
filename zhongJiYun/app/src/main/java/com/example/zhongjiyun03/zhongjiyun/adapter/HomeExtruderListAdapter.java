@@ -2,36 +2,66 @@ package com.example.zhongjiyun03.zhongjiyun.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
+import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.CommitCashDepositActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.RentOutExtruderActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.SellExtruderActivity;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ZHONGJIYUN03 on 2016/3/12.
  */
-public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> implements View.OnClickListener {
+public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
       private ViewHold viewHold;
-      private int positions;
-
-
-    public HomeExtruderListAdapter(List<MyExtruderBean> data, Context context) {
+    // 用来记录按钮状态的Map
+    public static Map<Integer, Boolean> isChecked;
+    private SVProgressHUD mSVProgressHUD;//loding
+    private PullToRefreshListView extruderListView;
+    public HomeExtruderListAdapter(List<MyExtruderBean> data, Context context,PullToRefreshListView extruderListView) {
         super(data, context);
+        this.extruderListView=extruderListView;
     }
+    private void initButton() {
+        // 初使化操作，默认都是false
+        isChecked = new HashMap<Integer, Boolean>();
+        for (int i = 0; i < data.size(); i++){
+            isChecked.put(i, false);
+        }
+
+    }
+
 
     @Override
     public View createView(int position, View convertView, ViewGroup parent) {
@@ -45,13 +75,16 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> impl
            viewHold= (ViewHold) convertView.getTag();
 
           }
-        positions=position;
+        initButton();
         inti(position);
+
         return convertView;
     }
 
     private void inti(int position) {
+        mSVProgressHUD = new SVProgressHUD(context);
         if (data!=null){
+
             if (!TextUtils.isEmpty(data.get(position).getDeviceNo())){
                 viewHold.numberTextView.setText(data.get(position).getDeviceNo());
 
@@ -73,19 +106,10 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> impl
             }
             if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
                   if (data.get(position).getSecondHandState()==1){
+                      viewHold.imageChuzTage.setVisibility(View.VISIBLE);
                       viewHold.imageChuzTage.setBackgroundResource(R.mipmap.leave_state);
                       if (data.get(position).getSecondHandType()==0){
-
-                          viewHold.sellTextView.setText("撤销出售");
-                          Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
-                          drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                          viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
-                          Drawable drawableOne= context.getResources().getDrawable(R.mipmap.update_icon);
-                          drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
-                          viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );
-                          viewHold.rentOutTextView.setText("更新出售信息");
-                      }else if (data.get(position).getSecondHandType()==1){
-                          viewHold.rentOutTextView.setText("撤销出租");
+                          viewHold.sellTextView.setText("撤回出租");
                           Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
                           drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
                           viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
@@ -93,12 +117,22 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> impl
                           drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
                           viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );
                           viewHold.rentOutTextView.setText("更新出租信息");
+                      }else if (data.get(position).getSecondHandType()==1){
+                          viewHold.rentOutTextView.setText("撤回出售");
+                          Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
+                          drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                          viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
+                          Drawable drawableOne= context.getResources().getDrawable(R.mipmap.update_icon);
+                          drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
+                          viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );
+                          viewHold.rentOutTextView.setText("更新出售信息");
                       }
 
                   }else if (data.get(position).getSecondHandState()==0){
+                      viewHold.imageChuzTage.setVisibility(View.VISIBLE);
                       viewHold.imageChuzTage.setBackgroundResource(R.mipmap.audit_ing_icon);
                       if (data.get(position).getSecondHandType()==0){
-                          viewHold.sellTextView.setText("撤销出售");
+                          viewHold.sellTextView.setText("撤回出租");
                           Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
                           drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
                           viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
@@ -108,7 +142,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> impl
                           viewHold.rentOutTextView.setText("缴纳保证金");
                           viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.yellow));
                       }else if (data.get(position).getSecondHandType()==1){
-                          viewHold.sellTextView.setText("撤销出租");
+                          viewHold.sellTextView.setText("撤回出售");
                           Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
                           drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
                           viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
@@ -117,71 +151,165 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> impl
                           viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );
                           viewHold.rentOutTextView.setText("缴纳保证金");
                           viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.yellow));
-
-
                       }
                   }
 
 
             }else {
+                viewHold.sellTextView.setTextColor(context.getResources().getColor(R.color.red));
                 viewHold.sellTextView.setText("我要出售");
+                Drawable drawable= context.getResources().getDrawable(R.mipmap.rig_sell);
+                drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
+                Drawable drawableOne= context.getResources().getDrawable(R.mipmap.rig_lease);
+                drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
+                viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );
                 viewHold.rentOutTextView.setText("我要出租");
+                viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.blue));
+
+
 
             }
         }
-        viewHold.rentOutTextView.setOnClickListener(this);
-        viewHold.sellTextView.setOnClickListener(this);
+        viewHold.rentOutTextView.setOnClickListener(new rentOutClick(position));
+        viewHold.sellTextView.setOnClickListener(new sellClick(position));
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case  R.id.rent_out_textview:
-                 if (!TextUtils.isEmpty(data.get(positions).getSecondHandId())){
-                     if (data.get(positions).getSecondHandState()==1){
-                         Intent cashIntent=new Intent(context, CommitCashDepositActivity.class);
-                         context.startActivity(cashIntent);
+    //此为listview条目中的rentOutClick按钮点击事件的写法
 
-                     }else if (data.get(positions).getSecondHandState()==0){
+    class rentOutClick implements View.OnClickListener {
 
-                     }
-                 }else {
-                     Intent rentOutIntent=new Intent(context, RentOutExtruderActivity.class);
-                     rentOutIntent.putExtra("data",data.get(positions));
-                     context.startActivity(rentOutIntent);
-                 }
+        private int position;
 
-                break;
-            case  R.id.sell_text_view:
-                if (!TextUtils.isEmpty(data.get(positions).getSecondHandId())){
+        public rentOutClick(int pos){  // 在构造时将position传给它这样就知道点击的是哪个条目的按钮
+            this.position = pos;
+        }
+        @Override
+        public void onClick(View v) {
+            int vid=v.getId();
+            if (vid == viewHold.rentOutTextView.getId()){
+                if (isChecked.get(position) == false){
+                    isChecked.put(position, true);   // 根据点击的情况来将其位置和相应的状态存入
+                    if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
+                        if (data.get(position).getSecondHandState()==1){
 
-                    if (data.get(positions).getSecondHandState()==0){
-                        MyAppliction.showToast("已撤销出售");
-                        viewHold.sellTextView.setText("我要出售");
-                        Drawable drawable= context.getResources().getDrawable(R.mipmap.rig_sell);
-                        drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                        viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
-                    }else if (data.get(positions).getSecondHandState()==1){
-                        MyAppliction.showToast("已撤销出租");
-                        viewHold.sellTextView.setText("我要出售");
-                        Drawable drawable= context.getResources().getDrawable(R.mipmap.rig_sell);
-                        drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                        viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
+
+                        }else if (data.get(position).getSecondHandState()==0){
+                            Intent cashIntent=new Intent(context, CommitCashDepositActivity.class);
+                            context.startActivity(cashIntent);
+                        }
+                    }else {
+                        Intent rentOutIntent=new Intent(context, RentOutExtruderActivity.class);
+                        rentOutIntent.putExtra("data",data.get(position));
+                        context.startActivity(rentOutIntent);
                     }
+                    //Log.e("steta________", position + "");
+                } else if (isChecked.get(position) == true){
+                    isChecked.put(position, false);  // 根据点击的情况来将其位置和相应的状态存入
 
-                }else {
-                    Intent sellIntent=new Intent(context, SellExtruderActivity.class);
-                    sellIntent.putExtra("data",data.get(positions));
-                    context.startActivity(sellIntent);
                 }
+                notifyDataSetChanged();
+            }
+        }
 
-                break;
+    }
+    //此为listview条目中的rentOutClick按钮点击事件的写法
 
+    class sellClick implements View.OnClickListener {
+
+        private int position;
+
+        public sellClick(int pos){  // 在构造时将position传给它这样就知道点击的是哪个条目的按钮
+            this.position = pos;
+        }
+        @Override
+        public void onClick(View v) {
+            int vid=v.getId();
+            if (vid == viewHold.sellTextView.getId()){
+                if (isChecked.get(position) == false){
+                    isChecked.put(position, true);   // 根据点击的情况来将其位置和相应的状态存入
+                    Log.e("secondHandId",data.get(position).getSecondHandId()+"---"+position);
+                    if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
+                        if (data.get(position).getSecondHandType()==0){
+                            MyAppliction.showToast("已撤回出租");
+                            recallRentOutData(position);
+
+                        }else if (data.get(position).getSecondHandType()==1){
+                            MyAppliction.showToast("已撤回出售");
+                            recallRentOutData(position );
+
+                        }
+
+                    }else {
+                        Intent sellIntent=new Intent(context, SellExtruderActivity.class);
+                        sellIntent.putExtra("data",data.get(position));
+                        context.startActivity(sellIntent);
+                    }
+                    //Log.e("steta________", position + "");
+                } else if (isChecked.get(position) == true){
+                    isChecked.put(position, false);  // 根据点击的情况来将其位置和相应的状态存入
+
+                }
+                notifyDataSetChanged();
+            }
+        }
+
+    }
+
+    private void recallRentOutData(int position) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        SQLhelper sqLhelper=new SQLhelper(context);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
 
         }
+        if (!TextUtils.isEmpty(uid)){
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = context.getSharedPreferences("lock", context.MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.addBodyParameter("id",uid);
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+            requestParams.addBodyParameter("deviceId",data.get(position).getId());
+            requestParams.addBodyParameter("deviceHistoryId",data.get(position).getSecondHandId());
+
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRecallRentOrSellData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                       Log.e("撤回出售",responseInfo.result);
+                        AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
+                        if (appDataBean.getResult().equals("success")){
+                            mSVProgressHUD.showSuccessWithStatus("撤回成功");
+                            extruderListView.setRefreshing();
+                        }else if (appDataBean.getResult().equals("fail")){
+                            mSVProgressHUD.showErrorWithStatus("撤回失败");
+
+                        }
+
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    Log.e("撤回出售",s);
+                }
+            });
+        }else {
+            MyAppliction.showToast("撤回失败");
+        }
+
+
+
+
+
     }
-
-
 
 
     private class ViewHold {

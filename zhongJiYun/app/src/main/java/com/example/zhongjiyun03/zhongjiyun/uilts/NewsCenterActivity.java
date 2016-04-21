@@ -134,7 +134,7 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getNewsData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-               // Log.e("新闻",responseInfo.result);\
+                Log.e("新闻",responseInfo.result);
                 AppListDataBean<NewsDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<NewsDataBean>>(){});
                 if ((appListDataBean.getResult()).equals("success")){
 

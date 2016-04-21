@@ -18,7 +18,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.HomeSecondHandListAdapter;
-import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.home.AttentionSecondHandDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.SecondHandBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
@@ -102,10 +103,12 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     Log.e("关注钻机",responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)){
-                        AppListDataBean<SecondHandBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<SecondHandBean>>(){});
+                        AppBean<AttentionSecondHandDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AttentionSecondHandDataBean>>(){});
                         if ((appListDataBean.getResult()).equals("success")){
-                            List<SecondHandBean> secondHandBeen=  appListDataBean.getData();
-                            if (secondHandBeen!=null){
+                            AttentionSecondHandDataBean attentionSecondHandDataBean=  appListDataBean.getData();
+
+                            if (attentionSecondHandDataBean!=null){
+                                List<SecondHandBean> secondHandBeen=  attentionSecondHandDataBean.getPagerData();
                                 initListView(secondHandBeen);
                                 attentionExtrunLsitview.onRefreshComplete();
                             }
