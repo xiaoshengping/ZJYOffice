@@ -53,7 +53,17 @@ public class CooperationActivity extends AppCompatActivity implements View.OnCli
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
         String url= AppUtilsUrl.BaseUrl+"/app/index.html#/tab/partner";
-
+        webView.getSettings().setSupportZoom(true);          //支持缩放
+        webView.getSettings().setBuiltInZoomControls(true);  //启用内置缩放装置
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // TODO Auto-generated method stub
+                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                view.loadUrl(url);
+                return true;
+            }
+        });
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(url);
         webView.setWebViewClient(new WebViewClient(){
@@ -88,26 +98,27 @@ public class CooperationActivity extends AppCompatActivity implements View.OnCli
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
 
-
-
-
         }
-
-
-
-
     }
 
+
+    //改写物理按键——返回的逻辑
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-// KeyEvent.KEYCODE_BACK代表返回操作.
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            // 处理返回操作.
-            finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
-
+        // TODO Auto-generated method stub
+        if(keyCode==KeyEvent.KEYCODE_BACK)
+        {
+            if(webView.canGoBack())
+            {
+                webView.goBack();//返回上一页面
+                return true;
+            }
+            else
+            {
+                finish();
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            }
         }
-        return true;
+        return super.onKeyDown(keyCode, event);
     }
-
 }

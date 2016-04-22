@@ -55,6 +55,7 @@ public class CommentOwnerActivity extends AppCompatActivity implements View.OnCl
     private int ratings;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +126,8 @@ public class CommentOwnerActivity extends AppCompatActivity implements View.OnCl
         }
         //
         if (!TextUtils.isEmpty(getIntent().getStringExtra("projectId"))){
+            if (ratings!=0.0){
+            if (!TextUtils.isEmpty(commentText.getText().toString())){
             HttpUtils httpUtils=new HttpUtils();
             RequestParams requestParams=new RequestParams();
             requestParams.addBodyParameter("id",uid);
@@ -134,12 +137,8 @@ public class CommentOwnerActivity extends AppCompatActivity implements View.OnCl
             //步骤2：获取文件中的值
             String sesstionId = read.getString("code","");
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-            if (!TextUtils.isEmpty(commentText.getText().toString())){
-                requestParams.addBodyParameter("commentary",commentText.getText().toString());
-            }
-            if (ratings!=0.0){
-              requestParams.addBodyParameter("attitudeScore",ratings+"");
-            }
+            requestParams.addBodyParameter("commentary",commentText.getText().toString());
+            requestParams.addBodyParameter("attitudeScore",ratings+"");
             mSVProgressHUD.showWithStatus("正在提交...");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCommentOwnerData(),requestParams, new RequestCallBack<String>() {
                 @Override
@@ -170,6 +169,13 @@ public class CommentOwnerActivity extends AppCompatActivity implements View.OnCl
                 }
             });
 
+            }else {
+                MyAppliction.showToast("请填写一下评论内容");
+
+            }
+            }else {
+                MyAppliction.showToast("请选择服务态度");
+            }
         }else {
 
             MyAppliction.showToast("提交数据失败");
@@ -195,5 +201,6 @@ public class CommentOwnerActivity extends AppCompatActivity implements View.OnCl
         }
         return true;
     }
+
 
 }

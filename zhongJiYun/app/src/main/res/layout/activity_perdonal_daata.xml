@@ -18,13 +18,19 @@
 
 
     <RelativeLayout
-        android:id="@+id/image_rlayout"
+
         android:background="@color/ic_white"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="80dp">
+        <RelativeLayout
+            android:id="@+id/image_rlayout"
+            android:layout_width="250dp"
+            android:layout_height="match_parent">
+
         <TextView
+            android:layout_centerVertical="true"
             android:textColor="@color/tailt_dark"
             android:textSize="@dimen/home_Size_15"
             android:layout_marginTop="15dp"
@@ -32,7 +38,7 @@
             android:text="个人头像"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
+        </RelativeLayout>
         <ImageView
             android:id="@+id/image_view"
             android:scaleType="centerCrop"
@@ -40,13 +46,15 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@mipmap/default_avatar"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:gravity="center_vertical|right"
             android:textSize="@dimen/home_Size_14"
             />
-
     </RelativeLayout>
+
+
     <ImageView
         android:src="@color/background"
         android:layout_width="match_parent"

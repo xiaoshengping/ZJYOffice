@@ -87,6 +87,18 @@ public class NewsListParticularsActivity extends AppCompatActivity implements Vi
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl(url);
         //Log.e("新闻id",getIntent().getStringExtra("newDataId"));
+        webView.getSettings().setSupportZoom(true);          //支持缩放
+        webView.getSettings().setBuiltInZoomControls(true);  //启用内置缩放装置
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // TODO Auto-generated method stub
+                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                view.loadUrl(url);
+                return true;
+            }
+        });
+
         webView.setWebViewClient(new WebViewClient(){
 
             @Override

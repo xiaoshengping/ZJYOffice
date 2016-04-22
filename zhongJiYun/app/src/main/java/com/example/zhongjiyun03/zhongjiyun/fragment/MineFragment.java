@@ -1,25 +1,32 @@
 package com.example.zhongjiyun03.zhongjiyun.fragment;
 
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.SystemMessageDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
+import com.example.zhongjiyun03.zhongjiyun.http.SystemMessageSQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.AttentionExtrunActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.AttentionProjectActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.CommentActivity;
@@ -37,6 +44,8 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
+import java.text.SimpleDateFormat;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,13 +77,28 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private TextView phoneText;
     @ViewInject(R.id.sting_layout)
     private LinearLayout stingLayout;
-    @ViewInject(R.id.rating_bar)
-    private RatingBar ratingBar;
+
     @ViewInject(R.id.comment_layout)
     private LinearLayout commentLayout;
-
-
-
+    @ViewInject(R.id.rating_one)
+    private TextView ratingOne;
+    @ViewInject(R.id.rating_two)
+    private TextView ratingTwo;
+    @ViewInject(R.id.rating_three)
+    private TextView ratingThree;
+    @ViewInject(R.id.rating_four)
+    private TextView ratingFour;
+    @ViewInject(R.id.rating_five)
+    private TextView ratingFive;
+    @ViewInject(R.id.evaluate_remind_image)
+    private ImageView evaluateRemindImage; //评论红点
+    @ViewInject(R.id.projectReply_remind_image)
+    private ImageView projectReplyeminDImage; //竞标红点
+    @ViewInject(R.id.message_remind_image)
+    private ImageView messageemindImage; //消息红点
+    @ViewInject(R.id.giftBag_remind_image)
+    private ImageView giftBagRemindImage; //红包红点
+    private String date;
 
 
     public MineFragment() {
@@ -109,7 +133,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         loingXshiLayout.setOnClickListener(this);
         stingLayout.setOnClickListener(this);
         commentLayout.setOnClickListener(this);
-
+        //获取系统时间
+        SimpleDateFormat sDateFormat    =   new    SimpleDateFormat("yyyy-MM-dd    HH:mm:ss");
+        date=sDateFormat.format(new java.util.Date());
 
     }
 
@@ -120,10 +146,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
         String uid=null;  //用户id
-         String phone=null;  //手机号码
-         String name=null;     //名字
-         String StarRate=null; //等级
-         String headtHumb=null;  //头像路径
+        String phone=null;  //手机号码
+        String name=null;     //名字
+        String StarRate=null; //等级
+        String headtHumb=null;  //头像路径
         while (cursor.moveToNext()) {
             uid=cursor.getString(0);
             phone= cursor.getString(1);
@@ -145,7 +171,45 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 phoneText.setText(phone);
             }
             if (!TextUtils.isEmpty(StarRate)){
-                ratingBar.setRating(Integer.parseInt(StarRate));
+                if (StarRate.equals("1")){
+                    ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                    ratingThree.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                    ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                    ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                }else if (StarRate.equals("2")){
+
+                    ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingThree.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                    ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                    ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
+
+                }else if (StarRate.equals("3")){
+
+                    ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                    ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
+
+                }else if (StarRate.equals("4")){
+
+                    ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingFour.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
+
+                }else if (StarRate.equals("5")){
+
+                    ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingFour.setBackgroundResource(R.mipmap.ratingbar_check);
+                    ratingFive.setBackgroundResource(R.mipmap.ratingbar_check);
+
+                }
             }
 
         }else {
@@ -165,19 +229,87 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         RequestParams requestParams=new RequestParams();
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("id",uid);
-        }
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSystemMessageRemindData(),requestParams, new RequestCallBack<String>() {
+            SystemMessageSQLhelper sqLhelper=new SystemMessageSQLhelper(getActivity());
+            SQLiteDatabase db= sqLhelper.getWritableDatabase();
+            Cursor cursor=db.query(SystemMessageSQLhelper.tableName, null, null, null, null, null, null);
+            String evaluate=null;  //我的评价数
+            String message=null;  //消息数
+            String giftBag=null;     //我的红包数
+            String projectReply=null; //我的竞标数
+
+            while (cursor.moveToNext()) {
+
+                evaluate=cursor.getString(0);
+                message= cursor.getString(1);
+                giftBag = cursor.getString(2);
+                projectReply=cursor.getString(3);
+
+            }
+
+            if (!TextUtils.isEmpty(evaluate)){
+            requestParams.addBodyParameter("evaluate",evaluate);
+            }
+            if (!TextUtils.isEmpty(message)){
+                requestParams.addBodyParameter("message",message);
+            }
+            if (!TextUtils.isEmpty(giftBag)){
+                requestParams.addBodyParameter("giftBag",giftBag);
+            }
+            if (!TextUtils.isEmpty(projectReply)){
+                requestParams.addBodyParameter("projectReply",projectReply);
+            }
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSystemMessageRemindData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.e("消息提醒",responseInfo.result);
+
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    AppBean<SystemMessageDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SystemMessageDataBean>>(){});
+                    if (appBean.getResult().equals("success")){
+                        SystemMessageDataBean systemMessageDataBean=  appBean.getData();
+                        if (systemMessageDataBean!=null){
+                            if (systemMessageDataBean.getEvaluate()>0){
+                                evaluateRemindImage.setVisibility(View.VISIBLE);
+                            }else {
+                                evaluateRemindImage.setVisibility(View.GONE);
+                            }
+                            if (systemMessageDataBean.getGiftBag()>0){
+                                giftBagRemindImage.setVisibility(View.VISIBLE);
+                            }else {
+                                giftBagRemindImage.setVisibility(View.GONE);
+                            }
+                            if (systemMessageDataBean.getMessage()>0){
+                                messageemindImage.setVisibility(View.VISIBLE);
+                            }else {
+                                messageemindImage.setVisibility(View.GONE);
+                            }
+                            if (systemMessageDataBean.getProjectReply()>0){
+                                projectReplyeminDImage.setVisibility(View.VISIBLE);
+                            }else {
+                                projectReplyeminDImage.setVisibility(View.GONE);
+                            }
+                        }
+
+                    }else {
+
+                    }
+
+                }
+
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-
+                Log.e("消息提醒",s);
             }
         });
-
+        }
 
 
     }
@@ -194,6 +326,24 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             uid=cursor.getString(0);
 
         }
+        //获取系统提醒数据
+        SystemMessageSQLhelper systemMessageSQLhelper=new SystemMessageSQLhelper(getActivity());
+        SQLiteDatabase sqLiteDatabase= systemMessageSQLhelper.getWritableDatabase();
+        Cursor cursors=sqLiteDatabase.query(SystemMessageSQLhelper.tableName, null, null, null, null, null, null);
+
+        String evaluate=null;  //我的评价数
+        String message=null;  //消息数
+        String giftBag=null;     //我的红包数
+        String projectReply=null; //我的竞标数
+
+        while (cursors.moveToNext()) {
+            evaluate=cursors.getString(0);
+            message= cursors.getString(1);
+            giftBag = cursors.getString(2);
+            projectReply=cursors.getString(3);
+
+        }
+
         switch (v.getId()){
             case R.id.loing_layout:
                 Intent intent=new Intent(getActivity(), LoginActivity.class);
@@ -241,6 +391,19 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.redpacket_layout:
                 if (!TextUtils.isEmpty(uid)){
+                    if (!TextUtils.isEmpty(giftBag)){
+                        Log.e("giftBag",giftBag);
+
+                        update("GiftBag",SystemMessageSQLhelper.GIFTBAG,date);
+                    }else {
+
+                        if (!TextUtils.isEmpty(date)){
+                            Log.e("添加数据了",date);
+                            insertData(systemMessageSQLhelper,SystemMessageSQLhelper.GIFTBAG,date);
+                        }
+
+                    }
+                    giftBagRemindImage.setVisibility(View.GONE);
                     Intent redPatckIntent=new Intent(getActivity(), MyRedPacketActivity.class);
                     startActivity(redPatckIntent);
                     getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
@@ -268,6 +431,28 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         }
     }
-
+    /**
+     * 插入数据
+     */
+    public void insertData(SystemMessageSQLhelper sqLhelper,String key,String value){
+        SQLiteDatabase db=sqLhelper.getWritableDatabase();
+        // db.execSQL("insert into user(uid,userName,userIcon,state) values('战士',3,5,7)");
+        ContentValues values=new ContentValues();
+        values.put(key,value);
+        db.insert(SystemMessageSQLhelper.tableName, key, values);
+        db.close();
+    }
+    /**
+     * 更新数据
+     */
+    public void update(String id,String key,String value){
+        SystemMessageSQLhelper sqLhelper= new SystemMessageSQLhelper(getActivity());
+        SQLiteDatabase db = sqLhelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(key, value);
+        db.update(SystemMessageSQLhelper.tableName, contentValues,
+                id+"=?", new String[]{id});
+        Log.e("更新了数据","更新了数据");
+    }
 
 }

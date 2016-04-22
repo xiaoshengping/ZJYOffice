@@ -52,6 +52,10 @@ public class ImagePagerActivity extends ActionBarActivity {
                 urls.add(MyExtruderBean.getDeviceCertificatePhoto());
             }
 
+        }else if (getIntent().getStringExtra("tage").equals("imageBrowerPersonTouXiang")){
+            PersonageInformationBean resumeValueBean = (PersonageInformationBean) getIntent().getSerializableExtra(EXTRA_IMAGE_URLS);
+
+            urls.add(resumeValueBean.getHeadthumb());
         }
 
 

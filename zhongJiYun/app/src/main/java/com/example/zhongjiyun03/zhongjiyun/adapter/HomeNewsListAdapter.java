@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.NewsDataBean;
-import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -54,7 +53,7 @@ public class HomeNewsListAdapter extends AppBaseAdapter<NewsDataBean> {
             }
             if (!TextUtils.isEmpty(data.get(position).getFrontCover())){
 
-                MyAppliction.imageLoader.displayImage(AppUtilsUrl.BaseUrl+data.get(position).getFrontCover(),viewHold.newsIcon,MyAppliction.options);
+                MyAppliction.imageLoader.displayImage(data.get(position).getFrontCover(),viewHold.newsIcon,MyAppliction.options);
 
             }
 

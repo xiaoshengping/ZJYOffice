@@ -244,6 +244,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
         file=new File(IMAGE_FILE_LOCATION+ConstantSet.USERTEMPPIC);
         imageUri = Uri.fromFile(file);//The Uri t
         mSVProgressHUD = new SVProgressHUD(this);
+        imageView.setOnClickListener(this);
 
 
 
@@ -294,6 +295,9 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
             case R.id.personage_image:
                 imageBrower(2,personageInformation);
                 break;
+            case R.id.image_view:
+                imageBrowerPersonTouXiang(0,personageInformation);
+                break;
 
 
 
@@ -303,7 +307,14 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
 
 
     }
-
+    private void imageBrowerPersonTouXiang(int position,PersonageInformationBean urls) {
+        Intent intent = new Intent(PersonageInformationActivity.this, ImagePagerActivity.class);
+        // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, urls);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        intent.putExtra("tage","imageBrowerPersonTouXiang");
+        startActivity(intent);
+    }
     private void imageBrower(int position,PersonageInformationBean urls) {
         Intent intent = new Intent(PersonageInformationActivity.this, ImagePagerActivity.class);
         // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取

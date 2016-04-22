@@ -95,7 +95,6 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
             }
             if (!TextUtils.isEmpty(data.get(position).getThumbnail())){
                 MyAppliction.imageLoader.displayImage(data.get(position).getThumbnail(),viewHold.imageView,MyAppliction.options);
-
             }
             viewHold.tailtTextView.setText(data.get(position).getManufacture()+data.get(position).getNoOfManufacture());
             if (data.get(position).getAuditStutas()==1){
@@ -106,8 +105,13 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
             }
             if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
                   if (data.get(position).getSecondHandState()==1){
-                      viewHold.imageChuzTage.setVisibility(View.VISIBLE);
-                      viewHold.imageChuzTage.setBackgroundResource(R.mipmap.leave_state);
+                      if (data.get(position).getSecondHandState()==1){
+                          viewHold.imageChuzTage.setVisibility(View.VISIBLE);
+                          viewHold.imageChuzTage.setBackgroundResource(R.mipmap.leave_state);
+                      }else {
+                          viewHold.imageChuzTage.setBackgroundResource(0);
+                      }
+
                       if (data.get(position).getSecondHandType()==0){
                           viewHold.sellTextView.setText("撤回出租");
                           Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
@@ -129,8 +133,13 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                       }
 
                   }else if (data.get(position).getSecondHandState()==0){
-                      viewHold.imageChuzTage.setVisibility(View.VISIBLE);
-                      viewHold.imageChuzTage.setBackgroundResource(R.mipmap.audit_ing_icon);
+                      if (data.get(position).getSecondHandState()==0){
+                          viewHold.imageChuzTage.setVisibility(View.VISIBLE);
+                          viewHold.imageChuzTage.setBackgroundResource(R.mipmap.audit_ing_icon);
+                      }else {
+                          viewHold.imageChuzTage.setBackgroundResource(0);
+                      }
+
                       if (data.get(position).getSecondHandType()==0){
                           viewHold.sellTextView.setText("撤回出租");
                           Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
@@ -213,7 +222,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
         }
 
     }
-    //此为listview条目中的rentOutClick按钮点击事件的写法
+    //此为listview条目中的sellClick按钮点击事件的写法
 
     class sellClick implements View.OnClickListener {
 

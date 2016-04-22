@@ -36,14 +36,14 @@ public class MyAppliction extends Application {
                 .showImageForEmptyUri(R.mipmap.default_img)//加载数据为空时显示的图片
                 .showImageOnFail(R.mipmap.default_img)//加载失败时显示的图片
                 .build();
-        /*RoundedOptions = new DisplayImageOptions.Builder()
-                .showStubImage(R.mipmap.mine_head_default)//加载等待 时显示的图片
-                .showImageForEmptyUri(R.mipmap.mine_head_default)//加载数据为空时显示的图片
-                .showImageOnFail(R.mipmap.mine_head_default)//加载失败时显示的图片
+        RoundedOptions = new DisplayImageOptions.Builder()
+                .showStubImage(R.mipmap.default_img)//加载等待 时显示的图片
+                .showImageForEmptyUri(R.mipmap.default_img)//加载数据为空时显示的图片
+                .showImageOnFail(R.mipmap.default_img)//加载失败时显示的图片
                 .cacheInMemory()
                 .cacheOnDisc()
                 .displayer(new RoundedBitmapDisplayer(200))
-                .build();*/
+                .build();
         RoundedOptionsOne = new DisplayImageOptions.Builder()
                 .showStubImage(R.mipmap.default_img)//加载等待 时显示的图片
                 .showImageForEmptyUri(R.mipmap.default_img)//加载数据为空时显示的图片

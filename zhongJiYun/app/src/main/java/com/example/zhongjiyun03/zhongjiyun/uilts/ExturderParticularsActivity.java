@@ -138,7 +138,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     @ViewInject(R.id.dirll_depth_text)
     private TextView dirllDepthText;    //最大成孔深度
     @ViewInject(R.id.txiang_image)
-    private TextView txiangImage;     //头像image
+    private ImageView txiangImage;     //头像image
     @ViewInject(R.id.address_text)
     private TextView addressText;     //定位地址
     private SecondHandListProjectBean secondHandBean; //数据
@@ -153,6 +153,10 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     @ViewInject(R.id.checkBox_check)
     private CheckBox checkBoxCheck;
     private SVProgressHUD mSVProgressHUD;//loding
+    @ViewInject(R.id.image_view_one)
+    private ImageView imageViewOne;
+    @ViewInject(R.id.image_view_two)
+    private ImageView imageViewTwo;
 
 
 
@@ -278,9 +282,36 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                             }else {
                                 shuiMingText.setVisibility(View.GONE);
                             }
+                            if (!TextUtils.isEmpty(secondHandBean.getDeviceDto().getBossHeadthumb())){
+                                MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceDto().getBossHeadthumb(),txiangImage,MyAppliction.RoundedOptions);
+                            }
                             tailtText.setText("机主"+secondHandBean.getDeviceDto().getBossName()+"自述");
-                            MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceDto().getBossHeadthumb(),imageView,MyAppliction.RoundedOptionsOne);
-                             if (secondHandBean.getDeviceBaseDto().getDeviceImages()!=null&&
+                            if (secondHandBean.getDeviceImages()!=null){
+                                if (secondHandBean.getDeviceImages().size()>0){
+                                    imageView.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(0),imageView,MyAppliction.RoundedOptionsOne);
+
+                                }else if (secondHandBean.getDeviceImages().size()>1){
+                                    imageView.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(0),imageView,MyAppliction.RoundedOptionsOne);
+                                    imageViewOne.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(1),imageViewOne,MyAppliction.RoundedOptionsOne);
+
+                                }else if (secondHandBean.getDeviceImages().size()>2){
+                                    imageView.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(0),imageView,MyAppliction.RoundedOptionsOne);
+                                    imageViewOne.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(1),imageViewOne,MyAppliction.RoundedOptionsOne);
+                                    imageViewTwo.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(2),imageViewTwo,MyAppliction.RoundedOptionsOne);
+
+                                }
+                            }else {
+                                imageView.setVisibility(View.GONE);
+                                imageViewOne.setVisibility(View.GONE);
+                                imageViewTwo.setVisibility(View.GONE);
+                            }
+                              if (secondHandBean.getDeviceBaseDto().getDeviceImages()!=null&&
                                      secondHandBean.getDeviceBaseDto().getDeviceImages().size()!=0){
                                  advertisementRlayout.setVisibility(View.VISIBLE);
                                  imageUrls.addAll(secondHandBean.getDeviceBaseDto().getDeviceImages());

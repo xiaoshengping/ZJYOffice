@@ -71,6 +71,12 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        competitveTenderLsitview.setRefreshing();
+    }
+
     private void initListData(int pageIndex) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();

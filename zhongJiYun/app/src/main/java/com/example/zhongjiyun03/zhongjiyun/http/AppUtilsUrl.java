@@ -212,8 +212,8 @@ public class AppUtilsUrl {
     }
     //获得系统消息提醒
     public static String getSystemMessageRemindData(){
-        //  /appapi/common/GetSystemMessageList
-        return BaseUrl+"appapi/common/GetSystemMessageList" ;
+        //  appapi/system/getnewdatastate
+        return BaseUrl+"appapi/system/getnewdatastate" ;
 
     }
     //评论我的

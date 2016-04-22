@@ -16,20 +16,30 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.CommitCashDepositActivity;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ZHONGJIYUN03 on 2016/3/12.
  */
-public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDataBean> implements View.OnClickListener {
+public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDataBean>  {
       private ViewHold viewHold;
       private int positions;
-
+    // 用来记录按钮状态的Map
+    public static Map<Integer, Boolean> isChecked;
 
     public MyCompetitveTenderListAdapter(List<ProjectlistDataBean> data, Context context) {
         super(data, context);
     }
+    private void initButton() {
+        // 初使化操作，默认都是false
+        isChecked = new HashMap<Integer, Boolean>();
+        for (int i = 0; i < data.size(); i++){
+            isChecked.put(i, false);
+        }
 
+    }
     @Override
     public View createView(int position, View convertView, ViewGroup parent) {
           if (convertView==null){
@@ -42,6 +52,7 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
            viewHold= (ViewHold) convertView.getTag();
 
           }
+        initButton();
         inti(position);
         positions=position;
         return convertView;
@@ -64,41 +75,110 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
                 viewHold.dataText.setText(data.get(position).getCreateDateStr());
             }
             if (data.get(position).getStatus()==1){
+                viewHold.commentImage.setVisibility(View.GONE);
                 viewHold.commentButton.setVisibility(View.GONE);
                 viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_one);
             }else if (data.get(position).getStatus()==2){
+                viewHold.commentImage.setVisibility(View.GONE);
                 viewHold.commentButton.setVisibility(View.GONE);
                 viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_two);
             }else if (data.get(position).getStatus()==3){
+                viewHold.commentImage.setVisibility(View.VISIBLE);
                 viewHold.commentButton.setVisibility(View.VISIBLE);
                 viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_three);
             }
+
+            if (data.get(position).getPayMarginStatus()==1){
+                viewHold.cashDepositImage.setBackgroundResource(R.mipmap.project_success);
+                viewHold.cashDepositButton.setTextColor(context.getResources().getColor(R.color.content_color));
+                viewHold.cashDepositButton.setText("已缴纳保证金");
+            }else if (data.get(position).getPayMarginStatus()==0){
+                viewHold.cashDepositImage.setBackgroundResource(R.mipmap.project_bond);
+                viewHold.cashDepositButton.setText("缴纳保证金");
+                viewHold.cashDepositButton.setTextColor(context.getResources().getColor(R.color.red));
+            }
+            if (data.get(position).getIsEvaluete()==0){
+                viewHold.commentImage.setBackgroundResource(R.mipmap.eval_icon);
+                viewHold.commentButton.setText("立即评价");
+
+            }else if (data.get(position).getIsEvaluete()==1){
+                viewHold.commentImage.setBackgroundResource(R.mipmap.eval_success_icon);
+                viewHold.commentButton.setText("已评价");
+                viewHold.commentButton.setTextColor(context.getResources().getColor(R.color.content_color));
+            }
+
+
+
+
         }
-        viewHold.commentButton.setOnClickListener(this);
-        viewHold.cashDepositButton.setOnClickListener(this);
+        viewHold.commentButton.setOnClickListener(new commentClick(position));
+        viewHold.cashDepositButton.setOnClickListener(new cashDepositClick(position));
 
 
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
 
-            case R.id.cash_deposit_button:
-                Intent cashDepositIntent=new Intent(context, CommitCashDepositActivity.class);
-                context.startActivity(cashDepositIntent);
-               break;
-            case R.id.comment_button:
-                Intent commentIntent=new Intent(context, CommentOwnerActivity.class);
-                commentIntent.putExtra("ProjectTitle",data.get(positions).getProjectTitle());
-                commentIntent.putExtra("ProjectCompany",data.get(positions).getProjectCompany());
-                commentIntent.putExtra("projectId",data.get(positions).getProjectId());
-                context.startActivity(commentIntent);
-                break;
+    //此为listview条目中的cashDepositClick按钮点击事件的写法
 
+    class cashDepositClick implements View.OnClickListener {
+
+        private int position;
+
+        public cashDepositClick(int pos){  // 在构造时将position传给它这样就知道点击的是哪个条目的按钮
+            this.position = pos;
         }
+        @Override
+        public void onClick(View v) {
+            int vid=v.getId();
+            if (vid == viewHold.cashDepositButton.getId()){
+                if (isChecked.get(position) == false){
+                    isChecked.put(position, true);   // 根据点击的情况来将其位置和相应的状态存入
+                    Intent cashDepositIntent=new Intent(context, CommitCashDepositActivity.class);
+                    context.startActivity(cashDepositIntent);
+                    //Log.e("steta________", position + "");
+                } else if (isChecked.get(position) == true){
+                    isChecked.put(position, false);  // 根据点击的情况来将其位置和相应的状态存入
+
+                }
+                notifyDataSetChanged();
+            }
+        }
+
     }
+    //此为listview条目中的commentClick按钮点击事件的写法
+
+    class commentClick implements View.OnClickListener {
+
+        private int position;
+
+        public commentClick(int pos){  // 在构造时将position传给它这样就知道点击的是哪个条目的按钮
+            this.position = pos;
+        }
+        @Override
+        public void onClick(View v) {
+            int vid=v.getId();
+            if (vid == viewHold.commentButton.getId()){
+                if (isChecked.get(position) == false){
+                    isChecked.put(position, true);   // 根据点击的情况来将其位置和相应的状态存入
+                    Intent commentIntent=new Intent(context, CommentOwnerActivity.class);
+                    commentIntent.putExtra("ProjectTitle",data.get(position).getProjectTitle());
+                    commentIntent.putExtra("ProjectCompany",data.get(position).getProjectCompany());
+                    commentIntent.putExtra("projectId",data.get(position).getProjectId());
+                    context.startActivity(commentIntent);
+                    //Log.e("steta________", position + "");
+                } else if (isChecked.get(position) == true){
+                    isChecked.put(position, false);  // 根据点击的情况来将其位置和相应的状态存入
+
+                }
+                notifyDataSetChanged();
+            }
+        }
+
+    }
+
+
+
 
 
     private class ViewHold {
@@ -117,6 +197,10 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
         private TextView commentButton;
         @ViewInject(R.id.cash_deposit_button)
         private TextView cashDepositButton;
+        @ViewInject(R.id.cash_deposit_image)
+        private ImageView cashDepositImage;
+        @ViewInject(R.id.comment_image)
+        private ImageView commentImage;
 
 
         public ViewHold(View view) {

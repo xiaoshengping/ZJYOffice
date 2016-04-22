@@ -1,6 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,15 +48,54 @@ public class CommentListAdapter extends AppBaseAdapter<CommentPagerDataBean> {
 
     private void inti(int position) {
         if (data.size()!=0){
-            MyAppliction.imageLoader.displayImage(data.get(position).getHeadthumb(),viewHold.imageView,MyAppliction.RoundedOptionsOne);
+            MyAppliction.imageLoader.displayImage(data.get(position).getHeadthumb(),viewHold.imageView,MyAppliction.RoundedOptions);
             viewHold.nameTextView.setText(data.get(position).getName());
             viewHold.timeText.setText(data.get(position).getDateTime());
             viewHold.commentContentText.setText(data.get(position).getContent());
+            //viewHold.ratingBar.setRating(Float.parseFloat(data.get(position).getScore()));
+            if (!TextUtils.isEmpty(data.get(position).getScore())){
+                String StarRate=data.get(position).getScore();
+                if (StarRate.equals("1")){
+                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.star_icon);
+                    viewHold.ratingThree.setBackgroundResource(R.mipmap.star_icon);
+                    viewHold.ratingFour.setBackgroundResource(R.mipmap.star_icon);
+                    viewHold.ratingFive.setBackgroundResource(R.mipmap.star_icon);
+                }else if (StarRate.equals("2")){
+
+                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingThree.setBackgroundResource(R.mipmap.star_icon);
+                    viewHold.ratingFour.setBackgroundResource(R.mipmap.star_icon);
+                    viewHold.ratingFive.setBackgroundResource(R.mipmap.star_icon);
+
+                }else if (StarRate.equals("3")){
+
+                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingFour.setBackgroundResource(R.mipmap.star_icon);
+                    viewHold.ratingFive.setBackgroundResource(R.mipmap.star_icon);
+
+                }else if (StarRate.equals("4")){
+
+                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingFour.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingFive.setBackgroundResource(R.mipmap.star_icon);
+
+                }else if (StarRate.equals("5")){
+
+                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingFour.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingFive.setBackgroundResource(R.mipmap.eval_icon);
+
+                }
+            }
         }
-
-
-
-
     }
 
 
@@ -69,6 +109,16 @@ public class CommentListAdapter extends AppBaseAdapter<CommentPagerDataBean> {
         private TextView timeText;
         @ViewInject(R.id.comment_content_text)
         private TextView commentContentText;
+        @ViewInject(R.id.rating_one)
+        private TextView ratingOne;
+        @ViewInject(R.id.rating_two)
+        private TextView ratingTwo;
+        @ViewInject(R.id.rating_three)
+        private TextView ratingThree;
+        @ViewInject(R.id.rating_four)
+        private TextView ratingFour;
+        @ViewInject(R.id.rating_five)
+        private TextView ratingFive;
 
 
         public ViewHold(View view) {

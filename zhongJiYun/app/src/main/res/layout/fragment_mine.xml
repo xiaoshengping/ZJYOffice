@@ -51,7 +51,7 @@
 
         </RelativeLayout>
         <RelativeLayout
-            android:visibility="gone"
+
             android:id="@+id/loing_xshi_layout"
             android:background="@color/ic_white"
 
@@ -106,15 +106,61 @@
                 android:layout_alignParentRight="@+id/loing_xshi_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-               <RatingBar
+               <!--<RatingBar
                    android:id="@+id/rating_bar"
                    android:layout_marginLeft="5dp"
                    android:layout_marginTop="7dp"
-                   style="?android:attr/ratingBarStyleSmall"
+                   style="@style/roomRatingBar"
                    android:layout_toRightOf="@+id/dengji_text"
                    android:layout_below="@+id/phone_text"
                    android:layout_width="wrap_content"
-                   android:layout_height="wrap_content" />
+                   android:layout_height="wrap_content" />-->
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_toRightOf="@+id/dengji_text"
+                android:layout_below="@+id/phone_text"
+                android:id="@+id/rating_one"
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="7dp"
+                android:layout_toRightOf="@+id/rating_one"
+                android:layout_below="@+id/phone_text"
+                android:id="@+id/rating_two"
+
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="7dp"
+                android:layout_toRightOf="@+id/rating_two"
+                android:layout_below="@+id/phone_text"
+                android:id="@+id/rating_three"
+
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="7dp"
+                android:layout_toRightOf="@+id/rating_three"
+                android:layout_below="@+id/phone_text"
+                android:id="@+id/rating_four"
+
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="7dp"
+                android:layout_toRightOf="@+id/rating_four"
+                android:layout_below="@+id/phone_text"
+                android:id="@+id/rating_five"
+
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
+
+
             <ImageView
 
                 android:layout_alignParentRight="true"
@@ -147,6 +193,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/giftBag_remind_image"
                     android:layout_marginLeft="5dp"
                     android:src="@mipmap/circle_tip_icon"
                     android:layout_width="10dp"
@@ -186,6 +234,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/message_remind_image"
                     android:layout_marginLeft="5dp"
                     android:src="@mipmap/circle_tip_icon"
                     android:layout_width="10dp"
@@ -230,6 +280,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/projectReply_remind_image"
                     android:layout_marginLeft="5dp"
                     android:src="@mipmap/circle_tip_icon"
                     android:layout_width="10dp"
@@ -338,6 +390,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/evaluate_remind_image"
                     android:layout_marginLeft="5dp"
                     android:src="@mipmap/circle_tip_icon"
                     android:layout_width="10dp"

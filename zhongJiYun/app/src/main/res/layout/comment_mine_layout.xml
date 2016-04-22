@@ -4,13 +4,12 @@
     android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ListView
-
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:divider="@color/background"
         android:dividerHeight="3dp"
         android:id="@+id/comment_mine_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-    </ListView>
+
 </LinearLayout>
