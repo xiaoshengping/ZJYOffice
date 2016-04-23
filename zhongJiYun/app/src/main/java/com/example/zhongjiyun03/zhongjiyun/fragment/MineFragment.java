@@ -232,17 +232,18 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             SystemMessageSQLhelper sqLhelper=new SystemMessageSQLhelper(getActivity());
             SQLiteDatabase db= sqLhelper.getWritableDatabase();
             Cursor cursor=db.query(SystemMessageSQLhelper.tableName, null, null, null, null, null, null);
+            String messageRemindId=null;  //id
             String evaluate=null;  //我的评价数
             String message=null;  //消息数
             String giftBag=null;     //我的红包数
             String projectReply=null; //我的竞标数
 
             while (cursor.moveToNext()) {
-
-                evaluate=cursor.getString(0);
-                message= cursor.getString(1);
-                giftBag = cursor.getString(2);
-                projectReply=cursor.getString(3);
+                messageRemindId=cursor.getString(0);
+                evaluate=cursor.getString(1);
+                message= cursor.getString(2);
+                giftBag = cursor.getString(3);
+                projectReply=cursor.getString(4);
 
             }
 
@@ -263,6 +264,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         //步骤2：获取文件中的值
         String sesstionId = read.getString("code","");
         requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+            final String finalMessageRemindId = messageRemindId;
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSystemMessageRemindData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -293,6 +295,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                             }else {
                                 projectReplyeminDImage.setVisibility(View.GONE);
                             }
+
+                            if (TextUtils.isEmpty(finalMessageRemindId)){
+                                SystemMessageSQLhelper sqLhelper=new SystemMessageSQLhelper(getActivity());
+                                insertData(sqLhelper,SystemMessageSQLhelper.MESSAGEREMINDID,"hshhdhhdhdhs");
+                            }
+
                         }
 
                     }else {
@@ -331,16 +339,18 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         SQLiteDatabase sqLiteDatabase= systemMessageSQLhelper.getWritableDatabase();
         Cursor cursors=sqLiteDatabase.query(SystemMessageSQLhelper.tableName, null, null, null, null, null, null);
 
+        String messageRemindId = null;  //id
         String evaluate=null;  //我的评价数
         String message=null;  //消息数
         String giftBag=null;     //我的红包数
         String projectReply=null; //我的竞标数
 
         while (cursors.moveToNext()) {
-            evaluate=cursors.getString(0);
-            message= cursors.getString(1);
-            giftBag = cursors.getString(2);
-            projectReply=cursors.getString(3);
+            messageRemindId=cursors.getString(0);
+            evaluate=cursors.getString(1);
+            message= cursors.getString(2);
+            giftBag = cursors.getString(3);
+            projectReply=cursors.getString(4);
 
         }
 
@@ -393,8 +403,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 if (!TextUtils.isEmpty(uid)){
                     if (!TextUtils.isEmpty(giftBag)){
                         Log.e("giftBag",giftBag);
-
-                        update("GiftBag",SystemMessageSQLhelper.GIFTBAG,date);
+                        Log.e("messageRemindId",messageRemindId);
+                        update(messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
                     }else {
 
                         if (!TextUtils.isEmpty(date)){
@@ -439,7 +449,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         // db.execSQL("insert into user(uid,userName,userIcon,state) values('战士',3,5,7)");
         ContentValues values=new ContentValues();
         values.put(key,value);
-        db.insert(SystemMessageSQLhelper.tableName, key, values);
+        db.insert(SystemMessageSQLhelper.tableName, SystemMessageSQLhelper.MESSAGEREMINDID, values);
         db.close();
     }
     /**
@@ -451,7 +461,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         ContentValues contentValues = new ContentValues();
         contentValues.put(key, value);
         db.update(SystemMessageSQLhelper.tableName, contentValues,
-                id+"=?", new String[]{id});
+                "messageRemindId=?", new String[]{id});
         Log.e("更新了数据","更新了数据");
     }
 

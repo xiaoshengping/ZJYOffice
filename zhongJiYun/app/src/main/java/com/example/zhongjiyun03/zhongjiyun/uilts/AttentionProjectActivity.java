@@ -122,8 +122,12 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                             }else {
                                 attentionProjectListview.onRefreshComplete();
                             }
-                        }else {
+                        }else if ((appBean.getResult()).equals("empty")){
+                            MyAppliction.showToast("没有更多数据");
                             attentionProjectListview.onRefreshComplete();
+                        }else if ((appBean.getResult()).equals("nomore")){
+                            attentionProjectListview.onRefreshComplete();
+                            MyAppliction.showToast("已到最低了");
                         }
 
 

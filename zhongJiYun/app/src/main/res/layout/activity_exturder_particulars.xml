@@ -501,7 +501,7 @@
           <ImageView
               android:visibility="gone"
               android:id="@+id/image_view_one"
-              android:layout_marginBottom="20dp"
+
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
@@ -513,7 +513,7 @@
           <ImageView
               android:visibility="gone"
               android:id="@+id/image_view_two"
-              android:layout_marginBottom="20dp"
+
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
@@ -523,7 +523,30 @@
               android:layout_width="match_parent"
               android:layout_height="200dp" />
 
+          <ImageView
+              android:visibility="gone"
+              android:id="@+id/image_view_Three"
 
+              android:layout_marginTop="10dp"
+              android:scaleType="centerCrop"
+              android:src="@mipmap/home_used_rig_img"
+              android:layout_marginRight="10dp"
+              android:layout_marginLeft="10dp"
+              android:layout_below="@+id/image_view_two"
+              android:layout_width="match_parent"
+              android:layout_height="200dp" />
+          <ImageView
+              android:visibility="gone"
+              android:id="@+id/image_view_foru"
+              android:layout_marginBottom="20dp"
+              android:layout_marginTop="10dp"
+              android:scaleType="centerCrop"
+              android:src="@mipmap/home_used_rig_img"
+              android:layout_marginRight="10dp"
+              android:layout_marginLeft="10dp"
+              android:layout_below="@+id/image_view_Three"
+              android:layout_width="match_parent"
+              android:layout_height="200dp" />
       </RelativeLayout>
 
 

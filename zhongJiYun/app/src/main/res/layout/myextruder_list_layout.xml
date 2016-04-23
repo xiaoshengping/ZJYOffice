@@ -136,7 +136,7 @@
             android:layout_height="wrap_content" />
 </RelativeLayout>
     <ImageView
-        android:visibility="gone"
+
         android:id="@+id/image_chuz_tage"
         android:layout_marginTop="30dp"
         android:layout_marginRight="40dp"

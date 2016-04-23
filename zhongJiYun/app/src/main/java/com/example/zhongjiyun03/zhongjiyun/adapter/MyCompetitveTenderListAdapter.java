@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.ProjectlistDataBean;
+import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.uilts.CommentOwnerActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.CommitCashDepositActivity;
 import com.lidroid.xutils.ViewUtils;
@@ -161,11 +162,17 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
             if (vid == viewHold.commentButton.getId()){
                 if (isChecked.get(position) == false){
                     isChecked.put(position, true);   // 根据点击的情况来将其位置和相应的状态存入
-                    Intent commentIntent=new Intent(context, CommentOwnerActivity.class);
-                    commentIntent.putExtra("ProjectTitle",data.get(position).getProjectTitle());
-                    commentIntent.putExtra("ProjectCompany",data.get(position).getProjectCompany());
-                    commentIntent.putExtra("projectId",data.get(position).getProjectId());
-                    context.startActivity(commentIntent);
+                    if (data.get(position).getIsEvaluete()==0){
+
+                        Intent commentIntent=new Intent(context, CommentOwnerActivity.class);
+                        commentIntent.putExtra("ProjectTitle",data.get(position).getProjectTitle());
+                        commentIntent.putExtra("ProjectCompany",data.get(position).getProjectCompany());
+                        commentIntent.putExtra("projectId",data.get(position).getProjectId());
+                        context.startActivity(commentIntent);
+                    }else if (data.get(position).getIsEvaluete()==1){
+                        MyAppliction.showToast("您已评论该业主");
+                    }
+
                     //Log.e("steta________", position + "");
                 } else if (isChecked.get(position) == true){
                     isChecked.put(position, false);  // 根据点击的情况来将其位置和相应的状态存入

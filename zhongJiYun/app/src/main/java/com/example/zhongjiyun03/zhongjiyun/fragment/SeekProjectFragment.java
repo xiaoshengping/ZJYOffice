@@ -518,7 +518,6 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         list.add("默认排序");
         list.add("招标中");
         list.add("已启动");
-        list.add("已关闭");
 
 
         //加载布局

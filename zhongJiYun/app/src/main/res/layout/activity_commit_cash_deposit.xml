@@ -31,7 +31,7 @@
 
             android:textColor="@color/tailt_dark"
             android:textSize="@dimen/home_Size_18"
-            android:text="工作经验"
+            android:text="支付信息"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageView
@@ -107,7 +107,7 @@
 
             android:textSize="@dimen/home_Size_16"
             android:layout_marginLeft="20dp"
-            android:text="支付说明"
+            android:text="保证金说明"
             android:layout_alignParentRight="@+id/loing_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

@@ -129,7 +129,6 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
             if (!TextUtils.isEmpty(myExtruderBean.getDeviceNo())){
                 numberText.setText(myExtruderBean.getDeviceNo());
             }
-
             if (!TextUtils.isEmpty(myExtruderBean.getHourOfWork()+"")){
                 durationText.setText(myExtruderBean.getHourOfWork()+"");
             }

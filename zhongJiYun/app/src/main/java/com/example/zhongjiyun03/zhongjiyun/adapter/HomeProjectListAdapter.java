@@ -70,7 +70,6 @@ public class HomeProjectListAdapter extends AppBaseAdapter<SeekProjectBean> {
             SQLiteDatabase db= sqLhelper.getWritableDatabase();
             Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
             String uid=null;  //用户id
-
             while (cursor.moveToNext()) {
                 uid=cursor.getString(0);
 

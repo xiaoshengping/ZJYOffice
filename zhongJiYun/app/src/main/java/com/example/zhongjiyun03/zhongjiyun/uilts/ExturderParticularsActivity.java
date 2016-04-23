@@ -157,7 +157,10 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     private ImageView imageViewOne;
     @ViewInject(R.id.image_view_two)
     private ImageView imageViewTwo;
-
+    @ViewInject(R.id.image_view_Three)
+    private ImageView imageViewThree;
+    @ViewInject(R.id.image_view_foru)
+    private ImageView imageViewForu;
 
 
 
@@ -287,29 +290,81 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                             }
                             tailtText.setText("机主"+secondHandBean.getDeviceDto().getBossName()+"自述");
                             if (secondHandBean.getDeviceImages()!=null){
-                                if (secondHandBean.getDeviceImages().size()>0){
+                                Log.e("图片list大小",secondHandBean.getDeviceImages().size()+"");
+                                if (secondHandBean.getDeviceImages().size()==1){
                                     imageView.setVisibility(View.VISIBLE);
                                     MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(0),imageView,MyAppliction.RoundedOptionsOne);
 
-                                }else if (secondHandBean.getDeviceImages().size()>1){
+                                }else {
+                                    imageView.setVisibility(View.GONE);
+                                    imageViewOne.setVisibility(View.GONE);
+                                    imageViewTwo.setVisibility(View.GONE);
+                                    imageViewThree.setVisibility(View.GONE);
+                                    imageViewForu.setVisibility(View.GONE);
+                                }
+                                if (secondHandBean.getDeviceImages().size()==2){
                                     imageView.setVisibility(View.VISIBLE);
                                     MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(0),imageView,MyAppliction.RoundedOptionsOne);
                                     imageViewOne.setVisibility(View.VISIBLE);
                                     MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(1),imageViewOne,MyAppliction.RoundedOptionsOne);
 
-                                }else if (secondHandBean.getDeviceImages().size()>2){
+                                }else {
+                                    imageViewTwo.setVisibility(View.GONE);
+                                    imageViewThree.setVisibility(View.GONE);
+                                    imageViewForu.setVisibility(View.GONE);
+                                }
+
+
+                                if (secondHandBean.getDeviceImages().size()==3){
                                     imageView.setVisibility(View.VISIBLE);
                                     MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(0),imageView,MyAppliction.RoundedOptionsOne);
                                     imageViewOne.setVisibility(View.VISIBLE);
                                     MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(1),imageViewOne,MyAppliction.RoundedOptionsOne);
                                     imageViewTwo.setVisibility(View.VISIBLE);
                                     MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(2),imageViewTwo,MyAppliction.RoundedOptionsOne);
+                                }else {
+
+                                    imageViewThree.setVisibility(View.GONE);
+                                    imageViewForu.setVisibility(View.GONE);
 
                                 }
+
+                                if (secondHandBean.getDeviceImages().size()==4){
+                                    imageView.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(0),imageView,MyAppliction.RoundedOptionsOne);
+                                    imageViewOne.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(1),imageViewOne,MyAppliction.RoundedOptionsOne);
+                                    imageViewTwo.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(2),imageViewTwo,MyAppliction.RoundedOptionsOne);
+                                    imageViewThree.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(3),imageViewThree,MyAppliction.RoundedOptionsOne);
+
+                                }else {
+                                    imageViewForu.setVisibility(View.GONE);
+
+                                }
+                                if (secondHandBean.getDeviceImages().size()==5){
+                                    imageView.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(0),imageView,MyAppliction.RoundedOptionsOne);
+                                    imageViewOne.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(1),imageViewOne,MyAppliction.RoundedOptionsOne);
+                                    imageViewTwo.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(2),imageViewTwo,MyAppliction.RoundedOptionsOne);
+                                    imageViewThree.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(3),imageViewThree,MyAppliction.RoundedOptionsOne);
+                                    imageViewForu.setVisibility(View.VISIBLE);
+                                    MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(4),imageViewForu,MyAppliction.RoundedOptionsOne);
+
+                                }
+
+
+
                             }else {
                                 imageView.setVisibility(View.GONE);
                                 imageViewOne.setVisibility(View.GONE);
                                 imageViewTwo.setVisibility(View.GONE);
+                                imageViewThree.setVisibility(View.GONE);
+                                imageViewForu.setVisibility(View.GONE);
                             }
                               if (secondHandBean.getDeviceBaseDto().getDeviceImages()!=null&&
                                      secondHandBean.getDeviceBaseDto().getDeviceImages().size()!=0){

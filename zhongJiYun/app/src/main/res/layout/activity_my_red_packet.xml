@@ -11,14 +11,14 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
     <include android:layout_width="match_parent"
         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
-     <ListView
+     <com.handmark.pulltorefresh.library.PullToRefreshListView
          android:layout_marginBottom="50dp"
          android:id="@+id/red_patck_listview"
          android:layout_width="match_parent"
-         android:layout_height="match_parent"></ListView>
+         android:layout_height="match_parent"/>
     </LinearLayout>
 
     <Button

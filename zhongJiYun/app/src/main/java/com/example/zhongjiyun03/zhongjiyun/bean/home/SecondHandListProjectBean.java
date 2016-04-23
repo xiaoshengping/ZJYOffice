@@ -15,8 +15,8 @@ public class SecondHandListProjectBean implements Serializable {
     private DeviceDtoBean DeviceDto	;//object	钻机数据对象
     private List<String> DeviceImages	;//array	钻机照片
     private int IsPayMargin	;//int	是否已缴纳保证金
-    private boolean IsShowContract;//	bool	是否显示合同照
-    private boolean IsShowInvoice;//	bool	是否显示发票照
+    private int IsShowContract;//	bool	是否显示合同照
+    private int IsShowInvoice;//	bool	是否显示发票照
     private boolean IsShowPrice;//	bool	是否显示价格
 
     private String PriceStr;//	string	价格
@@ -85,20 +85,20 @@ public class SecondHandListProjectBean implements Serializable {
         IsPayMargin = isPayMargin;
     }
 
-    public boolean isShowContract() {
+    public int getIsShowContract() {
         return IsShowContract;
     }
 
-    public void setShowContract(boolean showContract) {
-        IsShowContract = showContract;
+    public void setIsShowContract(int isShowContract) {
+        IsShowContract = isShowContract;
     }
 
-    public boolean isShowInvoice() {
+    public int getIsShowInvoice() {
         return IsShowInvoice;
     }
 
-    public void setShowInvoice(boolean showInvoice) {
-        IsShowInvoice = showInvoice;
+    public void setIsShowInvoice(int isShowInvoice) {
+        IsShowInvoice = isShowInvoice;
     }
 
     public boolean isShowPrice() {

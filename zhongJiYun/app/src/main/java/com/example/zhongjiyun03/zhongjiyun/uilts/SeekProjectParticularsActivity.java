@@ -283,9 +283,13 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
           if (seekProjectBean.getCanReply().equals("success")){
               competitiveButton.setText("我要竞标");
+          }else if (seekProjectBean.getCanReply().equals("联系业主")){
+              /*competitiveButton.setTextColor(getResources().getColor(R.color.tailt_dark));
+              competitiveButton.setBackgroundResource(R.drawable.gray_button_corners);*/
+              competitiveButton.setText(seekProjectBean.getCanReply());
           }else {
               competitiveButton.setTextColor(getResources().getColor(R.color.tailt_dark));
-              competitiveButton.setBackground(getResources().getDrawable(R.drawable.gray_button_corners));
+              competitiveButton.setBackgroundResource(R.drawable.gray_button_corners);
               competitiveButton.setText(seekProjectBean.getCanReply());
           }
 

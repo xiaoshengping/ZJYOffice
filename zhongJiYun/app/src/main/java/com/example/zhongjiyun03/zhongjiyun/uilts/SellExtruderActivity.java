@@ -37,6 +37,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.RentOutExtruderDeviceBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.home.SecondHandListProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
@@ -48,9 +49,6 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.Clipping
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.SelectImagesFromLocalActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.constants.ConstantSet;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.utils.SDCardUtils;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -132,11 +130,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private String contractPath;//全景照4路径
     private String qualifiedPath;//全景照5路径
     private MyExtruderBean myExtruderBean;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
 
 
     @Override
@@ -147,9 +141,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         ViewUtils.inject(this);
         inti();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     private void inti() {
@@ -165,6 +157,10 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         sellSaveButton.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
         myExtruderBean = (MyExtruderBean) getIntent().getSerializableExtra("data");
+        //获取修改数据
+        if (getIntent().getStringExtra("tage").equals("modifiSell")){
+            intiData();
+        }
         intiPvAddress();
         contractCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -247,11 +243,131 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+    private void intiData() {
+        String secondHandBeanId=myExtruderBean.getSecondHandId();
+        if (!TextUtils.isEmpty(secondHandBeanId)){
+            HttpUtils httpUtils=new HttpUtils();
+            RequestParams requestParams=new RequestParams();
+            SQLhelper sqLhelper=new SQLhelper(SellExtruderActivity.this);
+            SQLiteDatabase db= sqLhelper.getWritableDatabase();
+            Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+            String uid=null;  //用户id
+
+            while (cursor.moveToNext()) {
+                uid=cursor.getString(0);
+
+            }
+            if (!TextUtils.isEmpty(uid)){
+                requestParams.addBodyParameter("userId",uid);
+            }
+            requestParams.addBodyParameter("deviceId",secondHandBeanId);
+            mSVProgressHUD.showWithStatus("正在加载中...");
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderParticualsData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        Log.e("二手钻机详情",responseInfo.result);
+                        AppBean<SecondHandListProjectBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandListProjectBean>>(){});
+                        if (appListDataBean.getResult().equals("success")){
+                          SecondHandListProjectBean secondHandListProjectBean= appListDataBean.getData();
+                            if (secondHandListProjectBean!=null){
+                                if (!TextUtils.isEmpty(secondHandListProjectBean.getProvince())&&!TextUtils.isEmpty(secondHandListProjectBean.getCity())){
+                                    parkAddressEdit.setText(secondHandListProjectBean.getProvince()+secondHandListProjectBean.getCity());
+                                }else if (!TextUtils.isEmpty(secondHandListProjectBean.getProvince())){
+                                    parkAddressEdit.setText(secondHandListProjectBean.getProvince());
+                                }
+                                if (!TextUtils.isEmpty(secondHandListProjectBean.getAddress())){
+                                    particluarsAddressEdit.setText(secondHandListProjectBean.getAddress());
+                                }
+                                if (!TextUtils.isEmpty(secondHandListProjectBean.getPriceStr())){
+                                    priceEdit.setText(secondHandListProjectBean.getPriceStr());
+                                }
+                                if (!TextUtils.isEmpty(secondHandListProjectBean.getDescribing())){
+                                    jzhuMiaosEdit.setText(secondHandListProjectBean.getDescribing());
+                                }
+                                if (secondHandListProjectBean.getIsShowContract()==1){
+                                    contractCheckbox.setChecked(true);
+                                }
+                                if (secondHandListProjectBean.getIsShowInvoice()==1){
+                                    invoiceCheckBox.setChecked(true);
+                                }
+                                if (secondHandListProjectBean.getDeviceImages()!=null){
+                                    if (secondHandListProjectBean.getDeviceImages().size()==1){
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(0),leaveFactoryImage,MyAppliction.options);
+
+                                    }else if (secondHandListProjectBean.getDeviceImages().size()==2){
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(0),leaveFactoryImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(1),panoramaImage,MyAppliction.options);
+
+                                    }else if (secondHandListProjectBean.getDeviceImages().size()==3){
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(0),leaveFactoryImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(1),panoramaImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(2),invoiceImage,MyAppliction.options);
+
+                                    }else if (secondHandListProjectBean.getDeviceImages().size()==4){
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(0),leaveFactoryImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(1),panoramaImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(2),invoiceImage,MyAppliction.options);
+                    MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(3),contractImage,MyAppliction.options);
+
+                }else if (secondHandListProjectBean.getDeviceImages().size()==5){
+                    MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(0),leaveFactoryImage,MyAppliction.options);
+                    MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(1),panoramaImage,MyAppliction.options);
+                    MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(2),invoiceImage,MyAppliction.options);
+                    MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(3),contractImage,MyAppliction.options);
+                    MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(4),qualifiedImage,MyAppliction.options);
+
+                }
+
+
+
+            }
+
+
+
+
+        }
+
+        mSVProgressHUD.dismiss();
+    }else {
+        mSVProgressHUD.dismiss();
+
+    }
+
+
+}
+
+
+
+}
+
+@Override
+public void onFailure(HttpException e, String s) {
+                    mSVProgressHUD.dismiss();
+                }
+            });
+
+        }else {
+
+            MyAppliction.showToast("数据加载失败");
+
+        }
+
+
+
+
+
+    }
+
+
     private void sellSaveData() {
         if (!TextUtils.isEmpty(parkAddressEdit.getText().toString())) {
             if (!TextUtils.isEmpty(particluarsAddressEdit.getText().toString())) {
                 if (!TextUtils.isEmpty(priceEdit.getText().toString())) {
                     if (!TextUtils.isEmpty(jzhuMiaosEdit.getText().toString())) {
+
+
                         if (!TextUtils.isEmpty(leavePath)){
                             phoneListPath.add(leavePath);
                             if (!TextUtils.isEmpty(panoramaPath)){
@@ -290,10 +406,8 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                             requestParams.addBodyParameter("City", City);
                         }
                         requestParams.addBodyParameter("Address", particluarsAddressEdit.getText().toString());
-                        //requestParams.addBodyParameter("Tenancy",rentTenancyTerm.getText().toString());
                         requestParams.addBodyParameter("Price", priceEdit.getText().toString());
                         requestParams.addBodyParameter("IsShowContract", contractTage + "");
-
                         requestParams.addBodyParameter("IsShowInvoice", invoiceTage + "");
                         requestParams.addBodyParameter("Describing", jzhuMiaosEdit.getText().toString());
                         requestParams.addBodyParameter("Image1ServerId", "phont.png");
@@ -1023,43 +1137,5 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "SellExtruder Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.zhongjiyun03.zhongjiyun.uilts/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "SellExtruder Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://com.example.zhongjiyun03.zhongjiyun.uilts/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
 }

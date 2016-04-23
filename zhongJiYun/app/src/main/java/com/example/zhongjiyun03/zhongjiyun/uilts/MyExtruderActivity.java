@@ -164,7 +164,6 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
 
         HomeExtruderListAdapter homeExtruderAdapter=new HomeExtruderListAdapter(myExtruderBeens,this,extruderListView);
         extruderListView.setAdapter(homeExtruderAdapter);
-        //homeExtruderAdapter.notifyDataSetChanged();
         extruderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -232,6 +231,8 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
 
 
     }
+
+
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {

@@ -291,6 +291,10 @@
         <activity
             android:name=".uilts.MessageParticularsActivity"
             android:label="@string/title_activity_message_particulars"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.ModifiExtruderActivity"
+            android:label="@string/title_activity_modifi_extruder"
             android:theme="@style/AppTheme"></activity>
     </application>
 

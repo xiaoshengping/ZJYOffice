@@ -33,7 +33,6 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
 
 
     }
-
     private void inti() {
         initView();
 
@@ -41,7 +40,7 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
 
     private void initView() {
         addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("交纳保证金");
+        titleNemeTv.setText("缴纳保证金");
         retrunText.setOnClickListener(this);
         zfuStateLayout.setOnClickListener(this);
 

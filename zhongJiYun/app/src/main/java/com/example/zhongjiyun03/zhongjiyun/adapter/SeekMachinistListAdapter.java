@@ -50,6 +50,9 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
             }
             if (!TextUtils.isEmpty(data.get(position).getDistanceStr())){
                 viewHold.addressText.setText(data.get(position).getDistanceStr());
+            }else {
+                viewHold.addressText.setText("0.0Km");
+
             }
             if (!TextUtils.isEmpty(data.get(position).getLastUpdateTimeSubStr())){
                 viewHold.timeText.setText(data.get(position).getLastUpdateTimeSubStr()+"更新");

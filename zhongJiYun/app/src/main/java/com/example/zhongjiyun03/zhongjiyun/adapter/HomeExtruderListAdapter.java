@@ -6,11 +6,13 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,6 +62,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
             isChecked.put(i, false);
         }
 
+
     }
 
 
@@ -71,12 +74,20 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
               convertView.setTag(viewHold);
 
           }else {
-
-           viewHold= (ViewHold) convertView.getTag();
+              viewHold= (ViewHold) convertView.getTag();
 
           }
         initButton();
         inti(position);
+        if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
+            if (data.get(position).getSecondHandState()==1){
+                viewHold.imageChuzTage.setBackgroundResource(R.mipmap.leave_state);
+            }else if (data.get(position).getSecondHandState()==0){
+                viewHold.imageChuzTage.setBackgroundResource(R.mipmap.audit_ing_icon);
+            }else {
+                viewHold.imageChuzTage.setBackgroundResource(0);
+            }
+        }
 
         return convertView;
     }
@@ -84,7 +95,6 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
     private void inti(int position) {
         mSVProgressHUD = new SVProgressHUD(context);
         if (data!=null){
-
             if (!TextUtils.isEmpty(data.get(position).getDeviceNo())){
                 viewHold.numberTextView.setText(data.get(position).getDeviceNo());
 
@@ -105,12 +115,8 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
             }
             if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
                   if (data.get(position).getSecondHandState()==1){
-                      if (data.get(position).getSecondHandState()==1){
-                          viewHold.imageChuzTage.setVisibility(View.VISIBLE);
-                          viewHold.imageChuzTage.setBackgroundResource(R.mipmap.leave_state);
-                      }else {
-                          viewHold.imageChuzTage.setBackgroundResource(0);
-                      }
+
+
 
                       if (data.get(position).getSecondHandType()==0){
                           viewHold.sellTextView.setText("撤回出租");
@@ -133,12 +139,8 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                       }
 
                   }else if (data.get(position).getSecondHandState()==0){
-                      if (data.get(position).getSecondHandState()==0){
-                          viewHold.imageChuzTage.setVisibility(View.VISIBLE);
-                          viewHold.imageChuzTage.setBackgroundResource(R.mipmap.audit_ing_icon);
-                      }else {
-                          viewHold.imageChuzTage.setBackgroundResource(0);
-                      }
+
+
 
                       if (data.get(position).getSecondHandType()==0){
                           viewHold.sellTextView.setText("撤回出租");
@@ -201,6 +203,16 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                     isChecked.put(position, true);   // 根据点击的情况来将其位置和相应的状态存入
                     if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
                         if (data.get(position).getSecondHandState()==1){
+                            if (data.get(position).getSecondHandType()==0){
+                                Intent modifiRentExtruderInent=new Intent(context, RentOutExtruderActivity.class);
+                                modifiRentExtruderInent.putExtra("myExtruderData",data.get(position));
+                                modifiRentExtruderInent.putExtra("tage","modifiRent");
+                                context.startActivity(modifiRentExtruderInent);
+                            }else {
+                                Intent modifiSellExtruderInent=new Intent(context, SellExtruderActivity.class);
+                                modifiSellExtruderInent.putExtra("tage","modifiSell");
+                                context.startActivity(modifiSellExtruderInent);
+                            }
 
 
                         }else if (data.get(position).getSecondHandState()==0){
@@ -240,12 +252,14 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                     Log.e("secondHandId",data.get(position).getSecondHandId()+"---"+position);
                     if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
                         if (data.get(position).getSecondHandType()==0){
-                            MyAppliction.showToast("已撤回出租");
-                            recallRentOutData(position);
+                            //MyAppliction.showToast("已撤回出租");
+
+                            showExitGameAlert("是否撤回出租","1",position);
 
                         }else if (data.get(position).getSecondHandType()==1){
-                            MyAppliction.showToast("已撤回出售");
-                            recallRentOutData(position );
+                            //MyAppliction.showToast("已撤回出售");
+
+                            showExitGameAlert("是否撤回出售","2",position);
 
                         }
 
@@ -295,6 +309,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                         if (appDataBean.getResult().equals("success")){
                             mSVProgressHUD.showSuccessWithStatus("撤回成功");
                             extruderListView.setRefreshing();
+
                         }else if (appDataBean.getResult().equals("fail")){
                             mSVProgressHUD.showErrorWithStatus("撤回失败");
 
@@ -319,7 +334,43 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
 
 
     }
+    //对话框
+    private void showExitGameAlert(String text, final String tage, final int position) {
+        final AlertDialog dlg = new AlertDialog.Builder(context).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("确定");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
+                if (tage.equals("2")){
+
+                    recallRentOutData(position);
+
+                }else {
+                    recallRentOutData(position);
+                }
+
+                dlg.cancel();
+            }
+        });
+
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });
+    }
 
     private class ViewHold {
 

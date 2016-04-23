@@ -140,7 +140,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
                                     }
                                 }else if (appBean.getResult().equals("empty")){
-                                    MyAppliction.showToast("没有更多评论");
+                                    //MyAppliction.showToast("没有更多评论");
                                     commentMineListView.onRefreshComplete();
 
                                 }else if ((appBean.getResult()).equals("nomore")){
@@ -216,7 +216,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                 }
                                 mineCommentListView.onRefreshComplete();
                             }else if (appBean.getResult().equals("empty")){
-                                MyAppliction.showToast("没有更多评论");
+                                //MyAppliction.showToast("没有更多评论");
                                 mineCommentListView.onRefreshComplete();
 
                             }else if ((appBean.getResult()).equals("nomore")){

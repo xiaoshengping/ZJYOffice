@@ -24,6 +24,9 @@ import com.example.zhongjiyun03.zhongjiyun.bean.main.RePackedListBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.RedPacketDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -33,9 +36,10 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MyRedPacketActivity extends AppCompatActivity implements View.OnClickListener {
+public class MyRedPacketActivity extends AppCompatActivity implements View.OnClickListener,PullToRefreshBase.OnRefreshListener2<ListView> {
 
 
     @ViewInject(R.id.register_tv)
@@ -47,11 +51,13 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
 
 
 
-      @ViewInject(R.id.red_patck_listview)
-      private ListView redPatckListview;  //列表
+    @ViewInject(R.id.red_patck_listview)
+    private PullToRefreshListView redPatckListview;  //列表
     private SVProgressHUD mSVProgressHUD;//loding
     @ViewInject(R.id.get_packed_button)
     private Button getPackedButton;
+    private List<RePackedListBean> rePackedListBeens;//红包列表数据
+    private int PageIndex=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,17 +69,29 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
 
     private void init() {
         mSVProgressHUD = new SVProgressHUD(this);
-        initData(); //获取列表数据
-
         initView();
-
+        intiPullToRefresh();
+        initListView();
+    }
+    public void intiPullToRefresh(){
+        redPatckListview.setMode(PullToRefreshBase.Mode.BOTH);
+        redPatckListview.setOnRefreshListener(this);
+        ILoadingLayout endLabels  = redPatckListview
+                .getLoadingLayoutProxy(false, true);
+        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
+        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
+        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        ILoadingLayout startLabels  = redPatckListview
+                .getLoadingLayoutProxy(true, false);
+        startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
+        startLabels.setRefreshingLabel("正在刷新...");// 刷新时
+        startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        redPatckListview.setRefreshing();
 
     }
-
-    private void initData() {
+    private void initData(int PageIndex) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-
         //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
         //步骤2：获取文件中的值
@@ -81,7 +99,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
         ///Log.e("value",sesstionid);
         if (!TextUtils.isEmpty(value)) {
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + value);
-            requestParams.addBodyParameter("PageIndex", "1");
+            requestParams.addBodyParameter("PageIndex", PageIndex+"");
             requestParams.addBodyParameter("PageSize", "10");
             mSVProgressHUD.showWithStatus("加载中...");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRedPacketListData(), requestParams, new RequestCallBack<String>() {
@@ -96,17 +114,18 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                         if (redPacketDataBean.getTotal() != 0) {
                             getPackedButton.setVisibility(View.VISIBLE);
                         }
-                        if (listData != null) {
-                            initListView(listData);
+                        if (listData!= null) {
+                            rePackedListBeens.addAll(listData);
                         }
-                        mSVProgressHUD.dismiss();
-
                     } else if ((appBean.getResult()).equals("empty")) {
-                        mSVProgressHUD.dismiss();
                         MyAppliction.showToast("您还没有收到红包哦");
                         getPackedButton.setVisibility(View.GONE);
-                    }
 
+                    }else if ((appBean.getResult()).equals("nomore")) {
+                        MyAppliction.showToast("已到最底了");
+                    }
+                    redPatckListview.onRefreshComplete();
+                    mSVProgressHUD.dismiss();
 
                 }
 
@@ -115,6 +134,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                     Log.e("我的红包", s);
                     mSVProgressHUD.dismiss();
                     MyAppliction.showToast("网络异常,请稍后重试!");
+                    redPatckListview.onRefreshComplete();
                 }
             });
         }else {
@@ -127,6 +147,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
 
 
     private void initView() {
+        rePackedListBeens=new ArrayList<>();
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("我的红包");
         retrunText.setOnClickListener(this);
@@ -135,15 +156,28 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void initListView(List<RePackedListBean> listData) {
+    private void initListView() {
 
-        MyRedPatckListAdapter myredAdapter=new MyRedPatckListAdapter(listData,this);
+        MyRedPatckListAdapter myredAdapter=new MyRedPatckListAdapter(rePackedListBeens,this);
         redPatckListview.setAdapter(myredAdapter);
         myredAdapter.notifyDataSetChanged();
 
 
 
 
+    }
+
+    @Override
+    public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+        rePackedListBeens.clear();
+        PageIndex=1;
+        initData(PageIndex); //获取列表数据
+    }
+
+    @Override
+    public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+        PageIndex++;
+        initData(PageIndex); //获取列表数据
     }
 
     @Override
@@ -222,15 +256,15 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
         window.setContentView(R.layout.my_redpacked_alert_layout);
         TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
         TextView tailteTv = (TextView) window.findViewById(R.id.tv);
-        tailte.setText(text);
+        tailteTv.setText(text);
         tailte.setText(textTv);
         // 为确认按钮添加事件,执行退出应用操作
         TextView ok = (TextView) window.findViewById(R.id.btn_ok);
         ok.setText("确定");
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-
+                  finish();
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 dlg.cancel();
             }
         });
