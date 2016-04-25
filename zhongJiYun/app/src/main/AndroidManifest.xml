@@ -295,6 +295,14 @@
         <activity
             android:name=".uilts.ModifiExtruderActivity"
             android:label="@string/title_activity_modifi_extruder"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.HomeTribeActivity"
+            android:label="@string/title_activity_home_tribe"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.HomeBlackListActivity"
+            android:label="@string/title_activity_home_black_list"
             android:theme="@style/AppTheme"></activity>
     </application>
 

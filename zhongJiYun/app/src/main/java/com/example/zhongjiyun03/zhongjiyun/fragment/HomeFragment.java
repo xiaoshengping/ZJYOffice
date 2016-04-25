@@ -36,8 +36,10 @@ import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.CooperationActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.ExturderParticularsActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.HomeBlackListActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeMarketActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeMoreProjectActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.HomeTribeActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.LoginActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MyExtruderActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.NewsCenterActivity;
@@ -305,7 +307,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     //首页griview
     private void initGridView() {
         ArrayList<HashMap<String, Object>> meumList = new ArrayList<HashMap<String, Object>>();
-        String[] gridText={"二手钻机","我的钻机","服务商","商城","机主部落","黑名单","新闻动态","合作伙伴"};
+        String[] gridText={"二手钻机","我的钻机","服务商","商城","中基云部落","黑名单","新闻动态","合作伙伴"};
         int[] gridImage={R.drawable.rig0,R.drawable.rig1,R.drawable.rig2,R.drawable.rig3,R.drawable.rig4,R.drawable.rig5,R.drawable.rig6,R.drawable.rig7};
         for(int i = 0;i < 8;i++)
         {
@@ -367,6 +369,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             case 4:
                                 Intent marketIntent=new Intent(getActivity(), HomeMarketActivity.class)  ;
                                 startActivity(marketIntent);
+                                break;
+                            case 5:
+                                Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
+                                startActivity(tribeIntent);
+
+                                break;
+                            case 6:
+                                Intent blackListIntent=new Intent(getActivity(), HomeBlackListActivity.class)  ;
+                                startActivity(blackListIntent);
 
                                 break;
                             case 7:

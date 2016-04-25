@@ -158,6 +158,11 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        secondHandListview.setRefreshing();
+    }
 
     private void inti() {
 

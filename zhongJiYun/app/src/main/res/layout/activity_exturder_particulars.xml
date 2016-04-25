@@ -176,7 +176,7 @@
                 android:orientation="horizontal"
                 android:background="@color/ic_white"
                 android:layout_below="@+id/extruder_jies_layout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -225,7 +225,7 @@
           <RelativeLayout
               android:id="@+id/extruder_content_rlayout"
               android:background="@color/ic_white"
-              android:layout_marginTop="10dp"
+              android:layout_marginTop="3dp"
               android:layout_below="@+id/boss_layout"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
@@ -423,19 +423,11 @@
 
 
                     </LinearLayout>
-
-
-
-
                 </LinearLayout>
-
-
-
-
           </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/infomation_rlayout"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="3dp"
                 android:background="@color/ic_white"
                 android:layout_below="@+id/extruder_content_rlayout"
                 android:layout_width="match_parent"
@@ -488,7 +480,6 @@
           <ImageView
               android:visibility="gone"
               android:id="@+id/image_view"
-              android:layout_marginBottom="20dp"
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
@@ -513,7 +504,6 @@
           <ImageView
               android:visibility="gone"
               android:id="@+id/image_view_two"
-
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
@@ -526,7 +516,6 @@
           <ImageView
               android:visibility="gone"
               android:id="@+id/image_view_Three"
-
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
@@ -547,6 +536,12 @@
               android:layout_below="@+id/image_view_Three"
               android:layout_width="match_parent"
               android:layout_height="200dp" />
+
+          <TextView
+              android:layout_below="@+id/image_view_foru"
+              android:layout_width="match_parent"
+              android:layout_height="10dp" />
+
       </RelativeLayout>
 
 

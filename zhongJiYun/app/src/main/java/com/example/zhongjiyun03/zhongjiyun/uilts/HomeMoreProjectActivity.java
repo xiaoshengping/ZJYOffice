@@ -229,12 +229,12 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
 
         HomeProjectListAdapter homeProjectlsitAdapter = new HomeProjectListAdapter(seekProjectBeans, HomeMoreProjectActivity.this);
         projectListView.setAdapter(homeProjectlsitAdapter);
-        homeProjectlsitAdapter.notifyDataSetChanged();
+        //homeProjectlsitAdapter.notifyDataSetChanged();
         projectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(HomeMoreProjectActivity.this, SeekProjectParticularsActivity.class);
-                intent.putExtra("seekProjectData",seekProjectBeans.get(position-1));
+                intent.putExtra("seekProjectId",seekProjectBeans.get(position-1).getId());
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
             }
@@ -269,6 +269,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     }
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                 seekProjectBeans.clear();
                  PageIndex=1;
                  initListData(PageIndex,cityName,State,Order);
     }
@@ -283,7 +284,6 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
         if (provinceCityDataBean!=null){
             firstList=provinceCityDataBean.getProvinceCity();
-
 
         }
     }

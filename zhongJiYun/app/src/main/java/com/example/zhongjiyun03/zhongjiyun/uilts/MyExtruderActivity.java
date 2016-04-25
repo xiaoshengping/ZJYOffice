@@ -202,7 +202,6 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
         String uid=null;  //用户id
         while (cursor.moveToNext()) {
             uid=cursor.getString(0);
-
         }
         switch (v.getId()){
             case R.id.register_tv:
@@ -236,8 +235,8 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-        pageIndext=1;
         myExtruderBeens.clear();
+        pageIndext=1;
         initData(pageIndext);
 
 

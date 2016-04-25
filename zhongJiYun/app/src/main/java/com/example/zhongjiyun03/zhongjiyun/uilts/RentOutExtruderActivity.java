@@ -37,6 +37,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.RentOutExtruderDeviceBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.home.SecondHandListProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
@@ -159,6 +160,14 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
     }
 
     private void initView() {
+        String modifiRentTage=getIntent().getStringExtra("tage");
+
+        if (modifiRentTage.equals("modifiRent")){
+                modifiRentData();
+
+        }
+
+
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("钻机管理");
         retrunText.setOnClickListener(this);
@@ -202,6 +211,117 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         contractLayout.setOnClickListener(this);
         qualifiedLayout.setOnClickListener(this);
         leaveFactoryLayout.setOnClickListener(this);
+    }
+
+    private void modifiRentData() {
+
+        String secondHandBeanId=myExtruderBean.getSecondHandId();
+        if (!TextUtils.isEmpty(secondHandBeanId)){
+            HttpUtils httpUtils=new HttpUtils();
+            RequestParams requestParams=new RequestParams();
+            SQLhelper sqLhelper=new SQLhelper(RentOutExtruderActivity.this);
+            SQLiteDatabase db= sqLhelper.getWritableDatabase();
+            Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+            String uid=null;  //用户id
+
+            while (cursor.moveToNext()) {
+                uid=cursor.getString(0);
+
+            }
+            if (!TextUtils.isEmpty(uid)){
+                requestParams.addBodyParameter("userId",uid);
+            }
+            requestParams.addBodyParameter("deviceId",secondHandBeanId);
+            mSVProgressHUD.showWithStatus("正在加载中...");
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderParticualsData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        Log.e("二手钻机详情",responseInfo.result);
+                        AppBean<SecondHandListProjectBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandListProjectBean>>(){});
+                        if (appListDataBean.getResult().equals("success")){
+                            SecondHandListProjectBean secondHandListProjectBean= appListDataBean.getData();
+                            if (secondHandListProjectBean!=null){
+                                if (!TextUtils.isEmpty(secondHandListProjectBean.getProvince())&&!TextUtils.isEmpty(secondHandListProjectBean.getCity())){
+                                    rentPartAddress.setText(secondHandListProjectBean.getProvince()+secondHandListProjectBean.getCity());
+                                }else if (!TextUtils.isEmpty(secondHandListProjectBean.getProvince())){
+                                    rentPartAddress.setText(secondHandListProjectBean.getProvince());
+                                }
+                                if (!TextUtils.isEmpty(secondHandListProjectBean.getAddress())){
+                                    rentAddressParticulars.setText(secondHandListProjectBean.getAddress());
+                                }
+                                if (!TextUtils.isEmpty(secondHandListProjectBean.getPriceStr())){
+                                    rentPriceEdit.setText(secondHandListProjectBean.getPriceStr());
+                                }
+                                rentTenancyTerm.setText(secondHandListProjectBean.getTenancy()+"");
+                                if (!TextUtils.isEmpty(secondHandListProjectBean.getDescribing())){
+                                    rentDescribe.setText(secondHandListProjectBean.getDescribing());
+                                }
+                                if (secondHandListProjectBean.getIsShowContract()==1){
+                                    contractCheck.setChecked(true);
+                                }
+                                if (secondHandListProjectBean.getIsShowInvoice()==1){
+                                    invoiceCheck.setChecked(true);
+                                }
+                                if (secondHandListProjectBean.getDeviceImages()!=null){
+                                    if (secondHandListProjectBean.getDeviceImages().size()==1){
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(0),leaveFactoryImage,MyAppliction.options);
+
+                                    }else if (secondHandListProjectBean.getDeviceImages().size()==2){
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(0),leaveFactoryImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(1),panoramaImage,MyAppliction.options);
+
+                                    }else if (secondHandListProjectBean.getDeviceImages().size()==3){
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(0),leaveFactoryImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(1),panoramaImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(2),invoiceImage,MyAppliction.options);
+
+                                    }else if (secondHandListProjectBean.getDeviceImages().size()==4){
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(0),leaveFactoryImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(1),panoramaImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(2),invoiceImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(3),contractImage,MyAppliction.options);
+
+                                    }else if (secondHandListProjectBean.getDeviceImages().size()==5){
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(0),leaveFactoryImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(1),panoramaImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(2),invoiceImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(3),contractImage,MyAppliction.options);
+                                        MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(4),qualifiedImage,MyAppliction.options);
+
+                                    }
+                                }
+                            }
+
+                            mSVProgressHUD.dismiss();
+                        }else {
+                            mSVProgressHUD.dismiss();
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    mSVProgressHUD.dismiss();
+                }
+            });
+
+        }else {
+
+            MyAppliction.showToast("数据加载失败");
+
+        }
+
+
+
+
+
+
+
+
+
     }
 
     @Override

@@ -89,42 +89,59 @@
             android:background="@color/background"
             android:layout_width="match_parent"
             android:layout_height="1dp" />
+        <ImageView
+            android:id="@+id/sell_image"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/content_rlative_image"
+            android:layout_toLeftOf="@+id/sell_text_view"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
      <TextView
          android:focusable="false"
          android:layout_marginBottom="10dp"
-         android:drawableLeft="@mipmap/rig_sell"
          android:drawablePadding="10dp"
          android:id="@+id/sell_text_view"
+         android:layout_toLeftOf="@+id/middle_image"
          android:layout_below="@+id/content_rlative_image"
          android:layout_marginTop="5dp"
          android:text="我要出售"
          android:textSize="@dimen/home_Size_16"
-         android:layout_marginLeft="50dp"
+         android:layout_marginLeft="5dp"
          android:textColor="@color/red_light"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content" />
         <ImageView
+            android:id="@+id/middle_image"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             android:layout_below="@+id/content_rlative_image"
-            android:layout_toRightOf="@+id/sell_text_view"
             android:src="@color/background"
             android:layout_width="2dp"
             android:layout_height="20dp" />
+        <ImageView
+            android:id="@+id/rent_out_image"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/content_rlative_image"
+            android:layout_toRightOf="@+id/middle_image"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     <TextView
         android:focusable="false"
         android:id="@+id/rent_out_textview"
         android:layout_marginBottom="10dp"
-        android:drawableLeft="@mipmap/rig_lease"
-        android:drawablePadding="10dp"
         android:layout_below="@+id/content_rlative_layout"
-        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/rent_out_image"
         android:layout_marginTop="5dp"
         android:text="我要出租"
         android:textSize="@dimen/home_Size_16"
-        android:layout_marginRight="50dp"
+        android:layout_marginLeft="5dp"
         android:textColor="@color/blue_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -136,7 +153,7 @@
             android:layout_height="wrap_content" />
 </RelativeLayout>
     <ImageView
-
+        android:visibility="gone"
         android:id="@+id/image_chuz_tage"
         android:layout_marginTop="30dp"
         android:layout_marginRight="40dp"
