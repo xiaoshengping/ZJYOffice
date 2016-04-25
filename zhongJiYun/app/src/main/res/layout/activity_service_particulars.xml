@@ -147,10 +147,11 @@
 
    
     <LinearLayout
+
         android:layout_below="@+id/comtent_image"
         android:layout_marginTop="10dp"
         android:background="@color/ic_white"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="50dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

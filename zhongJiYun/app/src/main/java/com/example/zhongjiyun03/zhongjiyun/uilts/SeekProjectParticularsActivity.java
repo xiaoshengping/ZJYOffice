@@ -152,7 +152,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 uid=cursor.getString(0);
 
             }
-
             requestParams.addBodyParameter("projectId",seekProjectId);
             requestParams.addBodyParameter("id",uid);
             mSVProgressHUD.showWithStatus("加载中...");
@@ -294,20 +293,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
           }
 
 
-        /*if (seekProjectBean.getCanReply().equals("招标中")){
 
-            if (seekProjectBean.getReplyStatus().equals("1")){
-                competitiveButton.setText("已投标待业主选标");
-            }else if (seekProjectBean.getReplyStatus().equals("3")){
-                competitiveButton.setText("电话联系业主");
-            }else {
-                competitiveButton.setText("我要竞标");
-            }
-
-        }else if (seekProjectBean.getStatusStr().equals("已启动")){
-            competitiveButton.setText("本项目已启动");
-
-        }*/
 
 
     }

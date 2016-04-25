@@ -77,6 +77,12 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
+
+    <uses-permission android:name="android.permission.MOUNT_FORMAT_FILESYSTEMS"/>
+   <!-- <&#45;&#45;!向SD卡写入数据的权限-&ndash;&gt;-->
+    <uses-permission android:name="androd.permission.WRITE_EXTERNAL_STORAGE"/>
+
+
     <application
         android:name=".http.MyAppliction"
         android:allowBackup="true"

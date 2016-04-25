@@ -234,8 +234,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                 }else if (tage.equals("1")){
                    // cleanInternalCache(StingActivity.this);
                     textNumber.setText("0M");
-
-                            cleanCustomCache("/sdcard/zhongJiYunImage/");
+                    //cleanCustomCache("/sdcard/zhongJiYunImage/");
                 }
 
                 dlg.cancel();

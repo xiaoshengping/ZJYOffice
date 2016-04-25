@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.fragment;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -155,6 +156,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     }
 
+
     private void init() {
         pagerAdapter = new ImagePagerAdapter(getActivity(), imageUrls, dotLL);
         autoPager.setAdapter(pagerAdapter);
@@ -163,8 +165,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         moreTextView.setOnClickListener(this);
         projectMoreText.setOnClickListener(this);
-        initListData();
-        initListRecommentMachinist();
+
 
 
 
@@ -239,7 +240,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void initListData() {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("Id","d7c69db7-ecca-4915-bd5a-8015cef6c478");
+        SQLhelper sqLhelper=new SQLhelper(getActivity());
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        if (!TextUtils.isEmpty(uid)){
+            requestParams.addBodyParameter("Id",uid);
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        }
         requestParams.addBodyParameter("PageIndex","1");
         requestParams.addBodyParameter("PageSize","5");
 
@@ -407,13 +424,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         autoPager.startAutoScroll();
+        initListData();
+        initListRecommentMachinist();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        autoPager.stopAutoScroll();
-    }
+
 
 
     @Override

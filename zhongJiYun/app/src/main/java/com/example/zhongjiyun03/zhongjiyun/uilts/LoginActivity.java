@@ -155,7 +155,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String value = read.getString("code","");
                     if (!TextUtils.isEmpty(value)){
                         requestParams.setHeader("Cookie","ASP.NET_SessionId=" +  value );
-                        Log.e("jdfjfj",value);
+                        //Log.e("jdfjfj",value);
                     }
                    httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getLoginData(),requestParams, new RequestCallBack<String>() {
                         @Override
