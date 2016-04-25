@@ -121,7 +121,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private Animation animIn, animOut;
 
     private int pageIndex=1; //page
-    private  List<SecondHandBean> secondHandBeen;
+    private  List<SecondHandBean> secondHandBeens;
 
     //设备产商
     private PopupWindow popupWindowFacilly;
@@ -165,7 +165,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     }
 
     private void inti() {
-
+        secondHandBeens=new ArrayList<>();
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -194,6 +194,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         titleName.setText("二手机");
         retrunText.setOnClickListener(this);
         intiPullToRefresh();
+        intiListView();
         facillyTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,6 +244,43 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
     }
 
+    /*private void initTimeData() {
+        //时间
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        requestParams.addBodyParameter("DeviceJsonType","3");
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                //Log.e("设备厂商",responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    AppListDataBean<FacillyDataBean> appListDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<FacillyDataBean>>(){});
+                    if (appListDataBean.getResult().equals("success")){
+                        List<FacillyDataBean> facillyDataBeen=  appListDataBean.getData();
+                        //facilluyFirstList.addAll(facillyDataBeen);
+                        if (facillyDataBeen!=null){
+                            for (int i = 0; i <facillyDataBeen.size() ; i++) {
+                                list.add(facillyDataBeen.get(i).getText());
+                            }
+                        }
+
+
+
+                    }
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+
+            }
+        });
+
+
+    }
+*/
     public void intiPullToRefresh(){
         secondHandListview.setMode(PullToRefreshBase.Mode.BOTH);
         secondHandListview.setOnRefreshListener(this);
@@ -259,16 +297,15 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         secondHandListview.setRefreshing();
 
     }
-    private void intiListView(final List<SecondHandBean> secondHandBeen) {
-
-        HomeSecondHandListAdapter homeSecondHandListAdapter = new HomeSecondHandListAdapter(secondHandBeen, this);
+    private void intiListView() {
+        HomeSecondHandListAdapter homeSecondHandListAdapter = new HomeSecondHandListAdapter(secondHandBeens, this);
         secondHandListview.setAdapter(homeSecondHandListAdapter);
         homeSecondHandListAdapter.notifyDataSetChanged();
         secondHandListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(SecondHandActivity.this,ExturderParticularsActivity.class);
-                intent.putExtra("secondHandData",secondHandBeen.get(position-1).getId());
+                intent.putExtra("secondHandData",secondHandBeens.get(position-1).getId());
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
             }
@@ -314,7 +351,6 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         if (!TextUtils.isEmpty(Longitude)){
             requestParams.addBodyParameter("longitude",Longitude);
         }
-
         requestParams.addBodyParameter("pageIndex",pageIndex+"");
         requestParams.addBodyParameter("pageSize","10");
 
@@ -327,8 +363,11 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                     if ((appListDataBean.getResult()).equals("success")){
                         SecondHandDataBean secondHandDataBean=  appListDataBean.getData();
                         if (secondHandDataBean!=null){
-                            secondHandBeen=  secondHandDataBean.getPagerData();
-                            intiListView(secondHandBeen);
+                           List<SecondHandBean> secondHandBeen=  secondHandDataBean.getPagerData();
+                            if (secondHandBeen!=null){
+                                secondHandBeens.addAll(secondHandBeen);
+                            }
+
                         }
                     }else if ((appListDataBean.getResult()).equals("nomore")){
                         MyAppliction.showToast("已到最底了");
@@ -355,8 +394,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     }
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+        secondHandBeens.clear();
          pageIndex=1;
-
         initListData(pageIndex,type,city,year,order);
     }
 
@@ -663,7 +702,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         facillyText.setCompoundDrawables(null, null, img, null);
         type=selectedName;
-        secondHandBeen.clear();
+        secondHandBeens.clear();
         secondHandListview.setRefreshing();
         initListData(pageIndex,selectedName,city,year,order);
         //secondHandListview.setRefreshing();
@@ -801,7 +840,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         mainTab1TV.setCompoundDrawables(null, null, img, null);
         city=selectedName;
-        secondHandBeen.clear();
+        secondHandBeens.clear();
         secondHandListview.setRefreshing();
         initListData(pageIndex,type,selectedName,year,order);
 
@@ -818,7 +857,6 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         list.add("按价格由高到低");
         list.add("按距离由近到远");
         list.add("按距离由远到近");
-
 
         //加载布局
         layout = (LinearLayout) LayoutInflater.from(SecondHandActivity.this).inflate(
@@ -869,7 +907,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                  }else {
                      order=list.get(arg2);
                  }
-                secondHandBeen.clear();
+                secondHandBeens.clear();
                 secondHandListview.setRefreshing();
                 initListData(pageIndex,type,city,year,order);
 
@@ -891,8 +929,18 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         list.add("2014");
         list.add("2013");
         list.add("2012");
-
-
+        list.add("2011");
+        list.add("2010");
+        list.add("2009");
+        list.add("2008");
+        list.add("2007");
+        list.add("2006");
+        list.add("2005");
+        list.add("2004");
+        list.add("2003");
+        list.add("2002");
+        list.add("2001");
+        list.add("2000");
         //加载布局
         layout = (LinearLayout) LayoutInflater.from(SecondHandActivity.this).inflate(
                 R.layout.pop_time_contant_layout, null);
@@ -943,8 +991,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                       year=list.get(arg2);
 
                   }
-
-                secondHandBeen.clear();
+                secondHandBeens.clear();
                 secondHandListview.setRefreshing();
                 initListData(pageIndex,type,city,year,order);
             }

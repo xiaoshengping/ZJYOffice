@@ -138,18 +138,9 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
             MyAppliction.showToast("数据加载失败");
         }
 
-
-
-
-
-
-
     }
 
     private void initListView() {
-
-
-
         MyCompetitveTenderListAdapter myCompetitveAdapter=new MyCompetitveTenderListAdapter(projectlistDataBeanLists,this);
         competitveTenderLsitview.setAdapter(myCompetitveAdapter);
         myCompetitveAdapter.notifyDataSetChanged();

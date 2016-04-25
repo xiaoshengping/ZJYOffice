@@ -222,6 +222,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                                 context.startActivity(modifiRentExtruderInent);
                             }else {
                                 Intent modifiSellExtruderInent=new Intent(context, SellExtruderActivity.class);
+                                modifiSellExtruderInent.putExtra("data",data.get(position));
                                 modifiSellExtruderInent.putExtra("tage","modifiSell");
                                 context.startActivity(modifiSellExtruderInent);
                             }
@@ -234,6 +235,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                     }else {
                         Intent rentOutIntent=new Intent(context, RentOutExtruderActivity.class);
                         rentOutIntent.putExtra("data",data.get(position));
+                        rentOutIntent.putExtra("tage","rent");
                         context.startActivity(rentOutIntent);
                     }
                     //Log.e("steta________", position + "");
@@ -278,6 +280,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                     }else {
                         Intent sellIntent=new Intent(context, SellExtruderActivity.class);
                         sellIntent.putExtra("data",data.get(position));
+                        sellIntent.putExtra("tage","sell");
                         context.startActivity(sellIntent);
                     }
                     //Log.e("steta________", position + "");

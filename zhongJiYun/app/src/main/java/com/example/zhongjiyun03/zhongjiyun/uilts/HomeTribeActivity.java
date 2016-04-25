@@ -56,7 +56,7 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
         }//启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
         if (!TextUtils.isEmpty(uid)){
-            webView.loadUrl("http://h148a34804.iok.la/buluo/oauth.php");
+            webView.loadUrl("http://h148a34804.iok.la/buluo/new_oauth.php?asp_user_id="+uid);
 
         }else {
             webView.loadUrl("http://h148a34804.iok.la/buluo/");

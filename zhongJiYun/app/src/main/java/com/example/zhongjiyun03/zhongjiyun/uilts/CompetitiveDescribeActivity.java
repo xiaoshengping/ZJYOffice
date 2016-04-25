@@ -1,6 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-public class CompetitiveDescribeActivity extends AppCompatActivity implements View.OnClickListener {
+public class  CompetitiveDescribeActivity extends AppCompatActivity implements View.OnClickListener {
 
     @ViewInject(R.id.register_tv)
     private TextView addExtruderTv;   //头部右边
@@ -121,9 +122,15 @@ public class CompetitiveDescribeActivity extends AppCompatActivity implements Vi
     private void commintData(String uid,String ProjectId,String text) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requestParams.addBodyParameter("Id",uid);
         requestParams.addBodyParameter("ProjectId",ProjectId);
         requestParams.addBodyParameter("Description",text);
+
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCompetitiveDescribeData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -163,7 +170,7 @@ public class CompetitiveDescribeActivity extends AppCompatActivity implements Vi
         tailte.setText(text);
         // 为确认按钮添加事件,执行退出应用操作
         TextView ok = (TextView) window.findViewById(R.id.btn_ok);
-        ok.setText("交纳保证金");
+        ok.setText("缴纳保证金");
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent=new Intent(CompetitiveDescribeActivity.this,CommitCashDepositActivity.class);
@@ -178,6 +185,7 @@ public class CompetitiveDescribeActivity extends AppCompatActivity implements Vi
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dlg.cancel();
+                finish();
             }
         });
     }

@@ -135,8 +135,13 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
             if (vid == viewHold.cashDepositButton.getId()){
                 if (isChecked.get(position) == false){
                     isChecked.put(position, true);   // 根据点击的情况来将其位置和相应的状态存入
-                    Intent cashDepositIntent=new Intent(context, CommitCashDepositActivity.class);
-                    context.startActivity(cashDepositIntent);
+                    if (data.get(position).getPayMarginStatus()==0){
+                        Intent cashDepositIntent=new Intent(context, CommitCashDepositActivity.class);
+                        context.startActivity(cashDepositIntent);
+                    }else {
+                        MyAppliction.showToast("您已缴纳保证金");
+                    }
+
                     //Log.e("steta________", position + "");
                 } else if (isChecked.get(position) == true){
                     isChecked.put(position, false);  // 根据点击的情况来将其位置和相应的状态存入

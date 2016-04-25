@@ -243,11 +243,12 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
         if (location != null) {
             Longitude=String.valueOf(location.getLongitude());
             Latitude=String.valueOf(location.getLatitude());
-            MyAppliction.showToast(String.valueOf(location.getLongitude())+"----"+String.valueOf(location.getLatitude()));
+            //MyAppliction.showToast(String.valueOf(location.getLongitude())+"----"+String.valueOf(location.getLatitude()));
 
         } else {
             // 清空EditText对象
             //editText.getEditableText().clear();
+            MyAppliction.showToast("获取地理位置失败");
         }
     }
 

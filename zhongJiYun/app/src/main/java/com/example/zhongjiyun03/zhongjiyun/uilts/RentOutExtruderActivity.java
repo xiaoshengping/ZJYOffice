@@ -160,12 +160,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
     }
 
     private void initView() {
-        String modifiRentTage=getIntent().getStringExtra("tage");
 
-        if (modifiRentTage.equals("modifiRent")){
-                modifiRentData();
-
-        }
 
 
         addExtruderTv.setVisibility(View.GONE);
@@ -211,6 +206,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         contractLayout.setOnClickListener(this);
         qualifiedLayout.setOnClickListener(this);
         leaveFactoryLayout.setOnClickListener(this);
+        String modifiRentTage=getIntent().getStringExtra("tage");
+        if (modifiRentTage.equals("modifiRent")){
+            modifiRentData();
+
+        }
     }
 
     private void modifiRentData() {
