@@ -56,7 +56,8 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
       private TextView retrunText;
       private int pageIndext=1;
       private List<MyExtruderBean> myExtruderBeens;
-
+      private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+      private HomeExtruderListAdapter homeExtruderAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +80,9 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
         addExtruderTv.setText("新增");
         titleNemeTv.setText("我的钻机");
         retrunText.setOnClickListener(this);
-        intiPullToRefresh();
         intiListView();
+        intiPullToRefresh();
+
     }
 
     @Override
@@ -120,6 +122,9 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             MyExtruderDataBean myExtruderDataBean=appBean.getData();
                             List<MyExtruderBean> myExtruderBeen= myExtruderDataBean.getPagerData();
                             if (myExtruderBeen!=null){
+                                if (isPullDownRefresh){
+                                    myExtruderBeens.clear();
+                                }
                                 myExtruderBeens.addAll(myExtruderBeen);
 
                             }else {
@@ -135,7 +140,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             MyAppliction.showToast("没有更多数据");
                             extruderListView.onRefreshComplete();
                         }
-
+                        homeExtruderAdapter.notifyDataSetChanged();
 
                     }
 
@@ -162,7 +167,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
 
     private void intiListView() {
 
-        HomeExtruderListAdapter homeExtruderAdapter=new HomeExtruderListAdapter(myExtruderBeens,this,extruderListView);
+        homeExtruderAdapter=new HomeExtruderListAdapter(myExtruderBeens,this,extruderListView);
         extruderListView.setAdapter(homeExtruderAdapter);
         extruderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -235,8 +240,9 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-        myExtruderBeens.clear();
+
         pageIndext=1;
+        isPullDownRefresh=true;
         initData(pageIndext);
 
 
@@ -245,6 +251,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndext++;
+        isPullDownRefresh=false;
         initData(pageIndext);
 
 

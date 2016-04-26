@@ -1,6 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -44,14 +45,17 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
     private TextView phoneText;
     @ViewInject(R.id.modify_phone_button)
     private Button modifyPhoneButton;
-    @ViewInject(R.id.edit_phone)
-    private EditText phoneEdit;
+    @ViewInject(R.id.edit_new_phone)
+    private EditText phoneNewEdit;
+    @ViewInject(R.id.edit_formmer_phone)
+    private EditText editFormmerPhone;
     @ViewInject(R.id.edit_code)
     private EditText editCode;
     private SVProgressHUD mSVProgressHUD;//loding
     @ViewInject(R.id.code_button)
     private Button codeButton;
     private TimeCount time;
+    private String phone=null;  //用户手机号
 
 
     @Override
@@ -76,16 +80,11 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
         SQLhelper sqLhelper=new SQLhelper(ModificationPhoneActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String phone=null;  //用户id
-
         while (cursor.moveToNext()) {
-
             phone=cursor.getString(1);
-
         }
         if (!TextUtils.isEmpty(phone)){
             phoneText.setText(phone);
-
         }
     }
 
@@ -94,6 +93,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
         titleNemeTv.setText("修改机手号码");
         retrunText.setOnClickListener(this);
         modifyPhoneButton.setOnClickListener(this);
+        codeButton.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
         time = new TimeCount(60000, 1000);//构造CountDownTimer对象
 
@@ -119,13 +119,14 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
             }
     }
     private void intiVcodeData() {
-        String phone=phoneEdit.getText().toString();
+
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("PhoneNumber",phone);
-        requestParams.addBodyParameter("SmsType","1");
-        if (!TextUtils.isEmpty(phone)&&phone.length()==11) {
-            time.start();
+        requestParams.addBodyParameter("PhoneNumber",phoneNewEdit.getText().toString());
+        requestParams.addBodyParameter("SmsType","2");
+
+        if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())&&phoneNewEdit.getText().toString().length()==11) {
+
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCodeData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -134,7 +135,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                         AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                         if ((appDataBean.getResult()).equals("success")){
                             MyAppliction.showToast("验证码已发送成功");
-
+                            time.start();
                         }else {
                             MyAppliction.showToast(appDataBean.getMsg());
                         }
@@ -188,17 +189,25 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
             uid=cursor.getString(0);
 
         }
+        if (phone.equals(editFormmerPhone.getText().toString())){
 
-        if (!TextUtils.isEmpty(phoneEdit.getText().toString())){
-            if ((phoneEdit.getText().toString()).length()==11){
+
+        if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())){
+            if ((phoneNewEdit.getText().toString()).length()==11){
                 if (!TextUtils.isEmpty(editCode.getText().toString())){
                     HttpUtils httpUtils=new HttpUtils();
                     RequestParams requestParams=new RequestParams();
                     if (!TextUtils.isEmpty(uid)){
                         requestParams.addBodyParameter("id",uid);
                     }
-                    requestParams.addBodyParameter("PhoneNumber",phoneEdit.getText().toString());
+                    //步骤1：创建一个SharedPreferences接口对象
+                    SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+                    //步骤2：获取文件中的值
+                    String sesstionId = read.getString("code","");
+                    requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+                    requestParams.addBodyParameter("PhoneNumber",phoneNewEdit.getText().toString());
                     requestParams.addBodyParameter("SmsCode",editCode.getText().toString());
+                    requestParams.addBodyParameter("oldPhoneNumber",editFormmerPhone.getText().toString());
                     mSVProgressHUD.showWithStatus("提交中...");
                     final String finalUid = uid;
                     httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getModifyPhoneData(),requestParams, new RequestCallBack<String>() {
@@ -208,7 +217,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                             if (!TextUtils.isEmpty(responseInfo.result)){
                                 AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                                 if (appDataBean.getResult().equals("success")){
-                                    update(finalUid,phoneEdit.getText().toString());
+                                    update(finalUid,phoneNewEdit.getText().toString());
                                     mSVProgressHUD.dismiss();
                                     mSVProgressHUD.showSuccessWithStatus("恭喜，修改成功！");
                                     finish();
@@ -245,9 +254,13 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
             }
 
         }else {
-            MyAppliction.showToast("请输入您的手机号码");
+            MyAppliction.showToast("请输入您的新手机号码");
 
         }
+        }else {
+            MyAppliction.showToast("你输入的手机号与原手机号不相同");
+        }
+
     }
 
     /**

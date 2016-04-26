@@ -131,17 +131,19 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
     @ViewInject(R.id.project_list_view)
     private  ListView projectListView;
-
+    private SeekMachinistListAdapter homeServiceListAdapter;
 
 
       @ViewInject(R.id.seek_machinist_listview)
       private PullToRefreshListView seekMachinistListview;  //列表
-      private int pageIndex=1;
-      private  List<SekkMachinisDataBean> sekkMachinisDataBeens;
+    private int pageIndex=1;
+    private  List<SekkMachinisDataBean> sekkMachinisDataBeens;
     private LocationManager lm;
     private static final String TAG = "GpsActivity";
-    private String Longitude;
-    private String Latitude;
+    private String Longitude;   //经度
+    private String Latitude;    //纬度
+    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+
     public SeekMachinistFragment() {
         // Required empty public constructor
     }
@@ -186,9 +188,9 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
         OnClickListenerImpl l = new OnClickListenerImpl();
         mainTab1TV.setOnClickListener(l);
-
-        intiPullToRefresh();
         initListView();
+        intiPullToRefresh();
+
         facillyText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -265,8 +267,12 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                     if ((appListDataBean.getResult()).equals("success")){
                         SeekMachinisBean seekMachinisBean= appListDataBean.getData();
                         List<SekkMachinisDataBean> sekkMachinisDataBeen=seekMachinisBean.getPagerData();
+                        if (isPullDownRefresh){
+                            sekkMachinisDataBeens.clear();
+                        }
                         sekkMachinisDataBeens.addAll(sekkMachinisDataBeen);
 
+                        homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
 
                     }else if ((appListDataBean.getResult()).equals("nomore")){
@@ -302,9 +308,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     }
 
     private void initListView() {
-        SeekMachinistListAdapter homeServiceListAdapter=new SeekMachinistListAdapter(sekkMachinisDataBeens,getActivity());
+        homeServiceListAdapter=new SeekMachinistListAdapter(sekkMachinisDataBeens,getActivity());
         seekMachinistListview.setAdapter(homeServiceListAdapter);
-        homeServiceListAdapter.notifyDataSetChanged();
         seekMachinistListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -333,13 +338,14 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
         startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+
         seekMachinistListview.setRefreshing();
 
     }
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex=1;
-        sekkMachinisDataBeens.clear();
+        isPullDownRefresh=true;
         initListData(pageIndex,type,city,year,order);  //列表数据
 
 
@@ -350,6 +356,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
+        isPullDownRefresh=false;
         initListData(pageIndex,type,city,year,order);  //列表数据
 
     }

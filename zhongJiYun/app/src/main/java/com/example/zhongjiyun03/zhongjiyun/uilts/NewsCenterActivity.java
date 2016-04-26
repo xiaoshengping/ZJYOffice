@@ -80,14 +80,22 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
      private View andustryView; //行业新闻view
      private View enterpriseView; //企业新闻view
      private View bidsView;  //招标新闻view
-     private  List<NewsDataBean> newsDataBeens;
-     private  List<NewsDataBean>  andustryNewsDataBeen;
-     private  List<NewsDataBean>  enterpriseNewsDataBeen;
-     private  List<NewsDataBean>  bidsNewsDataBeen;
-     private int pageIndex=1;
-     private int pageIndex2=1;
-     private int pageIndex3=1;
-     private int pageIndex4=1;
+     private  List<NewsDataBean> newsDataBeens;//新闻动态数据
+     private  List<NewsDataBean>  andustryNewsDataBeen; //行业新闻数据
+     private  List<NewsDataBean>  enterpriseNewsDataBeen; //企业新闻数据
+     private  List<NewsDataBean>  bidsNewsDataBeen;  //招标新闻数据
+     private int pageIndex=1;    //新闻动态页数
+     private int pageIndex2=1;    //行业新闻页数
+     private int pageIndex3=1;    //企业新闻页数
+     private int pageIndex4=1;    //招标新闻页数
+     private HomeNewsListAdapter dynamicNewsListAdapter;//新闻动态
+     private boolean isPullDownRefresh1=true; //判断新闻动态是下拉，还是上拉的标记
+     private HomeNewsListAdapter andustryNewsListAdapter; //行业新闻
+     private boolean isPullDownRefresh2=true; //判断行业新闻是下拉，还是上拉的标记
+     private HomeNewsListAdapter enterPriseNewsListAdapter;//企业新闻
+     private boolean isPullDownRefresh3=true; //判断企业新闻是下拉，还是上拉的标记
+     private HomeNewsListAdapter bidsNewsListAdapter;//招标新闻
+     private boolean isPullDownRefresh4=true; //判断招标新闻是下拉，还是上拉的标记
 
 
 
@@ -139,8 +147,15 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                 if ((appListDataBean.getResult()).equals("success")){
 
                    List<NewsDataBean> newsDataBeen=appListDataBean.getData();
-                    newsDataBeens.addAll(newsDataBeen);
+                    if (newsDataBeen!=null){
+                        if (isPullDownRefresh1){
+                            newsDataBeens.clear();
+                        }
+                        newsDataBeens.addAll(newsDataBeen);
+                    }
+                    dynamicNewsListAdapter.notifyDataSetChanged();
                     dynamicListView.onRefreshComplete();
+
                 }
 
 
@@ -149,6 +164,7 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("新闻",s);
+                dynamicListView.onRefreshComplete();
             }
         });
 
@@ -169,8 +185,13 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                 if ((appListDataBean.getResult()).equals("success")){
 
                   List<NewsDataBean>  newsDataBeen=appListDataBean.getData();
-                    andustryNewsDataBeen.addAll(newsDataBeen);
-
+                    if (newsDataBeen!=null){
+                        if (isPullDownRefresh2){
+                            andustryNewsDataBeen.clear();
+                        }
+                        andustryNewsDataBeen.addAll(newsDataBeen);
+                    }
+                    andustryNewsListAdapter.notifyDataSetChanged();
                     andustryListView.onRefreshComplete();
                 }
 
@@ -180,6 +201,7 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("新闻",s);
+                andustryListView.onRefreshComplete();
             }
         });
 
@@ -199,16 +221,24 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                 AppListDataBean<NewsDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<NewsDataBean>>(){});
                 if ((appListDataBean.getResult()).equals("success")){
                     List<NewsDataBean>  newsDataBeenss=appListDataBean.getData();
-                    enterpriseNewsDataBeen.addAll(newsDataBeenss);
-                    enterpriseListView.onRefreshComplete();
+                    if (newsDataBeenss!=null){
+                        if (isPullDownRefresh3){
+                            enterpriseNewsDataBeen.clear();
+                        }
+                        enterpriseNewsDataBeen.addAll(newsDataBeenss);
+                    }
+                    enterPriseNewsListAdapter.notifyDataSetChanged();
+
                 }
 
+                enterpriseListView.onRefreshComplete();
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("新闻",s);
+                enterpriseListView.onRefreshComplete();
             }
         });
 
@@ -229,7 +259,13 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                 if ((appListDataBean.getResult()).equals("success")){
 
                     List<NewsDataBean>  newsDataBeensss =appListDataBean.getData();
-                    bidsNewsDataBeen.addAll(newsDataBeensss);
+                    if (newsDataBeensss!=null){
+                        if (isPullDownRefresh4){
+                            bidsNewsDataBeen.clear();
+                        }
+                        bidsNewsDataBeen.addAll(newsDataBeensss);
+                    }
+                     bidsNewsListAdapter.notifyDataSetChanged();
                      bidsListView.onRefreshComplete();
                 }
 
@@ -239,6 +275,7 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("新闻",s);
+                bidsListView.onRefreshComplete();
             }
         });
 
@@ -268,13 +305,14 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pageIndex=1;
-                newsDataBeens.clear();
+                isPullDownRefresh1=true;
                 intiData1(pageIndex);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pageIndex++;
+                isPullDownRefresh1=false;
                 intiData1(pageIndex);
             }
         });
@@ -289,9 +327,9 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
         startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         dynamicListView.setRefreshing();
-        HomeNewsListAdapter homeNewsListAdapter=new HomeNewsListAdapter(newsDataBeens,NewsCenterActivity.this);
-        dynamicListView.setAdapter(homeNewsListAdapter);
-        homeNewsListAdapter.notifyDataSetChanged();
+        dynamicNewsListAdapter=new HomeNewsListAdapter(newsDataBeens,NewsCenterActivity.this);
+        dynamicListView.setAdapter(dynamicNewsListAdapter);
+        dynamicNewsListAdapter.notifyDataSetChanged();
         dynamicListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -312,13 +350,14 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pageIndex2=1;
-                andustryNewsDataBeen.clear();
+                isPullDownRefresh2=true;
                 intiData2(pageIndex2);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pageIndex2++;
+                isPullDownRefresh2=false;
                 intiData2(pageIndex2);
             }
         });
@@ -333,9 +372,9 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
         startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         andustryListView.setRefreshing();
-        HomeNewsListAdapter homeNewsListAdapter=new HomeNewsListAdapter(andustryNewsDataBeen,NewsCenterActivity.this);
-        andustryListView.setAdapter(homeNewsListAdapter);
-        homeNewsListAdapter.notifyDataSetChanged();
+        andustryNewsListAdapter=new HomeNewsListAdapter(andustryNewsDataBeen,NewsCenterActivity.this);
+        andustryListView.setAdapter(andustryNewsListAdapter);
+        andustryNewsListAdapter.notifyDataSetChanged();
         andustryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -355,13 +394,14 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pageIndex3=1;
-                enterpriseNewsDataBeen.clear();
+                isPullDownRefresh3=true;
                 intiData3(pageIndex3);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pageIndex3++;
+                isPullDownRefresh3=false;
                 intiData3(pageIndex3);
             }
         });
@@ -376,9 +416,9 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
         startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         enterpriseListView.setRefreshing();
-        HomeNewsListAdapter homeNewsListAdapter=new HomeNewsListAdapter(enterpriseNewsDataBeen,NewsCenterActivity.this);
-        enterpriseListView.setAdapter(homeNewsListAdapter);
-        homeNewsListAdapter.notifyDataSetChanged();
+        enterPriseNewsListAdapter=new HomeNewsListAdapter(enterpriseNewsDataBeen,NewsCenterActivity.this);
+        enterpriseListView.setAdapter(enterPriseNewsListAdapter);
+        enterPriseNewsListAdapter.notifyDataSetChanged();
         enterpriseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -398,13 +438,14 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pageIndex4=1;
-                bidsNewsDataBeen.clear();
+                isPullDownRefresh4=true;
                 intiData4(pageIndex4);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 pageIndex4++;
+                isPullDownRefresh4=false;
                 intiData4(pageIndex4);
             }
         });
@@ -419,9 +460,9 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
         startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         bidsListView.setRefreshing();
-        HomeNewsListAdapter homeNewsListAdapter=new HomeNewsListAdapter(bidsNewsDataBeen,NewsCenterActivity.this);
-        bidsListView.setAdapter(homeNewsListAdapter);
-        homeNewsListAdapter.notifyDataSetChanged();
+        bidsNewsListAdapter=new HomeNewsListAdapter(bidsNewsDataBeen,NewsCenterActivity.this);
+        bidsListView.setAdapter(bidsNewsListAdapter);
+        bidsNewsListAdapter.notifyDataSetChanged();
         bidsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

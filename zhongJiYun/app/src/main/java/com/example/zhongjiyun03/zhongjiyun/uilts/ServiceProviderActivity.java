@@ -78,6 +78,7 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
     private static final String TAG = "GpsActivity";
     private String Longitude;
     private String Latitude;
+    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -293,7 +294,12 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
 
                          ServiceDataBean serviceProvider=appBean.getData();
                          List<ServiceProviderBean>  serviceProviderBeans=  serviceProvider.getPagerData();
-                         serviceProviderBean.addAll(serviceProviderBeans);
+                         if (serviceProviderBean!=null){
+                             if (isPullDownRefresh){
+                                 serviceProviderBean.clear();
+                             }
+                             serviceProviderBean.addAll(serviceProviderBeans);
+                         }
                          serviceProviderListview.onRefreshComplete();
                         // mSVProgressHUD.dismiss();
                      }else if ((appBean.getResult()).equals("nomore")){
@@ -305,7 +311,7 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
                          serviceProviderListview.onRefreshComplete();
 
                      }
-
+                    homeServiceListAdapter.notifyDataSetChanged();
 
                 }
 
@@ -378,8 +384,8 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-        serviceProviderBean.clear();
          pageIndext=1;
+        isPullDownRefresh=true;
         initData(pageIndext);
 
 
@@ -388,8 +394,8 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-           pageIndext++;
-        Log.e("pageIndext",pageIndext+"");
+         pageIndext++;
+        isPullDownRefresh=false;
         initData(pageIndext);
 
 

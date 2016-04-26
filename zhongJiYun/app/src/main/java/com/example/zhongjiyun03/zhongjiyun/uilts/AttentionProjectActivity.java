@@ -36,6 +36,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AttentionProjectActivity extends AppCompatActivity implements View.OnClickListener,PullToRefreshBase.OnRefreshListener2<ListView> {
@@ -48,9 +49,12 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
     private TextView retrunText;     //头部左边
 
 
-      @ViewInject(R.id.attention_project_listview)
-      private PullToRefreshListView attentionProjectListview;
-      private int pageIndex=1;
+    @ViewInject(R.id.attention_project_listview)
+    private PullToRefreshListView attentionProjectListview;
+    private int pageIndex=1;//分页
+    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+    private List<AttentionProjectBean> attentionProjectBeens; //列表数据
+    private AttentionProjectAdapter homeProjectlsitAdapter;
 
 
     @Override
@@ -64,6 +68,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
 
     private void init() {
         initView();
+        initListView();
         intiPullToRefresh();
 
 
@@ -117,7 +122,12 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                             AttentionProjectDataBean attentionProjectDataBean=appBean.getData();
                             if (attentionProjectDataBean!=null){
                                 List<AttentionProjectBean> attentionProjectBeen=attentionProjectDataBean.getPagerData();
-                                initListView(attentionProjectBeen);
+                                 if (attentionProjectBeen!=null){
+                                     if (isPullDownRefresh){
+                                         attentionProjectBeens.clear();
+                                     }
+                                     attentionProjectBeens.addAll(attentionProjectBeen);
+                                 }
                                 attentionProjectListview.onRefreshComplete();
                             }else {
                                 attentionProjectListview.onRefreshComplete();
@@ -130,7 +140,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                             MyAppliction.showToast("已到最低了");
                         }
 
-
+                        homeProjectlsitAdapter.notifyDataSetChanged();
                     }
                 }
 
@@ -151,17 +161,15 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
 
     }
 
-    private void initListView(final List<AttentionProjectBean> seekProjectBean) {
+    private void initListView() {
 
-        AttentionProjectAdapter homeProjectlsitAdapter=new AttentionProjectAdapter(seekProjectBean,this);
+        homeProjectlsitAdapter=new AttentionProjectAdapter(attentionProjectBeens,this);
         attentionProjectListview.setAdapter(homeProjectlsitAdapter);
-        homeProjectlsitAdapter.notifyDataSetChanged();
-
         attentionProjectListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(AttentionProjectActivity.this, SeekProjectParticularsActivity.class);
-                intent.putExtra("seekProjectId",seekProjectBean.get(position-1).getId());
+                intent.putExtra("seekProjectId",attentionProjectBeens.get(position-1).getId());
                 startActivity(intent);
             }
         });
@@ -172,15 +180,18 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex=1;
+        isPullDownRefresh=true;
         initListData(pageIndex);
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
+        isPullDownRefresh=false;
         initListData(pageIndex);
     }
     private void initView() {
+        attentionProjectBeens=new ArrayList<>();
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("关注的项目");
         retrunText.setOnClickListener(this);

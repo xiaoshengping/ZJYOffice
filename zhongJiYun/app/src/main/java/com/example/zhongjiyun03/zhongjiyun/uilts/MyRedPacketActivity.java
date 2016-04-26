@@ -58,6 +58,8 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
     private Button getPackedButton;
     private List<RePackedListBean> rePackedListBeens;//红包列表数据
     private int PageIndex=1;
+    private boolean isRefresh=true;//判断是上啦还是下拉
+    private MyRedPatckListAdapter myredAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +72,9 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
     private void init() {
         mSVProgressHUD = new SVProgressHUD(this);
         initView();
-        intiPullToRefresh();
         initListView();
+        intiPullToRefresh();
+
     }
     public void intiPullToRefresh(){
         redPatckListview.setMode(PullToRefreshBase.Mode.BOTH);
@@ -101,7 +104,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + value);
             requestParams.addBodyParameter("PageIndex", PageIndex+"");
             requestParams.addBodyParameter("PageSize", "10");
-            mSVProgressHUD.showWithStatus("加载中...");
+            //mSVProgressHUD.showWithStatus("加载中...");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRedPacketListData(), requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -115,6 +118,9 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                             getPackedButton.setVisibility(View.VISIBLE);
                         }
                         if (listData!= null) {
+                            if (isRefresh){
+                                rePackedListBeens.clear();
+                            }
                             rePackedListBeens.addAll(listData);
                         }
                     } else if ((appBean.getResult()).equals("empty")) {
@@ -124,15 +130,16 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                     }else if ((appBean.getResult()).equals("nomore")) {
                         MyAppliction.showToast("已到最底了");
                     }
+                    myredAdapter.notifyDataSetChanged();
                     redPatckListview.onRefreshComplete();
-                    mSVProgressHUD.dismiss();
+                    //mSVProgressHUD.dismiss();
 
                 }
 
                 @Override
                 public void onFailure(HttpException e, String s) {
                     Log.e("我的红包", s);
-                    mSVProgressHUD.dismiss();
+                    //mSVProgressHUD.dismiss();
                     MyAppliction.showToast("网络异常,请稍后重试!");
                     redPatckListview.onRefreshComplete();
                 }
@@ -158,7 +165,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
 
     private void initListView() {
 
-        MyRedPatckListAdapter myredAdapter=new MyRedPatckListAdapter(rePackedListBeens,this);
+        myredAdapter=new MyRedPatckListAdapter(rePackedListBeens,this);
         redPatckListview.setAdapter(myredAdapter);
         myredAdapter.notifyDataSetChanged();
 
@@ -169,13 +176,14 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-        rePackedListBeens.clear();
+        isRefresh=true;
         PageIndex=1;
         initData(PageIndex); //获取列表数据
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+        isRefresh=false;
         PageIndex++;
         initData(PageIndex); //获取列表数据
     }

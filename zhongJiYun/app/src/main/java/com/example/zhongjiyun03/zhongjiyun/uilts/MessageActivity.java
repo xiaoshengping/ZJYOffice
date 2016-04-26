@@ -127,7 +127,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                       List<MessageDataBean> messageDataBeen=  appListDataBean.getData();
                         if (messageDataBeen!=null){
                            list.addAll(messageDataBeen);
-                            Log.e("title",list.get(0).getTitle());
+                            //Log.e("title",list.get(0).getTitle());
                             InitListView(messageDataBeen);
                         }
 

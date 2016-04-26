@@ -50,7 +50,7 @@ public class HomeServicetListAdapter extends AppBaseAdapter<ServiceProviderBean>
             MyAppliction.imageLoader.displayImage(data.get(position).getThumbnail(),viewHold.imageView,MyAppliction.RoundedOptionsOne);
             viewHold.tailtTextView.setText(data.get(position).getName());
             viewHold.companyTextView.setText(data.get(position).getProviderName());
-            viewHold.addressTextView.setText(data.get(position).getDistance()+"m");
+            viewHold.addressTextView.setText(data.get(position).getDistance()+"Km");
             viewHold.neirongTextView.setText(data.get(position).getProviderTypeStr());
 
         }

@@ -109,6 +109,8 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     private RequestParams requestParams;
 
     private List<SeekProjectBean> seekProjectBeens;
+    private HomeProjectListAdapter homeProjectlsitAdapter;
+    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
 
 
 
@@ -157,8 +159,9 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
 
         OnClickListenerImpl l = new OnClickListenerImpl();
         mainTab1TV.setOnClickListener(l);
-        intiPullToRefresh();
         initListView();
+        intiPullToRefresh();
+
 
 
 
@@ -221,10 +224,12 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                         SeekProjectDataBean seekProjectBeanList=appBean.getData();
                         if (seekProjectBeanList!=null){
                             List<SeekProjectBean> seekProjectBean= seekProjectBeanList.getPagerData();
+                            if (isPullDownRefresh){
+                                seekProjectBeens.clear();
+                            }
                             seekProjectBeens.addAll(seekProjectBean);
-
-                                projectListView.onRefreshComplete();
-
+                            homeProjectlsitAdapter.notifyDataSetChanged();
+                            projectListView.onRefreshComplete();
                         }
 
                     }else  if ((appBean.getResult()).equals("empty")){
@@ -270,7 +275,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     }
 
     private void initListView() {
-        HomeProjectListAdapter homeProjectlsitAdapter=new HomeProjectListAdapter(seekProjectBeens,getActivity());
+        homeProjectlsitAdapter=new HomeProjectListAdapter(seekProjectBeens,getActivity());
         projectListView.setAdapter(homeProjectlsitAdapter);
         projectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -288,7 +293,8 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         PageIndex=1;
-        seekProjectBeens.clear();
+        isPullDownRefresh=true;
+
         initListData(PageIndex,cityName,State,Order);
     }
 
@@ -296,6 +302,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 
         PageIndex++;
+        isPullDownRefresh=false;
         initListData(PageIndex,cityName,State,Order);
     }
     private void findView(View view) {

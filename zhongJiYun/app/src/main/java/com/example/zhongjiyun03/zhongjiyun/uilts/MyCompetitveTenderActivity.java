@@ -52,6 +52,8 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
     private PullToRefreshListView competitveTenderLsitview;
     private int pageIndex=1;
     List<ProjectlistDataBean> projectlistDataBeanLists;
+    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+    private MyCompetitveTenderListAdapter myCompetitveAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +110,9 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                         if (( appBean.getResult()).equals("success")){
                             ProjectlistBean projectlistBean=  appBean.getData();
                             if (projectlistBean!=null){
+                                if (isPullDownRefresh){
+                                    projectlistDataBeanLists.clear();
+                                }
                                 projectlistDataBeanLists.addAll(projectlistBean.getPagerData());
                                 competitveTenderLsitview.onRefreshComplete();
                             }
@@ -121,7 +126,7 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                             MyAppliction.showToast("没有更多数据");
                         }
 
-
+                        myCompetitveAdapter.notifyDataSetChanged();
                     }else {
                         competitveTenderLsitview.onRefreshComplete();
                     }
@@ -141,9 +146,8 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
     }
 
     private void initListView() {
-        MyCompetitveTenderListAdapter myCompetitveAdapter=new MyCompetitveTenderListAdapter(projectlistDataBeanLists,this);
+        myCompetitveAdapter=new MyCompetitveTenderListAdapter(projectlistDataBeanLists,this);
         competitveTenderLsitview.setAdapter(myCompetitveAdapter);
-        myCompetitveAdapter.notifyDataSetChanged();
         competitveTenderLsitview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -187,14 +191,14 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex=1;
-        projectlistDataBeanLists.clear();
+        isPullDownRefresh=true;
         initListData(pageIndex);
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
-
+        isPullDownRefresh=false;
         initListData(pageIndex);
     }
 

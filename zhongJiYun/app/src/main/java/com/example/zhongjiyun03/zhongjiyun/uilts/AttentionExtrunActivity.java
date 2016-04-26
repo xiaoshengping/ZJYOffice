@@ -36,6 +36,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AttentionExtrunActivity extends AppCompatActivity implements View.OnClickListener,PullToRefreshBase.OnRefreshListener2<ListView> {
@@ -52,6 +53,10 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     @ViewInject(R.id.attention_extrun_lsitview)
     private PullToRefreshListView attentionExtrunLsitview;
     private int pageIndex=1;
+    private List<SecondHandBean> secondHandBeens; //列表数据
+    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+    private HomeSecondHandListAdapter homeSecondHandListAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +70,14 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
 
     private void inti() {
         initView();
+        initListView();
         intiPullToRefresh();
 
 
     }
 
     private void initView() {
+        secondHandBeens=new ArrayList<>();
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("关注的钻机");
         retrunText.setOnClickListener(this);
@@ -109,7 +116,12 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
 
                             if (attentionSecondHandDataBean!=null){
                                 List<SecondHandBean> secondHandBeen=  attentionSecondHandDataBean.getPagerData();
-                                initListView(secondHandBeen);
+                               if (secondHandBeen!=null){
+                                   if (isPullDownRefresh){
+                                       secondHandBeens.clear();
+                                   }
+                                   secondHandBeens.addAll(secondHandBeen);
+                               }
                                 attentionExtrunLsitview.onRefreshComplete();
                             }
 
@@ -117,6 +129,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                             attentionExtrunLsitview.onRefreshComplete();
                             MyAppliction.showToast("已到最底了");
                         }
+                        homeSecondHandListAdapter.notifyDataSetChanged();
 
                     }
 
@@ -152,16 +165,16 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
         attentionExtrunLsitview.setRefreshing();
 
     }
-    private void initListView(final List<SecondHandBean> secondHandBeen) {
+    private void initListView() {
 
-        HomeSecondHandListAdapter homeSecondHandListAdapter = new HomeSecondHandListAdapter(secondHandBeen, this);
+        homeSecondHandListAdapter = new HomeSecondHandListAdapter(secondHandBeens, this);
         attentionExtrunLsitview.setAdapter(homeSecondHandListAdapter);
         homeSecondHandListAdapter.notifyDataSetChanged();
         attentionExtrunLsitview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(AttentionExtrunActivity.this,ExturderParticularsActivity.class);
-                intent.putExtra("secondHandData",secondHandBeen.get(position-1).getId());
+                intent.putExtra("secondHandData",secondHandBeens.get(position-1).getId());
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
             }
@@ -173,6 +186,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 
         pageIndex=1;
+        isPullDownRefresh=true;
         intiListData(pageIndex);
 
 
@@ -181,6 +195,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
+        isPullDownRefresh=false;
         intiListData(pageIndex);
     }
 

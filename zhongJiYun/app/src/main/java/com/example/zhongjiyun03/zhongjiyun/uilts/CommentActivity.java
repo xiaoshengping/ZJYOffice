@@ -77,6 +77,10 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private int mineCommentPageIndex=1;  //我的评论mineCommentPageIndex
     private PullToRefreshListView mineCommentListView;
     private PullToRefreshListView commentMineListView;
+    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+    private boolean isPullDownRefresh1=true; //判断是下拉，还是上拉的标记
+    private  CommentListAdapter commentListAdapter;
+    private  CommentListAdapter mineCommentListAdapter;
 
 
     @Override
@@ -93,6 +97,88 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         initViewPager();
         initCommentMine();//评论我的
         initMineComment();//我的评论
+
+
+
+    }
+
+    private void initMineCommentData(int PageIndex) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        SQLhelper sqLhelper=new SQLhelper(CommentActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+        }
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionID = read.getString("code","");
+        if(!TextUtils.isEmpty(sesstionID)){
+            if (!TextUtils.isEmpty(uid)){
+                requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionID);
+                requestParams.addBodyParameter("Id",uid);
+                requestParams.addBodyParameter("PageIndex",PageIndex+"");
+                requestParams.addBodyParameter("PageSize","10");
+                httpUtils.send(HttpRequest.HttpMethod.POST,AppUtilsUrl.getCommentMineData() ,requestParams, new RequestCallBack<String>() {
+                    @Override
+                    public void onSuccess(ResponseInfo<String> responseInfo) {
+
+                        if (!TextUtils.isEmpty(responseInfo.result)){
+                            Log.e("我的评论",responseInfo.result);
+                            if (!TextUtils.isEmpty(responseInfo.result)){
+                                AppBean<CommentDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<CommentDataBean>>(){});
+                                if (appBean.getResult().equals("success")){
+                                    CommentDataBean commentDataBean= appBean.getData();
+                                    if (commentDataBean!=null){
+                                        List<CommentPagerDataBean> commentPagerDataBean=commentDataBean.getPagerData();
+                                        if (commentPagerDataBean!=null){
+                                            if (isPullDownRefresh){
+                                                mineCommentDataBeens.clear();
+                                            }
+                                            mineCommentDataBeens.addAll(commentPagerDataBean);
+                                        }
+
+                                    }
+                                    commentListAdapter.notifyDataSetChanged();
+                                    mineCommentListView.onRefreshComplete();
+                                }else if (appBean.getResult().equals("empty")){
+                                    //MyAppliction.showToast("没有更多评论");
+                                    mineCommentListView.onRefreshComplete();
+
+                                }else if ((appBean.getResult()).equals("nomore")){
+                                    MyAppliction.showToast("已到底部了");
+                                    mineCommentListView.onRefreshComplete();
+                                }
+
+
+                            }
+                            mineCommentListView.onRefreshComplete();
+                        }else {
+                            MyAppliction.showToast("加载数据失败");
+                            mineCommentListView.onRefreshComplete();
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onFailure(HttpException e, String s) {
+                        Log.e("我的评论",s);
+                        mineCommentListView.onRefreshComplete();
+                    }
+                });
+
+            }
+        }else {
+            MyAppliction.showToast("加载数据失败");
+
+        }
+
 
 
 
@@ -122,7 +208,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 requestParams.addBodyParameter("Id",uid);
                 requestParams.addBodyParameter("PageIndex",PageIndex+"");
                 requestParams.addBodyParameter("PageSize","10");
-                httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCommentMineData(),requestParams, new RequestCallBack<String>() {
+                httpUtils.send(HttpRequest.HttpMethod.POST,AppUtilsUrl.getMineCommentData() ,requestParams, new RequestCallBack<String>() {
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
 
@@ -135,6 +221,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                     if (commentDataBean!=null){
                                         List<CommentPagerDataBean> commentPagerDataBean=commentDataBean.getPagerData();
                                         if (commentPagerDataBean!=null){
+                                            if (isPullDownRefresh1){
+                                                commentMineDataBeens.clear();
+                                            }
                                             commentMineDataBeens.addAll(commentPagerDataBean);
                                         }
 
@@ -150,6 +239,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
 
                             }
+                            mineCommentListAdapter.notifyDataSetChanged();
                             commentMineListView.onRefreshComplete();
 
                         }else {
@@ -173,102 +263,28 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         }
 
 
-    }
-
-    private void initMineCommentData(int PageIndex) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(CommentActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-
-        }
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionID = read.getString("code","");
-        if(!TextUtils.isEmpty(sesstionID)){
-            if (!TextUtils.isEmpty(uid)){
-            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionID);
-            requestParams.addBodyParameter("Id",uid);
-            requestParams.addBodyParameter("PageIndex",PageIndex+"");
-            requestParams.addBodyParameter("PageSize","10");
-            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMineCommentData(),requestParams, new RequestCallBack<String>() {
-                @Override
-                public void onSuccess(ResponseInfo<String> responseInfo) {
-
-                    if (!TextUtils.isEmpty(responseInfo.result)){
-                        Log.e("我的评论",responseInfo.result);
-                        if (!TextUtils.isEmpty(responseInfo.result)){
-                            AppBean<CommentDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<CommentDataBean>>(){});
-                            if (appBean.getResult().equals("success")){
-                                CommentDataBean commentDataBean= appBean.getData();
-                                if (commentDataBean!=null){
-                                    List<CommentPagerDataBean> commentPagerDataBean=commentDataBean.getPagerData();
-                                    if (commentPagerDataBean!=null){
-                                        mineCommentDataBeens.addAll(commentPagerDataBean);
-                                    }
-
-                                }
-                                mineCommentListView.onRefreshComplete();
-                            }else if (appBean.getResult().equals("empty")){
-                                //MyAppliction.showToast("没有更多评论");
-                                mineCommentListView.onRefreshComplete();
-
-                            }else if ((appBean.getResult()).equals("nomore")){
-                                MyAppliction.showToast("已到底部了");
-                                mineCommentListView.onRefreshComplete();
-                            }
-
-
-                        }
-                        mineCommentListView.onRefreshComplete();
-                    }else {
-                        MyAppliction.showToast("加载数据失败");
-                        mineCommentListView.onRefreshComplete();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(HttpException e, String s) {
-                    Log.e("我的评论",s);
-                    mineCommentListView.onRefreshComplete();
-                }
-            });
-
-        }
-        }else {
-            MyAppliction.showToast("加载数据失败");
-
-        }
-
-
 
     }
 
     //我的评论
     private void initMineComment() {
        mineCommentListView= (PullToRefreshListView) mineCommentView.findViewById(R.id.mine_comment_listview);
-
-        CommentListAdapter commentListAdapter=new CommentListAdapter(mineCommentDataBeens,CommentActivity.this);
+       commentListAdapter=new CommentListAdapter(mineCommentDataBeens,CommentActivity.this);
         mineCommentListView.setAdapter(commentListAdapter);
 
         mineCommentListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                mineCommentDataBeens.clear();
+
                 mineCommentPageIndex=1;
+                isPullDownRefresh=true;
                 initMineCommentData(mineCommentPageIndex); //我的评论数据
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 mineCommentPageIndex++;
+                isPullDownRefresh=false;
                 initMineCommentData(mineCommentPageIndex); //我的评论数据
             }
         });
@@ -292,19 +308,21 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         commentMineListView= (PullToRefreshListView) commentMineView.findViewById(R.id.comment_mine_listview);
 
-        CommentListAdapter commentListAdapter=new CommentListAdapter(commentMineDataBeens,CommentActivity.this);
-        commentMineListView.setAdapter(commentListAdapter);
+        mineCommentListAdapter=new CommentListAdapter(commentMineDataBeens,CommentActivity.this);
+        commentMineListView.setAdapter(mineCommentListAdapter);
         commentMineListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                commentMineDataBeens.clear();
+
                 commentMinePageIndex=1;
+                isPullDownRefresh1=true;
                 initCommentMineData(commentMinePageIndex); //评论我的数据
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 commentMinePageIndex++;
+                isPullDownRefresh1=false;
                 initCommentMineData(commentMinePageIndex); //评论我的数据
             }
         });
@@ -321,8 +339,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
         startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         commentMineListView.setRefreshing();
-
-
     }
 
     private void initView() {
@@ -429,7 +445,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         cursor = BitmapFactory
                 .decodeResource(getResources(), R.drawable.cursor);
         bmWidth = cursor.getWidth();
-
         DisplayMetrics dm;
         dm = getResources().getDisplayMetrics();
 
@@ -443,7 +458,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-// KeyEvent.KEYCODE_BACK代表返回操作.
+      // KeyEvent.KEYCODE_BACK代表返回操作.
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();

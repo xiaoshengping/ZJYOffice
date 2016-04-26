@@ -35,6 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:singleLine="true"
+            android:ellipsize="middle"
             android:textColor="@color/tailt_dark"
             android:textSize="@dimen/home_Size_16"
             android:id="@+id/phone_text"
@@ -58,8 +60,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
-
-                android:id="@+id/edit_phone"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/edit_formmer_phone"
+                android:id="@+id/edit_new_phone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:drawableLeft="@mipmap/login_phone"
@@ -68,15 +71,29 @@
                 android:background="@drawable/loing_edit_corners"
                 android:drawablePadding="10dp"
                 android:textSize="@dimen/home_Size_14"
-                android:hint="请输入手机号码"
+                android:hint="请输入新手机号码"
                 android:phoneNumber="true"
                 android:paddingLeft="10dp"
-
                 />
+            <EditText
+                android:id="@+id/edit_formmer_phone"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:drawableLeft="@mipmap/login_phone"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/loing_edit_corners"
+                android:drawablePadding="10dp"
+                android:textSize="@dimen/home_Size_14"
+                android:hint="请输入旧手机号码"
+                android:phoneNumber="true"
+                android:paddingLeft="10dp"
+                />
+
             <Button
                 android:id="@+id/code_button"
                 android:layout_centerHorizontal="true"
-                android:layout_alignTop="@id/edit_phone"
+                android:layout_alignTop="@id/edit_new_phone"
                 android:text="获取验证码"
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="22dp"
@@ -92,7 +109,7 @@
             android:id="@+id/edit_code"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:drawableLeft="@mipmap/login_lock"

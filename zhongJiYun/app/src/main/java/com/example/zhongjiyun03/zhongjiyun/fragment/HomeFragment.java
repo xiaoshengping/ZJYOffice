@@ -33,7 +33,6 @@ import com.example.zhongjiyun03.zhongjiyun.bean.home.SecondHandBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
-import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.CooperationActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.ExturderParticularsActivity;
@@ -139,12 +138,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
                 }
-              /*  AppConn<FashBanner> conn = JSONObject.parseObject(responseInfo.result, new TypeReference<AppConn<FashBanner>>() {
-                });
-                if (conn != null) {
-                    imageUrls.addAll(conn.getData());
-                    pagerAdapter.refreshData(true);
-                }*/
+
             }
 
             @Override
@@ -192,14 +186,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         }
 
 
-                    }else if ((appListDataBean.getResult()).equals("nomore")){
+                    }/*else if ((appListDataBean.getResult()).equals("nomore")){
 
                         MyAppliction.showToast("已到最底了");
                     }else if ((appListDataBean.getResult()).equals("empty")){
                         //secondHandBeen.clear();
 
                         MyAppliction.showToast("没有更多数据");
-                    }
+                    }*/
 
                 }
             }
