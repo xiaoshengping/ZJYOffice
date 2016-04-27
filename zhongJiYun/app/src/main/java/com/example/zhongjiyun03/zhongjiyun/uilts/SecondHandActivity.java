@@ -56,9 +56,11 @@ import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FacillyFirstClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FacillySecondClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FirstClassAdapter;
+import com.example.zhongjiyun03.zhongjiyun.popwin.FirstClassItem;
 import com.example.zhongjiyun03.zhongjiyun.popwin.PopupWindowHelper;
 import com.example.zhongjiyun03.zhongjiyun.popwin.ScreenUtils;
 import com.example.zhongjiyun03.zhongjiyun.popwin.SecondClassAdapter;
+import com.example.zhongjiyun03.zhongjiyun.popwin.SecondClassItem;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -158,12 +160,6 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         inti();
 
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        secondHandListview.setRefreshing();
     }
 
     private void inti() {
@@ -335,7 +331,12 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         final RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("Id","921efefe-f50b-48f9-a44e-cbde4b691d44");
         if (!TextUtils.isEmpty(city)){
-            requestParams.addBodyParameter("city",city);
+            if (city.equals("全部")){
+
+            }else {
+             requestParams.addBodyParameter("city",city);
+            }
+
         }
         if (!TextUtils.isEmpty(type)){
             requestParams.addBodyParameter("type",type);
@@ -371,18 +372,24 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                                     secondHandBeens.clear();
                                 }
                                 secondHandBeens.addAll(secondHandBeen);
+                                homeSecondHandListAdapter.notifyDataSetChanged();
                             }
-
-                            homeSecondHandListAdapter.notifyDataSetChanged();
-
                         }
+                        secondHandListview.onRefreshComplete();
                     }else if ((appListDataBean.getResult()).equals("nomore")){
                         MyAppliction.showToast("已到最底了");
+                        homeSecondHandListAdapter.notifyDataSetChanged();
+                        secondHandListview.onRefreshComplete();
                     }else if ((appListDataBean.getResult()).equals("empty")){
-                        //secondHandBeen.clear();
+                        if (isPullDownRefresh){
+                            secondHandBeens.clear();
+                        }
+                        homeSecondHandListAdapter.notifyDataSetChanged();
+                        secondHandListview.onRefreshComplete();
                         MyAppliction.showToast("没有更多数据");
                     }
-                    secondHandListview.onRefreshComplete();
+
+
                 }
 
             }
@@ -390,6 +397,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("二手钻机",s);
+                homeSecondHandListAdapter.notifyDataSetChanged();
                 secondHandListview.onRefreshComplete();
             }
         });
@@ -404,7 +412,6 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
          pageIndex=1;
         isPullDownRefresh=true;
-
         initListData(pageIndex,type,city,year,order);
     }
 
@@ -429,7 +436,6 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             Log.i(TAG, "纬度：" + location.getLatitude());
             Log.i(TAG, "海拔：" + location.getAltitude());
         }
-
         /**
          * GPS状态变化时触发
          */
@@ -556,8 +562,6 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
         if (provinceCityDataBean!=null){
             firstList=provinceCityDataBean.getProvinceCity();
-
-
         }
 
         //设备厂商
@@ -594,13 +598,17 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     }
 
     private void initPopupFacilly(final List<FacillyDataBean> facilluyFirstList) {
-
-
-
         popupWindowFacilly = new PopupWindow(SecondHandActivity.this);
         View view = LayoutInflater.from(SecondHandActivity.this).inflate(R.layout.facilly_popup_layout, null);
         facillyLeftLV = (ListView) view.findViewById(R.id.facilly_pop_listview_left);
         facillyRightLV = (ListView) view.findViewById(R.id.facilly_pop_listview_right);
+       /* FacillyDataBean facillyDataBean=new FacillyDataBean();
+        facillyDataBean.setText("全部");
+        facilluyFirstList.add(facillyDataBean);
+        FacillyChildsBean facillyChildsBean=new FacillyChildsBean();
+        facillyChildsBean.setText("全部");
+        facillySecondList.add(facillyChildsBean);*/
+
 
         popupWindowFacilly.setContentView(view);
         popupWindowFacilly.setBackgroundDrawable(new PaintDrawable());
@@ -712,7 +720,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         facillyText.setCompoundDrawables(null, null, img, null);
         type=selectedName;
-        secondHandBeens.clear();
+        //secondHandBeens.clear();
+        isPullDownRefresh=true;
         secondHandListview.setRefreshing();
         initListData(pageIndex,selectedName,city,year,order);
         //secondHandListview.setRefreshing();
@@ -843,14 +852,13 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private void handleResult(String firstId, String secondId, String selectedName){
         String text = "first id:" + firstId + ",second id:" + secondId;
         //Toast.makeText(SecondHandActivity.this, text, Toast.LENGTH_SHORT).show();
-
-        mainTab1TV.setText(selectedName);
-        mainTab1TV.setTextColor(getResources().getColor(R.color.red_light));
-        Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
-        img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-        mainTab1TV.setCompoundDrawables(null, null, img, null);
+            mainTab1TV.setText(selectedName);
+            mainTab1TV.setTextColor(getResources().getColor(R.color.red_light));
+            Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
+            img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
+            mainTab1TV.setCompoundDrawables(null, null, img, null);
         city=selectedName;
-        secondHandBeens.clear();
+        isPullDownRefresh=true;
         secondHandListview.setRefreshing();
         initListData(pageIndex,type,selectedName,year,order);
 
@@ -917,7 +925,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                  }else {
                      order=list.get(arg2);
                  }
-                secondHandBeens.clear();
+                isPullDownRefresh=true;
                 secondHandListview.setRefreshing();
                 initListData(pageIndex,type,city,year,order);
 
@@ -1001,7 +1009,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                       year=list.get(arg2);
 
                   }
-                secondHandBeens.clear();
+                isPullDownRefresh=true;
                 secondHandListview.setRefreshing();
                 initListData(pageIndex,type,city,year,order);
             }

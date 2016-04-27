@@ -75,11 +75,11 @@
 
         </LinearLayout>
 
-        <!--<View
+        <View
             android:id="@+id/main_div_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/div_gray"/>-->
+            android:background="@color/div_gray"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -84,7 +84,11 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
             phone=cursor.getString(1);
         }
         if (!TextUtils.isEmpty(phone)){
-            phoneText.setText(phone);
+            StringBuffer stringBuffer=new StringBuffer(phone);
+            stringBuffer.replace(3,7,"****");
+            phoneText.setText(stringBuffer.toString());
+            //value.replace("3","*");
+
         }
     }
 
@@ -125,7 +129,9 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
         requestParams.addBodyParameter("PhoneNumber",phoneNewEdit.getText().toString());
         requestParams.addBodyParameter("SmsType","2");
 
-        if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())&&phoneNewEdit.getText().toString().length()==11) {
+        if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())) {
+            if (phoneNewEdit.getText().toString().length()==11){
+
 
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCodeData(),requestParams, new RequestCallBack<String>() {
                 @Override
@@ -152,8 +158,11 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                     MyAppliction.showToast("网络异常,请稍后重试");
                 }
             });
+            }else {
+                MyAppliction.showToast("您输入的手机号码有误");
+            }
         }else {
-            MyAppliction.showToast("您输入的手机号码有误");
+            MyAppliction.showToast("请输入您的手机号码");
 
 
         }

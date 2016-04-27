@@ -200,7 +200,12 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         requestParams.addBodyParameter("PageSize","10");
 
        if (!TextUtils.isEmpty(cityName)){
-            requestParams.addBodyParameter("City",cityName);
+           if (cityName.equals("全部")){
+
+           }else {
+               requestParams.addBodyParameter("City",cityName);
+           }
+
 
         }
 

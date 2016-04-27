@@ -168,7 +168,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
             }
             if (!TextUtils.isEmpty(phone)){
-                phoneText.setText(phone);
+                StringBuffer stringBuffer=new StringBuffer(phone);
+                stringBuffer.replace(3,7,"****");
+                phoneText.setText(stringBuffer.toString());
             }
             if (!TextUtils.isEmpty(StarRate)){
                 if (StarRate.equals("1")){

@@ -114,6 +114,8 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     private String cityName;  //城市
     private String State;//项目状态
     private String Order ;//排序
+    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+    private HomeProjectListAdapter homeProjectlsitAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +185,6 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
 
         while (cursor.moveToNext()) {
             uid=cursor.getString(0);
-
         }
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id",uid);
@@ -196,12 +197,14 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         requestParams.addBodyParameter("PageIndex",PageIndex+"");
         requestParams.addBodyParameter("PageSize","10");
         if (!TextUtils.isEmpty(cityName)){
-            requestParams.addBodyParameter("City",cityName);
+                if (cityName.equals("全部")){
 
+                }else {
+                    requestParams.addBodyParameter("City",cityName);
+                }
         }
 
         if (!TextUtils.isEmpty(State)){
-            Log.e("项目状态",State);
             requestParams.addBodyParameter("State",State);
 
         }
@@ -220,23 +223,31 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                         if (seekProjectBeanList!=null){
                             List<SeekProjectBean> seekProjectBean= seekProjectBeanList.getPagerData();
                             if (seekProjectBean!=null){
+                                if (isPullDownRefresh){
+                                    seekProjectBeans.clear();
+                                }
                                 seekProjectBeans.addAll(seekProjectBean);
-
+                                homeProjectlsitAdapter.notifyDataSetChanged();
                                 projectListView.onRefreshComplete();
+
                             }
                         }else {
+                            homeProjectlsitAdapter.notifyDataSetChanged();
                             projectListView.onRefreshComplete();
                         }
                     }else if ((appBean.getResult()).equals("nomore")){
                         MyAppliction.showToast("已到底部了");
+                        homeProjectlsitAdapter.notifyDataSetChanged();
                         projectListView.onRefreshComplete();
                     }else  if ((appBean.getResult()).equals("empty")){
                         MyAppliction.showToast("没有更多数据");
+                        homeProjectlsitAdapter.notifyDataSetChanged();
                         projectListView.onRefreshComplete();
                     }
 
 
                 }else {
+                    homeProjectlsitAdapter.notifyDataSetChanged();
                     projectListView.onRefreshComplete();
                 }
             }
@@ -244,6 +255,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("找项目",s);
+                homeProjectlsitAdapter.notifyDataSetChanged();
                 projectListView.onRefreshComplete();
             }
         });
@@ -254,7 +266,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     }
     private void initListView() {
 
-        HomeProjectListAdapter homeProjectlsitAdapter = new HomeProjectListAdapter(seekProjectBeans, HomeMoreProjectActivity.this);
+       homeProjectlsitAdapter = new HomeProjectListAdapter(seekProjectBeans, HomeMoreProjectActivity.this);
         projectListView.setAdapter(homeProjectlsitAdapter);
         //homeProjectlsitAdapter.notifyDataSetChanged();
         projectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -296,14 +308,16 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     }
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                 seekProjectBeans.clear();
+
                  PageIndex=1;
+                 isPullDownRefresh=true;
                  initListData(PageIndex,cityName,State,Order);
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         PageIndex++;
+        isPullDownRefresh=false;
         initListData(PageIndex,cityName,State,Order);
 
     }
@@ -393,7 +407,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                 if (list2 == null || list2.size() == 0) {
                     popupWindow.dismiss();
 
-                    String  firstId = firstList.get(position).getId();
+                    String firstId = firstList.get(position).getId();
                     String selectedName = firstList.get(position).getName();
                     handleResult(firstId, "-1", selectedName);
                     return;
@@ -401,9 +415,13 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
 
                 FirstClassAdapter adapter = (FirstClassAdapter) (parent.getAdapter());
                 //如果上次点击的就是这一个item，则不进行任何操作
-                if (adapter.getSelectedPosition() == position) {
+                if (adapter.getSelectedPosition() == position){
                     return;
                 }
+                //provinceName=firstList.get(position).getName();
+               /* if (!TextUtils.isEmpty(provinceName)){
+                    requestParams.addBodyParameter("Province",firstList.get(position).getName());
+                }*/
 
                 //根据左侧一级分类选中情况，更新背景色
                 adapter.setSelectedPosition(position);
@@ -422,11 +440,16 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                 popupWindow.dismiss();
 
                 int firstPosition = firstAdapter.getSelectedPosition();
-                String  firstId = firstList.get(firstPosition).getId();
+                String firstId = firstList.get(firstPosition).getId();
                 String  secondId = firstList.get(firstPosition).getProvinceCityChilds().get(position).getId();
-                String selectedName = firstList.get(firstPosition).getProvinceCityChilds().get(position)
+                String selectedName =firstList.get(firstPosition).getProvinceCityChilds().get(position)
                         .getName();
                 handleResult(firstId, secondId, selectedName);
+                /*if (!TextUtils.isEmpty(cityName)){
+                    requestParams.addBodyParameter("City",selectedName);
+                }*/
+
+                projectListView.setRefreshing();
             }
         });
     }
@@ -436,7 +459,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         if (popupWindow.isShowing()) {
             popupWindow.dismiss();
         } else {
-            popupWindow.showAsDropDown(HomeMoreProjectActivity.this.findViewById(R.id.main_div_line));
+            popupWindow.showAsDropDown((HomeMoreProjectActivity.this).findViewById(R.id.main_div_line));
             popupWindow.setAnimationStyle(-1);
             //背景变暗
             darkView.startAnimation(animIn);
@@ -453,16 +476,16 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     }
 
     //处理点击结果
-    private void handleResult(String   firstId, String  secondId, String selectedName) {
+    private void handleResult(String firstId, String secondId, String selectedName){
         String text = "first id:" + firstId + ",second id:" + secondId;
-        //Toast.makeText(HomeMoreProjectActivity.this, text, Toast.LENGTH_SHORT).show();
-
+        //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        cityName=selectedName;
         mainTab1TV.setText(selectedName);
+        mainTab1TV.setTextColor(getResources().getColor(R.color.red_light));
         Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         mainTab1TV.setCompoundDrawables(null, null, img, null);
-        cityName=selectedName;
-        projectListView.setRefreshing();
+        seekProjectBeans.clear();
         initListData(PageIndex,cityName,State,Order);
     }
 

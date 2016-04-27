@@ -161,11 +161,14 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                                     nameEdit.setText(personageInformation.getName());
                                 }
                                 if (!TextUtils.isEmpty(personageInformation.getPhoneNumber())){
-
-                                    phoneEdit.setText(personageInformation.getPhoneNumber());
+                                    StringBuffer stringBuffer=new StringBuffer(personageInformation.getPhoneNumber());
+                                    stringBuffer.replace(3,7,"****");
+                                    phoneEdit.setText(stringBuffer.toString());
                                 }
                                 if (!TextUtils.isEmpty(personageInformation.getIdCard())){
-                                    idCardEdit.setText(personageInformation.getIdCard());
+                                    StringBuffer stringBuffer=new StringBuffer(personageInformation.getIdCard());
+                                    stringBuffer.replace(6,14,"********");
+                                    idCardEdit.setText(stringBuffer.toString());
                                 }
                                 if (!TextUtils.isEmpty(personageInformation.getCity())&&!TextUtils.isEmpty(personageInformation.getProvince())){
                                     areaText.setText(personageInformation.getProvince()+personageInformation.getCity());

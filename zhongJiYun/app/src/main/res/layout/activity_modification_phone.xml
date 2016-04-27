@@ -60,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
+                android:maxLength="11"
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/edit_formmer_phone"
                 android:id="@+id/edit_new_phone"
@@ -76,6 +77,7 @@
                 android:paddingLeft="10dp"
                 />
             <EditText
+                android:maxLength="11"
                 android:id="@+id/edit_formmer_phone"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -106,6 +108,7 @@
 
 
         <EditText
+            android:maxLength="4"
             android:id="@+id/edit_code"
             android:layout_width="match_parent"
             android:layout_height="45dp"

@@ -241,7 +241,12 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
             requestParams.addBodyParameter("type",type);
         }
         if (!TextUtils.isEmpty(city)){
-            requestParams.addBodyParameter("city",city);
+            if (city.equals("全部")){
+
+            }else {
+                requestParams.addBodyParameter("city",city);
+            }
+
         }
         if (!TextUtils.isEmpty(year)){
             requestParams.addBodyParameter("year",year);
@@ -276,9 +281,11 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                         seekMachinistListview.onRefreshComplete();
 
                     }else if ((appListDataBean.getResult()).equals("nomore")){
+                        homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
                         MyAppliction.showToast("已到最底了");
                     }else if ((appListDataBean.getResult()).equals("empty")){
+                        homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
                         MyAppliction.showToast("没有更多数据");
                     }
@@ -286,6 +293,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
 
                 }else {
+                    homeServiceListAdapter.notifyDataSetChanged();
                     seekMachinistListview.onRefreshComplete();
                 }
 
