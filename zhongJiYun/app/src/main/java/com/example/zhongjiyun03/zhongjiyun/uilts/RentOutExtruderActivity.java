@@ -136,6 +136,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
     private String invoicePath;//全景照3路径
     private String contractPath;//全景照4路径
     private String qualifiedPath;//全景照5路径
+    private SecondHandListProjectBean secondHandListProjectBean;//修改钻机数据
 
 
 
@@ -160,9 +161,6 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
     }
 
     private void initView() {
-
-
-
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("钻机管理");
         retrunText.setOnClickListener(this);
@@ -192,7 +190,6 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 }
             }
         });
-
         file = new File(IMAGE_FILE_LOCATION);
         if(!file.exists()){
 
@@ -214,7 +211,6 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
     }
 
     private void modifiRentData() {
-
         String secondHandBeanId=myExtruderBean.getSecondHandId();
         if (!TextUtils.isEmpty(secondHandBeanId)){
             HttpUtils httpUtils=new HttpUtils();
@@ -241,13 +237,15 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                         Log.e("二手钻机详情",responseInfo.result);
                         AppBean<SecondHandListProjectBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandListProjectBean>>(){});
                         if (appListDataBean.getResult().equals("success")){
-                            SecondHandListProjectBean secondHandListProjectBean= appListDataBean.getData();
+                           secondHandListProjectBean= appListDataBean.getData();
                             if (secondHandListProjectBean!=null){
                                 if (!TextUtils.isEmpty(secondHandListProjectBean.getProvince())&&!TextUtils.isEmpty(secondHandListProjectBean.getCity())){
                                     rentPartAddress.setText(secondHandListProjectBean.getProvince()+secondHandListProjectBean.getCity());
                                 }else if (!TextUtils.isEmpty(secondHandListProjectBean.getProvince())){
                                     rentPartAddress.setText(secondHandListProjectBean.getProvince());
                                 }
+                                Province=secondHandListProjectBean.getProvince();
+                                City=secondHandListProjectBean.getCity();
                                 if (!TextUtils.isEmpty(secondHandListProjectBean.getAddress())){
                                     rentAddressParticulars.setText(secondHandListProjectBean.getAddress());
                                 }
@@ -263,6 +261,116 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                 }
                                 if (secondHandListProjectBean.getIsShowInvoice()==1){
                                     invoiceCheck.setChecked(true);
+                                }
+                                if (secondHandListProjectBean.getDeviceImages()!=null){
+                                 if (secondHandListProjectBean.getDeviceImages().size()==1){
+                                     if (TextUtils.isEmpty(leavePath)){
+                                         if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                             leavePath=secondHandListProjectBean.getDeviceImages().get(0);
+                                         }
+
+                                     }
+                                 }
+
+                                    if (secondHandListProjectBean.getDeviceImages().size()==2){
+                                        if (TextUtils.isEmpty(leavePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                leavePath=secondHandListProjectBean.getDeviceImages().get(0);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(panoramaPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(1))){
+                                                panoramaPath=secondHandListProjectBean.getDeviceImages().get(1);
+                                            }
+
+                                        }
+                                    }
+                                    if (secondHandListProjectBean.getDeviceImages().size()==3){
+                                        if (TextUtils.isEmpty(leavePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                leavePath=secondHandListProjectBean.getDeviceImages().get(0);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(panoramaPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(1))){
+                                                panoramaPath=secondHandListProjectBean.getDeviceImages().get(1);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(invoicePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(2))){
+                                                invoicePath=secondHandListProjectBean.getDeviceImages().get(2);
+                                            }
+
+                                        }
+                                    }
+                                    if (secondHandListProjectBean.getDeviceImages().size()==4){
+                                        if (TextUtils.isEmpty(leavePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                leavePath=secondHandListProjectBean.getDeviceImages().get(0);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(panoramaPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(1))){
+                                                panoramaPath=secondHandListProjectBean.getDeviceImages().get(1);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(invoicePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(2))){
+                                                invoicePath=secondHandListProjectBean.getDeviceImages().get(2);
+                                            }
+
+                                        }
+
+                                        if (TextUtils.isEmpty(contractPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(3))){
+                                                contractPath=secondHandListProjectBean.getDeviceImages().get(3);
+                                            }
+
+                                        }
+                                    }
+                                    if (secondHandListProjectBean.getDeviceImages().size()==5){
+                                        if (TextUtils.isEmpty(leavePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                leavePath=secondHandListProjectBean.getDeviceImages().get(0);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(panoramaPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(1))){
+                                                panoramaPath=secondHandListProjectBean.getDeviceImages().get(1);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(invoicePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(2))){
+                                                invoicePath=secondHandListProjectBean.getDeviceImages().get(2);
+                                            }
+
+                                        }
+
+                                        if (TextUtils.isEmpty(contractPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(3))){
+                                                contractPath=secondHandListProjectBean.getDeviceImages().get(3);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(qualifiedPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(4))){
+                                                qualifiedPath=secondHandListProjectBean.getDeviceImages().get(4);
+                                            }
+
+                                        }
+
+                                    }
+
+
+
+
                                 }
                                 if (secondHandListProjectBean.getDeviceImages()!=null){
                                     if (secondHandListProjectBean.getDeviceImages().size()==1){
@@ -407,6 +515,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             if (!TextUtils.isEmpty(City)){
                                 requestParams.addBodyParameter("City",City);
                             }
+                            if (getIntent().getStringExtra("tage").equals("modifiRent")){
+                              if (!TextUtils.isEmpty(myExtruderBean.getSecondHandId())){
+                                 requestParams.addBodyParameter("deviceHistoryId", myExtruderBean.getSecondHandId());
+                                   }
+                                  }
                             requestParams.addBodyParameter("Address",rentAddressParticulars.getText().toString());
                             requestParams.addBodyParameter("Tenancy",rentTenancyTerm.getText().toString());
                             requestParams.addBodyParameter("Price",rentPriceEdit.getText().toString());
@@ -414,17 +527,17 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                             requestParams.addBodyParameter("IsShowInvoice",invoiceTage+"");
                             requestParams.addBodyParameter("Describing",rentDescribe.getText().toString());
-                            requestParams.addBodyParameter("Image1","phont.png");
-                            requestParams.addBodyParameter("Image2","phont.png");
-                            requestParams.addBodyParameter("Image3","phont.png");
-                            requestParams.addBodyParameter("Image4","phont.png");
-                            requestParams.addBodyParameter("Image5","phont.png");
+                            requestParams.addBodyParameter("Image1","phont.jpg");
+                            requestParams.addBodyParameter("Image2","phont.jpg");
+                            requestParams.addBodyParameter("Image3","phont.jpg");
+                            requestParams.addBodyParameter("Image4","phont.jpg");
+                            requestParams.addBodyParameter("Image5","phont.jpg");
                             if (phoneListPath.size()==5){
-                                 mSVProgressHUD.showWithStatus("上传照片中(5张)...");
+                                 mSVProgressHUD.showWithStatus("上传中照片(5/5张)...");
                             } else if (phoneListPath.size()==4){
-                               mSVProgressHUD.showWithStatus("上传照片中(4张)...");
+                               mSVProgressHUD.showWithStatus("上传中照片(4/4张)...");
                             }else if (phoneListPath.size()==3){
-                              mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                              mSVProgressHUD.showWithStatus("上传中照片(3/3张)...");
                             }
 
                             final String finalUid = uid;
@@ -439,7 +552,16 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                         if (appBean.getData()!=null){
                                             RentOutExtruderDeviceBean rentOutExtruderDeviceDataBean=appBean.getData();
                                             if (rentOutExtruderDeviceDataBean!=null){
-                                                intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
+                                                if (getIntent().getStringExtra("tage").equals("modifiRent")){
+                                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                            intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
+                                                    }
+
+                                                    mSVProgressHUD.dismiss();
+                                                }else {
+                                                    intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
+                                                }
+
                                             }else {
                                                 mSVProgressHUD.dismiss();
                                             }
@@ -542,11 +664,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                     if (appBean.getResult().equals("success")){
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(4张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(4/5张)...");
                         } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(3/4张)...");
                         }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(2/3张)...");
                         }
                         intiPhontData1(id,"12",phoneListPath.get(1),ownId);
 
@@ -594,11 +716,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                     if (appBean.getResult().equals("success")){
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(3/5张)...");
                         } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(2/4张)...");
                         }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.showWithStatus("上传照片中(1张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(1/3张)...");
                         }
                         intiPhontData2(id,"13",phoneListPath.get(2),ownId);
                     }else {
@@ -647,9 +769,9 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                     if (appBean.getResult().equals("success")){
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(2/5张)...");
                         } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(1张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(1/4张)...");
                         }else if (phoneListPath.size()==3){
                             mSVProgressHUD.dismiss();
                             mSVProgressHUD.showSuccessWithStatus("出租钻机成功");
@@ -709,7 +831,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                     if (appBean.getResult().equals("success")){
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(1)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(1/5张)...");
                         }else if (phoneListPath.size()==4){
                             mSVProgressHUD.dismiss();
                             mSVProgressHUD.showSuccessWithStatus("出租钻机成功");

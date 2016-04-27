@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
@@ -23,6 +25,10 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
     private TextView retrunText;     //头部左边
     @ViewInject(R.id.zfu_state_layout)
     private LinearLayout zfuStateLayout;
+    @ViewInject(R.id.zfu_button)
+    private Button zFuButton;
+    @ViewInject(R.id.contract_check)
+    private RadioButton cntractCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +49,7 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
         titleNemeTv.setText("缴纳保证金");
         retrunText.setOnClickListener(this);
         zfuStateLayout.setOnClickListener(this);
-
-
+        zFuButton.setOnClickListener(this);
     }
 
 
@@ -59,8 +64,11 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
                 Intent intent=new Intent(CommitCashDepositActivity.this,PaymentStateActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
-
-
+                break;
+            case R.id.zfu_button:
+                Intent zfuIntent=new Intent(CommitCashDepositActivity.this,PaymentStateActivity.class);
+                startActivity(zfuIntent);
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
         }
     }

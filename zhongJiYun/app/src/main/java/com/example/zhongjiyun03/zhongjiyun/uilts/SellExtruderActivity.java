@@ -129,7 +129,8 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private String invoicePath;//全景照3路径
     private String contractPath;//全景照4路径
     private String qualifiedPath;//全景照5路径
-    private MyExtruderBean myExtruderBean;
+    private MyExtruderBean myExtruderBean; //钻机数据
+    private  SecondHandListProjectBean secondHandListProjectBean;//修改钻机数据
 
 
 
@@ -255,7 +256,6 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
             while (cursor.moveToNext()) {
                 uid=cursor.getString(0);
-
             }
             if (!TextUtils.isEmpty(uid)){
                 requestParams.addBodyParameter("userId",uid);
@@ -270,7 +270,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                         Log.e("二手钻机详情",responseInfo.result);
                         AppBean<SecondHandListProjectBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandListProjectBean>>(){});
                         if (appListDataBean.getResult().equals("success")){
-                          SecondHandListProjectBean secondHandListProjectBean= appListDataBean.getData();
+                          secondHandListProjectBean= appListDataBean.getData();
                             if (secondHandListProjectBean!=null){
                                 if (!TextUtils.isEmpty(secondHandListProjectBean.getProvince())&&!TextUtils.isEmpty(secondHandListProjectBean.getCity())){
                                     parkAddressEdit.setText(secondHandListProjectBean.getProvince()+secondHandListProjectBean.getCity());
@@ -291,6 +291,116 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                                 }
                                 if (secondHandListProjectBean.getIsShowInvoice()==1){
                                     invoiceCheckBox.setChecked(true);
+                                }
+                                if (secondHandListProjectBean.getDeviceImages()!=null){
+                                    if (secondHandListProjectBean.getDeviceImages().size()==1){
+                                        if (TextUtils.isEmpty(leavePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                leavePath=secondHandListProjectBean.getDeviceImages().get(0);
+                                            }
+
+                                        }
+                                    }
+
+                                    if (secondHandListProjectBean.getDeviceImages().size()==2){
+                                        if (TextUtils.isEmpty(leavePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                leavePath=secondHandListProjectBean.getDeviceImages().get(0);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(panoramaPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(1))){
+                                                panoramaPath=secondHandListProjectBean.getDeviceImages().get(1);
+                                            }
+
+                                        }
+                                    }
+                                    if (secondHandListProjectBean.getDeviceImages().size()==3){
+                                        if (TextUtils.isEmpty(leavePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                leavePath=secondHandListProjectBean.getDeviceImages().get(0);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(panoramaPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(1))){
+                                                panoramaPath=secondHandListProjectBean.getDeviceImages().get(1);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(invoicePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(2))){
+                                                invoicePath=secondHandListProjectBean.getDeviceImages().get(2);
+                                            }
+
+                                        }
+                                    }
+                                    if (secondHandListProjectBean.getDeviceImages().size()==4){
+                                        if (TextUtils.isEmpty(leavePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                leavePath=secondHandListProjectBean.getDeviceImages().get(0);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(panoramaPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(1))){
+                                                panoramaPath=secondHandListProjectBean.getDeviceImages().get(1);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(invoicePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(2))){
+                                                invoicePath=secondHandListProjectBean.getDeviceImages().get(2);
+                                            }
+
+                                        }
+
+                                        if (TextUtils.isEmpty(contractPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(3))){
+                                                contractPath=secondHandListProjectBean.getDeviceImages().get(3);
+                                            }
+
+                                        }
+                                    }
+                                    if (secondHandListProjectBean.getDeviceImages().size()==5){
+                                        if (TextUtils.isEmpty(leavePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                leavePath=secondHandListProjectBean.getDeviceImages().get(0);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(panoramaPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(1))){
+                                                panoramaPath=secondHandListProjectBean.getDeviceImages().get(1);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(invoicePath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(2))){
+                                                invoicePath=secondHandListProjectBean.getDeviceImages().get(2);
+                                            }
+
+                                        }
+
+                                        if (TextUtils.isEmpty(contractPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(3))){
+                                                contractPath=secondHandListProjectBean.getDeviceImages().get(3);
+                                            }
+
+                                        }
+                                        if (TextUtils.isEmpty(qualifiedPath)){
+                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(4))){
+                                                qualifiedPath=secondHandListProjectBean.getDeviceImages().get(4);
+                                            }
+
+                                        }
+
+                                    }
+
+
+
+
                                 }
                                 if (secondHandListProjectBean.getDeviceImages()!=null){
                                     if (secondHandListProjectBean.getDeviceImages().size()==1){
@@ -319,6 +429,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                     MyAppliction.imageLoader.displayImage(secondHandListProjectBean.getDeviceImages().get(4),qualifiedImage,MyAppliction.options);
 
                 }
+
 
 
 
@@ -366,8 +477,6 @@ public void onFailure(HttpException e, String s) {
             if (!TextUtils.isEmpty(particluarsAddressEdit.getText().toString())) {
                 if (!TextUtils.isEmpty(priceEdit.getText().toString())) {
                     if (!TextUtils.isEmpty(jzhuMiaosEdit.getText().toString())) {
-
-
                         if (!TextUtils.isEmpty(leavePath)){
                             phoneListPath.add(leavePath);
                             if (!TextUtils.isEmpty(panoramaPath)){
@@ -380,6 +489,7 @@ public void onFailure(HttpException e, String s) {
                                     if (!TextUtils.isEmpty(qualifiedPath)){
                                         phoneListPath.add(qualifiedPath);
                                     }
+
                         SQLhelper sqLhelper = new SQLhelper(SellExtruderActivity.this);
                         SQLiteDatabase db = sqLhelper.getWritableDatabase();
                         Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
@@ -395,7 +505,6 @@ public void onFailure(HttpException e, String s) {
                         String sesstionId = read.getString("code","");
                         requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
                         requestParams.addBodyParameter("Id", uid);
-
                         requestParams.addBodyParameter("DeviceId", ((MyExtruderBean) getIntent().getSerializableExtra("data")).getId());
                         //requestParams.addBodyParameter("DeviceHistoryId","");
                         requestParams.addBodyParameter("SecondHandType", "1");
@@ -405,24 +514,29 @@ public void onFailure(HttpException e, String s) {
                         if (!TextUtils.isEmpty(City)) {
                             requestParams.addBodyParameter("City", City);
                         }
+                        if (getIntent().getStringExtra("tage").equals("modifiSell")){
+                            if (!TextUtils.isEmpty(myExtruderBean.getSecondHandId())){
+                                requestParams.addBodyParameter("deviceHistoryId", myExtruderBean.getSecondHandId());
+                            }
+
+                        }
                         requestParams.addBodyParameter("Address", particluarsAddressEdit.getText().toString());
                         requestParams.addBodyParameter("Price", priceEdit.getText().toString());
                         requestParams.addBodyParameter("IsShowContract", contractTage + "");
                         requestParams.addBodyParameter("IsShowInvoice", invoiceTage + "");
                         requestParams.addBodyParameter("Describing", jzhuMiaosEdit.getText().toString());
-                        requestParams.addBodyParameter("Image1ServerId", "phont.png");
-                        requestParams.addBodyParameter("Image2ServerId", "phont.png");
-                        requestParams.addBodyParameter("Image3ServerId", "phont.png");
-                        requestParams.addBodyParameter("Image4ServerId", "phont.png");
-                        requestParams.addBodyParameter("Image5ServerId", "phont.png");
+                        requestParams.addBodyParameter("Image1ServerId", "phont.jpg");
+                        requestParams.addBodyParameter("Image2ServerId", "phont.jpg");
+                        requestParams.addBodyParameter("Image3ServerId", "phont.jpg");
+                        requestParams.addBodyParameter("Image4ServerId", "phont.jpg");
+                        requestParams.addBodyParameter("Image5ServerId", "phont.jpg");
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(5张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(5/5张)...");
                         } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(4张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(4/4张)...");
                         }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(3/3张)...");
                         }
-
                         final String finalUid = uid;
                         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(), requestParams, new RequestCallBack<String>() {
                             @Override
@@ -435,7 +549,37 @@ public void onFailure(HttpException e, String s) {
                                         if (appBean.getData()!=null){
                                             RentOutExtruderDeviceBean rentOutExtruderDeviceDataBean=appBean.getData();
                                             if (rentOutExtruderDeviceDataBean!=null){
-                                                intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
+                                                if (getIntent().getStringExtra("tage").equals("modifiSell")){
+                                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                        if (!phoneListPath.get(0).equals(secondHandListProjectBean.getDeviceImages().get(0))){
+                                                            intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
+                                                        }
+                                                    }
+                                                    /*if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(1))) {
+                                                        if (!phoneListPath.get(1).equals(secondHandListProjectBean.getDeviceImages().get(1))) {
+                                                            intiPhontData1(finalUid, "11", phoneListPath.get(1), rentOutExtruderDeviceDataBean.getId());
+                                                        }
+                                                    }
+                                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(2))) {
+                                                        if (!phoneListPath.get(2).equals(secondHandListProjectBean.getDeviceImages().get(2))) {
+                                                            intiPhontData2(finalUid, "11", phoneListPath.get(2), rentOutExtruderDeviceDataBean.getId());
+                                                        }
+                                                    }
+                                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(3))) {
+                                                        if (!phoneListPath.get(3).equals(secondHandListProjectBean.getDeviceImages().get(3))) {
+                                                            intiPhontData3(finalUid, "11", phoneListPath.get(3), rentOutExtruderDeviceDataBean.getId());
+                                                        }
+                                                    }
+                                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(4))) {
+                                                        if (!phoneListPath.get(4).equals(secondHandListProjectBean.getDeviceImages().get(4))) {
+                                                            intiPhontData4(finalUid, "11", phoneListPath.get(4), rentOutExtruderDeviceDataBean.getId());
+                                                        }
+                                                    }*/
+
+                                                }else {
+                                                    intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
+                                                }
+
                                             }
                                         }
 
@@ -525,11 +669,11 @@ public void onFailure(HttpException e, String s) {
                     if (appBean.getResult().equals("success")) {
 
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(4张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(4/5张)...");
                         } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(3/4张)...");
                         }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(2/3张)...");
                         }
                         intiPhontData1(id, "12", phoneListPath.get(1), OwnId);
 
@@ -579,11 +723,11 @@ public void onFailure(HttpException e, String s) {
                     if (appBean.getResult().equals("success")) {
 
                         if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传照片中(3张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(3/5张)...");
                         } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(2/4张)...");
                         }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.showWithStatus("上传照片中(1张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(1/3张)...");
                         }
                         intiPhontData2(id, "13", phoneListPath.get(2),OwnId);
 
@@ -632,9 +776,9 @@ public void onFailure(HttpException e, String s) {
 
                     if (appBean.getResult().equals("success")) {
                         if (phoneListPath.size() == 5) {
-                            mSVProgressHUD.showWithStatus("上传照片中(2张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(2/5张)...");
                         } else if (phoneListPath.size() == 4) {
-                            mSVProgressHUD.showWithStatus("上传照片中(1张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(1/4张)...");
                         }else if (phoneListPath.size()==3){
                             mSVProgressHUD.dismiss();
                             mSVProgressHUD.showSuccessWithStatus("出售钻机成功");
@@ -690,7 +834,7 @@ public void onFailure(HttpException e, String s) {
 
                     if (appBean.getResult().equals("success")) {
                         if (phoneListPath.size() == 5) {
-                            mSVProgressHUD.showWithStatus("上传照片中(1张)...");
+                            mSVProgressHUD.showWithStatus("上传中照片(1/5张)...");
                         } else if (phoneListPath.size() == 4) {
                             mSVProgressHUD.dismiss();
                             mSVProgressHUD.showSuccessWithStatus("出售钻机成功");

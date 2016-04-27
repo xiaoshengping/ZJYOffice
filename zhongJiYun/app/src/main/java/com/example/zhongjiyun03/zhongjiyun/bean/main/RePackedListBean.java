@@ -18,6 +18,15 @@ public class RePackedListBean implements Serializable {
    private int  StarLevel ; // int 礼包星级
    private int GiftBagType ; //int 礼包类型：云币：1，优惠券：！=1
    private int  isGet; //是否领取
+   private int IsRead;//是否已读
+
+    public int getIsRead() {
+        return IsRead;
+    }
+
+    public void setIsRead(int isRead) {
+        IsRead = isRead;
+    }
 
     public int getIsGet() {
         return isGet;

@@ -136,7 +136,7 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
                 typeText.setText(myExtruderBean.getNoOfManufacture());
             }
             if (!TextUtils.isEmpty(myExtruderBean.getDateOfManufacture())&&!TextUtils.isEmpty(myExtruderBean.getDateMonthOfManufacture())){
-                timeText.setText(myExtruderBean.getDateOfManufacture()+myExtruderBean.getDateMonthOfManufacture());
+                timeText.setText(myExtruderBean.getDateOfManufacture()+"年"+myExtruderBean.getDateMonthOfManufacture()+"月");
             }
             if (!TextUtils.isEmpty(myExtruderBean.getProvince())&&!TextUtils.isEmpty(myExtruderBean.getCity())){
                 addressText.setText(myExtruderBean.getProvince()+myExtruderBean.getCity());

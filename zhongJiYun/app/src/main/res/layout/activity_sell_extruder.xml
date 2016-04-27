@@ -404,7 +404,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_toRightOf="@+id/invoice_textview"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="80dp"
 
                 android:background="@color/phont_background"
                 android:gravity="center"
@@ -471,7 +471,7 @@
                 android:layout_below="@+id/invoice_textview"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="60dp"
                 android:orientation="vertical"
                 android:layout_width="150dp"
                 android:layout_height="150dp">
@@ -492,18 +492,22 @@
             android:layout_height="fill_parent"/>
 </LinearLayout>
       </ScrollView>
-    <Button
+    <LinearLayout
+        android:gravity="center_vertical"
         android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+    <Button
         android:id="@+id/sell_save_button"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
         android:textColor="@color/ic_white"
         android:background="@drawable/loing_button_corners"
         android:textSize="@dimen/home_Size_18"
         android:text="我要出售" />
+    </LinearLayout>
      </RelativeLayout>
 

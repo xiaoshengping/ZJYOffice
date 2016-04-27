@@ -80,7 +80,7 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
         @ViewInject(R.id.save_button)
         private Button saveButton;  //保存数据按钮
         @ViewInject(R.id.serial_number_edit)
-        private EditText serialNumberEdit;  //出厂型号
+        private EditText serialNumberEdit;  //出厂编号
         @ViewInject(R.id.work_time_edit)
         private EditText workTimeEdit;       //工作时长
        @ViewInject(R.id.model_edit)
@@ -268,11 +268,11 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                     requestParams.addBodyParameter("NoOfManufacture",NoOfManufacture);
                                     requestParams.addBodyParameter("Province",Province);
                                     requestParams.addBodyParameter("City",City);
-                                    requestParams.addBodyParameter("DeviceNoPhoto","photo.png");
-                                    requestParams.addBodyParameter("DevicePhoto","photo.png");
-                                    requestParams.addBodyParameter("DeviceInvoicePhoto","photo.png");
-                                    requestParams.addBodyParameter("DeviceContractPhoto","photo.png");
-                                    requestParams.addBodyParameter("DeviceCertificatePhoto","photo.png");
+                                    requestParams.addBodyParameter("DeviceNoPhoto","photo.jpg");
+                                    requestParams.addBodyParameter("DevicePhoto","photo.jpg");
+                                    requestParams.addBodyParameter("DeviceInvoicePhoto","photo.jpg");
+                                    requestParams.addBodyParameter("DeviceContractPhoto","photo.jpg");
+                                    requestParams.addBodyParameter("DeviceCertificatePhoto","photo.jpg");
                                     if (phoneListPath.size()==5){
                                         mSVProgressHUD.showWithStatus("上传照片中(5)...");
                                     }else if (phoneListPath.size()==4){

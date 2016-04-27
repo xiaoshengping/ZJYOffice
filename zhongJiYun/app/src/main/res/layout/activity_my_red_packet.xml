@@ -22,7 +22,7 @@
     </LinearLayout>
 
     <Button
-
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:id="@+id/get_packed_button"
         android:layout_width="match_parent"

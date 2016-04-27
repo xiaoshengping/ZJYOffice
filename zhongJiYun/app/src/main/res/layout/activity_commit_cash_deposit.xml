@@ -131,7 +131,7 @@
            android:orientation="vertical"
            android:layout_width="match_parent"
            android:layout_height="wrap_content">
-           <RelativeLayout
+           <!--<RelativeLayout
 
                android:orientation="horizontal"
                android:layout_width="match_parent"
@@ -195,7 +195,7 @@
                android:src="@color/background"
 
                android:layout_width="match_parent"
-               android:layout_height="1dp" />
+               android:layout_height="1dp" />-->
            <RelativeLayout
 
                android:orientation="horizontal"
@@ -231,7 +231,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <RadioButton
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="15dp"
                 android:id="@+id/contract_check"
                 android:button="@null"
                 android:layout_marginRight="30dp"
@@ -245,7 +245,7 @@
 
 
                 />
-            <RadioButton
+            <!--<RadioButton
                 android:layout_marginTop="28dp"
                 android:id="@+id/invoice_check"
                 android:layout_marginRight="30dp"
@@ -271,14 +271,14 @@
                 android:textSize="@dimen/home_Size_14"
 
 
-                />
+                />-->
         </RadioGroup>
 
     </RelativeLayout>
 
     <Button
         android:layout_below="@+id/zfu_layout"
-        android:id="@+id/login_button"
+        android:id="@+id/zfu_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"

@@ -404,8 +404,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.redpacket_layout:
                 if (!TextUtils.isEmpty(uid)){
                     if (!TextUtils.isEmpty(giftBag)){
-                        Log.e("giftBag",giftBag);
-                        Log.e("messageRemindId",messageRemindId);
+                       /* Log.e("giftBag",giftBag);
+                        Log.e("messageRemindId",messageRemindId);*/
                         update(messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
                     }else {
 

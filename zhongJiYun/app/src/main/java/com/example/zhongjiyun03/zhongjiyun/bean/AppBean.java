@@ -10,6 +10,16 @@ public class AppBean<T> implements Serializable {
         private String msg;
         private T data;
 
+        private String actions;//无法点击领取红包按钮
+
+        public String getActions() {
+                return actions;
+        }
+
+        public void setActions(String actions) {
+                this.actions = actions;
+        }
+
         public String getResult() {
                 return result;
         }

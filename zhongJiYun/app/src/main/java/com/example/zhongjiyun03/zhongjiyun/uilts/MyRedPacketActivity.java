@@ -111,18 +111,22 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                     Log.e("我的红包", responseInfo.result);
                     AppBean<RedPacketDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<RedPacketDataBean>>() {
                     });
+                    if (appBean.getActions().equals("nogifget")){
+                        getPackedButton.setVisibility(View.GONE);
+                    }else {
+                        getPackedButton.setVisibility(View.VISIBLE);
+                    }
                     if ((appBean.getResult()).equals("success")) {
                         RedPacketDataBean redPacketDataBean = appBean.getData();
                         List<RePackedListBean> listData = redPacketDataBean.getPagerData();
-                        if (redPacketDataBean.getTotal() != 0) {
-                            getPackedButton.setVisibility(View.VISIBLE);
-                        }
+
                         if (listData!= null) {
                             if (isRefresh){
                                 rePackedListBeens.clear();
                             }
                             rePackedListBeens.addAll(listData);
                         }
+
                     } else if ((appBean.getResult()).equals("empty")) {
                         MyAppliction.showToast("您还没有收到红包哦");
                         getPackedButton.setVisibility(View.GONE);

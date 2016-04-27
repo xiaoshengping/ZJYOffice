@@ -3,7 +3,10 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -53,14 +56,13 @@ import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FacillyFirstClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FacillySecondClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FirstClassAdapter;
-import com.example.zhongjiyun03.zhongjiyun.popwin.FirstClassItem;
 import com.example.zhongjiyun03.zhongjiyun.popwin.PopupWindowHelper;
 import com.example.zhongjiyun03.zhongjiyun.popwin.ScreenUtils;
 import com.example.zhongjiyun03.zhongjiyun.popwin.SecondClassAdapter;
-import com.example.zhongjiyun03.zhongjiyun.popwin.SecondClassItem;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -77,8 +79,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
+import cn.sharesdk.tencent.qq.QQ;
 
 public class SecondHandActivity extends AppCompatActivity implements OnClickListener  ,PullToRefreshBase.OnRefreshListener2<ListView>{
 
@@ -329,7 +333,24 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private void initListData(int pageIndex,String type,String city,String year,String order ) {
         HttpUtils httpUtils=new HttpUtils();
         final RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("Id","921efefe-f50b-48f9-a44e-cbde4b691d44");
+        SQLhelper sqLhelper=new SQLhelper(SecondHandActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        if (!TextUtils.isEmpty(uid)){
+            requestParams.addBodyParameter("Id",uid);
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        }
+
         if (!TextUtils.isEmpty(city)){
             if (city.equals("全部")){
 
@@ -1098,19 +1119,19 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle("中基云二手钻机市场海量二手钻，实名认证机主等你来拿");
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig-details?id=6405f230-a9fd-4c60-adab-df5e3a64645e");
+        oks.setTitleUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig");
         // text是分享文本，所有平台都需要这个字段
         oks.setText("中基云二手钻机市场海量二手钻，实名认证机主等你来拿");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         // url仅在微信（包括好友和朋友圈）中使用
-         oks.setUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig-details?id=6405f230-a9fd-4c60-adab-df5e3a64645e");
+         oks.setUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig");
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
         oks.setComment("中基云二手钻机市场海量二手钻，实名认证机主等你来拿");
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig-details?id=6405f230-a9fd-4c60-adab-df5e3a64645e");
+        oks.setSiteUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig");
 
         // 启动分享GUI
         oks.show(this);

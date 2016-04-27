@@ -90,7 +90,6 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
         }else {
             viewHold.imageChuzTage.setVisibility(View.GONE);
         }
-
         return convertView;
     }
 
@@ -99,11 +98,9 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
         if (data!=null){
             if (!TextUtils.isEmpty(data.get(position).getDeviceNo())){
                 viewHold.numberTextView.setText(data.get(position).getDeviceNo());
-
             }
             if (!TextUtils.isEmpty(data.get(position).getDateOfManufacture())){
                 viewHold.neirongTextView.setText(data.get(position).getDateOfManufacture());
-
             }
             if (!TextUtils.isEmpty(data.get(position).getThumbnail())){
                 MyAppliction.imageLoader.displayImage(data.get(position).getThumbnail(),viewHold.imageView,MyAppliction.options);
@@ -111,9 +108,19 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
             viewHold.tailtTextView.setText(data.get(position).getManufacture()+data.get(position).getNoOfManufacture());
             if (data.get(position).getAuditStutas()==1){
                 viewHold.auditStateImage.setBackgroundResource(R.mipmap.attestation_icon);
+                viewHold.rentOutTextView.setVisibility(View.VISIBLE);
+                viewHold.rentOutImage.setVisibility(View.VISIBLE);
+                viewHold.sellTextView.setVisibility(View.VISIBLE);
+                viewHold.sellImage.setVisibility(View.VISIBLE);
+                viewHold.middleImage.setVisibility(View.VISIBLE);
 
             }else if (data.get(position).getAuditStutas()==0){
                 viewHold.auditStateImage.setBackgroundResource(R.mipmap.examine_icon);
+                viewHold.sellTextView.setVisibility(View.GONE);
+                viewHold.sellImage.setVisibility(View.GONE);
+                viewHold.rentOutTextView.setVisibility(View.GONE);
+                viewHold.rentOutImage.setVisibility(View.GONE);
+                viewHold.middleImage.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
                   if (data.get(position).getSecondHandState()==1){
@@ -409,6 +416,8 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
         private ImageView sellImage;
         @ViewInject(R.id.rent_out_image)
         private ImageView rentOutImage;
+        @ViewInject(R.id.middle_image)
+        private ImageView middleImage;
 
         public ViewHold(View view) {
             ViewUtils.inject(this, view);

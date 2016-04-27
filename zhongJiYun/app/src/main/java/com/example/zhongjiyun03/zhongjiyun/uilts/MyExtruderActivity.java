@@ -126,21 +126,30 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                                     myExtruderBeens.clear();
                                 }
                                 myExtruderBeens.addAll(myExtruderBeen);
+                                homeExtruderAdapter.notifyDataSetChanged();
+                                extruderListView.onRefreshComplete();
 
                             }else {
+                                homeExtruderAdapter.notifyDataSetChanged();
+                                extruderListView.onRefreshComplete();
                                 MyAppliction.showToast("您还没有添加钻机,请添加钻机");
                             }
 
-                            extruderListView.onRefreshComplete();
+
                         }else if ((appBean.getResult()).equals("nomore")){
                             MyAppliction.showToast("已到底部");
+                            homeExtruderAdapter.notifyDataSetChanged();
                             extruderListView.onRefreshComplete();
 
                         }else  if ((appBean.getResult()).equals("empty")){
                             MyAppliction.showToast("没有更多数据");
+                            if (isPullDownRefresh){
+                                myExtruderBeens.clear();
+                            }
+                            homeExtruderAdapter.notifyDataSetChanged();
                             extruderListView.onRefreshComplete();
                         }
-                        homeExtruderAdapter.notifyDataSetChanged();
+
 
                     }
 
