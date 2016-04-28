@@ -82,7 +82,7 @@ import java.util.List;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-import cn.sharesdk.tencent.qq.QQ;
+import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
 public class SecondHandActivity extends AppCompatActivity implements OnClickListener  ,PullToRefreshBase.OnRefreshListener2<ListView>{
 
@@ -319,6 +319,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shard_tv:
+
+
                 showShare();
 
                 break;
@@ -592,7 +594,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("设备厂商",responseInfo.result);
+                Log.e("设备厂商",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppListDataBean<FacillyDataBean> appListDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<FacillyDataBean>>(){});
                     if (appListDataBean.getResult().equals("success")){
@@ -1113,7 +1115,18 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         OnekeyShare oks = new OnekeyShare();
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
+        oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
+            @Override
+            public void onShare(Platform platform,cn.sharesdk.framework.Platform.ShareParams paramsToShare) {
+                if ("Wechat".equals(platform.getName())) {
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
 
+                }
+                if ("WechatMoments".equals(platform.getName())) {
+                    paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
+                }
+            }
+        });
         // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
         //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
@@ -1123,7 +1136,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         // text是分享文本，所有平台都需要这个字段
         oks.setText("中基云二手钻机市场海量二手钻，实名认证机主等你来拿");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
         // url仅在微信（包括好友和朋友圈）中使用
          oks.setUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig");
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用

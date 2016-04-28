@@ -524,7 +524,6 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             requestParams.addBodyParameter("Tenancy",rentTenancyTerm.getText().toString());
                             requestParams.addBodyParameter("Price",rentPriceEdit.getText().toString());
                             requestParams.addBodyParameter("IsShowContract",contractTage+"");
-
                             requestParams.addBodyParameter("IsShowInvoice",invoiceTage+"");
                             requestParams.addBodyParameter("Describing",rentDescribe.getText().toString());
                             requestParams.addBodyParameter("Image1","phont.jpg");
@@ -532,6 +531,10 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             requestParams.addBodyParameter("Image3","phont.jpg");
                             requestParams.addBodyParameter("Image4","phont.jpg");
                             requestParams.addBodyParameter("Image5","phont.jpg");
+                           /* List<String> list=new ArrayList<String>();
+                            list.add("13123");
+                            list.add("13121231233");
+                            requestParams.addBodyParameter("updateImgs", String.valueOf(list));*/
                             if (phoneListPath.size()==5){
                                  mSVProgressHUD.showWithStatus("上传中照片(5/5张)...");
                             } else if (phoneListPath.size()==4){
@@ -554,9 +557,8 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                             if (rentOutExtruderDeviceDataBean!=null){
                                                 if (getIntent().getStringExtra("tage").equals("modifiRent")){
                                                     if (!TextUtils.isEmpty(secondHandListProjectBean.getDeviceImages().get(0))){
-                                                            intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
+                                                      intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
                                                     }
-
                                                     mSVProgressHUD.dismiss();
                                                 }else {
                                                     intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
