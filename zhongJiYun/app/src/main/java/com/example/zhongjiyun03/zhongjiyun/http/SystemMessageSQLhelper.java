@@ -28,7 +28,7 @@ public class SystemMessageSQLhelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db){
 //		db.execSQL("create table if not exists "+tableName+"("+ID+" integer primary key,"+NAME+" varchar,"
 //				+ATT+" integer,"+AGI+" integer,"+INT+" integer)");		
-		db.execSQL("create table if not exists MessageRemind(messageRemindId varchar pr imary key ,Evaluate varchar, Message varchar,GiftBag varchar,ProjectReply varchar,TotalCount varchar)");
+		db.execSQL("create table if not exists MessageRemind(messageRemindId integer primary key autoincrement ,Evaluate varchar, Message varchar,GiftBag varchar,ProjectReply varchar,TotalCount varchar)");
 	}
 
 	@Override

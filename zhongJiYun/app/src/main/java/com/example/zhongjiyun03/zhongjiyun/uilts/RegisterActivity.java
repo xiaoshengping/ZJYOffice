@@ -1276,7 +1276,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         final ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
         //final ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
 
-        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
+        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityDatas+SelectData.selectCityDataOnes+SelectData.selectCityDataTwos,new TypeReference<ProvinceCityDataBean>(){});
         if (provinceCityDataBean!=null){
             ArrayList<ProvinceCityBean>  options1Itemss= (ArrayList<ProvinceCityBean>) provinceCityDataBean.getProvinceCity();
             for (int i = 0; i <options1Itemss.size() ; i++) {
@@ -1388,7 +1388,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 //        pwOptions.setLabels("省", "市", "区");
         pvOptions.setPicker(options1Items, options2Items,true);
         pvOptions.setTitle("选择城市");
-        pvOptions.setCyclic(false, true, true);
+        pvOptions.setCyclic(false, false, true);
         //设置默认选中的三级项目
         //监听确定选择按钮
         pvOptions.setSelectOptions(1, 1, 1);
@@ -1422,9 +1422,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         //final ArrayList<ArrayList<ArrayList<String>>> options3Items = new ArrayList<ArrayList<ArrayList<String>>>();
 
 
-
-
-        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
+        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityDatas+SelectData.selectCityDataOnes+SelectData.selectCityDataTwos,new TypeReference<ProvinceCityDataBean>(){});
         if (provinceCityDataBean!=null){
             ArrayList<ProvinceCityBean>  options1Itemss= (ArrayList<ProvinceCityBean>) provinceCityDataBean.getProvinceCity();
             for (int i = 0; i <options1Itemss.size() ; i++) {
@@ -1535,7 +1533,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         pvOptionsCompany.setPicker(options1Items, options2Items,true);
 //        pwOptions.setLabels("省", "市", "区");
         pvOptionsCompany.setTitle("选择城市");
-        pvOptionsCompany.setCyclic(false, true, true);
+        pvOptionsCompany.setCyclic(false, false, false);
         //设置默认选中的三级项目
         //监听确定选择按钮
         pvOptionsCompany.setSelectOptions(1, 1, 1);

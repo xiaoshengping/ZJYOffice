@@ -1,6 +1,15 @@
 package com.example.zhongjiyun03.zhongjiyun;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +28,7 @@ import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
@@ -34,13 +44,15 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ViewUtils.inject(this);
         init();
-        /*SharedPreferences pref = this.getSharedPreferences("myActivityName", 0);
+        SharedPreferences pref = this.getSharedPreferences("myActivityName", 0);
         //取得相应的值，如果没有该值，说明还未写入，用true作为默认值
         isFirstIn = pref.getBoolean("isFirstIn", true);
         if(isFirstIn) {
-            Intent intent = new Intent().setClass(HomeActivity.this,MainActivity.class);
-            startActivityForResult(intent,0);
-        }*/
+            /*Intent intent = new Intent().setClass(HomeActivity.this,MainActivity.class);
+            startActivityForResult(intent,0);*/
+            testAddContacts();
+
+        }
         //HomeFragment.setStart(0);
         //startPage();
 
@@ -61,7 +73,93 @@ public class HomeActivity extends AppCompatActivity {
         PushAgent.getInstance(this).onAppStart();
     }
 
+    /**
+     * 添加联系人
+     * 在同一个事务中完成联系人各项数据的添加
+     * 使用ArrayList<ContentProviderOperation>，把每步操作放在它的对象中执行
+     * */
+    public void testAddContacts(){
+        Uri uri = Uri.parse("content://com.android.contacts/raw_contacts");
+        ContentResolver resolver = getContentResolver();
+        // 第一个参数：内容提供者的主机名
+        // 第二个参数：要执行的操作
+        ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
 
+        // 操作1.添加Google账号，这里值为null，表示不添加
+        ContentProviderOperation operation = ContentProviderOperation.newInsert(uri)
+                .withValue("account_name", null)// account_name:Google账号
+                .build();
+
+        // 操作2.添加data表中name字段
+        uri = Uri.parse("content://com.android.contacts/data");
+        ContentProviderOperation operation2 = ContentProviderOperation.newInsert(uri)
+                // 第二个参数int previousResult:表示上一个操作的位于operations的第0个索引，
+                // 所以能够将上一个操作返回的raw_contact_id作为该方法的参数
+                .withValueBackReference("raw_contact_id", 0)
+                .withValue("mimetype", "vnd.android.cursor.item/name")
+                .withValue("data2", "中基云免费电话")
+                .build();
+
+        // 操作3.添加data表中phone字段
+        uri = Uri.parse("content://com.android.contacts/data");
+        ContentProviderOperation operation3 = ContentProviderOperation.newInsert(uri)
+                .withValueBackReference("raw_contact_id", 0)
+                .withValue("mimetype", "vnd.android.cursor.item/phone_v2")
+                .withValue("data2", "2")
+                .withValue("data1", "02038361432")
+                .build();
+        uri = Uri.parse("content://com.android.contacts/data");
+        ContentProviderOperation operation4 = ContentProviderOperation.newInsert(uri)
+                .withValueBackReference("raw_contact_id", 0)
+                .withValue("mimetype", "vnd.android.cursor.item/phone_v2")
+                .withValue("data2", "2")
+                .withValue("data1", "02038258459")
+                .build();
+        uri = Uri.parse("content://com.android.contacts/data");
+        ContentProviderOperation operation5 = ContentProviderOperation.newInsert(uri)
+                .withValueBackReference("raw_contact_id", 0)
+                .withValue("mimetype", "vnd.android.cursor.item/phone_v2")
+                .withValue("data2", "2")
+                .withValue("data1", "4002029797")
+                .build();
+        uri = Uri.parse("content://com.android.contacts/data");
+        ContentProviderOperation operation6 = ContentProviderOperation.newInsert(uri)
+                .withValueBackReference("raw_contact_id", 0)
+                .withValue("mimetype", "vnd.android.cursor.item/phone_v2")
+                .withValue("data2", "2")
+                .withValue("data1", "18515333333")
+                .build();
+
+        // 向data表插入头像数据
+        ContentValues values = new ContentValues();
+        Uri rawContactUri = getContentResolver().insert(
+                ContactsContract.RawContacts.CONTENT_URI, values);
+        long rawContactId = ContentUris.parseId(rawContactUri);
+        Bitmap sourceBitmap = BitmapFactory.decodeResource(getResources(),
+                R.mipmap.logo_icon);
+        final ByteArrayOutputStream os = new ByteArrayOutputStream();
+        // 将Bitmap压缩成PNG编码，质量为100%存储
+        sourceBitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+        byte[] avatar = os.toByteArray();
+        values.put(ContactsContract.Contacts.Data.RAW_CONTACT_ID, rawContactId);
+        values.put(ContactsContract.Contacts.Data.MIMETYPE, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE);
+        values.put(ContactsContract.CommonDataKinds.Photo.PHOTO, avatar);
+        getContentResolver().insert(ContactsContract.Data.CONTENT_URI,
+                values);
+
+        operations.add(operation);
+        operations.add(operation2);
+        operations.add(operation3);
+        operations.add(operation4);
+        operations.add(operation5);
+        operations.add(operation6);
+
+        try {
+            resolver.applyBatch("com.android.contacts", operations);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private void init() {

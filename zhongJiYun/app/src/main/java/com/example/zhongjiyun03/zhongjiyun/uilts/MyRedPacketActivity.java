@@ -111,7 +111,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                     Log.e("我的红包", responseInfo.result);
                     AppBean<RedPacketDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<RedPacketDataBean>>() {
                     });
-                    if (appBean.getActions().equals("nogifget")){
+                    if (appBean.getActions()!=null&&appBean.getActions().equals("nogifget")){
                         getPackedButton.setVisibility(View.GONE);
                     }else {
                         getPackedButton.setVisibility(View.VISIBLE);

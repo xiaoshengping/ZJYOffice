@@ -28,6 +28,105 @@ public class SecondHandListProjectBean implements Serializable {
     private int Tenancy;//	int	租期
     private String UpdateDateStr;//	string	更新时间
     private int IsCollection;
+    private String Price;//string	价格
+    private String Image1Id; //图片1ID
+    private String Image2Id; //图片2ID
+    private String Image3Id; //图片3ID
+    private String Image4Id; //图片4ID
+    private String Image5Id; //图片5ID
+    private String Image1; //图片1
+    private String Image2; //图片2
+    private String Image3; //图片3
+    private String Image4; //图片4
+    private String Image5; //图片5
+
+    public String getPrice() {
+        return Price;
+    }
+
+    public void setPrice(String price) {
+        Price = price;
+    }
+
+    public String getImage1() {
+        return Image1;
+    }
+
+    public void setImage1(String image1) {
+        Image1 = image1;
+    }
+
+    public String getImage2() {
+        return Image2;
+    }
+
+    public void setImage2(String image2) {
+        Image2 = image2;
+    }
+
+    public String getImage3() {
+        return Image3;
+    }
+
+    public void setImage3(String image3) {
+        Image3 = image3;
+    }
+
+    public String getImage4() {
+        return Image4;
+    }
+
+    public void setImage4(String image4) {
+        Image4 = image4;
+    }
+
+    public String getImage5() {
+        return Image5;
+    }
+
+    public void setImage5(String image5) {
+        Image5 = image5;
+    }
+
+    public String getImage1Id() {
+        return Image1Id;
+    }
+
+    public void setImage1Id(String image1Id) {
+        Image1Id = image1Id;
+    }
+
+    public String getImage5Id() {
+        return Image5Id;
+    }
+
+    public void setImage5Id(String image5Id) {
+        Image5Id = image5Id;
+    }
+
+    public String getImage3Id() {
+        return Image3Id;
+    }
+
+    public void setImage3Id(String image3Id) {
+        Image3Id = image3Id;
+    }
+
+    public String getImage2Id() {
+        return Image2Id;
+    }
+
+    public void setImage2Id(String image2Id) {
+        Image2Id = image2Id;
+    }
+
+    public String getImage4Id() {
+        return Image4Id;
+    }
+
+    public void setImage4Id(String image4Id) {
+        Image4Id = image4Id;
+    }
 
     public String getAddress() {
         return Address;
@@ -203,6 +302,17 @@ public class SecondHandListProjectBean implements Serializable {
                 ", Tenancy=" + Tenancy +
                 ", UpdateDateStr='" + UpdateDateStr + '\'' +
                 ", IsCollection=" + IsCollection +
+                ", Price='" + Price + '\'' +
+                ", Image1Id='" + Image1Id + '\'' +
+                ", Image2Id='" + Image2Id + '\'' +
+                ", Image3Id='" + Image3Id + '\'' +
+                ", Image4Id='" + Image4Id + '\'' +
+                ", Image5Id='" + Image5Id + '\'' +
+                ", Image1='" + Image1 + '\'' +
+                ", Image2='" + Image2 + '\'' +
+                ", Image3='" + Image3 + '\'' +
+                ", Image4='" + Image4 + '\'' +
+                ", Image5='" + Image5 + '\'' +
                 '}';
     }
 }

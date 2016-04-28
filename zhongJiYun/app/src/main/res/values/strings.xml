@@ -2959,6 +2959,7 @@
     <string name="title_activity_modifi_extruder">ModifiExtruderActivity</string>
     <string name="title_activity_home_tribe">HomeTribeActivity</string>
     <string name="title_activity_home_black_list">HomeBlackListActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
 
 
 </resources>

@@ -228,6 +228,13 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/boss/ownerevaluete" ;
 
     }
+    //评价业主
+    public static String getModifiExtruderData(){
+        //  appapi/boss/ownerevaluete
+        return BaseUrl+"appapi/device/getsecondhanddetail" ;
+
+    }
+
 
 
 

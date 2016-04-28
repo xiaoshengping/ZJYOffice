@@ -251,12 +251,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
             if (!TextUtils.isEmpty(evaluate)){
             requestParams.addBodyParameter("evaluate",evaluate);
+
             }
             if (!TextUtils.isEmpty(message)){
                 requestParams.addBodyParameter("message",message);
             }
             if (!TextUtils.isEmpty(giftBag)){
                 requestParams.addBodyParameter("giftBag",giftBag);
+                Log.e("giftBag11",giftBag);
             }
             if (!TextUtils.isEmpty(projectReply)){
                 requestParams.addBodyParameter("projectReply",projectReply);
@@ -298,10 +300,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                                 projectReplyeminDImage.setVisibility(View.GONE);
                             }
 
-                            if (TextUtils.isEmpty(finalMessageRemindId)){
+                            /*if (TextUtils.isEmpty(finalMessageRemindId)){
                                 SystemMessageSQLhelper sqLhelper=new SystemMessageSQLhelper(getActivity());
                                 insertData(sqLhelper,SystemMessageSQLhelper.MESSAGEREMINDID,"hshhdhhdhdhs");
-                            }
+                            }*/
 
                         }
 
@@ -331,7 +333,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
         String uid=null;  //用户id
-
         while (cursor.moveToNext()) {
             uid=cursor.getString(0);
 
@@ -346,16 +347,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         String message=null;  //消息数
         String giftBag=null;     //我的红包数
         String projectReply=null; //我的竞标数
-
         while (cursors.moveToNext()) {
             messageRemindId=cursors.getString(0);
             evaluate=cursors.getString(1);
             message= cursors.getString(2);
             giftBag = cursors.getString(3);
             projectReply=cursors.getString(4);
-
         }
-
         switch (v.getId()){
             case R.id.loing_layout:
                 Intent intent=new Intent(getActivity(), LoginActivity.class);
@@ -365,6 +363,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
             case R.id.attention_layout:
                 if (!TextUtils.isEmpty(uid)){
+
+
                 Intent attentionIntent=new Intent(getActivity(), AttentionProjectActivity.class);
                 startActivity(attentionIntent);
                 getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
@@ -387,6 +387,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.competitive_layout:
                 if (!TextUtils.isEmpty(uid)){
+                    if (!TextUtils.isEmpty(projectReply)){
+                    /*Log.e("MESSAGE",message);
+                    Log.e("messageRemindId",messageRemindId+"----messageRemindId");*/
+                        update(messageRemindId,SystemMessageSQLhelper.PROJECTREPLY,date);
+                    }else {
+                        if (!TextUtils.isEmpty(date)){
+                            insertData(systemMessageSQLhelper,SystemMessageSQLhelper.PROJECTREPLY,date);
+                        }
+
+                    }
                 Intent competitveTenderIntent=new Intent(getActivity(), MyCompetitveTenderActivity.class);
                 startActivity(competitveTenderIntent);
                 getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
@@ -397,6 +407,17 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.message_layout:
+                if (!TextUtils.isEmpty(message)){
+                    /*Log.e("MESSAGE",message);
+                    Log.e("messageRemindId",messageRemindId+"----messageRemindId");*/
+                    update(messageRemindId,SystemMessageSQLhelper.MESSAGE,date);
+                }else {
+                    if (!TextUtils.isEmpty(date)){
+                        Log.e("添加数据了",date);
+                        insertData(systemMessageSQLhelper,SystemMessageSQLhelper.MESSAGE,date);
+                    }
+
+                }
                 Intent messageIntent=new Intent(getActivity(), MessageActivity.class);
                 startActivity(messageIntent);
                 getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
@@ -404,11 +425,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.redpacket_layout:
                 if (!TextUtils.isEmpty(uid)){
                     if (!TextUtils.isEmpty(giftBag)){
-                       /* Log.e("giftBag",giftBag);
-                        Log.e("messageRemindId",messageRemindId);*/
+                        /*Log.e("giftBag",giftBag);
+                        Log.e("messageRemindId",messageRemindId+"----messageRemindId");*/
                         update(messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
                     }else {
-
                         if (!TextUtils.isEmpty(date)){
                             Log.e("添加数据了",date);
                             insertData(systemMessageSQLhelper,SystemMessageSQLhelper.GIFTBAG,date);
@@ -436,9 +456,26 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
             case R.id.comment_layout:
-                Intent commentIntent=new Intent(getActivity(), CommentActivity.class);
-                startActivity(commentIntent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                if (!TextUtils.isEmpty(uid)){
+                    if (!TextUtils.isEmpty(evaluate)){
+                    /*Log.e("MESSAGE",message);
+                    Log.e("messageRemindId",messageRemindId+"----messageRemindId");*/
+                        update(messageRemindId,SystemMessageSQLhelper.EVALUATE,date);
+                    }else {
+                        if (!TextUtils.isEmpty(date)){
+                            insertData(systemMessageSQLhelper,SystemMessageSQLhelper.EVALUATE,date);
+                        }
+
+                    }
+                    Intent commentIntent=new Intent(getActivity(), CommentActivity.class);
+                    startActivity(commentIntent);
+                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                }else {
+                    Intent intent3=new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent3);
+                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                }
+
                 break;
 
         }

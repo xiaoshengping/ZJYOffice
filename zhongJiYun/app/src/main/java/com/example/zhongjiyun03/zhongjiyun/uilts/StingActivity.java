@@ -13,7 +13,9 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
@@ -21,6 +23,7 @@ import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.message.PushAgent;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -51,6 +54,8 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
        private TextView textNumber;
        @ViewInject(R.id.about_layout)
        private LinearLayout aboutLayout;
+       @ViewInject(R.id.switch_button)
+       private Switch switchButton;
 
 
 
@@ -66,12 +71,10 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
     private void init() {
         intiView();
 
-
-
     }
 
     private void intiView() {
-
+        switchButton.setChecked(true);
         modificationLayout.setOnClickListener(this);
         clearLayout.setOnClickListener(this);
         ideaLayout.setOnClickListener(this);
@@ -87,6 +90,19 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
         } catch (Exception e) {
             e.printStackTrace();
         }
+        switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked){
+                    PushAgent mPushAgent = PushAgent.getInstance(StingActivity.this);
+                    mPushAgent.enable();// 打开推送
+                }else {
+                    PushAgent mPushAgent = PushAgent.getInstance(StingActivity.this);
+                    mPushAgent.disable(); //关闭推送
+                }
+            }
+        });
 
 
     }
@@ -176,7 +192,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
             case R.id.about_layout:
-                Intent aboutIntent=new Intent(StingActivity.this,CommentOwnerActivity.class);
+                Intent aboutIntent=new Intent(StingActivity.this,AboutActivity.class);
                 startActivity(aboutIntent);
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
