@@ -34,7 +34,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
 
     private void initView() {
         addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("关于");
+        titleNemeTv.setText("关于我们");
         retrunText.setOnClickListener(this);
 
 

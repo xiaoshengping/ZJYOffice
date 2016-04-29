@@ -234,7 +234,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     };
     private void initView() {
         addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("机主主页");
+        titleNemeTv.setText("机手资料");
         retrunText.setOnClickListener(this);
         handler=new Handler();
         phoneTell.setOnClickListener(this);

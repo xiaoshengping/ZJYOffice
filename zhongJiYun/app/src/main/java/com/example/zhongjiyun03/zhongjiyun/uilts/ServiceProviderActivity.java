@@ -99,7 +99,7 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
 
     private void initView() {
         addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("推荐的服务商");
+        titleNemeTv.setText("配套服务");
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
         serviceProviderBean = new ArrayList<>();

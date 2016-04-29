@@ -19,7 +19,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
-import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -168,14 +167,11 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                     startActivity(intent);
                     overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 }else {
-
-                    MyAppliction.showToast("请先登录才可以修改密码");
+                  Intent intent=new Intent(StingActivity.this,LoginActivity.class);
+                  startActivity(intent);
                 }
-
-
                 break;
             case R.id.competitive_layout:
-
                 showExitGameAlert("是否清理缓存","1");
                 break;
             case R.id.attention_layout:

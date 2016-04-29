@@ -1,5 +1,4 @@
-package com.example.zhongjiyun03.zhongjiyun.fragment;
-
+package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.Manifest;
 import android.content.Context;
@@ -19,9 +18,10 @@ import android.location.LocationProvider;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +58,6 @@ import com.example.zhongjiyun03.zhongjiyun.popwin.FirstClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.PopupWindowHelper;
 import com.example.zhongjiyun03.zhongjiyun.popwin.ScreenUtils;
 import com.example.zhongjiyun03.zhongjiyun.popwin.SecondClassAdapter;
-import com.example.zhongjiyun03.zhongjiyun.uilts.SeekMachinistParticulasActivity;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -75,11 +74,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class SeekMachinistFragment extends Fragment implements PullToRefreshBase.OnRefreshListener2<ListView> {
-
+public class SeekMachinistActivity extends AppCompatActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, View.OnClickListener {
+    @ViewInject(R.id.register_tv)
+    private TextView addExtruderTv;   //头部右边
+    @ViewInject(R.id.title_name_tv)
+    private TextView titleNemeTv;     //头部中间
+    @ViewInject(R.id.retrun_text_view)
+    private TextView retrunText;     //头部左边
 
     //排序
     @ViewInject(R.id.time_text_view)
@@ -87,24 +88,32 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     PopupWindow popupWindowTime;
     private List<String> list;
     int cur_pos = -1;// 当前显示的一行
-    int popTag=1;
+    int popTag = 1;
 
     //项目进展
     @ViewInject(R.id.evolve_text_view)
     private TextView evolveButton;
     int cur_evolve_pos = -1;// 当前显示的一行
 
-      //地址选择
+    //地址选择
     private TextView mainTab1TV;
-    /**左侧一级分类的数据*/
+    /**
+     * 左侧一级分类的数据
+     */
     private List<ProvinceCityBean> firstList;
-    /**右侧二级分类的数据*/
+    /**
+     * 右侧二级分类的数据
+     */
     private List<ProvinceCityChildsBean> secondList;
 
-    /**使用PopupWindow显示一级分类和二级分类*/
+    /**
+     * 使用PopupWindow显示一级分类和二级分类
+     */
     private PopupWindow popupWindow;
 
-    /**左侧和右侧两个ListView*/
+    /**
+     * 左侧和右侧两个ListView
+     */
     private ListView leftLV, rightLV;
     //弹出PopupWindow时背景变暗
     private View darkView;
@@ -115,13 +124,17 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
     //设备产商
     private PopupWindow popupWindowFacilly;
-    /**左侧和右侧两个ListView*/
+    /**
+     * 左侧和右侧两个ListView
+     */
     private ListView facillyLeftLV, facillyRightLV;
     @ViewInject(R.id.facilly_text_view)
     private TextView facillyText;
     /**左侧一级分类的数据*/
-   // private List<FacillyDataBean> facilluyFirstList=new ArrayList<>();
-    /**右侧二级分类的数据*/
+    // private List<FacillyDataBean> facilluyFirstList=new ArrayList<>();
+    /**
+     * 右侧二级分类的数据
+     */
     private List<FacillyChildsBean> facillySecondList;
     private String type; //型号
     private String city; //城市
@@ -130,46 +143,42 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
 
     @ViewInject(R.id.project_list_view)
-    private  ListView projectListView;
+    private ListView projectListView;
     private SeekMachinistListAdapter homeServiceListAdapter;
 
 
-      @ViewInject(R.id.seek_machinist_listview)
-      private PullToRefreshListView seekMachinistListview;  //列表
-    private int pageIndex=1;
-    private  List<SekkMachinisDataBean> sekkMachinisDataBeens;
+    @ViewInject(R.id.seek_machinist_listview)
+    private PullToRefreshListView seekMachinistListview;  //列表
+    private int pageIndex = 1;
+    private List<SekkMachinisDataBean> sekkMachinisDataBeens;
     private LocationManager lm;
     private static final String TAG = "GpsActivity";
     private String Longitude;   //经度
     private String Latitude;    //纬度
-    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
-
-    public SeekMachinistFragment() {
-        // Required empty public constructor
-    }
+    private boolean isPullDownRefresh = true; //判断是下拉，还是上拉的标记
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_seek_machinist, container, false);
-        ViewUtils.inject(this,view);
-        PopupWindowHelper.init(getActivity());
-        init(view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_seek_machinist);
+        ViewUtils.inject(this);
+        PopupWindowHelper.init(this);
+        init();
 
-
-        return view;
     }
 
-    private void init(View view) {
-        sekkMachinisDataBeens=new ArrayList<>();
+    private void init() {
+        addExtruderTv.setVisibility(View.GONE);
+        titleNemeTv.setText("寻找机手");
+        retrunText.setOnClickListener(this);
+        sekkMachinisDataBeens = new ArrayList<>();
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 showSortPopupWindow(sortButton);
-                popTag=1;
+                popTag = 1;
 
             }
         });
@@ -178,11 +187,11 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
             public void onClick(View v) {
 
                 showEvolvePopupWindow(evolveButton);
-                popTag=2;
+                popTag = 2;
             }
         });
 
-        findView(view);
+        findView();
         initData();
         initPopup();
 
@@ -197,11 +206,11 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 tabFacillynClick();
             }
         });
-        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         // 判断GPS是否正常启动
         if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Toast.makeText(getActivity(), "请开启GPS导航...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请开启GPS导航...", Toast.LENGTH_SHORT).show();
             // 返回开启GPS导航设置界面
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             startActivityForResult(intent, 0);
@@ -213,6 +222,16 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         // 获取位置信息
         // 如果不设置查询要求，getLastKnownLocation方法传人的参数为LocationManager.GPS_PROVIDER
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         Location location = lm.getLastKnownLocation(bestProvider);
         updateView(location);
         // 监听状态
@@ -231,48 +250,49 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
     }
 
-    private void initListData(int pageIndex,String type,String city,String year ,String order) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("Id","019f64b5-b05e-4996-9d9c-572cfb8fa3bd");
-        requestParams.addBodyParameter("pageIndex",pageIndex+"");
-        requestParams.addBodyParameter("pageSize","10");
-        if (!TextUtils.isEmpty(type)){
-            requestParams.addBodyParameter("type",type);
+    private void initListData(int pageIndex, String type, String city, String year, String order) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requestParams = new RequestParams();
+        requestParams.addBodyParameter("Id", "019f64b5-b05e-4996-9d9c-572cfb8fa3bd");
+        requestParams.addBodyParameter("pageIndex", pageIndex + "");
+        requestParams.addBodyParameter("pageSize", "10");
+        if (!TextUtils.isEmpty(type)) {
+            requestParams.addBodyParameter("type", type);
         }
-        if (!TextUtils.isEmpty(city)){
-            if (city.equals("全部")){
+        if (!TextUtils.isEmpty(city)) {
+            if (city.equals("全部")) {
 
-            }else {
-                requestParams.addBodyParameter("city",city);
+            } else {
+                requestParams.addBodyParameter("city", city);
             }
 
         }
-        if (!TextUtils.isEmpty(year)){
-            requestParams.addBodyParameter("year",year);
+        if (!TextUtils.isEmpty(year)) {
+            requestParams.addBodyParameter("year", year);
         }
-        if (!TextUtils.isEmpty(order)){
-            requestParams.addBodyParameter("order",order);
+        if (!TextUtils.isEmpty(order)) {
+            requestParams.addBodyParameter("order", order);
         }
-        if (!TextUtils.isEmpty(Latitude)){
-            requestParams.addBodyParameter("latitude",Latitude);
+        if (!TextUtils.isEmpty(Latitude)) {
+            requestParams.addBodyParameter("latitude", Latitude);
         }
-        if (!TextUtils.isEmpty(Longitude)){
-            requestParams.addBodyParameter("longitude",Longitude);
+        if (!TextUtils.isEmpty(Longitude)) {
+            requestParams.addBodyParameter("longitude", Longitude);
         }
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMachinisData(),requestParams, new RequestCallBack<String>() {
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMachinisData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
 
-                Log.e("找机手",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
+                Log.e("找机手", responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)) {
 
-                    AppBean<SeekMachinisBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SeekMachinisBean>>(){});
-                    if ((appListDataBean.getResult()).equals("success")){
-                        SeekMachinisBean seekMachinisBean= appListDataBean.getData();
-                        List<SekkMachinisDataBean> sekkMachinisDataBeen=seekMachinisBean.getPagerData();
-                        if (isPullDownRefresh){
+                    AppBean<SeekMachinisBean> appListDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SeekMachinisBean>>() {
+                    });
+                    if ((appListDataBean.getResult()).equals("success")) {
+                        SeekMachinisBean seekMachinisBean = appListDataBean.getData();
+                        List<SekkMachinisDataBean> sekkMachinisDataBeen = seekMachinisBean.getPagerData();
+                        if (isPullDownRefresh) {
                             sekkMachinisDataBeens.clear();
                         }
                         sekkMachinisDataBeens.addAll(sekkMachinisDataBeen);
@@ -280,63 +300,61 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
 
-                    }else if ((appListDataBean.getResult()).equals("nomore")){
+                    } else if ((appListDataBean.getResult()).equals("nomore")) {
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
                         MyAppliction.showToast("已到最底了");
-                    }else if ((appListDataBean.getResult()).equals("empty")){
+                    } else if ((appListDataBean.getResult()).equals("empty")) {
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
                         MyAppliction.showToast("没有更多数据");
                     }
 
 
-
-                }else {
+                } else {
                     homeServiceListAdapter.notifyDataSetChanged();
                     seekMachinistListview.onRefreshComplete();
                 }
-
-
 
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("找机手",s);
+                Log.e("找机手", s);
                 seekMachinistListview.onRefreshComplete();
             }
         });
+
+
     }
 
     private void initListView() {
-        homeServiceListAdapter=new SeekMachinistListAdapter(sekkMachinisDataBeens,getActivity());
+        homeServiceListAdapter = new SeekMachinistListAdapter(sekkMachinisDataBeens, SeekMachinistActivity.this);
         seekMachinistListview.setAdapter(homeServiceListAdapter);
         seekMachinistListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(getActivity(),SeekMachinistParticulasActivity.class);
-                intent.putExtra("seekData",sekkMachinisDataBeens.get(position-1));
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                Intent intent = new Intent(SeekMachinistActivity.this, SeekMachinistParticulasActivity.class);
+                intent.putExtra("seekData", sekkMachinisDataBeens.get(position - 1));
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 startActivity(intent);
             }
         });
 
 
-
     }
 
 
-    public void intiPullToRefresh(){
+    public void intiPullToRefresh() {
         seekMachinistListview.setMode(PullToRefreshBase.Mode.BOTH);
         seekMachinistListview.setOnRefreshListener(this);
-        ILoadingLayout endLabels  = seekMachinistListview
+        ILoadingLayout endLabels = seekMachinistListview
                 .getLoadingLayoutProxy(false, true);
         endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
         endLabels.setRefreshingLabel("正在刷新...");// 刷新时
         endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
-        ILoadingLayout startLabels  = seekMachinistListview
+        ILoadingLayout startLabels = seekMachinistListview
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
@@ -345,13 +363,12 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         seekMachinistListview.setRefreshing();
 
     }
+
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-        pageIndex=1;
-        isPullDownRefresh=true;
-        initListData(pageIndex,type,city,year,order);  //列表数据
-
-
+        pageIndex = 1;
+        isPullDownRefresh = true;
+        initListData(pageIndex, type, city, year, order);  //列表数据
 
 
     }
@@ -359,8 +376,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
-        isPullDownRefresh=false;
-        initListData(pageIndex,type,city,year,order);  //列表数据
+        isPullDownRefresh = false;
+        initListData(pageIndex, type, city, year, order);  //列表数据
 
     }
 
@@ -449,7 +466,9 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                     Log.e(TAG, "定位结束");
                     break;
             }
-        };
+        }
+
+        ;
     };
 
     /**
@@ -459,8 +478,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
      */
     private void updateView(Location location) {
         if (location != null) {
-            Longitude=String.valueOf(location.getLongitude());
-            Latitude=String.valueOf(location.getLatitude());
+            Longitude = String.valueOf(location.getLongitude());
+            Latitude = String.valueOf(location.getLatitude());
             //MyAppliction.showToast(String.valueOf(location.getLongitude())+"----"+String.valueOf(location.getLatitude()));
 
         } else {
@@ -493,12 +512,12 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     }
 
 
-    private void findView(View view) {
-        mainTab1TV = (TextView) view.findViewById(R.id.main_tab1);
-        darkView = view.findViewById(R.id.main_darkview);
+    private void findView() {
+        mainTab1TV = (TextView) findViewById(R.id.main_tab1);
+        darkView =findViewById(R.id.main_darkview);
 
-        animIn = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in_anim);
-        animOut = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out_anim);
+        animIn = AnimationUtils.loadAnimation(SeekMachinistActivity.this, R.anim.fade_in_anim);
+        animOut = AnimationUtils.loadAnimation(SeekMachinistActivity.this, R.anim.fade_out_anim);
     }
 
     private void initData() {
@@ -540,34 +559,34 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         //copy
         firstList.addAll(firstList);*/
         //城市数据
-        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
-        if (provinceCityDataBean!=null){
-            firstList=provinceCityDataBean.getProvinceCity();
+        ProvinceCityDataBean provinceCityDataBean = JSONObject.parseObject(SelectData.selectCityData + SelectData.selectCityDataOne + SelectData.selectCityDataTwo, new TypeReference<ProvinceCityDataBean>() {
+        });
+        if (provinceCityDataBean != null) {
+            firstList = provinceCityDataBean.getProvinceCity();
 
 
         }
 
         //设备厂商
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("DeviceJsonType","4");
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requestParams = new RequestParams();
+        requestParams.addBodyParameter("DeviceJsonType", "2");
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("设备厂商",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<FacillyDataBean> appListDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<FacillyDataBean>>(){});
-                    if (appListDataBean.getResult().equals("success")){
-                       List<FacillyDataBean> facillyDataBeen=  appListDataBean.getData();
+                //Log.e("设备厂商",responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)) {
+                    AppListDataBean<FacillyDataBean> appListDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppListDataBean<FacillyDataBean>>() {
+                    });
+                    if (appListDataBean.getResult().equals("success")) {
+                        List<FacillyDataBean> facillyDataBeen = appListDataBean.getData();
                         //facilluyFirstList.addAll(facillyDataBeen);
                         initPopupFacilly(facillyDataBeen);
 
                     }
 
 
-
                 }
-
 
 
             }
@@ -583,8 +602,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
 
     private void initPopupFacilly(final List<FacillyDataBean> facilluyFirstList) {
-        popupWindowFacilly = new PopupWindow(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.facilly_popup_layout, null);
+        popupWindowFacilly = new PopupWindow(SeekMachinistActivity.this);
+        View view = LayoutInflater.from(SeekMachinistActivity.this).inflate(R.layout.facilly_popup_layout, null);
         facillyLeftLV = (ListView) view.findViewById(R.id.facilly_pop_listview_left);
         facillyRightLV = (ListView) view.findViewById(R.id.facilly_pop_listview_right);
 
@@ -592,8 +611,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         popupWindowFacilly.setBackgroundDrawable(new PaintDrawable());
         popupWindowFacilly.setFocusable(true);
 
-        popupWindowFacilly.setHeight(ScreenUtils.getScreenH(getActivity()) * 2 / 3);
-        popupWindowFacilly.setWidth(ScreenUtils.getScreenW(getActivity()));
+        popupWindowFacilly.setHeight(ScreenUtils.getScreenH(SeekMachinistActivity.this) * 2 / 3);
+        popupWindowFacilly.setWidth(ScreenUtils.getScreenW(SeekMachinistActivity.this));
 
         popupWindowFacilly.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -609,13 +628,13 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
         //为了方便扩展，这里的两个ListView均使用BaseAdapter.如果分类名称只显示一个字符串，建议改为ArrayAdapter.
         //加载一级分类
-        final FacillyFirstClassAdapter firstAdapter = new FacillyFirstClassAdapter(getActivity(), facilluyFirstList);
+        final FacillyFirstClassAdapter firstAdapter = new FacillyFirstClassAdapter(SeekMachinistActivity.this, facilluyFirstList);
         facillyLeftLV.setAdapter(firstAdapter);
 
         //加载左侧第一行对应右侧二级分类
         facillySecondList = new ArrayList<FacillyChildsBean>();
         facillySecondList.addAll(facilluyFirstList.get(0).getChilds());
-        final FacillySecondClassAdapter secondAdapter = new FacillySecondClassAdapter(getActivity(), facillySecondList);
+        final FacillySecondClassAdapter secondAdapter = new FacillySecondClassAdapter(SeekMachinistActivity.this, facillySecondList);
         facillyRightLV.setAdapter(secondAdapter);
 
         //左侧ListView点击事件
@@ -628,7 +647,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 if (list2 == null || list2.size() == 0) {
                     popupWindowFacilly.dismiss();
 
-                    String  firstId = facilluyFirstList.get(position).getValue();
+                    String firstId = facilluyFirstList.get(position).getValue();
                     String selectedName = facilluyFirstList.get(position).getText();
                     facillyHandleResult(firstId, "-1", selectedName);
                     return;
@@ -636,7 +655,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
                 FacillyFirstClassAdapter adapter = (FacillyFirstClassAdapter) (parent.getAdapter());
                 //如果上次点击的就是这一个item，则不进行任何操作
-                if (adapter.getSelectedPosition() == position){
+                if (adapter.getSelectedPosition() == position) {
                     return;
                 }
 
@@ -657,7 +676,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 popupWindowFacilly.dismiss();
 
                 int firstPosition = firstAdapter.getSelectedPosition();
-                String  firstId = facilluyFirstList.get(firstPosition).getValue();
+                String firstId = facilluyFirstList.get(firstPosition).getValue();
                 String secondId = facilluyFirstList.get(firstPosition).getChilds().get(position).getValue();
                 String selectedName = facilluyFirstList.get(firstPosition).getChilds().get(position)
                         .getText();
@@ -666,28 +685,30 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
             }
         });
     }
+
     //顶部第一个标签的点击事件
     private void tabFacillynClick() {
         if (popupWindowFacilly.isShowing()) {
             popupWindowFacilly.dismiss();
         } else {
-            popupWindowFacilly.showAsDropDown(getActivity().findViewById(R.id.main_div_line));
+            popupWindowFacilly.showAsDropDown(SeekMachinistActivity.this.findViewById(R.id.main_div_line));
             popupWindowFacilly.setAnimationStyle(-1);
             //背景变暗
             darkView.startAnimation(animIn);
             darkView.setVisibility(View.VISIBLE);
         }
     }
+
     //刷新右侧ListView
     private void facillyUpdateSecondListView(List<FacillyChildsBean> list2,
-                                      FacillySecondClassAdapter secondAdapter) {
+                                             FacillySecondClassAdapter secondAdapter) {
         facillySecondList.clear();
         facillySecondList.addAll(list2);
         secondAdapter.notifyDataSetChanged();
     }
 
     //处理点击结果
-    private void facillyHandleResult(String firstId, String  secondId, String selectedName){
+    private void facillyHandleResult(String firstId, String secondId, String selectedName) {
         String text = "first id:" + firstId + ",second id:" + secondId;
         //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
 
@@ -696,13 +717,12 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         facillyText.setCompoundDrawables(null, null, img, null);
-        type=selectedName;
+        type = selectedName;
         sekkMachinisDataBeens.clear();
         seekMachinistListview.setRefreshing();
-        initListData(pageIndex,type,city,year,order);
+        initListData(pageIndex, type, city, year, order);
 
     }
-
 
 
     //点击事件
@@ -721,8 +741,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     }
 
     private void initPopup() {
-        popupWindow = new PopupWindow(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.popup_layout, null);
+        popupWindow = new PopupWindow(SeekMachinistActivity.this);
+        View view = LayoutInflater.from(SeekMachinistActivity.this).inflate(R.layout.popup_layout, null);
         leftLV = (ListView) view.findViewById(R.id.pop_listview_left);
         rightLV = (ListView) view.findViewById(R.id.pop_listview_right);
 
@@ -730,8 +750,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         popupWindow.setBackgroundDrawable(new PaintDrawable());
         popupWindow.setFocusable(true);
 
-        popupWindow.setHeight(ScreenUtils.getScreenH(getActivity()) * 2 / 3);
-        popupWindow.setWidth(ScreenUtils.getScreenW(getActivity()));
+        popupWindow.setHeight(ScreenUtils.getScreenH(SeekMachinistActivity.this) * 2 / 3);
+        popupWindow.setWidth(ScreenUtils.getScreenW(SeekMachinistActivity.this));
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -747,13 +767,13 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
         //为了方便扩展，这里的两个ListView均使用BaseAdapter.如果分类名称只显示一个字符串，建议改为ArrayAdapter.
         //加载一级分类
-        final FirstClassAdapter firstAdapter = new FirstClassAdapter(getActivity(), firstList);
+        final FirstClassAdapter firstAdapter = new FirstClassAdapter(SeekMachinistActivity.this, firstList);
         leftLV.setAdapter(firstAdapter);
 
         //加载左侧第一行对应右侧二级分类
         secondList = new ArrayList<ProvinceCityChildsBean>();
         secondList.addAll(firstList.get(0).getProvinceCityChilds());
-        final SecondClassAdapter secondAdapter = new SecondClassAdapter(getActivity(), secondList);
+        final SecondClassAdapter secondAdapter = new SecondClassAdapter(SeekMachinistActivity.this, secondList);
         rightLV.setAdapter(secondAdapter);
 
         //左侧ListView点击事件
@@ -766,7 +786,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 if (list2 == null || list2.size() == 0) {
                     popupWindow.dismiss();
 
-                    String  firstId = firstList.get(position).getId();
+                    String firstId = firstList.get(position).getId();
                     String selectedName = firstList.get(position).getName();
                     handleResult(firstId, "-1", selectedName);
                     return;
@@ -774,7 +794,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
                 FirstClassAdapter adapter = (FirstClassAdapter) (parent.getAdapter());
                 //如果上次点击的就是这一个item，则不进行任何操作
-                if (adapter.getSelectedPosition() == position){
+                if (adapter.getSelectedPosition() == position) {
                     return;
                 }
 
@@ -795,7 +815,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 popupWindow.dismiss();
 
                 int firstPosition = firstAdapter.getSelectedPosition();
-                String  firstId = firstList.get(firstPosition).getId();
+                String firstId = firstList.get(firstPosition).getId();
                 String secondId = firstList.get(firstPosition).getProvinceCityChilds().get(position).getId();
                 String selectedName = firstList.get(firstPosition).getProvinceCityChilds().get(position)
                         .getName();
@@ -809,7 +829,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         if (popupWindow.isShowing()) {
             popupWindow.dismiss();
         } else {
-            popupWindow.showAsDropDown(getActivity().findViewById(R.id.main_div_line));
+            popupWindow.showAsDropDown(findViewById(R.id.main_div_line));
             popupWindow.setAnimationStyle(-1);
             //背景变暗
             darkView.startAnimation(animIn);
@@ -826,7 +846,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     }
 
     //处理点击结果
-    private void handleResult(String firstId, String  secondId, String selectedName){
+    private void handleResult(String firstId, String secondId, String selectedName) {
         String text = "first id:" + firstId + ",second id:" + secondId;
         //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
 
@@ -835,19 +855,18 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         mainTab1TV.setCompoundDrawables(null, null, img, null);
-        city=selectedName;
+        city = selectedName;
         sekkMachinisDataBeens.clear();
         seekMachinistListview.setRefreshing();
-        initListData(pageIndex,type,city,year,order);
+        initListData(pageIndex, type, city, year, order);
 
     }
-
 
 
     public void showSortPopupWindow(View parent) {
         LinearLayout layout;
         ListView listView;
-        list=new ArrayList<>();
+        list = new ArrayList<>();
         list.add("默认排序");
         list.add("按工作年限由低到高");
         list.add("按工作年限由高到低");
@@ -856,13 +875,13 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
 
         //加载布局
-        layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(
+        layout = (LinearLayout) LayoutInflater.from(SeekMachinistActivity.this).inflate(
                 R.layout.pop_time_contant_layout, null);
         //找到布局的控件
         listView = (ListView) layout.findViewById(R.id.pop_listview);
         //设置适配器
         //popWinListAdapter=new PopWinListAdapter(list,HomeMoreProjectActivity.this,cur_pos);
-        MyAdapter myAdapter=new MyAdapter(getActivity());
+        MyAdapter myAdapter = new MyAdapter(SeekMachinistActivity.this);
         listView.setAdapter(myAdapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);// 一定要设置这个属性，否则ListView不会刷新
         myAdapter.notifyDataSetChanged();
@@ -872,7 +891,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         popupWindowTime.setFocusable(true);
         //设置popupWindow弹出窗体的背景
         popupWindowTime.setBackgroundDrawable(new BitmapDrawable(null, ""));
-        WindowManager manager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         popupWindowTime.setOutsideTouchable(true);
         popupWindowTime.setFocusable(true);
         @SuppressWarnings("deprecation")
@@ -898,28 +917,28 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
                 img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
                 sortButton.setCompoundDrawables(null, null, img, null);
-                cur_pos=arg2;
-              if (list.get(arg2).equals("默认排序")){
-                  order="";
-              }else {
-                  order=list.get(arg2);
-              }
+                cur_pos = arg2;
+                if (list.get(arg2).equals("默认排序")) {
+                    order = "";
+                } else {
+                    order = list.get(arg2);
+                }
 
                 sekkMachinisDataBeens.clear();
                 seekMachinistListview.setRefreshing();
-                initListData(pageIndex,type,city,year,order);
+                initListData(pageIndex, type, city, year, order);
             }
 
 
         });
 
 
-
     }
+
     public void showEvolvePopupWindow(View parent) {
         LinearLayout layout;
         ListView listView;
-        list=new ArrayList<>();
+        list = new ArrayList<>();
         list.add("默认排序");
         list.add("一年以下");
         list.add("1-3年");
@@ -929,13 +948,13 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
 
         //加载布局
-        layout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(
+        layout = (LinearLayout) LayoutInflater.from(SeekMachinistActivity.this).inflate(
                 R.layout.pop_time_contant_layout, null);
         //找到布局的控件
         listView = (ListView) layout.findViewById(R.id.pop_listview);
         //设置适配器
         //popWinListAdapter=new PopWinListAdapter(list,HomeMoreProjectActivity.this,cur_pos);
-        MyAdapter myAdapter=new MyAdapter(getActivity());
+        MyAdapter myAdapter = new MyAdapter(SeekMachinistActivity.this);
         listView.setAdapter(myAdapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);// 一定要设置这个属性，否则ListView不会刷新
         myAdapter.notifyDataSetChanged();
@@ -945,7 +964,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         popupWindowTime.setFocusable(true);
         //设置popupWindow弹出窗体的背景
         popupWindowTime.setBackgroundDrawable(new BitmapDrawable(null, ""));
-        WindowManager manager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        WindowManager manager = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
         popupWindowTime.setOutsideTouchable(true);
         popupWindowTime.setFocusable(true);
         @SuppressWarnings("deprecation")
@@ -971,17 +990,17 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
                 img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
                 evolveButton.setCompoundDrawables(null, null, img, null);
-                cur_evolve_pos=arg2;
+                cur_evolve_pos = arg2;
 
-                if (list.get(arg2).equals("默认排序")){
-                    year="";
-                }else {
-                    year=list.get(arg2);
+                if (list.get(arg2).equals("默认排序")) {
+                    year = "";
+                } else {
+                    year = list.get(arg2);
                 }
 
                 sekkMachinisDataBeens.clear();
                 seekMachinistListview.setRefreshing();
-                initListData(pageIndex,type,city,year,order);
+                initListData(pageIndex, type, city, year, order);
 
             }
 
@@ -989,9 +1008,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         });
 
 
-
     }
-
 
 
     private class MyAdapter extends BaseAdapter {
@@ -1030,7 +1047,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                     convertView.setBackgroundColor(getResources().getColor(R.color.background));// 更改整行的背景色
                     tv.setTextColor(Color.RED);// 更改字体颜色
                 }
-            }else {
+            } else {
                 if (position == cur_evolve_pos) {// 如果当前的行就是ListView中选中的一行，就更改显示样式
                     convertView.setBackgroundColor(getResources().getColor(R.color.background));// 更改整行的背景色
                     tv.setTextColor(Color.RED);// 更改字体颜色
@@ -1042,8 +1059,32 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+
+            case R.id.retrun_text_view:
+                finish();
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                break;
+        }
 
 
 
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+// KeyEvent.KEYCODE_BACK代表返回操作.
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 处理返回操作.
+            finish();
+            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+
+        }
+        return true;
+    }
 
 }

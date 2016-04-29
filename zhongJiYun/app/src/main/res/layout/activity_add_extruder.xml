@@ -49,6 +49,8 @@
             android:layout_height="wrap_content" />
 
         <EditText
+
+            android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ"
              android:id="@+id/serial_number_edit"
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -58,9 +60,9 @@
             android:gravity="center_vertical|right"
             android:drawablePadding="10dp"
             android:textSize="@dimen/home_Size_14"
-            android:hint="未填写"
+            android:hint="未填写（只能填写字母和数字）"
             android:paddingLeft="10dp"
-            android:inputType="text"
+
             />
 
     </LinearLayout>

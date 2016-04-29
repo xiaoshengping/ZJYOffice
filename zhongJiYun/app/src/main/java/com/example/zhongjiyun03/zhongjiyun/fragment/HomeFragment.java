@@ -44,6 +44,7 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.LoginActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MyExtruderActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.NewsCenterActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.SecondHandActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.SeekMachinistActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.SeekProjectParticularsActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.ServiceProviderActivity;
 import com.example.zhongjiyun03.zhongjiyun.view.CustomHomeScrollListView;
@@ -289,13 +290,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Log.e("找项目",s);
             }
         });
-
-
-
-
     }
-
-
       //项目推荐listView
     private void intiListView(final List<SeekProjectBean> seekProjectBean) {
 
@@ -318,10 +313,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     //首页griview
     private void initGridView() {
         ArrayList<HashMap<String, Object>> meumList = new ArrayList<HashMap<String, Object>>();
-        String[] gridText={"二手钻机","我的钻机","服务商","商城","中基云部落","黑名单","新闻动态","合作伙伴"};
-        int[] gridImage={R.drawable.rig0,R.drawable.rig1,R.drawable.rig2,R.drawable.rig3,R.drawable.rig4,R.drawable.rig5,R.drawable.rig6,R.drawable.rig7};
-        for(int i = 0;i < 8;i++)
-        {
+        String[] gridText={"寻找项目","二手钻机","寻找机手","配套服务","商城","我的钻机","部落","黑名单","新闻动态","合作伙伴"};
+        int[] gridImage={R.mipmap.rig0,R.mipmap.rig1,R.mipmap.rig2,R.mipmap.rig3,R.mipmap.rig4,R.mipmap.rig5,R.mipmap.rig6,R.mipmap.rig7,R.mipmap.rig8,R.mipmap.rig9};
+        for(int i = 0;i < 10;i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("ItemImage",gridImage[i]);
             map.put("ItemText", gridText[i]);
@@ -355,11 +349,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
                         switch (index){
                             case 1:
-                                Intent SecondHandIntent=new Intent(getActivity(), SecondHandActivity.class)  ;
-                                startActivity(SecondHandIntent);
+                                Intent projectIntent=new Intent(getActivity(),HomeMoreProjectActivity.class);
+                                startActivity(projectIntent);
                                 break;
 
                             case 2:
+                                Intent SecondHandIntent=new Intent(getActivity(), SecondHandActivity.class)  ;
+                                startActivity(SecondHandIntent);
+                                break;
+                            case 3:
+
+                                Intent seekMachinistIntent=new Intent(getActivity(), SeekMachinistActivity.class)  ;
+                                startActivity(seekMachinistIntent);
+                                break;
+                            case 4:
+                                Intent serviceIntent=new Intent(getActivity(), ServiceProviderActivity.class)  ;
+                                startActivity(serviceIntent);
+                                break;
+                            case 5:
+                                Intent marketIntent=new Intent(getActivity(), HomeMarketActivity.class)  ;
+                                startActivity(marketIntent);
+
+                                break;
+                            case 6:
                                 if (!TextUtils.isEmpty(uid)){
                                     Intent MyExtruderIntent=new Intent(getActivity(), MyExtruderActivity.class)  ;
                                     startActivity(MyExtruderIntent);
@@ -369,38 +381,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                                     startActivity(intent);
                                     getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                                 }
-
-
-                                break;
-                            case 3:
-                                Intent serviceIntent=new Intent(getActivity(), ServiceProviderActivity.class)  ;
-                                startActivity(serviceIntent);
-
-                                break;
-                            case 4:
-                                Intent marketIntent=new Intent(getActivity(), HomeMarketActivity.class)  ;
-                                startActivity(marketIntent);
-                                break;
-                            case 5:
-                                Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
-                                startActivity(tribeIntent);
-
-                                break;
-                            case 6:
-                                Intent blackListIntent=new Intent(getActivity(), HomeBlackListActivity.class)  ;
-                                startActivity(blackListIntent);
-
                                 break;
                             case 7:
-                                Intent newsIntent=new Intent(getActivity(), NewsCenterActivity.class)  ;
-                                    startActivity(newsIntent);
-
+                                Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
+                                startActivity(tribeIntent);
                             break;
 
                             case 8:
+                                Intent blackListIntent=new Intent(getActivity(), HomeBlackListActivity.class)  ;
+                                startActivity(blackListIntent);
+                                break;
+                            case 9:
+                                Intent newsIntent=new Intent(getActivity(), NewsCenterActivity.class)  ;
+                                startActivity(newsIntent);
+                            break;
+
+                            case 10:
                                 Intent cooperationIntent=new Intent(getActivity(), CooperationActivity.class)  ;
                                 startActivity(cooperationIntent);
-
                                 break;
 
 

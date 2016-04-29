@@ -44,7 +44,7 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
 
     private void initView() {
         addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("中基云部落");
+        titleNemeTv.setText("部落");
         retrunText.setOnClickListener(this);
         SQLhelper sqLhelper=new SQLhelper(HomeTribeActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();

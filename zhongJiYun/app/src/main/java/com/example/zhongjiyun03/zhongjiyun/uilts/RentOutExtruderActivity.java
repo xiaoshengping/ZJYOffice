@@ -143,6 +143,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
     private String invoiceImageID;//全景照3ID
     private String contractImageID;//全景照4ID
     private String qualifiedImageID;//全景照5ID
+    private  int tage;
 
 
 
@@ -523,7 +524,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                             RentOutExtruderDeviceBean rentOutExtruderDeviceDataBean=appBean.getData();
                                             if (rentOutExtruderDeviceDataBean!=null){
                                                 if (getIntent().getStringExtra("tage").equals("modifiRent")){
-                                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getImage1())){
+                                                    /*if (!TextUtils.isEmpty(secondHandListProjectBean.getImage1())){
                                                       if ((secondHandListProjectBean.getImage1()).equals(leavePath)){
                                                           if ((secondHandListProjectBean.getImage2()).equals(panoramaPath)){
                                                               if (!TextUtils.isEmpty(secondHandListProjectBean.getImage3())){
@@ -581,10 +582,17 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                                           intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
                                                       }
 
-                                                    }
+                                                    }*/
                                                     mSVProgressHUD.dismiss();
                                                 }else {
-                                                    intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
+
+                                                    if (phoneListPath!=null){
+                                                        for (int i = 0; i <phoneListPath.size() ; i++) {
+                                                            intiPhontData7(finalUid,"11",phoneListPath.get(i),rentOutExtruderDeviceDataBean.getId(),i);
+                                                        }
+                                                    }
+
+
                                                 }
 
                                             }else {
@@ -664,8 +672,64 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
 
     }
+    private void intiPhontData7(String id, String imageType, String imagePath, String ownId, final int tages) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requwstParams=new RequestParams();
+        requwstParams.addBodyParameter("Id",id);
+        requwstParams.addBodyParameter("ImageType",imageType);
+        requwstParams.addBodyParameter("UserType","boss");
+        requwstParams.addBodyParameter("SourceType","4");
+        requwstParams.addBodyParameter("File", new File(imagePath));
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        Log.e("AddSesstionId",sesstionId);
+        requwstParams.addBodyParameter("OwnId",ownId);
 
-    private void intiPhontData0(final String id, String imageType, String imagePath, final String ownId) {
+
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.e("照片请求",responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    AppBean<AppDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
+
+                    if (appBean.getResult().equals("success")){
+
+                        if (phoneListPath.size()==5){
+                            mSVProgressHUD.showWithStatus("上传中照片("+(tages+1)+"/5张)...");
+                        } else if (phoneListPath.size()==4){
+                            mSVProgressHUD.showWithStatus("上传中照片("+(tages+1)+"/4张)...");
+                        }else if (phoneListPath.size()==3){
+                            mSVProgressHUD.showWithStatus("上传中照片("+(tages+1)+"/3张)...");
+                        }
+                        if (tages==(phoneListPath.size()-1)){
+                            finish();
+                            MyAppliction.showToast("出租钻机成功");
+                            mSVProgressHUD.dismiss();
+                        }
+                    }else {
+                        MyAppliction.showToast("上传照片失败");
+                        mSVProgressHUD.dismiss();
+                    }
+
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("照片请求s",s);
+                mSVProgressHUD.dismiss();
+            }
+        });
+
+
+    }
+   /* private void intiPhontData0(final String id, String imageType, String imagePath, final String ownId) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
         requwstParams.addBodyParameter("Id",id);
@@ -978,7 +1042,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("Id",id);
         requwstParams.addBodyParameter("ImageType",imageType);
         requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","3");
+        requwstParams.addBodyParameter("SourceType","4");
         requwstParams.addBodyParameter("File", new File(imagePath));
         //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
@@ -1057,7 +1121,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("Id",id);
         requwstParams.addBodyParameter("ImageType",userType);
         requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","3");
+        requwstParams.addBodyParameter("SourceType","4");
         requwstParams.addBodyParameter("File", new File(imagePath));
         //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
@@ -1108,7 +1172,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         });
 
 
-    }
+    }*/
     //对话框
     private void showExitGameAlert(String text,String tailtText) {
         final AlertDialog dlg = new AlertDialog.Builder(RentOutExtruderActivity.this).create();

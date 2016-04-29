@@ -49,7 +49,7 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
                 viewHold.tailtTextView.setText(data.get(position).getDriverName());
             }
             if (!TextUtils.isEmpty(data.get(position).getDistanceStr())){
-                viewHold.addressText.setText(data.get(position).getDistanceStr());
+                viewHold.addressText.setText(data.get(position).getDistanceStr()+"Km");
             }else {
                 viewHold.addressText.setText("0.0Km");
 

@@ -76,11 +76,11 @@
         android:layout_height="3dp"
         android:scaleType="matrix"
         android:src="@color/red_light" />
-    <ImageView
+    <!--<ImageView
         android:layout_width="match_parent"
         android:layout_height="5dp"
         android:scaleType="matrix"
-        android:src="@color/background" />
+        android:src="@color/background" />-->
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

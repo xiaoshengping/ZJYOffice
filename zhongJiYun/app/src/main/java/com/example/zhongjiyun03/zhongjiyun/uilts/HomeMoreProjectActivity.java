@@ -169,7 +169,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     private void initView() {
 
         retrunTextView.setOnClickListener(this);
-        tailtNameTv.setText("找项目");
+        tailtNameTv.setText("寻找项目");
         registerTv.setVisibility(View.GONE);
         seekProjectBeans=new ArrayList<>();
 

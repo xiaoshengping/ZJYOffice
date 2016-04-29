@@ -60,14 +60,14 @@ public class FragmentTabAdapter implements RadioGroup.OnCheckedChangeListener {
                     home_title_neme_tv.setText("首页");
                 }else if(i==1){//找项目
                     home_title_bar_rl.setVisibility(View.VISIBLE);
-                    home_title_neme_tv.setText("找项目");
+                    home_title_neme_tv.setText("寻找项目");
                 }else if(i==2) {//找机手
                     home_title_bar_rl.setVisibility(View.VISIBLE);
-                    home_title_neme_tv.setText("找机手");
+                    home_title_neme_tv.setText("寻找机手");
                 }else {//我的
                     //home_title_bar_rl.setVisibility(View.GONE);
                     home_title_bar_rl.setVisibility(View.VISIBLE);
-                    home_title_neme_tv.setText("我的");
+                    home_title_neme_tv.setText("个人中心");
                 }
 //                Toast.makeText(this.fragmentActivity, "" + i, Toast.LENGTH_LONG).show();
 

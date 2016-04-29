@@ -120,6 +120,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     private SeekProjectBean seekProjectBean;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,10 +150,8 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             SQLiteDatabase db= sqLhelper.getWritableDatabase();
             Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
             String uid=null;  //用户id
-
             while (cursor.moveToNext()) {
                 uid=cursor.getString(0);
-
             }
             requestParams.addBodyParameter("projectId",seekProjectId);
             requestParams.addBodyParameter("id",uid);
@@ -205,7 +204,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
               exturdNumberText.setText(seekProjectBean.getDriverCount()+"");
               fuwuNumberText.setText(seekProjectBean.getSecondHandCount()+"");
               fuwuNumberText.setText(seekProjectBean.getDeviceCount()+"");
-
     }
     //项目概况数据展示
 
@@ -224,6 +222,17 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         TextView projectIntroduceContent= (TextView) projectParticularsView.findViewById(R.id.project_introduce_content);
         TextView extruderContenText= (TextView) projectParticularsView.findViewById(R.id.extruder_conten_text);
         TextView addressContentTextView= (TextView) projectParticularsView.findViewById(R.id.address_content_text_view);
+        
+        TextView ratingOne=(TextView) projectParticularsView.findViewById(R.id.rating_one);
+
+         TextView ratingTwo=(TextView) projectParticularsView.findViewById(R.id.rating_two);
+
+         TextView ratingThree=(TextView) projectParticularsView.findViewById(R.id.rating_three);
+
+         TextView ratingFour=(TextView) projectParticularsView.findViewById(R.id.rating_four);
+
+         TextView ratingFive=(TextView) projectParticularsView.findViewById(R.id.rating_five);
+
 
          if (!TextUtils.isEmpty(seekProjectBean.getTitle())){
 
@@ -294,7 +303,46 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
               competitiveButton.setText(seekProjectBean.getCanReply());
           }
 
+        String StarRate=seekProjectBean.getBossStarLevel();
+        if (StarRate.equals("1")){
+            ratingOne.setBackgroundResource(R.mipmap.eval_icon);
+           /*ratingTwo.setBackgroundResource(R.mipmap.star_icon);
+           ratingThree.setBackgroundResource(R.mipmap.star_icon);
+            ratingFour.setBackgroundResource(R.mipmap.star_icon);
+         ratingFive.setBackgroundResource(R.mipmap.star_icon);*/
+        }else if (StarRate.equals("2")){
 
+            ratingOne.setBackgroundResource(R.mipmap.eval_icon);
+            ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
+           /* ratingThree.setBackgroundResource(R.mipmap.star_icon);
+            ratingFour.setBackgroundResource(R.mipmap.star_icon);
+            ratingFive.setBackgroundResource(R.mipmap.star_icon);*/
+
+        }else if (StarRate.equals("3")){
+
+            ratingOne.setBackgroundResource(R.mipmap.eval_icon);
+            ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
+            ratingThree.setBackgroundResource(R.mipmap.eval_icon);
+           /* ratingFour.setBackgroundResource(R.mipmap.star_icon);
+            ratingFive.setBackgroundResource(R.mipmap.star_icon);*/
+
+        }else if (StarRate.equals("4")){
+
+            ratingOne.setBackgroundResource(R.mipmap.eval_icon);
+            ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
+            ratingThree.setBackgroundResource(R.mipmap.eval_icon);
+            ratingFour.setBackgroundResource(R.mipmap.eval_icon);
+           /* ratingFive.setBackgroundResource(R.mipmap.star_icon);*/
+
+        }else if (StarRate.equals("5")){
+
+            ratingOne.setBackgroundResource(R.mipmap.eval_icon);
+            ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
+            ratingThree.setBackgroundResource(R.mipmap.eval_icon);
+            ratingFour.setBackgroundResource(R.mipmap.eval_icon);
+            ratingFive.setBackgroundResource(R.mipmap.eval_icon);
+
+        }
 
 
 

@@ -5,12 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/background"
+    android:background="@color/window_background"
     tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.AboutActivity">
-
-
-    <include layout="@layout/app_head_layout" />
-
-
+    <include android:id="@+id/head_layout" android:layout_width="match_parent" android:layout_height="wrap_content"  layout="@layout/app_head_layout" />
+     <ImageView
+         android:id="@+id/about_image"
+         android:scaleType="centerCrop"
+         android:layout_marginTop="70dp"
+         android:layout_centerHorizontal="true"
+         android:layout_below="@+id/head_layout"
+         android:src="@mipmap/about_logo_icon"
+         android:layout_width="100dp"
+         android:layout_height="100dp" />
+     <TextView
+         android:id="@+id/about_text"
+         android:textColor="@color/tailt_dark"
+         android:textSize="@dimen/home_Size_23"
+         android:layout_marginTop="10dp"
+         android:layout_centerHorizontal="true"
+         android:layout_below="@+id/about_image"
+         android:text="中基云"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" />
+    <TextView
+        android:textColor="@color/content_color"
+        android:textSize="@dimen/home_Size_20"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/about_text"
+        android:text="版本号1.1.0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

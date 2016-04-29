@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-        <ImageView
+        <!--<ImageView
             android:layout_below="@+id/attention_layout"
             android:id="@+id/attention_imageview"
             android:layout_width="match_parent"
@@ -125,9 +125,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-        </LinearLayout>
+        </LinearLayout>-->
         <ImageView
-            android:layout_below="@+id/extruder_layout"
+            android:layout_below="@+id/attention_layout"
             android:id="@+id/extruder_imageview_one"
             android:layout_width="match_parent"
             android:layout_height="1dp" />

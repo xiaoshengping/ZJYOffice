@@ -12,8 +12,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -155,7 +157,6 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
     private void init() {
          initView();
         intiPvAddress();
-
         facillyData();
         timeData();
 
@@ -169,18 +170,38 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
         leaveFactoryLayout.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
         file = new File(IMAGE_FILE_LOCATION);
-        if(!file.exists()){
+        if (!file.exists()) {
             SDCardUtils.makeRootDirectory(IMAGE_FILE_LOCATION);
         }
-        file=new File(IMAGE_FILE_LOCATION+ConstantSet.USERTEMPPIC);
+        file = new File(IMAGE_FILE_LOCATION + ConstantSet.USERTEMPPIC);
         imageUri = Uri.fromFile(file);//The Uri t
         panoramaLayout.setOnClickListener(this);
         invoiceLayout.setOnClickListener(this);
         contractLayout.setOnClickListener(this);
         qualifiedLayout.setOnClickListener(this);
-
+        /**
+         * 限制只能输入字母和数字，默认弹出英文输入法
+         */
+        serialNumberEdit.setKeyListener(new DigitsKeyListener() {
+            @Override
+            public int getInputType() {
+                return InputType.TYPE_TEXT_VARIATION_PASSWORD;
+            }
+            @Override
+            protected char[] getAcceptedChars() {
+                char[] data = getStringData(R.string.login_only_can_input).toCharArray();
+                return data;
+            }
+        });
 
     }
+
+
+    public String getStringData(int id) {
+        return getResources().getString(id);
+    }
+
+
 
     @Override
     public void onClick(View v) {

@@ -77,7 +77,7 @@
                 android:background="#00000000"
                 android:drawableTop="@drawable/home_recruitment_selector"
                 android:gravity="center"
-                android:text="找项目"
+                android:text="寻找项目"
                 android:textColor="@color/home_color_seletor"
                 android:textSize="@dimen/home_Size_15"
 
@@ -89,7 +89,7 @@
                 android:background="#00000000"
                 android:drawableTop="@drawable/home_talents_selector"
                 android:gravity="center"
-                android:text="找机手"
+                android:text="寻找机手"
                 android:textColor="@color/home_color_seletor"
                 android:textSize="@dimen/home_Size_15"
 
@@ -102,7 +102,7 @@
 
                 android:drawableTop="@drawable/home_mine_selector"
                 android:gravity="center"
-                android:text="我的"
+                android:text="个人中心"
                 android:textColor="@color/home_color_seletor"
                 android:textSize="@dimen/home_Size_15"
 

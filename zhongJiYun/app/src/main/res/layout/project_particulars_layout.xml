@@ -266,8 +266,63 @@
             android:text="提供三证"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <TextView
 
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/leixing_text"
+            android:id="@+id/xingji_text"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginLeft="20dp"
+            android:text="需要机主星级"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+        <RelativeLayout
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/leixing_text"
+            android:layout_toRightOf="@+id/xingji_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="3dp"
+
+                android:id="@+id/rating_one"
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/rating_one"
+
+                android:id="@+id/rating_two"
+
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/rating_two"
+
+                android:id="@+id/rating_three"
+
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/rating_three"
+                android:id="@+id/rating_four"
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/rating_four"
+                android:id="@+id/rating_five"
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
