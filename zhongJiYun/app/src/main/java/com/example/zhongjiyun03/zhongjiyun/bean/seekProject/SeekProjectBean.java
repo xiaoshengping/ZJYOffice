@@ -37,7 +37,7 @@ public class SeekProjectBean implements Serializable  {
     private  int ServiceProviderCount;// Int 项目附近资源数量信息-服务商数量
     private int DriverCount;// Int 项目附近资源数量信息-机手数量
     private int SecondHandCount;// Int 项目附近资源数量信息-二手机数量
-    private int DeviceCount;// Int 项目附近资源数量信息-钻机数量
+    private int DeviceCount;// Int 项目附近资源数量信息-配件
     private String CanReply;// String 能否投标
 
 

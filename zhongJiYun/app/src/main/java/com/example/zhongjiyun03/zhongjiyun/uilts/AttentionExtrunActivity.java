@@ -128,7 +128,11 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                         }else if ((appListDataBean.getResult()).equals("nomore")){
                             attentionExtrunLsitview.onRefreshComplete();
                             MyAppliction.showToast("已到最底了");
+                        }else if ((appListDataBean.getResult()).equals("empty")){
+                            attentionExtrunLsitview.onRefreshComplete();
+                            MyAppliction.showToast("您还没有关注钻机哦");
                         }
+
                         homeSecondHandListAdapter.notifyDataSetChanged();
 
                     }
@@ -138,6 +142,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                 @Override
                 public void onFailure(HttpException e, String s) {
                     Log.e("关注钻机",s);
+                    attentionExtrunLsitview.onRefreshComplete();
                 }
             });
         }else {

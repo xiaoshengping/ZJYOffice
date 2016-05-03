@@ -7,9 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -18,12 +19,14 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -118,6 +121,8 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     @ViewInject(R.id.competitive_button)
     private Button competitiveButton; //竞标按钮
     private SeekProjectBean seekProjectBean;
+    private TimeCount time;      //获取计时线程
+    private  AlertDialog dlg;
 
 
 
@@ -195,15 +200,63 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
     }
       //配置设施
-    private void initMatingFacliyView(SeekProjectBean seekProjectBean) {
+    private void initMatingFacliyView(final SeekProjectBean seekProjectBean) {
              TextView fuwuNumberText= (TextView) matingFacilyView.findViewById(R.id.fuwu_number_text);
              TextView exturdNumberText= (TextView) matingFacilyView.findViewById(R.id.exturd_number_text);
              TextView jshouNUmberText= (TextView) matingFacilyView.findViewById(R.id.jshou_number_text);
              TextView peiJNumberText= (TextView) matingFacilyView.findViewById(R.id.peij_number_text);
-              fuwuNumberText.setText(seekProjectBean.getServiceProviderCount()+"");
-              exturdNumberText.setText(seekProjectBean.getDriverCount()+"");
-              fuwuNumberText.setText(seekProjectBean.getSecondHandCount()+"");
-              fuwuNumberText.setText(seekProjectBean.getDeviceCount()+"");
+             fuwuNumberText.setText(seekProjectBean.getServiceProviderCount()+"");
+             exturdNumberText.setText(seekProjectBean.getSecondHandCount()+"");
+             jshouNUmberText.setText(seekProjectBean.getDriverCount()+"");
+             peiJNumberText.setText(seekProjectBean.getDeviceCount()+"");
+        RelativeLayout serviceLayout= (RelativeLayout) matingFacilyView.findViewById(R.id.service_layout);
+        RelativeLayout secondHandLayout= (RelativeLayout) matingFacilyView.findViewById(R.id.second_hand_layout);
+        RelativeLayout exturdLayout= (RelativeLayout) matingFacilyView.findViewById(R.id.exturd_layout);
+
+        serviceLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (seekProjectBean.getServiceProviderCount()==0){
+                    MyAppliction.showToast("您附近没有服务商");
+                }else {
+                    Intent intent=new Intent(SeekProjectParticularsActivity.this,ServiceProviderActivity.class);
+                    intent.putExtra("data",seekProjectBean.getProvince());
+                    intent.putExtra("tage","matingFacily");
+                    startActivity(intent);
+                }
+
+            }
+        });
+        secondHandLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (seekProjectBean.getSecondHandCount()==0){
+                    MyAppliction.showToast("您附近没有二手钻机");
+                }else {
+                    Intent intent=new Intent(SeekProjectParticularsActivity.this,SecondHandActivity.class);
+                    intent.putExtra("data",seekProjectBean.getProvince());
+                    intent.putExtra("tage","matingFacily");
+                    startActivity(intent);
+                }
+
+            }
+        });
+        exturdLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (seekProjectBean.getDriverCount()==0){
+                    MyAppliction.showToast("您附近没有机手");
+                }else {
+                    Intent intent=new Intent(SeekProjectParticularsActivity.this,SeekMachinistActivity.class);
+                    intent.putExtra("data",seekProjectBean.getProvince());
+                    intent.putExtra("tage","matingFacily");
+                    startActivity(intent);
+                }
+
+            }
+        });
+
+
     }
     //项目概况数据展示
 
@@ -355,6 +408,8 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         mSVProgressHUD = new SVProgressHUD(this);
         competitiveButton.setOnClickListener(this);
         checkBoxCheck.setOnCheckedChangeListener(this);
+        time = new TimeCount(5000, 1000);//构造CountDownTimer对象
+        dlg = new AlertDialog.Builder(SeekProjectParticularsActivity.this).create();
 
     }
 
@@ -393,16 +448,10 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                             MyAppliction.showToast(seekProjectBean.getCanReply());
                         }
                     }else {
-                        if (!TextUtils.isEmpty(seekProjectBean.getPhone())){
+                        if (!TextUtils.isEmpty(seekProjectId)){
                             //意图：打电话
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_DIAL);
-                            //url:统一资源定位符
-                            //uri:统一资源标示符（更广）
-                            intent.setData(Uri.parse("tel:" + seekProjectBean.getPhone()));
-                            //开启系统拨号器
-                            startActivity(intent);
-                        }else {
+                            CellOwnerData(uid,seekProjectId);
+                            }else {
                             MyAppliction.showToast("该业主没有联系方式");
                         }
 
@@ -424,6 +473,99 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
 
 
+
+    }
+     //拨打电话
+    private void CellOwnerData(String uid,String seekProjectId) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        if (!TextUtils.isEmpty(seekProjectId)){
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+            requestParams.addBodyParameter("id",uid);
+            requestParams.addBodyParameter("projectId",seekProjectId);
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCallOwerData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    Log.e("拨打业主电话",responseInfo.result);
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        AppDataBean appDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
+                        if (appDataBean!=null){
+                            if (appDataBean.getResult().equals("success")){
+                                time.start();
+                                showExitGameAlert("正在为您拨打电话中","尊敬的用户，中基云平台正在为您拨打机主电话，请耐心等待10秒钟");
+                            }else {
+                              MyAppliction.showToast("拨打电话失败");
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    Log.e("拨打业主电话",s);
+                }
+            });
+
+        }else {
+            Intent intent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
+            startActivity(intent);
+        }
+
+
+
+    }
+
+    //电话框
+    private void showExitGameAlert(String text,String textTv) {
+
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.my_redpacked_alert_layout);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        TextView tailteTv = (TextView) window.findViewById(R.id.tv);
+        tailteTv.setText(text);
+        tailte.setText(textTv);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("关闭");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                dlg.cancel();
+            }
+        });
+
+        /*// 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });*/
+    }
+
+    class TimeCount extends CountDownTimer {
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);//参数依次为总时长,和计时的时间间隔
+        }
+
+        @Override
+        public void onFinish() {//计时完毕时触发
+            dlg.cancel();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {//计时过程显示
+
+        }
 
     }
 

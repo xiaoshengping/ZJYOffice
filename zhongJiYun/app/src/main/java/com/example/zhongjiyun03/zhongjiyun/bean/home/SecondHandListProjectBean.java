@@ -18,6 +18,7 @@ public class SecondHandListProjectBean implements Serializable {
     private int IsShowContract;//	bool	是否显示合同照
     private int IsShowInvoice;//	bool	是否显示发票照
     private boolean IsShowPrice;//	bool	是否显示价格
+    private String BossPhoneNumber; //手机号码
 
     private String PriceStr;//	string	价格
     private String Province;//	string	省份
@@ -39,6 +40,14 @@ public class SecondHandListProjectBean implements Serializable {
     private String Image3; //图片3
     private String Image4; //图片4
     private String Image5; //图片5
+
+    public String getBossPhoneNumber() {
+        return BossPhoneNumber;
+    }
+
+    public void setBossPhoneNumber(String bossPhoneNumber) {
+        BossPhoneNumber = bossPhoneNumber;
+    }
 
     public String getPrice() {
         return Price;

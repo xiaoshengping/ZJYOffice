@@ -5,6 +5,8 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,7 +24,14 @@ import com.example.zhongjiyun03.zhongjiyun.fragment.HomeFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.MineFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekMachinistFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekProjectFragment;
+import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
@@ -50,7 +59,8 @@ public class HomeActivity extends AppCompatActivity {
         if(isFirstIn) {
             /*Intent intent = new Intent().setClass(HomeActivity.this,MainActivity.class);
             startActivityForResult(intent,0);*/
-            testAddContacts();
+            testAddContacts();  //添加联系人
+            getVersontData();   //获取本版
 
         }
         //HomeFragment.setStart(0);
@@ -59,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
         PushAgent mPushAgent = PushAgent.getInstance(this);
         mPushAgent.enable();
         String device_token = UmengRegistrar.getRegistrationId(this);
-        Log.e("shdhdhdh",device_token);
+        //Log.e("shdhdhdh",device_token);
         //开启推送并设置注册的回调处理
         mPushAgent.enable(new IUmengRegisterCallback() {
 
@@ -71,6 +81,40 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         PushAgent.getInstance(this).onAppStart();
+    }
+
+    private void getVersontData() {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        try {
+            requestParams.addBodyParameter("versionNo",getVersionName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        requestParams.addBodyParameter("versionType","0");
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getVersonData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+             Log.e("获取本版信息",responseInfo.result);
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("获取本版信息",s);
+            }
+        });
+
+
+
+    }
+
+    private String getVersionName() throws Exception {
+        // 获取packagemanager的实例
+        PackageManager packageManager = getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(),0);
+        String version = packInfo.versionName;
+        return version;
     }
 
     /**

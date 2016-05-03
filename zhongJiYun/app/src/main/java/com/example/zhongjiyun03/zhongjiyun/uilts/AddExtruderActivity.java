@@ -279,7 +279,6 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                     //步骤2：获取文件中的值
                                     String sesstionId = read.getString("code","");
                                     requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-                                    Log.e("数字SesstionId",sesstionId);
                                     requestParams.addBodyParameter("Id",uid);
                                     requestParams.addBodyParameter("DeviceNo",serialNumberEdit.getText().toString());
                                     requestParams.addBodyParameter("HourOfWork",workTimeEdit.getText().toString());

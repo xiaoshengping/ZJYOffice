@@ -27,6 +27,8 @@
         android:layout_alignTop="@+id/exitGameBackground"
         />
     <TextView
+    android:paddingRight="5dp"
+    android:paddingLeft="5dp"
     android:text="您当前的云币数为888个"
     android:textSize="@dimen/home_Size_16"
     android:id="@+id/tailte_tv"

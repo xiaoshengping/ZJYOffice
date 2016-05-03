@@ -276,13 +276,19 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
     }
 
     private void initData(int pageIndex) {
-
         HttpUtils httpUtils=new HttpUtils();
         final RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("PageIndex",pageIndex+"");
         requestParams.addBodyParameter("PageSize","10");
         requestParams.addBodyParameter("Longitude",Longitude);
         requestParams.addBodyParameter("Latitude",Latitude);
+        if (getIntent().getStringExtra("tage").equals("matingFacily")){
+            String province=getIntent().getStringExtra("data");
+            if (!TextUtils.isEmpty(province)){
+                requestParams.addBodyParameter("province",province);
+            }
+
+        }
         //mSVProgressHUD.showWithStatus("加载中...");
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getServiceListData(),requestParams, new RequestCallBack<String>() {
             @Override

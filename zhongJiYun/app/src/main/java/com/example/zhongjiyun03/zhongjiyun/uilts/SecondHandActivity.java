@@ -244,6 +244,9 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         // 注意：此处更新准确度非常低，推荐在service里面启动一个Thread，在run中sleep(10000);然后执行handler.sendMessage(),更新位置
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
 
+
+
+
     }
 
     /*private void initTimeData() {
@@ -319,10 +322,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.shard_tv:
-
-
                 showShare();
-
                 break;
             case R.id.retrun_text_view:
                 finish();
@@ -358,6 +358,12 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
             }else {
              requestParams.addBodyParameter("city",city);
+            }
+
+        }
+        if (getIntent().getStringExtra("tage").equals("matingFacily")){
+            if (!TextUtils.isEmpty(getIntent().getStringExtra("data"))){
+                requestParams.addBodyParameter("province",getIntent().getStringExtra("data").toString());
             }
 
         }

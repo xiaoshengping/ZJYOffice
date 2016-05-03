@@ -138,8 +138,9 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     private List<FacillyChildsBean> facillySecondList;
     private String type; //型号
     private String city; //城市
-    private String year;
-    private String order;
+    private String year;   //工作经历排序
+    private String order;  //排序
+    private String brandType;//品牌
 
 
     @ViewInject(R.id.project_list_view)
@@ -257,7 +258,19 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
         requestParams.addBodyParameter("pageIndex", pageIndex + "");
         requestParams.addBodyParameter("pageSize", "10");
         if (!TextUtils.isEmpty(type)) {
-            requestParams.addBodyParameter("type", type);
+            if (brandType.equals("全部")){
+
+            }else {
+                if (type.equals("全部")){
+                    if (!TextUtils.isEmpty(brandType)){
+                        requestParams.addBodyParameter("manufacture",brandType);
+                    }
+
+                }else {
+                    requestParams.addBodyParameter("type", type);
+                }
+            }
+
         }
         if (!TextUtils.isEmpty(city)) {
             if (city.equals("全部")) {
@@ -266,6 +279,13 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                 requestParams.addBodyParameter("city", city);
             }
 
+        }
+
+
+        if (getIntent().getStringExtra("tage").equals("matingFacily")){
+            if (!TextUtils.isEmpty(getIntent().getStringExtra("data"))){
+                requestParams.addBodyParameter("province",getIntent().getStringExtra("data"));
+            }
         }
         if (!TextUtils.isEmpty(year)) {
             requestParams.addBodyParameter("year", year);
@@ -570,7 +590,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
         //设备厂商
         HttpUtils httpUtils = new HttpUtils();
         RequestParams requestParams = new RequestParams();
-        requestParams.addBodyParameter("DeviceJsonType", "2");
+        requestParams.addBodyParameter("DeviceJsonType", "4");
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -647,7 +667,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                 if (list2 == null || list2.size() == 0) {
                     popupWindowFacilly.dismiss();
 
-                    String firstId = facilluyFirstList.get(position).getValue();
+                    String firstId = facilluyFirstList.get(position).getText();
                     String selectedName = facilluyFirstList.get(position).getText();
                     facillyHandleResult(firstId, "-1", selectedName);
                     return;
@@ -676,10 +696,9 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                 popupWindowFacilly.dismiss();
 
                 int firstPosition = firstAdapter.getSelectedPosition();
-                String firstId = facilluyFirstList.get(firstPosition).getValue();
+                String firstId = facilluyFirstList.get(firstPosition).getText();
                 String secondId = facilluyFirstList.get(firstPosition).getChilds().get(position).getValue();
-                String selectedName = facilluyFirstList.get(firstPosition).getChilds().get(position)
-                        .getText();
+                String selectedName = facilluyFirstList.get(firstPosition).getChilds().get(position).getText();
                 facillyHandleResult(firstId, secondId, selectedName);
                 seekMachinistListview.setRefreshing();
             }
@@ -711,12 +730,12 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     private void facillyHandleResult(String firstId, String secondId, String selectedName) {
         String text = "first id:" + firstId + ",second id:" + secondId;
         //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
-
         facillyText.setText(selectedName);
         facillyText.setTextColor(getResources().getColor(R.color.red_light));
         Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         facillyText.setCompoundDrawables(null, null, img, null);
+        brandType=firstId;
         type = selectedName;
         sekkMachinisDataBeens.clear();
         seekMachinistListview.setRefreshing();

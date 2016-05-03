@@ -59,7 +59,7 @@ public class HomeSecondHandListAdapter extends AppBaseAdapter<SecondHandBean> {
                 viewHold.distanceTextView.setText("0.0Km");
             }
 
-            viewHold.addressTextView.setText(data.get(position).getAddress());
+            viewHold.addressTextView.setText(data.get(position).getProvince());
             if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getDateOfManufacture())&&!TextUtils.isEmpty(data.get(position).getDeviceDto().getDateMonthOfManufacture())){
                 viewHold.dataTextView.setText(data.get(position).getDeviceDto().getDateOfManufacture()+"年"+
                 data.get(position).getDeviceDto().getDateMonthOfManufacture()+"月");

@@ -131,6 +131,8 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
 
         if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())) {
             if (phoneNewEdit.getText().toString().length()==11){
+              if (phoneNewEdit.getText().toString().equals(phone)){
+
 
 
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCodeData(),requestParams, new RequestCallBack<String>() {
@@ -158,6 +160,9 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                     MyAppliction.showToast("网络异常,请稍后重试");
                 }
             });
+              }else {
+                  MyAppliction.showToast("请输入新的手机号码");
+              }
             }else {
                 MyAppliction.showToast("您输入的手机号码有误");
             }

@@ -235,6 +235,18 @@ public class AppUtilsUrl {
 
     }
 
+    //获取本版信息
+    public static String getVersonData(){
+        //  appapi/system/checkappversion
+        return BaseUrl+"appapi/system/checkappversion" ;
+
+    }
+    //获取本版信息
+    public static String getCallOwerData(){
+        //  appapi/communicationapi/callowner
+        return BaseUrl+"appapi/communicationapi/callowner" ;
+
+    }
 
 
 

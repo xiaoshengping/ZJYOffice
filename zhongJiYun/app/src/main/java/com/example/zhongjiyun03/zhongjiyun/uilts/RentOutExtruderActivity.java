@@ -218,7 +218,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         String modifiRentTage=getIntent().getStringExtra("tage");
         if (modifiRentTage.equals("modifiRent")){
             modifiRentData();
-
+            rentOutButton.setText("修改钻机出租信息");
         }
     }
 
@@ -366,7 +366,12 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
             case R.id.rent_out_button:
-                sellSaveData();
+                if (getIntent().getStringExtra("tage").equals("modifiRent")){
+                    modifiExtruderData();
+                }else {
+                    sellSaveData();
+                }
+
 
                 break;
             case R.id.leave_factory_textview:
@@ -387,7 +392,176 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 showDialog(ConstantSet.TAKEPICTURE3,ConstantSet.SELECTPICTURE3,imageUri);
                 break;
 
+        }
 
+
+
+
+    }
+
+    private void modifiExtruderData() {
+
+        if (!TextUtils.isEmpty(rentPartAddress.getText().toString())){
+            if (!TextUtils.isEmpty(rentAddressParticulars.getText().toString())){
+                if (!TextUtils.isEmpty(rentPriceEdit.getText().toString())){
+                    if (!TextUtils.isEmpty(rentTenancyTerm.getText().toString())){
+                        if (!TextUtils.isEmpty(rentDescribe.getText().toString())){
+
+                            if (!TextUtils.isEmpty(leavePath)) {
+                                if (!leavePath.equals(secondHandListProjectBean.getImage1())){
+                                    phoneListPath.add(leavePath);
+                                    leaveImageID=secondHandListProjectBean.getImage1Id();
+                                }
+                                }
+                                if (!TextUtils.isEmpty(panoramaPath)) {
+                                    if (!panoramaPath.equals(secondHandListProjectBean.getImage2())){
+                                        phoneListPath.add(panoramaPath);
+                                        panoramaImageID=secondHandListProjectBean.getImage2Id();
+                                    }
+
+                                }
+                                    if (!TextUtils.isEmpty(invoicePath)) {
+                                        if (!invoicePath.equals(secondHandListProjectBean.getImage3())){
+                                             phoneListPath.add(invoicePath);
+                                            invoiceImageID=secondHandListProjectBean.getImage3Id();
+                                        }
+
+                                    }
+                                        if (!TextUtils.isEmpty(contractPath)) {
+                                            if (!contractPath.equals(secondHandListProjectBean.getImage4())){
+                                                phoneListPath.add(contractPath);
+                                                contractImageID=secondHandListProjectBean.getImage4Id();
+                                            }
+
+                                        }
+                                        if (!TextUtils.isEmpty(qualifiedPath)){
+                                            if (!qualifiedPath.equals(secondHandListProjectBean.getImage5())){
+                                                phoneListPath.add(qualifiedPath);
+                                                qualifiedImageID=secondHandListProjectBean.getImage5Id();
+                                            }
+
+                                        }
+                                        SQLhelper sqLhelper=new SQLhelper(RentOutExtruderActivity.this);
+                                        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+                                        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+                                        String uid=null;  //用户id
+                                        while (cursor.moveToNext()) {
+                                            uid=cursor.getString(0);
+                                        }
+                                        HttpUtils httpUtils=new HttpUtils();
+                                        RequestParams requestParams=new RequestParams();
+                                        //步骤1：创建一个SharedPreferences接口对象
+                                        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+                                        //步骤2：获取文件中的值
+                                        String sesstionId = read.getString("code","");
+                                        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+                                        requestParams.addBodyParameter("Id",uid);
+                                        requestParams.addBodyParameter("DeviceId",myExtruderBean.getId());
+                                        requestParams.addBodyParameter("SecondHandType","0");
+                                        if (!TextUtils.isEmpty(Province)){
+                                            requestParams.addBodyParameter("Province",Province);
+                                        }
+                                        if (!TextUtils.isEmpty(City)){
+                                            requestParams.addBodyParameter("City",City);
+                                        }
+                                        if (!TextUtils.isEmpty(myExtruderBean.getSecondHandId())){
+                                           requestParams.addBodyParameter("deviceHistoryId", myExtruderBean.getSecondHandId());
+                                        }
+                                        requestParams.addBodyParameter("Address",rentAddressParticulars.getText().toString());
+                                        requestParams.addBodyParameter("Tenancy",rentTenancyTerm.getText().toString());
+                                        requestParams.addBodyParameter("Price",rentPriceEdit.getText().toString());
+                                        requestParams.addBodyParameter("IsShowContract",contractTage+"");
+                                        requestParams.addBodyParameter("IsShowInvoice",invoiceTage+"");
+                                        requestParams.addBodyParameter("Describing",rentDescribe.getText().toString());
+                                        requestParams.addBodyParameter("Image1","phont.jpg");
+                                        requestParams.addBodyParameter("Image2","phont.jpg");
+                                        requestParams.addBodyParameter("Image3","phont.jpg");
+                                        requestParams.addBodyParameter("Image4","phont.jpg");
+                                        requestParams.addBodyParameter("Image5","phont.jpg");
+
+                                        Log.e("sdhhdhdhhdhdh","'"+leaveImageID+","+panoramaImageID+","+invoiceImageID+","+contractImageID+","+qualifiedImageID+"'".replace("null",""));
+                                        requestParams.addBodyParameter("updateImgs", (leaveImageID+","+panoramaImageID+","+invoiceImageID+","+contractImageID+","+qualifiedImageID).replace("null",""));
+                                        mSVProgressHUD.showWithStatus("正在提交中...");
+                                        final String finalUid = uid;
+                                        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
+                                            @Override
+                                            public void onSuccess(ResponseInfo<String> responseInfo) {
+                                                Log.e("修改出租",responseInfo.result);
+                                                if (!TextUtils.isEmpty(responseInfo.result)){
+                                                    AppBean<RentOutExtruderDeviceBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceBean>>(){});
+                                                    if (appBean.getResult().equals("success")){
+                                                        //Log.e("出租id",appBean.getData().getOwnId());
+                                                        if (appBean.getData()!=null){
+                                                            RentOutExtruderDeviceBean rentOutExtruderDeviceDataBean=appBean.getData();
+                                                            if (rentOutExtruderDeviceDataBean!=null){
+                                                                if (phoneListPath!=null&&phoneListPath.size()!=0){
+
+                                                                    int imageType=11;
+                                                                    for (int i = 0; i <phoneListPath.size() ; i++) {
+                                                                        Log.e("imageType",imageType+"");
+                                                                        intiPhontData7(finalUid,imageType,phoneListPath.get(i),rentOutExtruderDeviceDataBean.getId(),i);
+                                                                        imageType++;
+                                                                    }
+                                                                }else {
+                                                                    finish();
+                                                                    MyAppliction.showToast("修改钻机信息成功");
+                                                                    mSVProgressHUD.dismiss();
+                                                                }
+                                                            }else {
+                                                                finish();
+                                                                MyAppliction.showToast("修改钻机信息成功");
+                                                                mSVProgressHUD.dismiss();
+                                                            }
+                                                        }else {
+                                                            mSVProgressHUD.dismiss();
+                                                        }
+                                                    }else {
+                                                        mSVProgressHUD.dismiss();
+                                                        MyAppliction.showToast(appBean.getMsg());
+                                                    }
+                                                }
+
+
+                                            }
+
+                                            @Override
+                                            public void onFailure(HttpException e, String s) {
+                                                Log.e("出租",s);
+                                                mSVProgressHUD.dismiss();
+                                                MyAppliction.showToast("网络异常，请稍后重试");
+                                            }
+                                        });
+
+
+
+
+                        }else {
+                            MyAppliction.showToast("请输入描述");
+
+                        }
+                    }else {
+                        MyAppliction.showToast("请输租期");
+
+                    }
+
+
+
+                }else {
+                    MyAppliction.showToast("请输入价格");
+
+                }
+
+
+
+            }else {
+                MyAppliction.showToast("请输入详细地址");
+
+            }
+
+
+
+        }else {
+            MyAppliction.showToast("请输入停放地");
 
         }
 
@@ -395,12 +569,14 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
 
     }
+
     private void sellSaveData() {
         if (!TextUtils.isEmpty(rentPartAddress.getText().toString())){
             if (!TextUtils.isEmpty(rentAddressParticulars.getText().toString())){
                 if (!TextUtils.isEmpty(rentPriceEdit.getText().toString())){
                     if (!TextUtils.isEmpty(rentTenancyTerm.getText().toString())){
                         if (!TextUtils.isEmpty(rentDescribe.getText().toString())){
+
                             if (!TextUtils.isEmpty(leavePath)){
                                 phoneListPath.add(leavePath);
                                 if (!TextUtils.isEmpty(panoramaPath)){
@@ -440,11 +616,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             if (!TextUtils.isEmpty(City)){
                                 requestParams.addBodyParameter("City",City);
                             }
-                            if (getIntent().getStringExtra("tage").equals("modifiRent")){
-                              if (!TextUtils.isEmpty(myExtruderBean.getSecondHandId())){
-                                 requestParams.addBodyParameter("deviceHistoryId", myExtruderBean.getSecondHandId());
-                                   }
-                                  }
+
                             requestParams.addBodyParameter("Address",rentAddressParticulars.getText().toString());
                             requestParams.addBodyParameter("Tenancy",rentTenancyTerm.getText().toString());
                             requestParams.addBodyParameter("Price",rentPriceEdit.getText().toString());
@@ -456,61 +628,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             requestParams.addBodyParameter("Image3","phont.jpg");
                             requestParams.addBodyParameter("Image4","phont.jpg");
                             requestParams.addBodyParameter("Image5","phont.jpg");
-                            if (getIntent().getStringExtra("tage").equals("modifiRent")){
-                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getImage1())){
-                                                if ((secondHandListProjectBean.getImage1()).equals(leavePath)){
-                                                    if ((secondHandListProjectBean.getImage2()).equals(panoramaPath)){
-                                                        if (!TextUtils.isEmpty(secondHandListProjectBean.getImage3())){
-                                                            if (secondHandListProjectBean.getImage3().equals(invoicePath)){
-                                                                if (!TextUtils.isEmpty(secondHandListProjectBean.getImage4())){
-                                                                    if (secondHandListProjectBean.getImage4().equals(contractPath)){
-                                                                        if (!TextUtils.isEmpty(secondHandListProjectBean.getImage5())){
-                                                                            if (secondHandListProjectBean.getImage5().equals(qualifiedPath)){
 
-                                                                            }else {
-                                                                                qualifiedImageID=secondHandListProjectBean.getImage5Id();
-                                                                            }
-                                                                        }else {
-                                                                            if (!TextUtils.isEmpty(qualifiedPath)){
-                                                                                qualifiedImageID=secondHandListProjectBean.getImage5Id();
-                                                                            }
-                                                                        }
-                                                                    } else {
-                                                                        contractImageID=secondHandListProjectBean.getImage4Id();
-                                                                    }
-                                                                }else {
-                                                                    if (!TextUtils.isEmpty(contractPath)){
-                                                                        contractImageID=secondHandListProjectBean.getImage4Id();
-                                                                    }
-                                                                }
-                                                            }else {
-
-                                                               invoiceImageID=secondHandListProjectBean.getImage3Id();
-                                                            }
-                                                        }
-                                                    }else {
-
-                                                        panoramaImageID=secondHandListProjectBean.getImage2Id();
-                                                    }
-
-
-                                                }else {
-                                                    leaveImageID=secondHandListProjectBean.getImage1Id();
-                                                }
-
-                                            }
-
-                            }
-                            if (getIntent().getStringExtra("tage").equals("modifiRent")){
+                            /*if (getIntent().getStringExtra("tage").equals("modifiRent")){
                                 requestParams.addBodyParameter("updateImgs", "'"+leaveImageID+","+panoramaImageID+","+invoiceImageID+","+contractImageID+","+qualifiedImageID+"'");
-                            }
-                            if (phoneListPath.size()==5){
-                                 mSVProgressHUD.showWithStatus("上传中照片(5/5张)...");
-                            } else if (phoneListPath.size()==4){
-                               mSVProgressHUD.showWithStatus("上传中照片(4/4张)...");
-                            }else if (phoneListPath.size()==3){
-                              mSVProgressHUD.showWithStatus("上传中照片(3/3张)...");
-                            }
+                            }*/
+                            mSVProgressHUD.showWithStatus("上传照片中...");
                             final String finalUid = uid;
                             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
                             @Override
@@ -523,81 +645,16 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                         if (appBean.getData()!=null){
                                             RentOutExtruderDeviceBean rentOutExtruderDeviceDataBean=appBean.getData();
                                             if (rentOutExtruderDeviceDataBean!=null){
-                                                if (getIntent().getStringExtra("tage").equals("modifiRent")){
-                                                    /*if (!TextUtils.isEmpty(secondHandListProjectBean.getImage1())){
-                                                      if ((secondHandListProjectBean.getImage1()).equals(leavePath)){
-                                                          if ((secondHandListProjectBean.getImage2()).equals(panoramaPath)){
-                                                              if (!TextUtils.isEmpty(secondHandListProjectBean.getImage3())){
-                                                                  if (secondHandListProjectBean.getImage3().equals(invoicePath)){
-                                                                      if (!TextUtils.isEmpty(secondHandListProjectBean.getImage4())){
-                                                                              if (secondHandListProjectBean.getImage4().equals(contractPath)){
-
-                                                                                      if (!TextUtils.isEmpty(secondHandListProjectBean.getImage5())){
-                                                                                          if (secondHandListProjectBean.getImage5().equals(qualifiedPath)){
-                                                                                              MyAppliction.showToast("修改出租信息成功");
-                                                                                              finish();
-                                                                                          }else {
-                                                                                              intiPhontData4(finalUid,"12",phoneListPath.get(4),rentOutExtruderDeviceDataBean.getId());
-                                                                                          }
-
-
-
-                                                                                  }else {
-                                                                                  if (!TextUtils.isEmpty(qualifiedPath)){
-                                                                                      intiPhontData4(finalUid,"12",phoneListPath.get(4),rentOutExtruderDeviceDataBean.getId());
-                                                                                  }else {
-                                                                                      MyAppliction.showToast("修改出租信息成功");
-                                                                                      finish();
-                                                                                  }
-
-                                                                                  }
-
-
-                                                                              } else {
-                                                                                  intiPhontData3(finalUid,"12",phoneListPath.get(3),rentOutExtruderDeviceDataBean.getId());
-                                                                              }
-
-                                                                      }else {
-                                                                      if (!TextUtils.isEmpty(contractPath)){
-                                                                          intiPhontData3(finalUid,"12",phoneListPath.get(3),rentOutExtruderDeviceDataBean.getId());
-                                                                      }else {
-                                                                          MyAppliction.showToast("修改出租信息成功");
-                                                                          finish();
-                                                                      }
-
-                                                                      }
-
-
-                                                                  }else {
-
-                                                                      intiPhontData2(finalUid,"12",phoneListPath.get(2),rentOutExtruderDeviceDataBean.getId());
-                                                                  }
-                                                              }
-
-                                                          }else {
-
-                                                              intiPhontData1(finalUid,"12",phoneListPath.get(1),rentOutExtruderDeviceDataBean.getId());
-                                                          }
-                                                      }else {
-                                                          intiPhontData0(finalUid,"11",phoneListPath.get(0),rentOutExtruderDeviceDataBean.getId());
-                                                      }
-
-                                                    }*/
-                                                    mSVProgressHUD.dismiss();
-                                                }else {
-
                                                     if (phoneListPath!=null){
+                                                        int imageType=11;
                                                         for (int i = 0; i <phoneListPath.size() ; i++) {
-                                                            intiPhontData7(finalUid,"11",phoneListPath.get(i),rentOutExtruderDeviceDataBean.getId(),i);
+                                                            Log.e("imageType",imageType+"");
+                                                            intiPhontData7(finalUid,imageType,phoneListPath.get(i),rentOutExtruderDeviceDataBean.getId(),i);
+                                                            imageType++;
+
                                                         }
                                                     }
-
-
                                                 }
-
-                                            }else {
-                                                mSVProgressHUD.dismiss();
-                                            }
                                         }else {
                                             mSVProgressHUD.dismiss();
                                         }
@@ -672,11 +729,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
 
     }
-    private void intiPhontData7(String id, String imageType, String imagePath, String ownId, final int tages) {
+    private void intiPhontData7(String id, int imageType, String imagePath, String ownId, final int tages) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
         requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",imageType);
+        requwstParams.addBodyParameter("ImageType",imageType+"");
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","4");
         requwstParams.addBodyParameter("File", new File(imagePath));
@@ -687,29 +744,31 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         Log.e("AddSesstionId",sesstionId);
         requwstParams.addBodyParameter("OwnId",ownId);
-
-
+        httpUtils.configSoTimeout(1200000);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 Log.e("照片请求",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<AppDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-
+                    int tage=tages+1;
                     if (appBean.getResult().equals("success")){
 
-                        if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传中照片("+(tages+1)+"/5张)...");
-                        } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传中照片("+(tages+1)+"/4张)...");
-                        }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.showWithStatus("上传中照片("+(tages+1)+"/3张)...");
-                        }
-                        if (tages==(phoneListPath.size()-1)){
-                            finish();
-                            MyAppliction.showToast("出租钻机成功");
-                            mSVProgressHUD.dismiss();
-                        }
+                      if (getIntent().getStringExtra("tage").equals("modifiRent")){
+                          if (tage==phoneListPath.size()){
+                              MyAppliction.showToast("修改成功");
+                              mSVProgressHUD.dismiss();
+                              finish();
+                          }
+                      }else {
+                          if (tage==phoneListPath.size()){
+                              MyAppliction.showToast("出租钻机成功");
+                              showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出租申请已提交成功，请等待后台审核，为了提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
+                              mSVProgressHUD.dismiss();
+                          }
+                      }
+
+
                     }else {
                         MyAppliction.showToast("上传照片失败");
                         mSVProgressHUD.dismiss();
@@ -723,7 +782,20 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("照片请求s",s);
-                mSVProgressHUD.dismiss();
+                if (getIntent().getStringExtra("tage").equals("modifiRent")){
+                    MyAppliction.showToast("修改成功");
+                    mSVProgressHUD.dismiss();
+                    finish();
+                }else {
+                    if (tage==phoneListPath.size()){
+                        MyAppliction.showToast("出租钻机成功");
+                        mSVProgressHUD.dismiss();
+                        showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出租申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
+
+                    }
+                }
+
+
             }
         });
 
@@ -1188,7 +1260,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         TextView ok = (TextView) window.findViewById(R.id.btn_ok);
         TextView tailtVt= (TextView) window.findViewById(R.id.tv);
         tailtVt.setText(tailtText);
-        ok.setText("交纳保证金");
+        ok.setText("缴纳保证金");
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent=new Intent(RentOutExtruderActivity.this,CommitCashDepositActivity.class);

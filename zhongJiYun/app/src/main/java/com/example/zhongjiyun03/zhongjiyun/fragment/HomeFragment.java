@@ -355,15 +355,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
                             case 2:
                                 Intent SecondHandIntent=new Intent(getActivity(), SecondHandActivity.class)  ;
+                                SecondHandIntent.putExtra("tage","secondHand");
                                 startActivity(SecondHandIntent);
                                 break;
                             case 3:
 
                                 Intent seekMachinistIntent=new Intent(getActivity(), SeekMachinistActivity.class)  ;
+                                seekMachinistIntent.putExtra("tage","seekMachinis");
                                 startActivity(seekMachinistIntent);
                                 break;
                             case 4:
                                 Intent serviceIntent=new Intent(getActivity(), ServiceProviderActivity.class)  ;
+                                serviceIntent.putExtra("tage","service");
                                 startActivity(serviceIntent);
                                 break;
                             case 5:

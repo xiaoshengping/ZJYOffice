@@ -601,13 +601,13 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.phone_text_view:
-                  if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getDeviceBasePhone())){
+                  if (!TextUtils.isEmpty(secondHandBean.getBossPhoneNumber())){
                       //意图：打电话
                       Intent intent = new Intent();
                       intent.setAction(Intent.ACTION_DIAL);
                       //url:统一资源定位符
                       //uri:统一资源标示符（更广）
-                      intent.setData(Uri.parse("tel:" + secondHandBean.getDeviceBaseDto().getDeviceBasePhone()));
+                      intent.setData(Uri.parse("tel:" + secondHandBean.getBossPhoneNumber()));
                       //开启系统拨号器
                       startActivity(intent);
                   }else {

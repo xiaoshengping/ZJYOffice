@@ -125,8 +125,9 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     private List<FacillyChildsBean> facillySecondList;
     private String type; //型号
     private String city; //城市
-    private String year;
-    private String order;
+    private String year;  //工作经验排序
+    private String order; //其他排序
+    private String brandType; //厂商
 
 
     @ViewInject(R.id.project_list_view)
@@ -238,7 +239,19 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         requestParams.addBodyParameter("pageIndex",pageIndex+"");
         requestParams.addBodyParameter("pageSize","10");
         if (!TextUtils.isEmpty(type)){
-            requestParams.addBodyParameter("type",type);
+            if (brandType.equals("全部")){
+
+            }else {
+                if (type.equals("全部")){
+                    if (!TextUtils.isEmpty(brandType)){
+                        requestParams.addBodyParameter("manufacture",brandType);
+                    }
+
+                }else {
+                    requestParams.addBodyParameter("type",type);
+                }
+            }
+
         }
         if (!TextUtils.isEmpty(city)){
             if (city.equals("全部")){
@@ -628,7 +641,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 if (list2 == null || list2.size() == 0) {
                     popupWindowFacilly.dismiss();
 
-                    String  firstId = facilluyFirstList.get(position).getValue();
+                    String  firstId = facilluyFirstList.get(position).getText();
                     String selectedName = facilluyFirstList.get(position).getText();
                     facillyHandleResult(firstId, "-1", selectedName);
                     return;
@@ -657,7 +670,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 popupWindowFacilly.dismiss();
 
                 int firstPosition = firstAdapter.getSelectedPosition();
-                String  firstId = facilluyFirstList.get(firstPosition).getValue();
+                String  firstId = facilluyFirstList.get(firstPosition).getText();
                 String secondId = facilluyFirstList.get(firstPosition).getChilds().get(position).getValue();
                 String selectedName = facilluyFirstList.get(firstPosition).getChilds().get(position)
                         .getText();
@@ -696,6 +709,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         facillyText.setCompoundDrawables(null, null, img, null);
+        brandType=firstId;
         type=selectedName;
         sekkMachinisDataBeens.clear();
         seekMachinistListview.setRefreshing();
