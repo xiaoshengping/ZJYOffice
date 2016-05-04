@@ -116,6 +116,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     private String Order ;//排序
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
     private HomeProjectListAdapter homeProjectlsitAdapter;
+    private String province;//省份
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,11 +198,18 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         requestParams.addBodyParameter("PageIndex",PageIndex+"");
         requestParams.addBodyParameter("PageSize","10");
         if (!TextUtils.isEmpty(cityName)){
-                if (cityName.equals("全部")){
+            if (province.equals("全部")){
 
+            }else {
+                if (cityName.equals("全部")){
+                    requestParams.addBodyParameter("province",province);
                 }else {
                     requestParams.addBodyParameter("City",cityName);
                 }
+
+            }
+
+
         }
 
         if (!TextUtils.isEmpty(State)){
@@ -407,7 +415,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                 if (list2 == null || list2.size() == 0) {
                     popupWindow.dismiss();
 
-                    String firstId = firstList.get(position).getId();
+                    String firstId = firstList.get(position).getName();
                     String selectedName = firstList.get(position).getName();
                     handleResult(firstId, "-1", selectedName);
                     return;
@@ -440,7 +448,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                 popupWindow.dismiss();
 
                 int firstPosition = firstAdapter.getSelectedPosition();
-                String firstId = firstList.get(firstPosition).getId();
+                String firstId = firstList.get(firstPosition).getName();
                 String  secondId = firstList.get(firstPosition).getProvinceCityChilds().get(position).getId();
                 String selectedName =firstList.get(firstPosition).getProvinceCityChilds().get(position)
                         .getName();
@@ -479,6 +487,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     private void handleResult(String firstId, String secondId, String selectedName){
         String text = "first id:" + firstId + ",second id:" + secondId;
         //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        province=firstId;
         cityName=selectedName;
         mainTab1TV.setText(selectedName);
         mainTab1TV.setTextColor(getResources().getColor(R.color.red_light));

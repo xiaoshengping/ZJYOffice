@@ -124,29 +124,14 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
             }
             if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
                   if (data.get(position).getSecondHandState()==1){
-
-
-
                       if (data.get(position).getSecondHandType()==0){
                           viewHold.sellTextView.setText("撤回出租");
-                          /*Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
-                          drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                          viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );*/
                           viewHold.sellImage.setBackgroundResource(R.mipmap.retract_icon);
                           viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_icon);
-                         /* Drawable drawableOne= context.getResources().getDrawable(R.mipmap.update_icon);
-                          drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
-                          viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );*/
                           viewHold.rentOutTextView.setText("更新出租信息");
                           viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.color_2361ac));
                       }else if (data.get(position).getSecondHandType()==1){
-                          viewHold.rentOutTextView.setText("撤回出售");
-                         /* Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
-                          drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                          viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
-                          Drawable drawableOne= context.getResources().getDrawable(R.mipmap.update_icon);
-                          drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
-                          viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );*/
+                          viewHold.sellTextView.setText("撤回出售");
                           viewHold.sellImage.setBackgroundResource(R.mipmap.retract_icon);
                           viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_icon);
                           viewHold.rentOutTextView.setText("更新出售信息");
@@ -159,26 +144,32 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
 
                       if (data.get(position).getSecondHandType()==0){
                           viewHold.sellTextView.setText("撤回出租");
-                         /* Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
-                          drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());*/
                           viewHold.sellImage.setBackgroundResource(R.mipmap.retract_icon);
-                          /*Drawable drawableOne= context.getResources().getDrawable(R.drawable.used_rig_bond);
-                          drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());*/
-                          viewHold.rentOutImage.setBackgroundResource(R.mipmap.used_rig_bond);
-                          viewHold.rentOutTextView.setText("缴纳保证金");
-                          viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.yellow));
+                          if (data.get(position).getPayMarginStatus().equals("0")){
+                              viewHold.rentOutImage.setBackgroundResource(R.mipmap.used_rig_bond);
+                              viewHold.rentOutTextView.setText("缴纳保证金");
+                              viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.yellow));
+                          }else {
+                              viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_icon);
+                              viewHold.rentOutTextView.setText("更新出售信息");
+                              viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.color_2361ac));
+                          }
+
                       }else if (data.get(position).getSecondHandType()==1){
                           viewHold.sellTextView.setText("撤回出售");
-                         /* Drawable drawable= context.getResources().getDrawable(R.drawable.retract_icon);
-                          drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                          viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );*/
                           viewHold.sellImage.setBackgroundResource(R.mipmap.retract_icon);
+
+                      if (data.get(position).getPayMarginStatus().equals("0")){
                           viewHold.rentOutImage.setBackgroundResource(R.mipmap.used_rig_bond);
-                         /* Drawable drawableOne= context.getResources().getDrawable(R.drawable.used_rig_bond);
-                          drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
-                          viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );*/
                           viewHold.rentOutTextView.setText("缴纳保证金");
                           viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.yellow));
+                      }else {
+                          viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_icon);
+                          viewHold.rentOutTextView.setText("更新出售信息");
+                          viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.color_2361ac));
+                      }
+
+
                       }
                   }
 
@@ -186,12 +177,6 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
             }else {
                 viewHold.sellTextView.setTextColor(context.getResources().getColor(R.color.red));
                 viewHold.sellTextView.setText("我要出售");
-               /* Drawable drawable= context.getResources().getDrawable(R.mipmap.rig_sell);
-                drawable.setBounds( 0 ,  0 , drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                viewHold.sellTextView.setCompoundDrawables(drawable, null , null , null );
-                Drawable drawableOne= context.getResources().getDrawable(R.mipmap.rig_lease);
-                drawableOne.setBounds( 0 ,  0 , drawableOne.getMinimumWidth(), drawableOne.getMinimumHeight());
-                viewHold.rentOutTextView.setCompoundDrawables(drawableOne, null , null , null );*/
                 viewHold.sellImage.setBackgroundResource(R.mipmap.rig_sell);
                 viewHold.rentOutImage.setBackgroundResource(R.mipmap.rig_lease);
                 viewHold.rentOutTextView.setText("我要出租");
@@ -236,8 +221,23 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
 
 
                         }else if (data.get(position).getSecondHandState()==0){
-                            Intent cashIntent=new Intent(context, CommitCashDepositActivity.class);
-                            context.startActivity(cashIntent);
+                            if (data.get(position).getPayMarginStatus().equals("0")){
+                                Intent cashIntent=new Intent(context, CommitCashDepositActivity.class);
+                                context.startActivity(cashIntent);
+                            }else {
+                                if (data.get(position).getSecondHandType()==0){
+                                    Intent modifiRentExtruderInent=new Intent(context, RentOutExtruderActivity.class);
+                                    modifiRentExtruderInent.putExtra("data",data.get(position));
+                                    modifiRentExtruderInent.putExtra("tage","modifiRent");
+                                    context.startActivity(modifiRentExtruderInent);
+                                }else {
+                                    Intent modifiSellExtruderInent=new Intent(context, SellExtruderActivity.class);
+                                    modifiSellExtruderInent.putExtra("data",data.get(position));
+                                    modifiSellExtruderInent.putExtra("tage","modifiSell");
+                                    context.startActivity(modifiSellExtruderInent);
+                                }
+                            }
+
                         }
                     }else {
                         Intent rentOutIntent=new Intent(context, RentOutExtruderActivity.class);

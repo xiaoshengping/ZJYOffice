@@ -419,7 +419,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                 }
 
                 String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File frontFile = getFile(bis, "/sdcard/zhongJiYunImage/", frontName);
+                File frontFile = getFile(bis, "/sdcard/zhongJiYun/", frontName);
                 if (!TextUtils.isEmpty(frontFile.getPath())) {
                     imagePath = frontFile.getPath();
                 }

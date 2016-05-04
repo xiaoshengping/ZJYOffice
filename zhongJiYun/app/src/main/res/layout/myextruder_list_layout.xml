@@ -105,7 +105,7 @@
          android:layout_toLeftOf="@+id/middle_image"
          android:layout_below="@+id/content_rlative_image"
          android:layout_marginTop="5dp"
-         android:text="我要出售"
+
          android:textSize="@dimen/home_Size_16"
          android:layout_marginLeft="5dp"
          android:textColor="@color/red_light"
@@ -137,7 +137,7 @@
         android:layout_below="@+id/content_rlative_layout"
         android:layout_toRightOf="@+id/rent_out_image"
         android:layout_marginTop="5dp"
-        android:text="我要出租"
+
         android:textSize="@dimen/home_Size_16"
         android:layout_marginLeft="5dp"
         android:textColor="@color/blue_light"

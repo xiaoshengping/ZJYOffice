@@ -169,7 +169,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private List<String> companyListPath=new ArrayList<>();//企业注册照片路径集合
     private  String companyProvince;
     private String companyCity;
-
+    String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
 
 
 
@@ -202,6 +202,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","0");
         requwstParams.addBodyParameter("File", new File(imagePath));
+        httpUtils.configSoTimeout(1200000);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -247,7 +248,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","0");
         requwstParams.addBodyParameter("File", new File(imagePath));
-
+        httpUtils.configSoTimeout(1200000);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -295,6 +296,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","0");
         requwstParams.addBodyParameter("File", new File(imagePath));
+        httpUtils.configSoTimeout(1200000);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -341,6 +343,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","0");
         requwstParams.addBodyParameter("File", new File(imagePath));
+        httpUtils.configSoTimeout(1200000);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -383,6 +386,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","0");
         requwstParams.addBodyParameter("File", new File(imagePath));
+        httpUtils.configSoTimeout(1200000);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -668,12 +672,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (bitmap!=null){
                     frontIdcardImage.setImageBitmap(bitmap);
                 }
+                //data.getStringExtra("uri");
 
-                String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File frontFile=  getFile(bis,"/sdcard/zhongJiYunImage/",frontName);
-                if (!TextUtils.isEmpty(frontFile.getPath())){
-                    frontImagePath=frontFile.getPath();
-                }
+                frontImagePath=saveMyBitmap(frontName,bitmap).getPath();
+
+
+                 /*File frontFile=  getFile(bis,"/sdcard/zhongJiYun/",frontName);*/
+               /* if (!TextUtils.isEmpty(data.getStringExtra("StringPath"))){
+                    frontImagePath=data.getStringExtra("StringPath");
+                }*/
 
                 break;
             case ConstantSet.TAKEPICTURE0:
@@ -701,11 +708,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                  if (bitmaps!=null){
                      idCardImage.setImageBitmap(bitmaps);
                  }
-                String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File file2=  getFile(biss,"/sdcard/zhongJiYunImage/",name);
-                if (!TextUtils.isEmpty(file2.getPath())){
-                   imageVersoPath=file2.getPath();
-                }
+
+                /*String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                File file2=  getFile(biss,"/sdcard/zhongJiYun/",name);*/
+                /*if (!TextUtils.isEmpty(data.getStringExtra("StringPath"))){
+                   imageVersoPath= data.getStringExtra("StringPath");
+                }*/
+                imageVersoPath=saveMyBitmap(frontName,bitmaps).getPath();
                 break;
             case ConstantSet.TAKEPICTURE1:
                 Intent persongeTakIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
@@ -732,11 +741,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (bitmapPersonge!=null){
                     certificateImage.setImageBitmap(bitmapPersonge);
                 }
-                String namePersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File filePersonge=  getFile(bisPersonge,"/sdcard/zhongJiYunImage/",namePersonge);
-                if (!TextUtils.isEmpty(filePersonge.getPath())){
-                    personageImagePath=filePersonge.getPath();
-                }
+                /*String namePersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                File filePersonge=  getFile(bisPersonge,"/sdcard/zhongJiYun/",namePersonge);*/
+                /*if (!TextUtils.isEmpty( data.getStringExtra("StringPath"))){
+                    personageImagePath= data.getStringExtra("StringPath");
+                }*/
+                personageImagePath=saveMyBitmap(frontName,bitmapPersonge).getPath();
                 break;
             case ConstantSet.TAKEPICTURE2:
                 Intent companyFrontTakIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
@@ -763,10 +773,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (frontBitmap!=null){
                     companyFrontImage.setImageBitmap(frontBitmap);
                 }
-                String nameFront = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileFront=  getFile(forntBis,"/sdcard/zhongJiYunImage/",nameFront);
-                if (!TextUtils.isEmpty(fileFront.getPath())){
-                    companyFrontPath=fileFront.getPath();
+                /*String nameFront = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                File fileFront=  getFile(forntBis,"/sdcard/zhongJiYun/",nameFront);*/
+                if (!TextUtils.isEmpty( data.getStringExtra("StringPath"))){
+                    companyFrontPath= data.getStringExtra("StringPath");
                 }
                 break;
             case ConstantSet.TAKEPICTURE3:
@@ -794,10 +804,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (vesonBitmap!=null){
                     companyVersoImage.setImageBitmap(vesonBitmap);
                 }
-                String nameVeson = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileVeson=  getFile(vesonBis,"/sdcard/zhongJiYunImage/",nameVeson);
-                if (!TextUtils.isEmpty(fileVeson.getPath())){
-                    companyVesonPath=fileVeson.getPath();
+               /* String nameVeson = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                File fileVeson=  getFile(vesonBis,"/sdcard/zhongJiYun/",nameVeson);*/
+
+                if (!TextUtils.isEmpty( data.getStringExtra("StringPath"))){
+                    companyVesonPath=data.getStringExtra("StringPath");
                 }
                 break;
 
@@ -826,10 +837,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (companyPersongeBitmap!=null){
                     companyPersongeImage.setImageBitmap(companyPersongeBitmap);
                 }
-                String nameCompanyPersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileCompanyPersonge=  getFile(comopanyPersongeBis,"/sdcard/zhongJiYunImage/",nameCompanyPersonge);
-                if (!TextUtils.isEmpty(fileCompanyPersonge.getPath())){
-                    companyPersongePath=fileCompanyPersonge.getPath();
+               /* String nameCompanyPersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                File fileCompanyPersonge=  getFile(comopanyPersongeBis,"/sdcard/zhongJiYun/",nameCompanyPersonge);*/
+                if (!TextUtils.isEmpty( data.getStringExtra("StringPath"))){
+                    companyPersongePath= data.getStringExtra("StringPath");
                 }
                 break;
             case ConstantSet.TAKEPICTURE5:
@@ -858,7 +869,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     companyTradingImage.setImageBitmap(tradingBitmap);
                 }
                 String nameTrading = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileTrading=  getFile(tradingBis,"/sdcard/zhongJiYunImage/",nameTrading);
+                File fileTrading=  getFile(tradingBis,"/sdcard/zhongJiYun/",nameTrading);
                 if (!TextUtils.isEmpty(fileTrading.getPath())){
                     companyTradingPath=fileTrading.getPath();
                 }
@@ -890,7 +901,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     companyStatusImage.setImageBitmap(statusBitmap);
                 }
                 String nameStatus = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileStatus=  getFile(statusBis,"/sdcard/zhongJiYunImage/",nameStatus);
+                File fileStatus=  getFile(statusBis,"/sdcard/zhongJiYun/",nameStatus);
                 if (!TextUtils.isEmpty(fileStatus.getPath())){
                     companyStatusPath=fileStatus.getPath();
                 }
@@ -910,7 +921,27 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
 
+    public File saveMyBitmap(String filename, Bitmap bit) {
+        File dir = new File("/sdcard/ZhongJiYun/");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        File f = new File("/sdcard/ZhongJiYun/" + filename);
+        try {
+            f.createNewFile();
+            FileOutputStream fOut = null;
+            fOut = new FileOutputStream(f);
+            bit.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            f = null;
+            e1.printStackTrace();
+        }
 
+        return f;
+    }
 
 
     //企业注册数据提交

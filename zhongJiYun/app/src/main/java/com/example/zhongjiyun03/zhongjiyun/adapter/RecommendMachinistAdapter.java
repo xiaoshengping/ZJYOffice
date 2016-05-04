@@ -51,12 +51,19 @@ public class RecommendMachinistAdapter extends AppBaseAdapter<SecondHandBean> {
                 MyAppliction.imageLoader.displayImage(data.get(position).getDeviceDto().getDevicePhoto(),holderView.imageView,MyAppliction.options);
             }
             if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getDateOfManufacture())){
-                holderView.dateTextVIew.setText("租期："+data.get(position).getTenancy()+"个月");
+                holderView.dateTextVIew.setText(data.get(position).getTenancy()+"个月");
             }
             if (data.get(position).getPriceStr().equals("面议")){
                 holderView.priceTextView.setText("面议");
             }else {
                 holderView.priceTextView.setText(data.get(position).getPriceStr()+"万");
+            }
+            if (data.get(position).getSecondHandType()==0){
+                holderView.secondTageImage.setBackgroundResource(R.mipmap.lease_icon);
+
+            }else if (data.get(position).getSecondHandType()==1){
+                holderView.secondTageImage.setBackgroundResource(R.mipmap.sell_icon);
+
             }
 
 
@@ -78,6 +85,8 @@ public class RecommendMachinistAdapter extends AppBaseAdapter<SecondHandBean> {
         private TextView priceTextView;
         @ViewInject(R.id.name_text)
         private TextView nameText;
+        @ViewInject(R.id.second_tage_image)
+        private ImageView secondTageImage;
 
         public HolderView(View view) {
             ViewUtils.inject(this,view);

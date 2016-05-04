@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.constants.ConstantSet;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.utils.BitmapUtils;
-import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.utils.SDCardUtils;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.view.CuttingFrameView;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.view.PerfectControlImageView;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.view.SpinnerProgressDialoag;
@@ -29,6 +28,7 @@ public class ClippingPageActivity extends AppCompatActivity {
     private Bitmap bitmap;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +40,9 @@ public class ClippingPageActivity extends AppCompatActivity {
         imageView = (PerfectControlImageView) findViewById(R.id.targetImage);
 
         if (getIntent().getStringExtra("type").equals("takePicture")) {
-
-
             bitmap = BitmapUtils.DecodLocalFileImage(ConstantSet.LOCALFILE + ConstantSet.USERTEMPPIC, this);
 
-
-
-
         } else {
-
             String path=getIntent().getStringExtra("path");
             bitmap = BitmapUtils.DecodLocalFileImage(path, this);
 
@@ -56,8 +50,6 @@ public class ClippingPageActivity extends AppCompatActivity {
         }
 
         if (bitmap != null) {
-
-
             imageView.setImageBitmap(bitmap);
         }
 
@@ -92,7 +84,7 @@ public class ClippingPageActivity extends AppCompatActivity {
                 SpinnerProgressDialoag sp=new SpinnerProgressDialoag(ClippingPageActivity.this);
                 sp.show();
                 Bitmap bitmap=cuttingFrameView.takeScreenShot(ClippingPageActivity.this);
-                SDCardUtils.saveMyBitmap(ConstantSet.LOCALFILE, ConstantSet.USERPIC, bitmap);
+                //SDCardUtils.saveMyBitmap(ConstantSet.LOCALFILE, ConstantSet.USERPIC, bitmap);
                 Intent it=new Intent();
                 ByteArrayOutputStream baos=new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);

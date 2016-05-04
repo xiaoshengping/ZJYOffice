@@ -432,10 +432,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             case R.id.more_text_view:
                 Intent intent=new Intent(getActivity(), SecondHandActivity.class);
+                intent.putExtra("tage","secondHand");
                 startActivity(intent);
                 break;
             case R.id.project_more_text:
                 Intent projectIntent=new Intent(getActivity(), HomeMoreProjectActivity.class);
+                projectIntent.putExtra("tage","MoreProject");
                 startActivity(projectIntent);
                 break;
 

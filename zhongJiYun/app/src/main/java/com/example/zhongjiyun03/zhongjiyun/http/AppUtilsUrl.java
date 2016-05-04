@@ -228,7 +228,7 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/boss/ownerevaluete" ;
 
     }
-    //评价业主
+    //修改钻机出租出售信息
     public static String getModifiExtruderData(){
         //  appapi/boss/ownerevaluete
         return BaseUrl+"appapi/device/getsecondhanddetail" ;

@@ -632,7 +632,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             /*if (getIntent().getStringExtra("tage").equals("modifiRent")){
                                 requestParams.addBodyParameter("updateImgs", "'"+leaveImageID+","+panoramaImageID+","+invoiceImageID+","+contractImageID+","+qualifiedImageID+"'");
                             }*/
-                            mSVProgressHUD.showWithStatus("上传照片中...");
+                            mSVProgressHUD.showWithStatus("正在提交中...");
                             final String finalUid = uid;
                             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
                             @Override
@@ -746,6 +746,12 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         requwstParams.addBodyParameter("OwnId",ownId);
         httpUtils.configSoTimeout(1200000);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
+
+            @Override
+            public void onLoading(long total, long current, boolean isUploading) {
+                super.onLoading(total, current, isUploading);
+            }
+
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 Log.e("照片请求",responseInfo.result);
@@ -801,450 +807,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
 
     }
-   /* private void intiPhontData0(final String id, String imageType, String imagePath, final String ownId) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",imageType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","4");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        Log.e("AddSesstionId",sesstionId);
-        requwstParams.addBodyParameter("OwnId",ownId);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
 
-                    if (appBean.getResult().equals("success")){
-                        if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传中照片(4/5张)...");
-                        } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传中照片(3/4张)...");
-                        }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.showWithStatus("上传中照片(2/3张)...");
-                        }
-                        if (getIntent().getStringExtra("tage").equals("modifiRent")){
-                            if (!TextUtils.isEmpty(secondHandListProjectBean.getImage2())){
-                                if ((secondHandListProjectBean.getImage2()).equals(panoramaPath)){
-                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getImage3())){
-                                        if (secondHandListProjectBean.getImage3().equals(invoicePath)){
-                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getImage4())){
-                                                if (secondHandListProjectBean.getImage4().equals(contractPath)){
-
-                                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getImage5())){
-                                                        if (secondHandListProjectBean.getImage5().equals(qualifiedPath)){
-                                                            MyAppliction.showToast("修改出租信息成功");
-                                                            finish();
-                                                        }else {
-                                                            intiPhontData4(id,"12",phoneListPath.get(4),ownId);
-                                                        }
-
-
-
-                                                    }else {
-                                                        if (!TextUtils.isEmpty(qualifiedPath)){
-                                                            intiPhontData4(id,"12",phoneListPath.get(4),ownId);
-                                                        }else {
-                                                            MyAppliction.showToast("修改出租信息成功");
-                                                            finish();
-                                                        }
-
-                                                    }
-
-
-                                                } else {
-                                                    intiPhontData3(id,"12",phoneListPath.get(3),ownId);
-                                                }
-
-                                            }else {
-                                                if (!TextUtils.isEmpty(contractPath)){
-                                                    intiPhontData3(id,"12",phoneListPath.get(3),ownId);
-                                                }else {
-                                                    MyAppliction.showToast("修改出租信息成功");
-                                                    finish();
-                                                }
-
-                                            }
-
-
-                                        }else {
-
-                                            intiPhontData2(id,"12",phoneListPath.get(2),ownId);
-                                        }
-                                    }
-
-                                }else {
-
-                                    intiPhontData1(id,"12",phoneListPath.get(1),ownId);
-                                }
-
-                            }
-                            mSVProgressHUD.dismiss();
-                        }else {
-                            intiPhontData1(id,"12",phoneListPath.get(1),ownId);
-                        }
-
-
-
-
-                    }else {
-                        MyAppliction.showToast("上传照片失败");
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-    private void intiPhontData1(final String id, String iamgeType, String imagePath, final String ownId) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",iamgeType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","4");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        Log.e("AddSesstionId1",sesstionId);
-        requwstParams.addBodyParameter("OwnId",ownId);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-
-                    if (appBean.getResult().equals("success")){
-                        if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传中照片(3/5张)...");
-                        } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传中照片(2/4张)...");
-                        }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.showWithStatus("上传中照片(1/3张)...");
-                        }
-                        if (getIntent().getStringExtra("tage").equals("modifiRent")){
-                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getImage3())){
-                                        if (secondHandListProjectBean.getImage3().equals(invoicePath)){
-                                            if (!TextUtils.isEmpty(contractPath)){
-                                                if (!TextUtils.isEmpty(secondHandListProjectBean.getImage4())){
-                                                    if (secondHandListProjectBean.getImage4().equals(contractPath)){
-                                                        if (!TextUtils.isEmpty(qualifiedPath)){
-                                                            if (!TextUtils.isEmpty(secondHandListProjectBean.getImage5())){
-                                                                if (secondHandListProjectBean.getImage5().equals(qualifiedPath)){
-                                                                    MyAppliction.showToast("修改出租信息成功");
-                                                                    finish();
-                                                                }else {
-                                                                    intiPhontData4(id,"12",phoneListPath.get(4),ownId);
-                                                                }
-                                                            }else {
-                                                                MyAppliction.showToast("修改出租信息成功");
-                                                                finish();
-                                                            }
-
-
-                                                        }else {
-                                                            MyAppliction.showToast("修改出租信息成功");
-                                                            finish();
-                                                        }
-
-
-                                                    } else {
-                                                        intiPhontData3(id,"12",phoneListPath.get(3),ownId);
-                                                    }
-                                                }else {
-                                                    MyAppliction.showToast("修改出租信息成功");
-                                                    finish();
-                                                }
-                                            }else {
-                                                MyAppliction.showToast("修改出租信息成功");
-                                                finish();
-                                            }
-
-
-                                        }else {
-                                            intiPhontData2(id,"12",phoneListPath.get(2),ownId);
-                                        }
-                                    }
-                            mSVProgressHUD.dismiss();
-                        }else {
-                            intiPhontData2(id,"13",phoneListPath.get(2),ownId);
-                        }
-
-
-
-                    }else {
-                        mSVProgressHUD.dismiss();
-                        MyAppliction.showToast("上传照片失败");
-
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-    private void intiPhontData2(final String id, String imageType, String imagePath, final String ownId) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",imageType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","4");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        Log.e("AddSesstionId2",sesstionId);
-            requwstParams.addBodyParameter("OwnId",ownId);
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-
-                    if (appBean.getResult().equals("success")){
-                        if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传中照片(2/5张)...");
-                        } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传中照片(1/4张)...");
-                        }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.dismiss();
-                            mSVProgressHUD.showSuccessWithStatus("出租钻机成功");
-                            showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出租申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
-
-                        }
-
-                        if (getIntent().getStringExtra("tage").equals("modifiRent")){
-
-                            if (!TextUtils.isEmpty(secondHandListProjectBean.getImage4())){
-                                            if (secondHandListProjectBean.getImage4().equals(contractPath)){
-                                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getImage5())){
-                                                        if (secondHandListProjectBean.getImage5().equals(qualifiedPath)){
-                                                            MyAppliction.showToast("修改出租信息成功");
-                                                            finish();
-                                                        }else {
-                                                            intiPhontData4(id,"12",phoneListPath.get(4),ownId);
-                                                        }
-                                                    }else {
-                                                        if (!TextUtils.isEmpty(qualifiedPath)){
-                                                            intiPhontData4(id,"12",phoneListPath.get(4),ownId);
-
-                                                        }else {
-                                                            MyAppliction.showToast("修改出租信息成功");
-                                                            finish();
-                                                        }
-                                                    }
-                                            } else {
-                                                intiPhontData3(id,"12",phoneListPath.get(3),ownId);
-                                            }
-
-                                    }else {
-                                     if (!TextUtils.isEmpty(contractPath)){
-                                         intiPhontData3(id,"12",phoneListPath.get(3),ownId);
-                                     }else {
-                                         MyAppliction.showToast("修改出租信息成功");
-                                         finish();
-                                     }
-
-                                    }
-                            mSVProgressHUD.dismiss();
-                        }else {
-                            if (phoneListPath.size()>3){
-                                intiPhontData3(id,"14",phoneListPath.get(3),ownId);
-                            }
-                        }
-                    }else {
-                        MyAppliction.showToast(appBean.getMsg());
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-    private void intiPhontData3(final String id, String imageType, String imagePath, final String ownId) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",imageType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","4");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        Log.e("AddSesstionId3",sesstionId);
-        requwstParams.addBodyParameter("OwnId",ownId);
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-
-                    if (appBean.getResult().equals("success")){
-                        if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传中照片(1/5张)...");
-                        }else if (phoneListPath.size()==4){
-                            mSVProgressHUD.dismiss();
-                            mSVProgressHUD.showSuccessWithStatus("出租钻机成功");
-                            showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出租申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
-
-                        }
-                            if (getIntent().getStringExtra("tage").equals("modifiRent")){
-                                    if (!TextUtils.isEmpty(secondHandListProjectBean.getImage5())){
-                                        if (secondHandListProjectBean.getImage5().equals(qualifiedPath)){
-                                            MyAppliction.showToast("修改出租信息成功");
-                                            finish();
-                                        }else {
-                                            intiPhontData4(id,"12",phoneListPath.get(4),ownId);
-                                        }
-                                    }else {
-                                        if (!TextUtils.isEmpty(qualifiedPath)){
-                                            intiPhontData4(id,"12",phoneListPath.get(4),ownId);
-
-                                        }else {
-                                            MyAppliction.showToast("修改出租信息成功");
-                                            finish();
-                                        }
-                                    }
-                            mSVProgressHUD.dismiss();
-                        }else {
-                            if (phoneListPath!=null&&phoneListPath.size()>4){
-                                intiPhontData4(id,"15",phoneListPath.get(4),ownId);
-                            }
-                        }
-
-
-
-
-
-                    }else {
-                        MyAppliction.showToast("上传照片失败");
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-    private void intiPhontData4(final String id, String userType, String imagePath,String ownId) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",userType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","4");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        Log.e("AddSesstionId4",sesstionId);
-            requwstParams.addBodyParameter("OwnId",ownId);
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-
-                    if (appBean.getResult().equals("success")){
-                        if (getIntent().getStringExtra("tage").equals("modifiRent")){
-
-                            MyAppliction.showToast("修改出租信息成功");
-                            finish();
-
-                        }else {
-                            mSVProgressHUD.dismiss();
-                            mSVProgressHUD.showSuccessWithStatus("出租钻机成功");
-                            showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出租申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
-
-                        }
-
-
-
-
-                    }else {
-                        MyAppliction.showToast("上传照片失败");
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }*/
     //对话框
     private void showExitGameAlert(String text,String tailtText) {
         final AlertDialog dlg = new AlertDialog.Builder(RentOutExtruderActivity.this).create();
@@ -1270,7 +833,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         });
         // 关闭alert对话框架
         TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
-        cancel.setText("取消");
+        cancel.setText("关闭");
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dlg.cancel();
@@ -1366,7 +929,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 }
 
                 String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File frontFile = getFile(bis, "/sdcard/zhongJiYunImage/", frontName);
+                File frontFile = getFile(bis, "/sdcard/zhongJiYun/", frontName);
                 if (!TextUtils.isEmpty(frontFile.getPath())) {
                     leavePath = frontFile.getPath();
                 }
@@ -1397,7 +960,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                     panoramaImage.setImageBitmap(bitmaps);
                 }
                 String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File file2 = getFile(biss, "/sdcard/zhongJiYunImage/", name);
+                File file2 = getFile(biss, "/sdcard/zhongJiYun/", name);
                 if (!TextUtils.isEmpty(file2.getPath())) {
                     panoramaPath = file2.getPath();
                 }
@@ -1427,7 +990,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                     invoiceImage.setImageBitmap(bitmapPersonge);
                 }
                 String namePersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File filePersonge = getFile(bisPersonge, "/sdcard/zhongJiYunImage/", namePersonge);
+                File filePersonge = getFile(bisPersonge, "/sdcard/zhongJiYun/", namePersonge);
                 if (!TextUtils.isEmpty(filePersonge.getPath())) {
                     invoicePath = filePersonge.getPath();
                 }
@@ -1457,7 +1020,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                     contractImage.setImageBitmap(frontBitmap);
                 }
                 String nameFront = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileFront = getFile(forntBis, "/sdcard/zhongJiYunImage/", nameFront);
+                File fileFront = getFile(forntBis, "/sdcard/zhongJiYun/", nameFront);
                 if (!TextUtils.isEmpty(fileFront.getPath())) {
                     contractPath = fileFront.getPath();
                 }
@@ -1487,7 +1050,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                     qualifiedImage.setImageBitmap(vesonBitmap);
                 }
                 String nameVeson = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileVeson = getFile(vesonBis, "/sdcard/zhongJiYunImage/", nameVeson);
+                File fileVeson = getFile(vesonBis, "/sdcard/zhongJiYun/", nameVeson);
                 if (!TextUtils.isEmpty(fileVeson.getPath())) {
                     qualifiedPath = fileVeson.getPath();
                 }

@@ -265,13 +265,17 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                     phoneListPath.add(leavePath);
                                     if (!TextUtils.isEmpty(panoramaPath)){
                                         phoneListPath.add(panoramaPath);
-                                        if (!TextUtils.isEmpty(invoicePath)){
-                                            phoneListPath.add(invoicePath);
+                                        if (!TextUtils.isEmpty(invoicePath)||!TextUtils.isEmpty(contractPath)){
+                                            if (!TextUtils.isEmpty(invoicePath)){
+                                                phoneListPath.add(invoicePath);
+                                            }
+
                                             if (!TextUtils.isEmpty(contractPath)){
                                                 phoneListPath.add(contractPath);
-                                                if (!TextUtils.isEmpty(qualifiedPath)){
+                                            }
+                                            if (!TextUtils.isEmpty(qualifiedPath)){
                                                     phoneListPath.add(qualifiedPath);
-                                                }
+                                            }
                                     HttpUtils httpUtils=new HttpUtils();
                                     RequestParams requestParams=new RequestParams();
                                     //步骤1：创建一个SharedPreferences接口对象
@@ -331,13 +335,10 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                     });
 
 
-                                            }else {
 
-                                                MyAppliction.showToast("请选择设备合同图");
-                                            }
                                         }else {
 
-                                            MyAppliction.showToast("请选择设备发票图");
+                                            MyAppliction.showToast("请选择设备发票图或者设备合同图其中一个");
                                         }
 
 
@@ -740,7 +741,7 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                 }
 
                 String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File frontFile = getFile(bis, "/sdcard/zhongJiYunImage/", frontName);
+                File frontFile = getFile(bis, "/sdcard/zhongJiYun/", frontName);
                 if (!TextUtils.isEmpty(frontFile.getPath())) {
                     leavePath = frontFile.getPath();
                 }
@@ -771,7 +772,7 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                     panoramaImage.setImageBitmap(bitmaps);
                 }
                 String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File file2 = getFile(biss, "/sdcard/zhongJiYunImage/", name);
+                File file2 = getFile(biss, "/sdcard/zhongJiYun/", name);
                 if (!TextUtils.isEmpty(file2.getPath())) {
                     panoramaPath = file2.getPath();
                 }
@@ -801,7 +802,7 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                     invoiceImage.setImageBitmap(bitmapPersonge);
                 }
                 String namePersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File filePersonge = getFile(bisPersonge, "/sdcard/zhongJiYunImage/", namePersonge);
+                File filePersonge = getFile(bisPersonge, "/sdcard/zhongJiYun/", namePersonge);
                 if (!TextUtils.isEmpty(filePersonge.getPath())) {
                     invoicePath = filePersonge.getPath();
                 }
@@ -831,7 +832,7 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                     contractImage.setImageBitmap(frontBitmap);
                 }
                 String nameFront = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileFront = getFile(forntBis, "/sdcard/zhongJiYunImage/", nameFront);
+                File fileFront = getFile(forntBis, "/sdcard/zhongJiYun/", nameFront);
                 if (!TextUtils.isEmpty(fileFront.getPath())) {
                     contractPath = fileFront.getPath();
                 }
@@ -861,7 +862,7 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                     qualifiedImage.setImageBitmap(vesonBitmap);
                 }
                 String nameVeson = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileVeson = getFile(vesonBis, "/sdcard/zhongJiYunImage/", nameVeson);
+                File fileVeson = getFile(vesonBis, "/sdcard/zhongJiYun/", nameVeson);
                 if (!TextUtils.isEmpty(fileVeson.getPath())) {
                     qualifiedPath = fileVeson.getPath();
                 }

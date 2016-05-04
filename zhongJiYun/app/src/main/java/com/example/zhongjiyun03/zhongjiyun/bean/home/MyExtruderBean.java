@@ -25,6 +25,15 @@ public class MyExtruderBean implements Serializable {
     private int SecondHandState;
     private int SecondHandType;
     private String SecondHandId;
+    private String PayMarginStatus;//是否交保证金
+
+    public String getPayMarginStatus() {
+        return PayMarginStatus;
+    }
+
+    public void setPayMarginStatus(String payMarginStatus) {
+        PayMarginStatus = payMarginStatus;
+    }
 
     public String getId() {
         return Id;

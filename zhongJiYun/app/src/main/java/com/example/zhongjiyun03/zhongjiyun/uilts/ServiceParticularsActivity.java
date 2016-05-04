@@ -150,7 +150,9 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
                             MyAppliction.imageLoader.displayImage(serviceProviderBean.getThumbnail(),imageView,MyAppliction.RoundedOptionsOne);
                             nameTextView.setText(serviceProviderBean.getName());
                             companyTextView.setText(serviceProviderBean.getProviderName());
-                            phoneTextView.setText(serviceProviderBean.getPhoneNumber());
+                            StringBuffer stringBuffer=new StringBuffer(serviceProviderBean.getPhoneNumber());
+                            stringBuffer.replace(3,7,"****");
+                            phoneTextView.setText(stringBuffer.toString());
                             if (!TextUtils.isEmpty(serviceProviderBean.getTel())){
                                 immobImage.setVisibility(View.VISIBLE);
                                 immobilizationTextView.setVisibility(View.VISIBLE);

@@ -111,6 +111,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     private List<SeekProjectBean> seekProjectBeens;
     private HomeProjectListAdapter homeProjectlsitAdapter;
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+    private String province;
 
 
 
@@ -200,10 +201,15 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         requestParams.addBodyParameter("PageSize","10");
 
        if (!TextUtils.isEmpty(cityName)){
-           if (cityName.equals("全部")){
+           if (province.equals("全部")){
 
            }else {
-               requestParams.addBodyParameter("City",cityName);
+               if (cityName.equals("全部")){
+                   requestParams.addBodyParameter("province",province);
+               }else {
+                   requestParams.addBodyParameter("City",cityName);
+               }
+
            }
 
 
@@ -392,7 +398,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                 if (list2 == null || list2.size() == 0) {
                     popupWindow.dismiss();
 
-                    String firstId = firstList.get(position).getId();
+                    String firstId = firstList.get(position).getName();
                     String selectedName = firstList.get(position).getName();
                     handleResult(firstId, "-1", selectedName);
                     return;
@@ -425,7 +431,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                 popupWindow.dismiss();
 
                 int firstPosition = firstAdapter.getSelectedPosition();
-                String firstId = firstList.get(firstPosition).getId();
+                String firstId = firstList.get(firstPosition).getName();
                 String  secondId = firstList.get(firstPosition).getProvinceCityChilds().get(position).getId();
                 String selectedName =firstList.get(firstPosition).getProvinceCityChilds().get(position)
                         .getName();
@@ -464,6 +470,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     private void handleResult(String firstId, String secondId, String selectedName){
         String text = "first id:" + firstId + ",second id:" + secondId;
         //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        province=firstId;
         cityName=selectedName;
         mainTab1TV.setText(selectedName);
         mainTab1TV.setTextColor(getResources().getColor(R.color.red_light));

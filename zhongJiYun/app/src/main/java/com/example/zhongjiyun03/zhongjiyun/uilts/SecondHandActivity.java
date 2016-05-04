@@ -152,6 +152,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private String Latitude;
     private HomeSecondHandListAdapter homeSecondHandListAdapter;
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+    private String province;
 
 
 
@@ -354,11 +355,18 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         }
 
         if (!TextUtils.isEmpty(city)){
-            if (city.equals("全部")){
+
+            if (province.equals("全部")){
 
             }else {
-             requestParams.addBodyParameter("city",city);
+                if (city.equals("全部")){
+                    requestParams.addBodyParameter("province",province);
+                }else {
+                    requestParams.addBodyParameter("city",city);
+                }
+
             }
+
 
         }
         if (getIntent().getStringExtra("tage").equals("matingFacily")){
@@ -817,7 +825,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                 if (list2 == null || list2.size() == 0) {
                     popupWindow.dismiss();
 
-                    String  firstId = firstList.get(position).getId();
+                    String  firstId = firstList.get(position).getName();
                     String selectedName = firstList.get(position).getName();
                     handleResult(firstId, "-1", selectedName);
                     return;
@@ -846,7 +854,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                 popupWindow.dismiss();
 
                 int firstPosition = firstAdapter.getSelectedPosition();
-                String firstId = firstList.get(firstPosition).getId();
+                String firstId = firstList.get(firstPosition).getName();
                 String secondId = firstList.get(firstPosition).getProvinceCityChilds().get(position).getId();
                 String selectedName = firstList.get(firstPosition).getProvinceCityChilds().get(position)
                         .getName();
@@ -886,6 +894,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
             img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
             mainTab1TV.setCompoundDrawables(null, null, img, null);
+        province=firstId;
         city=selectedName;
         isPullDownRefresh=true;
         secondHandListview.setRefreshing();
