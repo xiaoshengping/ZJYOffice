@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.view.CuttingFrame
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.view.PerfectControlImageView;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.view.SpinnerProgressDialoag;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -85,9 +87,10 @@ public class ClippingPageActivity extends AppCompatActivity {
                 sp.show();
                 Bitmap bitmap=cuttingFrameView.takeScreenShot(ClippingPageActivity.this);
                 //SDCardUtils.saveMyBitmap(ConstantSet.LOCALFILE, ConstantSet.USERPIC, bitmap);
+                //Bitmap compressBitmap=compressImage(bitmap);
                 Intent it=new Intent();
                 ByteArrayOutputStream baos=new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
                 byte [] bitmapByte =baos.toByteArray();
                 it.putExtra("result", bitmapByte);
                 setResult(RESULT_OK, it);
@@ -99,5 +102,18 @@ public class ClippingPageActivity extends AppCompatActivity {
         });
     }
 
+    private Bitmap compressImage(Bitmap image) {
 
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+        int options = 100;
+        while ( baos.toByteArray().length / 1024>100) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩
+            baos.reset();//重置baos即清空baos
+            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中
+            options -= 10;//每次都减少10
+        }
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
+        return bitmap;
+    }
 }

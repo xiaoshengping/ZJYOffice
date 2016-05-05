@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -9,6 +10,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -63,6 +65,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -129,9 +132,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private File file ;   //拍照文件
     private Uri imageUri ;   //拍照uri
     private File fileVeson;
-    private Uri vesonUri;
-    private String province;
-    private String city;
+    private Uri vesonUri;    //文件uri
+    private String province;  //个人注册省份
+    private String city;      //个人注册城市
 
 
     /*
@@ -159,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private LinearLayout companyStatusLayout;//证书layout
 
     private View vMaskerCompany;
-    private OptionsPickerView pvOptionsCompany;
+    private OptionsPickerView pvOptionsCompany;  //地区选择
     private SVProgressHUD mSVProgressHUD;//loding
     private String companyFrontPath;   //身份证正面照片路径
     private String companyVesonPath;    //身份证反面照片路径
@@ -167,9 +170,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String companyTradingPath;    //营业执照照片路径
     private String companyStatusPath;      //证书照片路径
     private List<String> companyListPath=new ArrayList<>();//企业注册照片路径集合
-    private  String companyProvince;
-    private String companyCity;
-    String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+    private  String companyProvince;    //省份
+    private String companyCity;         //城市
 
 
 
@@ -183,10 +185,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         init();
 
     }
-
     private void init() {
         intiView();
-
         intiPersonageView();
         intiCompanyView();
 
@@ -194,235 +194,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    private void intiPhontData0(final String id, String userType, String imagePath, final String tage) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",userType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","0");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        httpUtils.configSoTimeout(1200000);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                   Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-
-                    if (appBean.getResult().equals("success")){
-                        if (tage.equals("1")){
-                            mSVProgressHUD.dismiss();
-                            mSVProgressHUD.showSuccessWithStatus("恭喜,已提交数据成功");
-                            Intent intent=new Intent(RegisterActivity.this,RegisterFishActivity.class);
-                            startActivityForResult(intent,30);
-                        }else {
-                            mSVProgressHUD.showWithStatus("上传照片中(2)...");
-                            intiPhontData3(id,"2",companyListPath.get(3),"2");
-                        }
-
-                    }else {
-                        MyAppliction.showToast("上传照片失败");
-                        mSVProgressHUD.dismiss();
-                    }
 
 
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-    private void intiPhontData1(final String id, String userType, String imagePath, final String tage) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",userType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","0");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        httpUtils.configSoTimeout(1200000);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-
-                    if (appBean.getResult().equals("success")){
-
-                        if (tage.equals("1")){
-                            mSVProgressHUD.showWithStatus("上传照片中(2)...");
-                            intiPhontData2(id,"2",imagePathList.get(1),"1");
-                        }else {
-                            mSVProgressHUD.showWithStatus("上传照片中(4)...");
-                            intiPhontData2(id,"2",companyListPath.get(1),"2");
-                        }
-
-
-
-                    }else {
-                        mSVProgressHUD.dismiss();
-                        MyAppliction.showToast("上传照片失败");
-
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-    private void intiPhontData2(final String id, String userType, String imagePath, final String tage) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",userType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","0");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        httpUtils.configSoTimeout(1200000);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-
-                    if (appBean.getResult().equals("success")){
-                        if (tage.equals("1")){
-                            mSVProgressHUD.showWithStatus("上传照片中(1)...");
-                            intiPhontData0(id,"0",imagePathList.get(2),"1");
-
-                        }else {
-                            mSVProgressHUD.showWithStatus("上传照片中(3)...");
-                            intiPhontData0(id,"0",companyListPath.get(2),"2");
-                        }
-
-
-
-                    }else {
-                        MyAppliction.showToast(appBean.getMsg());
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-    private void intiPhontData3(final String id, String userType, String imagePath, final String tage) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",userType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","0");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        httpUtils.configSoTimeout(1200000);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-
-                    if (appBean.getResult().equals("success")){
-                        if (tage.equals("2")){
-                            mSVProgressHUD.showWithStatus("上传照片中(1)...");
-                            intiPhontData4(id,"0",companyListPath.get(4),"2");
-                        }
-
-
-
-                    }else {
-                        MyAppliction.showToast("上传照片失败");
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-    private void intiPhontData4(final String id, String userType, String imagePath, final String tage) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",userType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","0");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        httpUtils.configSoTimeout(1200000);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-
-                    if (appBean.getResult().equals("success")){
-                        if (tage.equals("2")){
-                            mSVProgressHUD.dismiss();
-                            mSVProgressHUD.showSuccessWithStatus("恭喜,已提交数据成功");
-                            Intent intent=new Intent(RegisterActivity.this,RegisterFishActivity.class);
-                            startActivity(intent);
-                        }
-
-
-
-                    }else {
-                        MyAppliction.showToast("上传照片失败");
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求",s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
 
     //企业注册初始化
     private void intiCompanyView() {
@@ -618,7 +391,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//action is capture
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(intent,captureIndext );//or TAKE_SMALL_PICTURE
+               // 调用系统的拍照功能
+                /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                   // 指定调用相机拍照后照片的储存路径
+                intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(tempFile));
+                startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);*/
+
                 dialog.dismiss();
+
             }
         });
         photographDialogButton.setOnClickListener(new View.OnClickListener() {
@@ -626,6 +407,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(View v) {
                 Intent sintent = new Intent(RegisterActivity.this, SelectImagesFromLocalActivity.class);
                 startActivityForResult(sintent,pickIndext );
+                /*try {
+                    //选择照片的时候也一样，我们用Action为Intent.ACTION_GET_CONTENT，
+                    //有些人使用其他的Action但我发现在有些机子中会出问题，所以优先选择这个
+                    Intent intent = new Intent();
+                    intent.setType("image*//*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(intent, 32);
+                } catch (ActivityNotFoundException e) {
+
+                }*/
+                /*Intent intent = new Intent(Intent.ACTION_PICK, null);
+                intent.setDataAndType(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        "image*//*");
+                startActivityForResult(intent, PHOTO_REQUEST_GALLERY);*/
                 dialog.dismiss();
 
 
@@ -640,7 +436,27 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
     }
+    public static String savePicToSdcard(Bitmap bitmap, String path,
+                                         String fileName) {
+        String filePath = "";
+        if (bitmap == null) {
+            return filePath;
+        } else {
 
+            filePath=path+ fileName;
+            File destFile = new File(filePath);
+            OutputStream os = null;
+            try {
+                os = new FileOutputStream(destFile);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+                os.flush();
+                os.close();
+            } catch (IOException e) {
+                filePath = "";
+            }
+        }
+        return filePath;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -673,14 +489,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     frontIdcardImage.setImageBitmap(bitmap);
                 }
                 //data.getStringExtra("uri");
-
-                frontImagePath=saveMyBitmap(frontName,bitmap).getPath();
-
-
-                 /*File frontFile=  getFile(bis,"/sdcard/zhongJiYun/",frontName);*/
-               /* if (!TextUtils.isEmpty(data.getStringExtra("StringPath"))){
-                    frontImagePath=data.getStringExtra("StringPath");
-                }*/
+                String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                 File frontFile=  getFile(bis,Environment.getExternalStorageDirectory()+"/zhongJiYun",frontName);
+                if (!TextUtils.isEmpty(frontFile.getPath())){
+                    frontImagePath=frontFile.getPath();
+                }
 
                 break;
             case ConstantSet.TAKEPICTURE0:
@@ -709,12 +522,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                      idCardImage.setImageBitmap(bitmaps);
                  }
 
-                /*String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File file2=  getFile(biss,"/sdcard/zhongJiYun/",name);*/
-                /*if (!TextUtils.isEmpty(data.getStringExtra("StringPath"))){
-                   imageVersoPath= data.getStringExtra("StringPath");
-                }*/
-                imageVersoPath=saveMyBitmap(frontName,bitmaps).getPath();
+                String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                File file2=  getFile(biss,Environment.getExternalStorageDirectory()+"/zhongJiYun",name);
+                if (!TextUtils.isEmpty(file2.getPath())){
+                   imageVersoPath= file2.getPath();
+                }
+
                 break;
             case ConstantSet.TAKEPICTURE1:
                 Intent persongeTakIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
@@ -741,12 +554,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (bitmapPersonge!=null){
                     certificateImage.setImageBitmap(bitmapPersonge);
                 }
-                /*String namePersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File filePersonge=  getFile(bisPersonge,"/sdcard/zhongJiYun/",namePersonge);*/
-                /*if (!TextUtils.isEmpty( data.getStringExtra("StringPath"))){
-                    personageImagePath= data.getStringExtra("StringPath");
-                }*/
-                personageImagePath=saveMyBitmap(frontName,bitmapPersonge).getPath();
+                String namePersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                File filePersonge=  getFile(bisPersonge,Environment.getExternalStorageDirectory()+"/zhongJiYun",namePersonge);
+                if (!TextUtils.isEmpty(filePersonge.getPath())){
+                    personageImagePath= filePersonge.getPath();
+                }
+
                 break;
             case ConstantSet.TAKEPICTURE2:
                 Intent companyFrontTakIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
@@ -773,11 +586,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (frontBitmap!=null){
                     companyFrontImage.setImageBitmap(frontBitmap);
                 }
-                /*String nameFront = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileFront=  getFile(forntBis,"/sdcard/zhongJiYun/",nameFront);*/
-                if (!TextUtils.isEmpty( data.getStringExtra("StringPath"))){
-                    companyFrontPath= data.getStringExtra("StringPath");
+                String nameFront = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                File fileFront=  getFile(forntBis,Environment.getExternalStorageDirectory()+"/zhongJiYun",nameFront);
+                if (!TextUtils.isEmpty( fileFront.getPath())){
+                    companyFrontPath=  fileFront.getPath();
                 }
+
                 break;
             case ConstantSet.TAKEPICTURE3:
                 Intent companyVesonTakIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
@@ -804,11 +618,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (vesonBitmap!=null){
                     companyVersoImage.setImageBitmap(vesonBitmap);
                 }
-               /* String nameVeson = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileVeson=  getFile(vesonBis,"/sdcard/zhongJiYun/",nameVeson);*/
-
-                if (!TextUtils.isEmpty( data.getStringExtra("StringPath"))){
-                    companyVesonPath=data.getStringExtra("StringPath");
+                String nameVeson = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                File fileVeson=  getFile(vesonBis,Environment.getExternalStorageDirectory()+"/zhongJiYun",nameVeson);
+                if (!TextUtils.isEmpty( fileVeson.getPath())){
+                    companyVesonPath=fileVeson.getPath();
                 }
                 break;
 
@@ -837,10 +650,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 if (companyPersongeBitmap!=null){
                     companyPersongeImage.setImageBitmap(companyPersongeBitmap);
                 }
-               /* String nameCompanyPersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileCompanyPersonge=  getFile(comopanyPersongeBis,"/sdcard/zhongJiYun/",nameCompanyPersonge);*/
-                if (!TextUtils.isEmpty( data.getStringExtra("StringPath"))){
-                    companyPersongePath= data.getStringExtra("StringPath");
+                String nameCompanyPersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                File fileCompanyPersonge=  getFile(comopanyPersongeBis,Environment.getExternalStorageDirectory()+"/zhongJiYun",nameCompanyPersonge);
+                if (!TextUtils.isEmpty( fileCompanyPersonge.getPath())){
+                    companyPersongePath= fileCompanyPersonge.getPath();
                 }
                 break;
             case ConstantSet.TAKEPICTURE5:
@@ -869,7 +682,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     companyTradingImage.setImageBitmap(tradingBitmap);
                 }
                 String nameTrading = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileTrading=  getFile(tradingBis,"/sdcard/zhongJiYun/",nameTrading);
+                File fileTrading=  getFile(tradingBis,Environment.getExternalStorageDirectory()+"/zhongJiYun",nameTrading);
                 if (!TextUtils.isEmpty(fileTrading.getPath())){
                     companyTradingPath=fileTrading.getPath();
                 }
@@ -901,7 +714,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     companyStatusImage.setImageBitmap(statusBitmap);
                 }
                 String nameStatus = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileStatus=  getFile(statusBis,"/sdcard/zhongJiYun/",nameStatus);
+                File fileStatus=  getFile(statusBis,Environment.getExternalStorageDirectory()+"/zhongJiYun",nameStatus);
                 if (!TextUtils.isEmpty(fileStatus.getPath())){
                     companyStatusPath=fileStatus.getPath();
                 }
@@ -918,31 +731,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
     }
-
-
-
-    public File saveMyBitmap(String filename, Bitmap bit) {
-        File dir = new File("/sdcard/ZhongJiYun/");
-        if (!dir.exists()) {
-            dir.mkdir();
-        }
-        File f = new File("/sdcard/ZhongJiYun/" + filename);
-        try {
-            f.createNewFile();
-            FileOutputStream fOut = null;
-            fOut = new FileOutputStream(f);
-            bit.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-            fOut.flush();
-            fOut.close();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            f = null;
-            e1.printStackTrace();
-        }
-
-        return f;
-    }
-
 
     //企业注册数据提交
     private void submitCompanyData() {
@@ -989,7 +777,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                             requestParams.addBodyParameter("Photo","photo.jpg");
                                                             requestParams.addBodyParameter("Qualification","photo.jpg");
                                                             requestParams.addBodyParameter("BusinessLicence","photo.jpg");
-                                                            mSVProgressHUD.showWithStatus("上传照片中(5)...");
+                                                            mSVProgressHUD.showWithStatus("正在提交中...");
                                                             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegisterData(),requestParams, new RequestCallBack<String>() {
                                                                 @Override
                                                                 public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -1002,8 +790,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                                        if (companyListPath!=null&&companyListPath.size()==5){
                                                                             if (!TextUtils.isEmpty(registerBean.getId())){
 
-                                                                                    intiPhontData1(registerBean.getId(), "1", companyListPath.get(0),"2");
+                                                                                int[] imageType={1,2,0,3,4};
+                                                                                for (int i = 0; i <companyListPath.size() ; i++) {
+                                                                                    intiPhontData7(registerBean.getId(),imageType[i],companyListPath.get(i),i,2);
 
+                                                                                }
                                                                             }
                                                                         }
 
@@ -1106,7 +897,79 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
+    private void intiPhontData7(String id, int imageType, final String imagePath,  final int tages, final int registerTage) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requwstParams=new RequestParams();
+        requwstParams.addBodyParameter("Id",id);
+        requwstParams.addBodyParameter("ImageType",imageType+"");
+        requwstParams.addBodyParameter("UserType","boss");
+        requwstParams.addBodyParameter("SourceType","0");
+        requwstParams.addBodyParameter("File", new File(imagePath));
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        httpUtils.configSoTimeout(1200000);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
 
+            @Override
+            public void onLoading(long total, long current, boolean isUploading) {
+                super.onLoading(total, current, isUploading);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.e("照片请求",responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    AppBean<AppDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
+                    int tage=tages+1;
+                    if (appBean.getResult().equals("success")){
+
+                        if (registerTage==1){
+                            if (tage==imagePathList.size()){
+
+                                mSVProgressHUD.showSuccessWithStatus("恭喜,已提交数据成功");
+                                Intent intent=new Intent(RegisterActivity.this,RegisterFishActivity.class);
+                                startActivity(intent);
+                                finish();
+                                mSVProgressHUD.dismiss();
+                            }
+                        }else {
+                            if (tage==companyListPath.size()){
+                                mSVProgressHUD.showSuccessWithStatus("恭喜,已提交数据成功");
+                                Intent intent=new Intent(RegisterActivity.this,RegisterFishActivity.class);
+                                startActivity(intent);
+                                finish();
+                                mSVProgressHUD.dismiss();
+                            }
+                        }
+
+
+                    }else {
+                        MyAppliction.showToast("上传照片失败");
+                        mSVProgressHUD.dismiss();
+                    }
+
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("照片请求s",s);
+                    MyAppliction.showToast("网络异常,请稍后重试");
+                    mSVProgressHUD.dismiss();
+                    finish();
+
+
+
+            }
+        });
+
+
+    }
 
 
 
@@ -1151,7 +1014,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                              requestParams.addBodyParameter("idCardImage1","photo.jpg");
                                              requestParams.addBodyParameter("idCardImage2","photo.jpg");
                                              requestParams.addBodyParameter("photo","photo.jpg");
-                                                 mSVProgressHUD.showWithStatus("上传照片中(3)...");
+                                                 mSVProgressHUD.showWithStatus("正在提交中...");
                                              httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegisterData(), requestParams,new RequestCallBack<String>() {
                                                  @Override
                                                  public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -1159,20 +1022,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                      AppBean<RegisterBean> appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RegisterBean>>(){});
                                                      if ((appDataBean.getResult()).equals("success")){
                                                          RegisterBean registerBean=   appDataBean.getData();
-                                                         if (imagePathList!=null&&imagePathList.size()==3){
-                                                            if (!TextUtils.isEmpty(registerBean.getId())){
-                                                                intiPhontData1(registerBean.getId(), "1", imagePathList.get(0),"1");
-                                                            }else {
-                                                                mSVProgressHUD.dismiss();
-                                                            }
-
+                                                         if (imagePathList!=null&&imagePathList.size()!=0){
+                                                             int[] imageType={1,2,0};
+                                                             for (int i = 0; i <imagePathList.size() ; i++) {
+                                                                 intiPhontData7(registerBean.getId(),imageType[i],imagePathList.get(i),i,1);
+                                                             }
                                                          }else {
                                                              mSVProgressHUD.dismiss();
                                                          }
-
-
-
-
                                                      }else {
 
                                                          MyAppliction.showToast(appDataBean.getMsg());

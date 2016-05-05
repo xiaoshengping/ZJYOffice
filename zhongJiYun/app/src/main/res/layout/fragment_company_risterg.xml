@@ -139,7 +139,7 @@
             android:layout_height="1dp" />
         <LinearLayout
             android:background="@color/ic_white"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="3dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:gravity="center"
@@ -234,7 +234,7 @@
 
         </LinearLayout>
         <ImageView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="3dp"
             android:layout_width="match_parent"
             android:layout_height="1dp" />
 
@@ -267,7 +267,7 @@
 
         </LinearLayout>
         <LinearLayout
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="3dp"
             android:background="@color/ic_white"
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -419,7 +419,7 @@
             <LinearLayout
                android:id="@+id/company_status_layout"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="40dp"
                 android:layout_marginLeft="20dp"
                 android:background="@color/phont_background"
                 android:gravity="center"
@@ -462,6 +462,13 @@
 
     </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+    android:gravity="center"
+    android:background="@color/white"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
     <Button
         android:layout_alignParentBottom="true"
         android:id="@+id/cpmpany_register_button"
@@ -469,12 +476,12 @@
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
         android:textColor="@color/ic_white"
         android:background="@drawable/loing_button_corners"
         android:textSize="@dimen/home_Size_18"
         android:text="提交" />
+  </LinearLayout>
+
 
 
 </RelativeLayout>

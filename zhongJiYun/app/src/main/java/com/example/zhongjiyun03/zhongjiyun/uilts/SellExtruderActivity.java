@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -1147,7 +1148,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                 }
 
                 String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File frontFile = getFile(bis, "/sdcard/zhongJiYun/", frontName);
+                File frontFile = getFile(bis, Environment.getExternalStorageDirectory()+"/zhongJiYun", frontName);
                 if (!TextUtils.isEmpty(frontFile.getPath())) {
                     leavePath = frontFile.getPath();
                 }
@@ -1178,7 +1179,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                     panoramaImage.setImageBitmap(bitmaps);
                 }
                 String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File file2 = getFile(biss, "/sdcard/zhongJiYun/", name);
+                File file2 = getFile(biss, Environment.getExternalStorageDirectory()+"/zhongJiYun", name);
                 if (!TextUtils.isEmpty(file2.getPath())) {
                     panoramaPath = file2.getPath();
                 }
@@ -1208,7 +1209,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                     invoiceImage.setImageBitmap(bitmapPersonge);
                 }
                 String namePersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File filePersonge = getFile(bisPersonge, "/sdcard/zhongJiYun/", namePersonge);
+                File filePersonge = getFile(bisPersonge, Environment.getExternalStorageDirectory()+"/zhongJiYun", namePersonge);
                 if (!TextUtils.isEmpty(filePersonge.getPath())) {
                     invoicePath = filePersonge.getPath();
                 }
@@ -1238,7 +1239,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                     contractImage.setImageBitmap(frontBitmap);
                 }
                 String nameFront = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileFront = getFile(forntBis, "/sdcard/zhongJiYun/", nameFront);
+                File fileFront = getFile(forntBis, Environment.getExternalStorageDirectory()+"/zhongJiYun", nameFront);
                 if (!TextUtils.isEmpty(fileFront.getPath())) {
                     contractPath = fileFront.getPath();
                 }
@@ -1268,7 +1269,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                     qualifiedImage.setImageBitmap(vesonBitmap);
                 }
                 String nameVeson = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileVeson = getFile(vesonBis, "/sdcard/zhongJiYun/", nameVeson);
+                File fileVeson = getFile(vesonBis, Environment.getExternalStorageDirectory()+"/zhongJiYun", nameVeson);
                 if (!TextUtils.isEmpty(fileVeson.getPath())) {
                     qualifiedPath = fileVeson.getPath();
                 }
