@@ -1,11 +1,8 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -14,13 +11,11 @@ import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-public class HomeTribeActivity extends AppCompatActivity implements View.OnClickListener {
-
-    @ViewInject(R.id.web_view)
+public class AdvertisementParticulsrsActivity extends AppCompatActivity implements View.OnClickListener {
+    @ViewInject(R.id.webview)
     private WebView webView;
     @ViewInject(R.id.register_tv)
     private TextView addExtruderTv;   //头部右边
@@ -30,41 +25,31 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
     private TextView retrunText;     //头部左边
     private SVProgressHUD mSVProgressHUD;//loding
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_tribe);
+        setContentView(R.layout.activity_advertisement_particulsrs);
         ViewUtils.inject(this);
-
         init();
-
     }
-
     private void init() {
+        //http://h148a34804.iok.la/store/mobile/selfreg.php?asp_user_id=2341&redir=home
         initView();
+
+
+
 
     }
 
     private void initView() {
         mSVProgressHUD = new SVProgressHUD(this);
         addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("部落");
+        titleNemeTv.setText(getIntent().getStringExtra("name"));
         retrunText.setOnClickListener(this);
-        SQLhelper sqLhelper=new SQLhelper(HomeTribeActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-
-        }//启用支持javascript
+        //启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
-        if (!TextUtils.isEmpty(uid)){
-            webView.loadUrl("http://h148a34804.iok.la/buluo/new_oauth.php?asp_user_id="+uid);
-
-        }else {
-            webView.loadUrl("http://h148a34804.iok.la/buluo/");
-        }
+        webView.loadUrl(getIntent().getStringExtra("url"));
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -97,8 +82,6 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
 
 
     }
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -135,5 +118,4 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
         }
         return super.onKeyDown(keyCode, event);
     }
-
 }

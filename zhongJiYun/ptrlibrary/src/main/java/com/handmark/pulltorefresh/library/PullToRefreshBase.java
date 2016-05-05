@@ -180,7 +180,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
 	}
 
 	@Override
-	public final T getRefreshableView() {
+	public T getRefreshableView() {
 		return mRefreshableView;
 	}
 

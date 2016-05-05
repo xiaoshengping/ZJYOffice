@@ -318,6 +318,10 @@
         <activity
             android:name=".uilts.SeekMachinistActivity"
             android:label="@string/title_activity_seek_machinist"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.AdvertisementParticulsrsActivity"
+            android:label="@string/title_activity_advertisement_particulsrs"
             android:theme="@style/AppTheme"></activity>
     </application>
 

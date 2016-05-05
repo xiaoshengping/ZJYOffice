@@ -124,13 +124,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAdvertisementData(), new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("dsjfjfj",responseInfo.result);
+                Log.e("图片联播",responseInfo.result);
                 if(!TextUtils.isEmpty(responseInfo.result)){
                     AppListDataBean<AdvertisementBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<AdvertisementBean>>(){});
                     if (appListDataBean.getResult().equals("success")){
                         List<AdvertisementBean> advertisementBeen=appListDataBean.getData();
                         if (advertisementBeen!=null){
-
                             imageUrls.addAll(advertisementBeen);
                             pagerAdapter.refreshData(true);
                         }
@@ -157,7 +156,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         autoPager.setAdapter(pagerAdapter);
         autoPager.setOnPageChangeListener(pagerAdapter);
         initGridView();
-
         moreTextView.setOnClickListener(this);
         projectMoreText.setOnClickListener(this);
 
@@ -169,9 +167,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void initListRecommentMachinist() {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("Id","d7c69db7-ecca-4915-bd5a-8015cef6c478");
+        SQLhelper sqLhelper=new SQLhelper(getActivity());
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+        }
+        if (!TextUtils.isEmpty(uid)){
+            requestParams.addBodyParameter("Id",uid);
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        }
         requestParams.addBodyParameter("PageIndex","1");
-        requestParams.addBodyParameter("PageSize","10");
+        requestParams.addBodyParameter("PageSize","6");
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderData(),requestParams, new RequestCallBack<String>() {
             @Override
@@ -258,7 +270,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctListData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("找项目",responseInfo.result);
+                Log.e("推荐的项目",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<SeekProjectDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SeekProjectDataBean>>(){});
                     if ((appBean.getResult()).equals("success")){

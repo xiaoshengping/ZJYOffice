@@ -9,7 +9,15 @@ public class AdvertisementBean implements Serializable {
 
     private String Url;
     private String Img;
+    private String Name;
 
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
 
     public String getUrl() {
         return Url;
@@ -32,6 +40,7 @@ public class AdvertisementBean implements Serializable {
         return "AdvertisementBean{" +
                 "Url='" + Url + '\'' +
                 ", Img='" + Img + '\'' +
+                ", Name='" + Name + '\'' +
                 '}';
     }
 }

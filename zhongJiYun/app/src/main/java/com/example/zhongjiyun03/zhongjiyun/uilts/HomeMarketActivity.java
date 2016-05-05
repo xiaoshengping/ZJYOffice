@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -11,6 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.ViewUtils;
@@ -27,6 +29,7 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)
     private TextView retrunText;     //头部左边
+    private SVProgressHUD mSVProgressHUD;//loding
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initView() {
+        mSVProgressHUD = new SVProgressHUD(this);
         addExtruderTv.setOnClickListener(this);
         titleNemeTv.setText("");
         retrunText.setOnClickListener(this);
@@ -73,6 +77,23 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
                 //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
                 view.loadUrl(url);
                 return true;
+            }
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                mSVProgressHUD.showWithStatus("正在加载中...");
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                mSVProgressHUD.dismiss();
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                mSVProgressHUD.dismiss();
             }
         });
 

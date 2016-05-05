@@ -146,6 +146,12 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
+
     private void initData() {
         seekProjectId= getIntent().getStringExtra("seekProjectId");
         HttpUtils httpUtils=new HttpUtils();
@@ -158,6 +164,11 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             while (cursor.moveToNext()) {
                 uid=cursor.getString(0);
             }
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
             requestParams.addBodyParameter("projectId",seekProjectId);
             requestParams.addBodyParameter("id",uid);
             mSVProgressHUD.showWithStatus("加载中...");

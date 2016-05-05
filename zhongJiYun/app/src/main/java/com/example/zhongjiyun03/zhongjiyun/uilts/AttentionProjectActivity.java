@@ -66,6 +66,12 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        attentionProjectListview.setRefreshing();
+    }
+
     private void init() {
         initView();
         initListView();
@@ -173,6 +179,16 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                 startActivity(intent);
             }
         });
+         ListView listView= attentionProjectListview.getRefreshableView();
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                MyAppliction.showToast("长按了"+position);
+
+                return false;
+            }
+        });
+
 
 
     }

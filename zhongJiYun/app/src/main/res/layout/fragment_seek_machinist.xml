@@ -113,7 +113,7 @@
 
     </RelativeLayout>
     <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:dividerHeight="5dp"
+        android:dividerHeight="3dp"
         android:divider="@color/background"
         android:id="@+id/seek_machinist_listview"
         android:layout_width="match_parent"

@@ -10,7 +10,9 @@ package com.example.zhongjiyun03.zhongjiyun.adapter;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +20,7 @@ import android.widget.LinearLayout;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AdvertisementBean;
+import com.example.zhongjiyun03.zhongjiyun.uilts.AdvertisementParticulsrsActivity;
 import com.example.zhongjiyun03.zhongjiyun.widget.RecyclingPagerAdapter;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -60,17 +63,31 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter implements ViewPage
     }
 
     @Override
-    public View getView(int position, View view, ViewGroup container) {
+    public View getView(final int position, View view, ViewGroup container) {
         ViewHolder holder;
         if (view == null) {
             holder = new ViewHolder();
             view = holder.imageView = new ImageView(context);
+
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
         }
         holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         bitmapUtils.display(holder.imageView, iamgeUrls.get(getPosition(position)).getImg());
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(iamgeUrls.get(getPosition(position)).getUrl())){
+                    Intent intent=new Intent(context, AdvertisementParticulsrsActivity.class);
+                    intent.putExtra("url",iamgeUrls.get(getPosition(position)).getUrl());
+                    intent.putExtra("name",iamgeUrls.get(getPosition(position)).getName());
+                    context.startActivity(intent);
+                }
+
+
+            }
+        });
         return view;
     }
 
@@ -97,6 +114,7 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter implements ViewPage
 
     private static class ViewHolder {
         ImageView imageView;
+
     }
 
     /**

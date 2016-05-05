@@ -128,6 +128,11 @@ public class PullToRefreshWebView extends PullToRefreshBase<WebView> {
 		mRefreshableView.saveState(saveState);
 	}
 
+	@Override
+	public WebView getRefreshableView() {
+		return null;
+	}
+
 	@TargetApi(9)
 	final class InternalWebViewSDK9 extends WebView {
 

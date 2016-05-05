@@ -73,19 +73,34 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
                 viewHold.imageLiginEnd.setVisibility(View.VISIBLE);
                 viewHold.imageLiginr.setVisibility(View.VISIBLE);
                 if (data.get(position).getWorkInfoItemDtos().size()>0){
-                    viewHold.textView.setVisibility(View.VISIBLE);
 
-                    viewHold.textView.setText(data.get(position).getWorkInfoItemDtos().get(0).getManufacture()+
-                            data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getManufacture())&&
+                            !TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture())){
+                        viewHold.imageLiginEnd.setVisibility(View.VISIBLE);
+                        viewHold.imageLiginr.setVisibility(View.VISIBLE);
+                        viewHold.textView.setVisibility(View.VISIBLE);
+                        viewHold.textView.setText(data.get(position).getWorkInfoItemDtos().get(0).getManufacture()+
+                                data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    }else {
+                        viewHold.imageLiginr.setVisibility(View.GONE);
+                        viewHold.imageLiginEnd.setVisibility(View.GONE);
+                        viewHold.textView.setVisibility(View.GONE);
+                    }
+
 
                 }else {
                     viewHold.textView.setVisibility(View.GONE);
 
                 }
                 if (data.get(position).getWorkInfoItemDtos().size()>1){
-                    viewHold.textView.setVisibility(View.VISIBLE);
-                    viewHold.textViewOne.setText(data.get(position).getWorkInfoItemDtos().get(0).getManufacture()+
-                            data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getManufacture())&&
+                            !TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture())) {
+                        viewHold.textView.setVisibility(View.VISIBLE);
+                        viewHold.textViewOne.setText(data.get(position).getWorkInfoItemDtos().get(0).getManufacture() +
+                                data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    }else {
+                        viewHold.textViewOne.setVisibility(View.GONE);
+                    }
 
                 }else {
                     viewHold.textViewOne.setVisibility(View.GONE);

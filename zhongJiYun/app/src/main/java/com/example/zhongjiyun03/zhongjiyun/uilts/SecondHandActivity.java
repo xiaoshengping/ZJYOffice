@@ -250,43 +250,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
     }
 
-    /*private void initTimeData() {
-        //时间
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("DeviceJsonType","3");
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("设备厂商",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<FacillyDataBean> appListDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<FacillyDataBean>>(){});
-                    if (appListDataBean.getResult().equals("success")){
-                        List<FacillyDataBean> facillyDataBeen=  appListDataBean.getData();
-                        //facilluyFirstList.addAll(facillyDataBeen);
-                        if (facillyDataBeen!=null){
-                            for (int i = 0; i <facillyDataBeen.size() ; i++) {
-                                list.add(facillyDataBeen.get(i).getText());
-                            }
-                        }
 
-
-
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-
-            }
-        });
-
-
-    }
-*/
     public void intiPullToRefresh(){
         secondHandListview.setMode(PullToRefreshBase.Mode.BOTH);
         secondHandListview.setOnRefreshListener(this);

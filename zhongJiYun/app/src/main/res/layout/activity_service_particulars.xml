@@ -149,7 +149,7 @@
     <LinearLayout
 
         android:layout_below="@+id/comtent_image"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3dp"
         android:background="@color/ic_white"
         android:layout_marginBottom="50dp"
         android:orientation="horizontal"
@@ -182,7 +182,7 @@
 </ScrollView>
     <LinearLayout
         android:gravity="center_vertical"
-        android:background="@color/window_background"
+        android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="60dp">

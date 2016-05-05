@@ -73,7 +73,7 @@
     <string name="all_images">所有图片</string>
     <string name="cancel">取消</string>
     <string name="sure">确定</string>
-       //只能输入字母和数字
+    //只能输入字母和数字
     <string name="login_only_can_input">qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890</string>
     <string name="title_activity_sting">StingActivity</string>
     <string name="title_activity_modification_phone">ModificationPhoneActivity</string>
@@ -89,6 +89,8 @@
     <string name="title_activity_home_black_list">HomeBlackListActivity</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_seek_machinist">SeekMachinistActivity</string>
+    <string name="title_activity_advertisement_particulsrs">AdvertisementParticulsrsActivity
+    </string>
 
 
 </resources>
