@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -55,7 +56,8 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
     private List<AttentionProjectBean> attentionProjectBeens; //列表数据
     private AttentionProjectAdapter homeProjectlsitAdapter;
-
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,18 +137,28 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                                      attentionProjectBeens.addAll(attentionProjectBeen);
                                  }
                                 attentionProjectListview.onRefreshComplete();
+                                homeProjectlsitAdapter.notifyDataSetChanged();
                             }else {
                                 attentionProjectListview.onRefreshComplete();
+                                homeProjectlsitAdapter.notifyDataSetChanged();
                             }
+                            notDataLayout.setVisibility(View.GONE);
                         }else if ((appBean.getResult()).equals("empty")){
+                            if (isPullDownRefresh){
+                                attentionProjectBeens.clear();
+                            }
+                            notDataLayout.setVisibility(View.VISIBLE);
                             MyAppliction.showToast("没有更多数据");
                             attentionProjectListview.onRefreshComplete();
+                            homeProjectlsitAdapter.notifyDataSetChanged();
                         }else if ((appBean.getResult()).equals("nomore")){
+                            notDataLayout.setVisibility(View.GONE);
                             attentionProjectListview.onRefreshComplete();
                             MyAppliction.showToast("已到最低了");
+                            homeProjectlsitAdapter.notifyDataSetChanged();
                         }
 
-                        homeProjectlsitAdapter.notifyDataSetChanged();
+
                     }
                 }
 

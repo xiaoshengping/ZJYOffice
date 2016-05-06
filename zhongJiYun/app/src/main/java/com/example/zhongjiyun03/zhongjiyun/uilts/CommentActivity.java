@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -82,6 +83,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private  CommentListAdapter commentListAdapter;
     private  CommentListAdapter mineCommentListAdapter;
 
+    private LinearLayout notDataLayout;
+    private LinearLayout commentNotDataLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,12 +148,15 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                     }
                                     commentListAdapter.notifyDataSetChanged();
                                     mineCommentListView.onRefreshComplete();
+                                    notDataLayout.setVisibility(View.GONE);
                                 }else if (appBean.getResult().equals("empty")){
                                     //MyAppliction.showToast("没有更多评论");
+                                    notDataLayout.setVisibility(View.VISIBLE);
                                     mineCommentListView.onRefreshComplete();
 
                                 }else if ((appBean.getResult()).equals("nomore")){
                                     MyAppliction.showToast("已到底部了");
+                                    notDataLayout.setVisibility(View.GONE);
                                     mineCommentListView.onRefreshComplete();
                                 }
 
@@ -228,12 +234,15 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                         }
 
                                     }
+                                    commentNotDataLayout.setVisibility(View.GONE);
                                 }else if (appBean.getResult().equals("empty")){
                                     //MyAppliction.showToast("没有更多评论");
+                                    commentNotDataLayout.setVisibility(View.VISIBLE);
                                     commentMineListView.onRefreshComplete();
 
                                 }else if ((appBean.getResult()).equals("nomore")){
                                     MyAppliction.showToast("已到底部了");
+                                    commentNotDataLayout.setVisibility(View.GONE);
                                     commentMineListView.onRefreshComplete();
                                 }
 
@@ -268,6 +277,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
     //我的评论
     private void initMineComment() {
+
        mineCommentListView= (PullToRefreshListView) mineCommentView.findViewById(R.id.mine_comment_listview);
        commentListAdapter=new CommentListAdapter(mineCommentDataBeens,CommentActivity.this);
         mineCommentListView.setAdapter(commentListAdapter);
@@ -305,7 +315,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     }
     //评论我的
     private void initCommentMine() {
-
         commentMineListView= (PullToRefreshListView) commentMineView.findViewById(R.id.comment_mine_listview);
 
         mineCommentListAdapter=new CommentListAdapter(commentMineDataBeens,CommentActivity.this);
@@ -313,7 +322,6 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         commentMineListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-
                 commentMinePageIndex=1;
                 isPullDownRefresh1=true;
                 initCommentMineData(commentMinePageIndex); //评论我的数据
@@ -365,7 +373,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         commentMineView=getLayoutInflater().inflate(R.layout.comment_mine_layout, null);
         lists.add(mineCommentView);
         lists.add(commentMineView);
-
+        notDataLayout= (LinearLayout) mineCommentView.findViewById(R.id.not_data_layout);
+        commentNotDataLayout= (LinearLayout) commentMineView.findViewById(R.id.comment_not_data_layout);
         initeCursor();
         myAdapter = new MyAdapter(lists);
         viewPager.setAdapter(myAdapter);

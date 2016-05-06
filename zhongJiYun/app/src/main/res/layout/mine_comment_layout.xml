@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -11,6 +11,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/not_data_layout"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="120dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <ImageView
+            android:src="@mipmap/no_eval_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <TextView
+            android:textColor="@color/nodata_background"
+            android:layout_marginTop="5dp"
+            android:text="还没有业主评论您哦"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -60,6 +61,8 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
     private int PageIndex=1;
     private boolean isRefresh=true;//判断是上啦还是下拉
     private MyRedPatckListAdapter myredAdapter;
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,13 +129,15 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                             }
                             rePackedListBeens.addAll(listData);
                         }
-
+                        notDataLayout.setVisibility(View.GONE);
                     } else if ((appBean.getResult()).equals("empty")) {
                         MyAppliction.showToast("您还没有收到红包哦");
                         getPackedButton.setVisibility(View.GONE);
+                        notDataLayout.setVisibility(View.VISIBLE);
 
                     }else if ((appBean.getResult()).equals("nomore")) {
                         MyAppliction.showToast("已到最底了");
+                        notDataLayout.setVisibility(View.GONE);
                     }
                     myredAdapter.notifyDataSetChanged();
                     redPatckListview.onRefreshComplete();

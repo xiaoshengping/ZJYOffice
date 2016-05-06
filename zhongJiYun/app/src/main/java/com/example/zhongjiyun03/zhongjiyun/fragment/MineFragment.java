@@ -418,15 +418,20 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     }
 
                 }
-                Intent messageIntent=new Intent(getActivity(), MessageActivity.class);
-                startActivity(messageIntent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                if (!TextUtils.isEmpty(uid)){
+                    Intent messageIntent=new Intent(getActivity(), MessageActivity.class);
+                    startActivity(messageIntent);
+                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                }else {
+                    Intent intent3=new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent3);
+                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                }
+
                 break;
             case R.id.redpacket_layout:
                 if (!TextUtils.isEmpty(uid)){
                     if (!TextUtils.isEmpty(giftBag)){
-                        /*Log.e("giftBag",giftBag);
-                        Log.e("messageRemindId",messageRemindId+"----messageRemindId");*/
                         update(messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
                     }else {
                         if (!TextUtils.isEmpty(date)){

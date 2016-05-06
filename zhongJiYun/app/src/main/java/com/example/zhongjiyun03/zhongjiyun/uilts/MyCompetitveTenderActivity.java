@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,6 +55,8 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
     List<ProjectlistDataBean> projectlistDataBeanLists;
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
     private MyCompetitveTenderListAdapter myCompetitveAdapter;
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,12 +119,17 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                                 projectlistDataBeanLists.addAll(projectlistBean.getPagerData());
                                 competitveTenderLsitview.onRefreshComplete();
                             }
-
+                            notDataLayout.setVisibility(View.GONE);
                         }else if (( appBean.getResult()).equals("nomore")){
                             MyAppliction.showToast("已到最底了");
+                            notDataLayout.setVisibility(View.GONE);
                             competitveTenderLsitview.onRefreshComplete();
                         }else if ((appBean.getResult()).equals("empty")){
-                            //secondHandBeen.clear();
+                            //secondHandBeen.clear();]
+                            if (isPullDownRefresh){
+                                projectlistDataBeanLists.clear();
+                            }
+                            notDataLayout.setVisibility(View.VISIBLE);
                             competitveTenderLsitview.onRefreshComplete();
                             MyAppliction.showToast("没有更多数据");
                         }

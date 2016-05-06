@@ -169,6 +169,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                 }else {
                   Intent intent=new Intent(StingActivity.this,LoginActivity.class);
                   startActivity(intent);
+                  overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 }
                 break;
             case R.id.competitive_layout:

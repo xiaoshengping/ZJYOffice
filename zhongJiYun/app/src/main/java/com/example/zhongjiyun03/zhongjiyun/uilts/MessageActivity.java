@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,7 +49,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     /*@ViewInject(R.id.web_view)
     private WebView webView;*/
     private List<MessageDataBean> list=new ArrayList<>();
-
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,46 +69,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void intiData() {
-        //HttpUtils httpUtils=new HttpUtils();
-       /* SQLhelper sqLhelper=new SQLhelper(MessageActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String sesstionid=null;  //用户id
-        String uid=null;  //用户id
 
-        while (cursor.moveToNext()) {
-            sesstionid=cursor.getString(6);
-            uid=cursor.getString(0);
-
-        }*/
-      /*  RequestParams requestParams=new RequestParams();
-        //requestParams.addBodyParameter("Id",uid);
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String value = read.getString("code","");
-        ///Log.e("value",sesstionid);
-        if (!TextUtils.isEmpty(value)){
-            requestParams.setHeader("Cookie","ASP.NET_SessionId="+value);
-            Log.e("value",value);
-            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMessageData(),requestParams, new RequestCallBack<String>() {
-                @Override
-                public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("系统消息列表",responseInfo.result);
-
-
-
-
-                }
-
-                @Override
-                public void onFailure(HttpException e, String s) {
-                    Log.e("系统消息列表",s);
-                }
-            });
-        }else {
-            MyAppliction.showToast("没有找到sesstionid");
-        }*/
 
 
 
@@ -126,9 +89,12 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                     if (appListDataBean.getResult().equals("success")){
                       List<MessageDataBean> messageDataBeen=  appListDataBean.getData();
                         if (messageDataBeen!=null){
+                            notDataLayout.setVisibility(View.GONE);
                            list.addAll(messageDataBeen);
                             //Log.e("title",list.get(0).getTitle());
                             InitListView(messageDataBeen);
+                        }else {
+                            notDataLayout.setVisibility(View.VISIBLE);
                         }
 
                     }

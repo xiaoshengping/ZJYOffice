@@ -1,22 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
+
     android:background="@color/background"
     tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.AttentionExtrunActivity">
-    <include  android:layout_width="match_parent"
+    <include android:id="@+id/head_layout"  android:layout_width="match_parent"
         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
     <com.handmark.pulltorefresh.library.PullToRefreshListView
+
         android:id="@+id/attention_extrun_lsitview"
+        android:layout_below="@+id/head_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <LinearLayout
+
+        android:visibility="gone"
+        android:id="@+id/not_data_layout"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <ImageView
+            android:src="@mipmap/no_rig_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+         <TextView
+             android:textColor="@color/nodata_background"
+             android:layout_marginTop="5dp"
+             android:text="您还没有关注的二手钻机哦"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
 
 
 
 
-</LinearLayout>
+
+</RelativeLayout>

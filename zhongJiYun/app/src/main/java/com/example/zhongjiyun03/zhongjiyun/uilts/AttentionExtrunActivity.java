@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -56,6 +57,8 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     private List<SecondHandBean> secondHandBeens; //列表数据
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
     private HomeSecondHandListAdapter homeSecondHandListAdapter;
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
 
     @Override
@@ -84,6 +87,13 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
 
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        attentionExtrunLsitview.setRefreshing();
+    }
+
     private void intiListData(int pageIndex) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
@@ -123,17 +133,25 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                                    secondHandBeens.addAll(secondHandBeen);
                                }
                                 attentionExtrunLsitview.onRefreshComplete();
+                                homeSecondHandListAdapter.notifyDataSetChanged();
                             }
-
+                            notDataLayout.setVisibility(View.GONE);
                         }else if ((appListDataBean.getResult()).equals("nomore")){
+                            notDataLayout.setVisibility(View.GONE);
                             attentionExtrunLsitview.onRefreshComplete();
                             MyAppliction.showToast("已到最底了");
+                            homeSecondHandListAdapter.notifyDataSetChanged();
                         }else if ((appListDataBean.getResult()).equals("empty")){
+                            if (isPullDownRefresh){
+                                secondHandBeens.clear();
+                            }
+                            notDataLayout.setVisibility(View.VISIBLE);
                             attentionExtrunLsitview.onRefreshComplete();
                             MyAppliction.showToast("您还没有关注钻机哦");
+                            homeSecondHandListAdapter.notifyDataSetChanged();
                         }
 
-                        homeSecondHandListAdapter.notifyDataSetChanged();
+
 
                     }
 

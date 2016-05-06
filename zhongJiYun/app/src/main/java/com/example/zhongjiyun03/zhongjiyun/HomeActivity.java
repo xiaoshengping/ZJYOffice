@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -56,6 +57,11 @@ public class HomeActivity extends AppCompatActivity {
     public Boolean isFirstIn = false;
     @ViewInject(R.id.progress_bar)
     private ProgressBar progressBar;
+    @ViewInject(R.id.loding_layout)
+    private LinearLayout loodingLayout;
+   /* @ViewInject(R.id.progress_bar_text)
+    private TextView progressBarText;*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +73,10 @@ public class HomeActivity extends AppCompatActivity {
         //取得相应的值，如果没有该值，说明还未写入，用true作为默认值
         isFirstIn = pref.getBoolean("isFirstIn", true);
         if(isFirstIn) {
-            /*Intent intent = new Intent().setClass(HomeActivity.this,MainActivity.class);
-            startActivityForResult(intent,0);*/
+            Intent intent = new Intent().setClass(HomeActivity.this,MainActivity.class);
+            startActivityForResult(intent,0);
             //testAddContacts();  //添加联系人
-            getVersontData();   //获取本版
+            //getVersontData();   //获取本版
 
         }
         //HomeFragment.setStart(0);
@@ -158,7 +164,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onStart() {
                 super.onStart();
-                progressBar.setVisibility(View.VISIBLE);
+
+                loodingLayout.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -166,12 +173,14 @@ public class HomeActivity extends AppCompatActivity {
                 super.onLoading(total, current, isUploading);
                 progressBar.setMax((int)total);
                 progressBar.setProgress((int)current);
+                //progressBarText.setText((int)current+"/"+(int)total);
+
             }
 
             @Override
             public void onSuccess(ResponseInfo<File> responseInfo) {
                 Log.e("下载",responseInfo.result.toString());
-                progressBar.setVisibility(View.GONE);
+                loodingLayout.setVisibility(View.GONE);
                 MyAppliction.showToast("下载成功");
                 openFile(responseInfo.result);
             }
@@ -179,7 +188,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("下载",s);
-                progressBar.setVisibility(View.GONE);
+                loodingLayout.setVisibility(View.GONE);
             }
         });
 
