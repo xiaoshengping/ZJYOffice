@@ -35,12 +35,12 @@
         android:text="大旱朝野是时时旱防静电发奖金方法回复觉得觉得方法 降幅达回复好地方的甲方回复觉得附件地方呵呵 防静电肺结核附件"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />-->
-    <ImageView
+    <!--<ImageView
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_below="@+id/content_text"
         android:src="@color/background"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="10dp" />-->
 
 </RelativeLayout>

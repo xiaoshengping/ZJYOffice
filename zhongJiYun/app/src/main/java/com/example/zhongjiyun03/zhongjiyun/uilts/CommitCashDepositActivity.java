@@ -29,6 +29,7 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
     private Button zFuButton;
     @ViewInject(R.id.contract_check)
     private RadioButton cntractCheck;
+    private String zfuTage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
         retrunText.setOnClickListener(this);
         zfuStateLayout.setOnClickListener(this);
         zFuButton.setOnClickListener(this);
+       zfuTage= getIntent().getStringExtra("zfuTage");
     }
 
 
@@ -62,11 +64,13 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
                 break;
             case R.id.zfu_state_layout:
                 Intent intent=new Intent(CommitCashDepositActivity.this,PaymentStateActivity.class);
+                intent.putExtra("tage",zfuTage);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
             case R.id.zfu_button:
                 Intent zfuIntent=new Intent(CommitCashDepositActivity.this,PaymentStateActivity.class);
+                zfuIntent.putExtra("tage",zfuTage);
                 startActivity(zfuIntent);
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;

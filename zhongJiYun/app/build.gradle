@@ -9,7 +9,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.9.3"
     }
     buildTypes {
         release {
@@ -47,5 +47,6 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     compile 'com.bigkoo:svprogresshud:1.0.2'
     compile 'com.commit451:PhotoView:1.2.4'
+
 
 }

@@ -2,29 +2,37 @@ package com.example.zhongjiyun03.zhongjiyun;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.Window;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.VersontDataBean;
 import com.example.zhongjiyun03.zhongjiyun.fragment.FragmentTabAdapter;
 import com.example.zhongjiyun03.zhongjiyun.fragment.HomeFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.MineFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekMachinistFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekProjectFragment;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -37,7 +45,7 @@ import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
 
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
@@ -46,6 +54,8 @@ public class HomeActivity extends AppCompatActivity {
     private RadioGroup homeRG;
     private long mExitTime;
     public Boolean isFirstIn = false;
+    @ViewInject(R.id.progress_bar)
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
         if(isFirstIn) {
             /*Intent intent = new Intent().setClass(HomeActivity.this,MainActivity.class);
             startActivityForResult(intent,0);*/
-            testAddContacts();  //添加联系人
+            //testAddContacts();  //添加联系人
             getVersontData();   //获取本版
 
         }
@@ -92,10 +102,29 @@ public class HomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         requestParams.addBodyParameter("versionType","0");
+
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getVersonData(),requestParams, new RequestCallBack<String>() {
+
+
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
              Log.e("获取本版信息",responseInfo.result);
+               if (!TextUtils.isEmpty(responseInfo.result)){
+                   AppBean<VersontDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<VersontDataBean>>(){});
+                   if (appBean!=null){
+                       if (appBean.getResult().equals("success")){
+                         VersontDataBean versontDataBean=  appBean.getData();
+                           if (versontDataBean!=null){
+                               if (versontDataBean.getUpdateLevel()==1){ //不强制更新
+                                   showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
+                               }else if (versontDataBean.getUpdateLevel()==2){  //强制更新
+                                   showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
+                               }
+                           }
+                       }
+                   }
+               }
+
             }
 
             @Override
@@ -106,6 +135,99 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void LodingApkData(String url) {
+        HttpUtils httpUtils=new HttpUtils();
+        Log.e("path",url);
+        httpUtils.configSoTimeout(1200000);
+        String filePath= Environment.getExternalStorageDirectory()+"/zhongJiYun/";
+        String fileName="ZhongJiYun.apk";
+        File file = null;
+        try {
+            File dir = new File(filePath);
+            if(!dir.exists()&&dir.isDirectory()){//判断文件目录是否存在
+                dir.mkdirs();
+            }
+            file = new File(filePath+fileName);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        httpUtils.download(url, file.getPath(), new RequestCallBack<File>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onLoading(long total, long current, boolean isUploading) {
+                super.onLoading(total, current, isUploading);
+                progressBar.setMax((int)total);
+                progressBar.setProgress((int)current);
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<File> responseInfo) {
+                Log.e("下载",responseInfo.result.toString());
+                progressBar.setVisibility(View.GONE);
+                MyAppliction.showToast("下载成功");
+                openFile(responseInfo.result);
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("下载",s);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+    }
+
+    private void openFile(File file) {
+        // TODO Auto-generated method stub
+        Log.e("OpenFile", file.getName());
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file),"application/vnd.android.package-archive");
+        startActivity(intent);
+
+    }
+
+    //对话框
+    private void showExitGameAlert(String versionNo, String text, final String url) {
+        final AlertDialog dlg = new AlertDialog.Builder(HomeActivity.this).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        TextView tailteTv = (TextView) window.findViewById(R.id.tv);
+        tailteTv.setText(versionNo);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("确定");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                LodingApkData(url);
+
+                dlg.cancel();
+            }
+        });
+
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });
     }
 
     private String getVersionName() throws Exception {
@@ -174,29 +296,27 @@ public class HomeActivity extends AppCompatActivity {
                 .withValue("data1", "18515333333")
                 .build();
 
-        // 向data表插入头像数据
-        ContentValues values = new ContentValues();
-        Uri rawContactUri = getContentResolver().insert(
-                ContactsContract.RawContacts.CONTENT_URI, values);
-        long rawContactId = ContentUris.parseId(rawContactUri);
-        Bitmap sourceBitmap = BitmapFactory.decodeResource(getResources(),
+
+       /* Bitmap sourceBitmap = BitmapFactory.decodeResource(getResources(),
                 R.mipmap.logo_icon);
         final ByteArrayOutputStream os = new ByteArrayOutputStream();
         // 将Bitmap压缩成PNG编码，质量为100%存储
         sourceBitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
         byte[] avatar = os.toByteArray();
-        values.put(ContactsContract.Contacts.Data.RAW_CONTACT_ID, rawContactId);
-        values.put(ContactsContract.Contacts.Data.MIMETYPE, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE);
-        values.put(ContactsContract.CommonDataKinds.Photo.PHOTO, avatar);
-        getContentResolver().insert(ContactsContract.Data.CONTENT_URI,
-                values);
-
+        uri = Uri.parse("content://com.android.contacts/data");
+        ContentProviderOperation operation7 = ContentProviderOperation.newInsert(uri)
+                .withValueBackReference("raw_contact_id", 0)
+                .withValue("mimetype", "vnd.android.cursor.item/phone_v2")
+                .withValue("data2", "2")
+                .withValue("data1",avatar)
+                .build();*/
         operations.add(operation);
         operations.add(operation2);
         operations.add(operation3);
         operations.add(operation4);
         operations.add(operation5);
         operations.add(operation6);
+
 
         try {
             resolver.applyBatch("com.android.contacts", operations);

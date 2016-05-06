@@ -139,7 +139,7 @@ public class  CompetitiveDescribeActivity extends AppCompatActivity implements V
                     AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                     if (appDataBean.getResult().equals("success")){
 
-                        showExitGameAlert("\u3000\u3000"+"尊敬的用户,您已成功竞标,请您耐心等待业主选标,为提高您中标的概率,现建议您先交纳1000元的保证金,谢谢!");
+                        showExitGameAlert("\u3000\u3000"+"尊敬的用户,您已成功竞标,请您耐心等待业主选标,为提高您中标的概率,现建议您先缴纳1000元的保证金,谢谢!");
                     }else {
                         MyAppliction.showToast(appDataBean.getMsg());
                     }
@@ -174,6 +174,7 @@ public class  CompetitiveDescribeActivity extends AppCompatActivity implements V
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent=new Intent(CompetitiveDescribeActivity.this,CommitCashDepositActivity.class);
+                intent.putExtra("zfuTage","project");
                 startActivity(intent);
                 dlg.cancel();
             }

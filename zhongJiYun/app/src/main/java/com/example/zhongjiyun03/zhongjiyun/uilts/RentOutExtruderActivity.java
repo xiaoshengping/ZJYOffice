@@ -480,7 +480,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                         requestParams.addBodyParameter("Image4","phont.jpg");
                                         requestParams.addBodyParameter("Image5","phont.jpg");
 
-                                        Log.e("sdhhdhdhhdhdh","'"+leaveImageID+","+panoramaImageID+","+invoiceImageID+","+contractImageID+","+qualifiedImageID+"'".replace("null",""));
+                                        /*Log.e("sdhhdhdhhdhdh","'"+leaveImageID+","+panoramaImageID+","+invoiceImageID+","+contractImageID+","+qualifiedImageID+"'".replace("null",""));*/
                                         requestParams.addBodyParameter("updateImgs", (leaveImageID+","+panoramaImageID+","+invoiceImageID+","+contractImageID+","+qualifiedImageID).replace("null",""));
                                         mSVProgressHUD.showWithStatus("正在提交中...");
                                         final String finalUid = uid;
@@ -820,7 +820,9 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent=new Intent(RentOutExtruderActivity.this,CommitCashDepositActivity.class);
+                intent.putExtra("zfuTage","rentExturd");
                 startActivity(intent);
+                finish();
                 dlg.cancel();
             }
         });

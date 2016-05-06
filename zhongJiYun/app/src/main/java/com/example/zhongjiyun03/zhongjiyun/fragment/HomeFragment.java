@@ -199,14 +199,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         }
 
 
-                    }/*else if ((appListDataBean.getResult()).equals("nomore")){
-
-                        MyAppliction.showToast("已到最底了");
-                    }else if ((appListDataBean.getResult()).equals("empty")){
-                        //secondHandBeen.clear();
-
-                        MyAppliction.showToast("没有更多数据");
-                    }*/
+                    }
 
                 }
             }
@@ -281,16 +274,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                                 intiListView(seekProjectBean);
 
                             }
-
-
-
-
                         }
-
-
-
-
-
                     }
 
 

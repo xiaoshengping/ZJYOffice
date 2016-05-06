@@ -164,13 +164,15 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             while (cursor.moveToNext()) {
                 uid=cursor.getString(0);
             }
-            //步骤1：创建一个SharedPreferences接口对象
-            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-            //步骤2：获取文件中的值
-            String sesstionId = read.getString("code","");
-            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+            if (!TextUtils.isEmpty(uid)){
+                //步骤1：创建一个SharedPreferences接口对象
+                SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+                //步骤2：获取文件中的值
+                String sesstionId = read.getString("code","");
+                requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+                requestParams.addBodyParameter("id",uid);
+            }
             requestParams.addBodyParameter("projectId",seekProjectId);
-            requestParams.addBodyParameter("id",uid);
             mSVProgressHUD.showWithStatus("加载中...");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctParticularsData(),requestParams, new RequestCallBack<String>() {
                 @Override

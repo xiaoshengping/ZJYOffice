@@ -47,12 +47,28 @@ public class HomeSecondHandListAdapter extends AppBaseAdapter<SecondHandBean> {
 
     private void inti(int position) {
         if (data!=null){
-            MyAppliction.imageLoader.displayImage(data.get(position).getDeviceDto().getDevicePhoto(),viewHold.imageView,MyAppliction.options);
-            if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getManufacture())
-                    &&!TextUtils.isEmpty(data.get(position).getDeviceDto().getNoOfManufacture())){
-                viewHold.tailtTextView.setText(data.get(position).getDeviceDto().getManufacture()
-                        +data.get(position).getDeviceDto().getNoOfManufacture());
+
+            if (data.get(position).getDeviceDto()!=null){
+                if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getDevicePhoto())) {
+                    MyAppliction.imageLoader.displayImage(data.get(position).getDeviceDto().getDevicePhoto(), viewHold.imageView, MyAppliction.options);
+                }
+                if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getManufacture())
+                        &&!TextUtils.isEmpty(data.get(position).getDeviceDto().getNoOfManufacture())){
+                    viewHold.tailtTextView.setText(data.get(position).getDeviceDto().getManufacture()
+                            +data.get(position).getDeviceDto().getNoOfManufacture());
+                }
+                if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getDateOfManufacture())&&!TextUtils.isEmpty(data.get(position).getDeviceDto().getDateMonthOfManufacture())){
+                    viewHold.dataTextView.setText(data.get(position).getDeviceDto().getDateOfManufacture()+"年"+
+                            data.get(position).getDeviceDto().getDateMonthOfManufacture()+"月");
+                }else {
+                    viewHold.dataTextView.setText(data.get(position).getDeviceDto().getDateOfManufacture()+"年");
+                }
+                if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getHourOfWork()+"")){
+                    viewHold.timeTextView.setText(data.get(position).getDeviceDto().getHourOfWork()+"小时");
+                }
             }
+
+
             if (!TextUtils.isEmpty(data.get(position).getDistanceStr())){
                 viewHold.distanceTextView.setText(data.get(position).getDistanceStr()+"Km");
             }else {
@@ -60,15 +76,8 @@ public class HomeSecondHandListAdapter extends AppBaseAdapter<SecondHandBean> {
             }
 
             viewHold.addressTextView.setText(data.get(position).getProvince());
-            if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getDateOfManufacture())&&!TextUtils.isEmpty(data.get(position).getDeviceDto().getDateMonthOfManufacture())){
-                viewHold.dataTextView.setText(data.get(position).getDeviceDto().getDateOfManufacture()+"年"+
-                data.get(position).getDeviceDto().getDateMonthOfManufacture()+"月");
-            }else {
-                viewHold.dataTextView.setText(data.get(position).getDeviceDto().getDateOfManufacture()+"年");
-            }
-            if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getHourOfWork()+"")){
-                viewHold.timeTextView.setText(data.get(position).getDeviceDto().getHourOfWork()+"小时");
-            }
+
+
            if (!TextUtils.isEmpty(data.get(position).getPriceStr())){
                if (data.get(position).getPriceStr().equals("面议")){
                    viewHold.priceTextView.setText(data.get(position).getPriceStr());
@@ -77,8 +86,6 @@ public class HomeSecondHandListAdapter extends AppBaseAdapter<SecondHandBean> {
                }
 
            }
-
-            //Log.e("sdjdj",data.get(position).getUpdateDateStr()+"更新");
             viewHold.updateTimeTextViewl.setText(data.get(position).getUpdateDateStr()+"更新");
             if (data.get(position).getSecondHandType()==0){
                 viewHold.secondTageImage.setBackgroundResource(R.mipmap.lease_icon);

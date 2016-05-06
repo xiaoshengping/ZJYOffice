@@ -602,13 +602,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                                     requestParams.addBodyParameter("Image3ServerId", "phont.jpg");
                                     requestParams.addBodyParameter("Image4ServerId", "phont.jpg");
                                     requestParams.addBodyParameter("Image5ServerId", "phont.jpg");
-                                    if (phoneListPath.size() == 5) {
-                                        mSVProgressHUD.showWithStatus("上传中照片(5/5张)...");
-                                    } else if (phoneListPath.size() == 4) {
-                                        mSVProgressHUD.showWithStatus("上传中照片(4/4张)...");
-                                    } else if (phoneListPath.size() == 3) {
-                                        mSVProgressHUD.showWithStatus("上传中照片(3/3张)...");
-                                    }
+                                    mSVProgressHUD.showWithStatus("正在提交中...");
                                     final String finalUid = uid;
                                     httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(), requestParams, new RequestCallBack<String>() {
                                         @Override
@@ -1046,7 +1040,9 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent=new Intent(SellExtruderActivity.this,CommitCashDepositActivity.class);
+                intent.putExtra("zfuTage","sellExturd");
                 startActivity(intent);
+                finish();
                 dlg.cancel();
             }
         });

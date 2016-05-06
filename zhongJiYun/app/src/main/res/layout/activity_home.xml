@@ -1,10 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".HomeActivity">
 
+
+     <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
     <RelativeLayout
         android:id="@+id/home_title_bar_rl"
         android:layout_width="match_parent"
@@ -113,6 +118,30 @@
 
 
 
-
-
-</LinearLayout>
+     </LinearLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/progress_bar"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+   <!-- <com.shinelw.library.ColorArcProgressBar
+        android:layout_centerVertical="true"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/bar1"
+        app:is_need_content="true"
+        app:front_color1="@color/colorAccent"
+        app:max_value="100"
+        app:back_width="10dp"
+        app:front_width="10dp"
+        app:total_engle="360"
+        app:is_need_unit="true"
+        app:string_unit="百分比%"
+        app:back_color="@android:color/darker_gray"
+        android:layout_marginBottom="150dp"
+        />-->
+</RelativeLayout>

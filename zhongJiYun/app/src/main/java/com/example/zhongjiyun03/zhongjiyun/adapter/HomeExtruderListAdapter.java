@@ -222,8 +222,16 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
 
                         }else if (data.get(position).getSecondHandState()==0){
                             if (data.get(position).getPayMarginStatus().equals("0")){
-                                Intent cashIntent=new Intent(context, CommitCashDepositActivity.class);
-                                context.startActivity(cashIntent);
+                                if (data.get(position).getSecondHandType()==0){
+                                    Intent cashIntent=new Intent(context, CommitCashDepositActivity.class);
+                                    cashIntent.putExtra("zfuTage","rentExturd");
+                                    context.startActivity(cashIntent);
+                                }else {
+                                    Intent cashIntent=new Intent(context, CommitCashDepositActivity.class);
+                                    cashIntent.putExtra("zfuTage","sellExturd");
+                                    context.startActivity(cashIntent);
+                                }
+
                             }else {
                                 if (data.get(position).getSecondHandType()==0){
                                     Intent modifiRentExtruderInent=new Intent(context, RentOutExtruderActivity.class);

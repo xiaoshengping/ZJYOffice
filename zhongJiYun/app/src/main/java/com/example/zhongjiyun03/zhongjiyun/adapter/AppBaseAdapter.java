@@ -1,7 +1,6 @@
 package com.example.zhongjiyun03.zhongjiyun.adapter;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -19,12 +18,12 @@ import java.util.List;
 public abstract class AppBaseAdapter<T> extends BaseAdapter {
     public List<T> data;
     public Context context;
-    public LayoutInflater inflater;
+    //public LayoutInflater inflater;
 
     public AppBaseAdapter(List<T> data, Context context) {
         this.context = context;
         this.data = data;
-        inflater = LayoutInflater.from(context);
+        //inflater = LayoutInflater.from(context);
     }
 
     @Override

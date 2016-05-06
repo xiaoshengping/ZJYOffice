@@ -47,9 +47,18 @@
         >
 
     </com.example.zhongjiyun03.zhongjiyun.view.MyGridView>
+        <ImageView
+        android:background="#dedede"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:background="#dedede"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
     <RelativeLayout
+
         android:background="@color/ic_white"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
@@ -128,10 +137,17 @@
 
 
     </RelativeLayout>
-
+        <ImageView
+            android:background="#dedede"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:background="#dedede"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
         <RelativeLayout
             android:background="@color/ic_white"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
