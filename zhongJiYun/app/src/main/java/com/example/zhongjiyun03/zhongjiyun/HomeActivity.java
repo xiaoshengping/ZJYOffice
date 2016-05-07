@@ -69,16 +69,27 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ViewUtils.inject(this);
         init();
-        SharedPreferences pref = this.getSharedPreferences("myActivityName", 0);
-        //取得相应的值，如果没有该值，说明还未写入，用true作为默认值
-        isFirstIn = pref.getBoolean("isFirstIn", true);
-        if(isFirstIn) {
+
+        SharedPreferences sharedPreferences = this.getSharedPreferences("share", MODE_PRIVATE);
+        boolean isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (isFirstRun)
+        {
+            Log.d("debug", "第一次运行");
             Intent intent = new Intent().setClass(HomeActivity.this,MainActivity.class);
             startActivityForResult(intent,0);
             //testAddContacts();  //添加联系人
-            //getVersontData();   //获取本版
 
+            editor.putBoolean("isFirstRun", false);
+            editor.commit();
+        } else{
+            Log.d("debug", "不是第一次运行");
+            Intent intent=new Intent(HomeActivity.this,WelcomeActivity.class);
+            startActivity(intent);
         }
+
+
+
         //HomeFragment.setStart(0);
         //startPage();
 
@@ -338,7 +349,7 @@ public class HomeActivity extends AppCompatActivity {
     private void init() {
         addFragment();
         FragmentTabAdapter fragmentTabAdapter=new FragmentTabAdapter(HomeActivity.this,fragments,R.id.home_layout,homeRG);
-
+        //getVersontData();   //获取本版
 
     }
 

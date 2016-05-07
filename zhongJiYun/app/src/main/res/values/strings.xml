@@ -91,6 +91,7 @@
     <string name="title_activity_seek_machinist">SeekMachinistActivity</string>
     <string name="title_activity_advertisement_particulsrs">AdvertisementParticulsrsActivity
     </string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
 
 
 </resources>

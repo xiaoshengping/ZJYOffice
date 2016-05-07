@@ -1,13 +1,17 @@
 package com.example.zhongjiyun03.zhongjiyun;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.adapter.HomeViewPaterAdapter;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +31,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //记录当前选中位置
     private int currentIndex;
+
+    @ViewInject(R.id.experience_button)
+    private TextView experienceButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ViewUtils.inject(this);
         views = new ArrayList<View>();
 
         LinearLayout.LayoutParams mParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -50,9 +58,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         vp.setAdapter(vpAdapter);
         //绑定回调
         vp.setOnPageChangeListener(this);
-
         //初始化底部小点
         initDots();
+        experienceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,WelcomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 
@@ -88,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         vp.setCurrentItem(position);
+
+
     }
 
     /**
@@ -101,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         dots[positon].setEnabled(false);
         dots[currentIndex].setEnabled(true);
-
         currentIndex = positon;
     }
 
@@ -124,6 +140,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onPageSelected(int arg0) {
         //设置底部小点选中状态
         setCurDot(arg0);
+        if (arg0==3){
+            experienceButton.setVisibility(View.VISIBLE);
+        }else {
+            experienceButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -131,6 +152,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int position = (Integer)v.getTag();
         setCurView(position);
         setCurDot(position);
+        if (position==3){
+            experienceButton.setVisibility(View.VISIBLE);
+        }else {
+            experienceButton.setVisibility(View.GONE);
+        }
 
     }
 }

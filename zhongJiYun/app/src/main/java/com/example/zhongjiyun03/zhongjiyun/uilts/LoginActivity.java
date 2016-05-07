@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.register_tv:
                 Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
-
+                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
             case R.id.login_button:
                 loginData();  //用户登录
