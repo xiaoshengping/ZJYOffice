@@ -326,6 +326,10 @@
         <activity
             android:name=".WelcomeActivity"
             android:label="@string/title_activity_welcome"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".uilts.RatingHelpActivity"
+            android:label="@string/title_activity_rating_help"
             android:theme="@style/AppTheme"></activity>
     </application>
 

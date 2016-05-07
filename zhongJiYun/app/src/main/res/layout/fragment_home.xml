@@ -48,14 +48,14 @@
 
     </com.example.zhongjiyun03.zhongjiyun.view.MyGridView>
         <ImageView
-        android:background="#dedede"
+        android:background="@color/color_dedede"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="0.5dp" />
         <ImageView
             android:layout_marginTop="10dp"
-            android:background="#dedede"
+            android:background="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
     <RelativeLayout
 
         android:background="@color/ic_white"
@@ -140,12 +140,12 @@
         <ImageView
             android:background="#dedede"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <ImageView
             android:layout_marginTop="10dp"
             android:background="#dedede"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <RelativeLayout
             android:background="@color/ic_white"
             android:layout_width="match_parent"

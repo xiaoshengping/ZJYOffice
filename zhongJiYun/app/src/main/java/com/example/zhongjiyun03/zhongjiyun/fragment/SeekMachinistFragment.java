@@ -5,6 +5,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -38,6 +40,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.example.zhongjiyun03.zhongjiyun.HomeActivity;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.SeekMachinistListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
@@ -52,6 +55,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FacillyFirstClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FacillySecondClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FirstClassAdapter;
@@ -87,14 +91,14 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     PopupWindow popupWindowTime;
     private List<String> list;
     int cur_pos = -1;// 当前显示的一行
-    int popTag=1;
+    int popTag = 1;
 
     //项目进展
     @ViewInject(R.id.evolve_text_view)
     private TextView evolveButton;
     int cur_evolve_pos = -1;// 当前显示的一行
 
-      //地址选择
+    //地址选择
     private TextView mainTab1TV;
     /**左侧一级分类的数据*/
     private List<ProvinceCityBean> firstList;
@@ -120,7 +124,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     @ViewInject(R.id.facilly_text_view)
     private TextView facillyText;
     /**左侧一级分类的数据*/
-   // private List<FacillyDataBean> facilluyFirstList=new ArrayList<>();
+    // private List<FacillyDataBean> facilluyFirstList=new ArrayList<>();
     /**右侧二级分类的数据*/
     private List<FacillyChildsBean> facillySecondList;
     private String type; //型号
@@ -131,19 +135,19 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
 
     @ViewInject(R.id.project_list_view)
-    private  ListView projectListView;
+    private ListView projectListView;
     private SeekMachinistListAdapter homeServiceListAdapter;
 
 
-      @ViewInject(R.id.seek_machinist_listview)
-      private PullToRefreshListView seekMachinistListview;  //列表
-    private int pageIndex=1;
-    private  List<SekkMachinisDataBean> sekkMachinisDataBeens;
+    @ViewInject(R.id.seek_machinist_listview)
+    private PullToRefreshListView seekMachinistListview;  //列表
+    private int pageIndex = 1;
+    private List<SekkMachinisDataBean> sekkMachinisDataBeens;
     private LocationManager lm;
     private static final String TAG = "GpsActivity";
     private String Longitude;   //经度
     private String Latitude;    //纬度
-    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+    private boolean isPullDownRefresh = true; //判断是下拉，还是上拉的标记
     private String province;
 
     public SeekMachinistFragment() {
@@ -155,8 +159,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =inflater.inflate(R.layout.fragment_seek_machinist, container, false);
-        ViewUtils.inject(this,view);
+        View view = inflater.inflate(R.layout.fragment_seek_machinist, container, false);
+        ViewUtils.inject(this, view);
         PopupWindowHelper.init(getActivity());
         init(view);
 
@@ -165,13 +169,13 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     }
 
     private void init(View view) {
-        sekkMachinisDataBeens=new ArrayList<>();
+        sekkMachinisDataBeens = new ArrayList<>();
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 showSortPopupWindow(sortButton);
-                popTag=1;
+                popTag = 1;
 
             }
         });
@@ -180,7 +184,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
             public void onClick(View v) {
 
                 showEvolvePopupWindow(evolveButton);
-                popTag=2;
+                popTag = 2;
             }
         });
 
@@ -199,7 +203,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 tabFacillynClick();
             }
         });
-        lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        lm = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
 
         // 判断GPS是否正常启动
         if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -214,6 +218,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         String bestProvider = lm.getBestProvider(getCriteria(), true);
         // 获取位置信息
         // 如果不设置查询要求，getLastKnownLocation方法传人的参数为LocationManager.GPS_PROVIDER
+
 
         Location location = lm.getLastKnownLocation(bestProvider);
         updateView(location);
@@ -236,7 +241,18 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     private void initListData(int pageIndex,String type,String city,String year ,String order) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("Id","019f64b5-b05e-4996-9d9c-572cfb8fa3bd");
+        SQLhelper sqLhelper=new SQLhelper(getActivity());
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        if (!TextUtils.isEmpty(uid)){
+            requestParams.addBodyParameter("Id",uid);
+        }
+
         requestParams.addBodyParameter("pageIndex",pageIndex+"");
         requestParams.addBodyParameter("pageSize","10");
         if (!TextUtils.isEmpty(type)){

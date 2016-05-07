@@ -72,7 +72,7 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
             if (data.get(position).getWorkInfoItemDtos()!=null&&data.get(position).getWorkInfoItemDtos().size()!=0){
                 viewHold.imageLiginEnd.setVisibility(View.VISIBLE);
                 viewHold.imageLiginr.setVisibility(View.VISIBLE);
-                if (data.get(position).getWorkInfoItemDtos().size()>0){
+                if (data.get(position).getWorkInfoItemDtos().size()==1){
 
                     if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getManufacture())&&
                             !TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture())){
@@ -88,23 +88,20 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
                     }
 
 
+                }else if (data.get(position).getWorkInfoItemDtos().size()==2){
+                    viewHold.imageLiginEnd.setVisibility(View.VISIBLE);
+                    viewHold.imageLiginr.setVisibility(View.VISIBLE);
+                    viewHold.textView.setVisibility(View.VISIBLE);
+                    viewHold.textView.setText(data.get(position).getWorkInfoItemDtos().get(0).getManufacture()+
+                            data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    viewHold.textViewOne.setVisibility(View.VISIBLE);
+                    viewHold.textViewOne.setText(data.get(position).getWorkInfoItemDtos().get(1).getManufacture() +
+                            data.get(position).getWorkInfoItemDtos().get(1).getNoOfManufacture());
                 }else {
                     viewHold.textView.setVisibility(View.GONE);
-
-                }
-                if (data.get(position).getWorkInfoItemDtos().size()>1){
-                    if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getManufacture())&&
-                            !TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture())) {
-                        viewHold.textView.setVisibility(View.VISIBLE);
-                        viewHold.textViewOne.setText(data.get(position).getWorkInfoItemDtos().get(0).getManufacture() +
-                                data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture());
-                    }else {
-                        viewHold.textViewOne.setVisibility(View.GONE);
-                    }
-
-                }else {
                     viewHold.textViewOne.setVisibility(View.GONE);
                 }
+
 
             }else {
                 viewHold.textView.setVisibility(View.GONE);

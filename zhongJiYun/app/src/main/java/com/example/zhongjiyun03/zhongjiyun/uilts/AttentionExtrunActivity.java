@@ -5,11 +5,13 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -17,9 +19,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.HomeSecondHandListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AttentionSecondHandDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.SecondHandBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
@@ -59,6 +63,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     private HomeSecondHandListAdapter homeSecondHandListAdapter;
     @ViewInject(R.id.not_data_layout)
     private LinearLayout notDataLayout;
+    private SVProgressHUD mSVProgressHUD;//loding
 
 
     @Override
@@ -84,7 +89,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("关注的钻机");
         retrunText.setOnClickListener(this);
-
+        mSVProgressHUD = new SVProgressHUD(this);
 
     }
 
@@ -147,7 +152,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                             }
                             notDataLayout.setVisibility(View.VISIBLE);
                             attentionExtrunLsitview.onRefreshComplete();
-                            MyAppliction.showToast("您还没有关注钻机哦");
+                            //MyAppliction.showToast("您还没有关注钻机哦");
                             homeSecondHandListAdapter.notifyDataSetChanged();
                         }
 
@@ -193,6 +198,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
         homeSecondHandListAdapter = new HomeSecondHandListAdapter(secondHandBeens, this);
         attentionExtrunLsitview.setAdapter(homeSecondHandListAdapter);
         homeSecondHandListAdapter.notifyDataSetChanged();
+        ListView listView=attentionExtrunLsitview.getRefreshableView();
         attentionExtrunLsitview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -202,9 +208,100 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
             }
         });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                showExitGameAlert("确定要删除？",position-1);
+
+                return true;
+            }
+        });
 
 
     }
+    //对话框
+    private void showExitGameAlert(String text, final int position) {
+        final AlertDialog dlg = new AlertDialog.Builder(AttentionExtrunActivity.this).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("确定");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                isNoCheckedRequest(position);
+                dlg.cancel();
+            }
+        });
+
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });
+    }
+    private void isNoCheckedRequest(int position) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        SQLhelper sqLhelper=new SQLhelper(AttentionExtrunActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid = null;
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        if (!TextUtils.isEmpty(uid)){
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+            requestParams.addBodyParameter("Id",uid);
+            Log.e("collectId",position+"");
+            requestParams.addBodyParameter("collectId",secondHandBeens.get(position).getId());
+            requestParams.addBodyParameter("collectType","5");
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionNoData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
+                        if (appDataBean.getResult().equals("success")){
+                            mSVProgressHUD.showSuccessWithStatus("删除二手钻机成功");
+                            attentionExtrunLsitview.setRefreshing();
+                            homeSecondHandListAdapter.notifyDataSetChanged();
+                        }else {
+                            mSVProgressHUD.showErrorWithStatus("删除二手钻机失败");
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    Log.e("取消关注钻机",s);
+                }
+            });
+        }
+
+
+
+
+
+
+
+    }
+
+
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 

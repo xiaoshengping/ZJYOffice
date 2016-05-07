@@ -51,7 +51,7 @@
 
         </RelativeLayout>
         <RelativeLayout
-            android:visibility="gone"
+
             android:id="@+id/loing_xshi_layout"
             android:background="@color/ic_white"
 
@@ -74,7 +74,7 @@
                 android:textSize="@dimen/home_Size_16"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
-                android:text="李少锋"
+
                 android:layout_alignParentRight="@+id/loing_xshi_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -89,7 +89,6 @@
                 android:layout_marginTop="5dp"
                 android:drawableLeft="@mipmap/login_phone"
                 android:drawablePadding="5dp"
-                android:text="18819220688"
                 android:layout_alignParentRight="@+id/loing_xshi_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -160,7 +159,15 @@
                 android:layout_width="12dp"
                 android:layout_height="15dp" />
 
-
+            <TextView
+                android:background="@mipmap/ic_launcher"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:layout_toRightOf="@+id/rating_five"
+                android:layout_below="@+id/phone_text"
+                android:id="@+id/rating_help"
+                android:layout_width="12dp"
+                android:layout_height="15dp" />
             <ImageView
                 android:layout_marginRight="20dp"
                 android:layout_centerVertical="true"

@@ -131,7 +131,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                         }
                         notDataLayout.setVisibility(View.GONE);
                     } else if ((appBean.getResult()).equals("empty")) {
-                        MyAppliction.showToast("您还没有收到红包哦");
+                        //MyAppliction.showToast("您还没有收到红包哦");
                         getPackedButton.setVisibility(View.GONE);
                         notDataLayout.setVisibility(View.VISIBLE);
 

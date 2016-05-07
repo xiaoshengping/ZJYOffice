@@ -5,11 +5,13 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -17,9 +19,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.AttentionProjectAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AttentionProjectDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.AttentionProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
@@ -58,6 +62,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
     private AttentionProjectAdapter homeProjectlsitAdapter;
     @ViewInject(R.id.not_data_layout)
     private LinearLayout notDataLayout;
+    private SVProgressHUD mSVProgressHUD;//loding
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +124,6 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
             requestParams.addBodyParameter("collectType","1");
             requestParams.addBodyParameter("PageIndex",pageIndex+"");
             requestParams.addBodyParameter("PageSize","10");
-
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionProjectListData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -148,7 +152,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                                 attentionProjectBeens.clear();
                             }
                             notDataLayout.setVisibility(View.VISIBLE);
-                            MyAppliction.showToast("没有更多数据");
+                            //MyAppliction.showToast("没有更多数据");
                             attentionProjectListview.onRefreshComplete();
                             homeProjectlsitAdapter.notifyDataSetChanged();
                         }else if ((appBean.getResult()).equals("nomore")){
@@ -180,10 +184,10 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
     }
 
     private void initListView() {
-
         homeProjectlsitAdapter=new AttentionProjectAdapter(attentionProjectBeens,this);
         attentionProjectListview.setAdapter(homeProjectlsitAdapter);
-        attentionProjectListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+         ListView listView= attentionProjectListview.getRefreshableView();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(AttentionProjectActivity.this, SeekProjectParticularsActivity.class);
@@ -191,15 +195,96 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                 startActivity(intent);
             }
         });
-         ListView listView= attentionProjectListview.getRefreshableView();
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                MyAppliction.showToast("长按了"+position);
-
-                return false;
+                //MyAppliction.showToast("长按了"+position);
+                showExitGameAlert("确定要删除？",position-1);
+                return true;
             }
         });
+
+
+
+    }
+
+    //对话框
+    private void showExitGameAlert(String text, final int position) {
+        final AlertDialog dlg = new AlertDialog.Builder(AttentionProjectActivity.this).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("确定");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                isNoCheckedRequest(position);
+                dlg.cancel();
+            }
+        });
+
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });
+    }
+
+    private void isNoCheckedRequest(int position) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        SQLhelper sqLhelper=new SQLhelper(AttentionProjectActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid = null;
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        if (!TextUtils.isEmpty(uid)){
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+            requestParams.addBodyParameter("Id",uid);
+            Log.e("collectId",position+"");
+            requestParams.addBodyParameter("collectId",attentionProjectBeens.get(position).getId());
+            requestParams.addBodyParameter("collectType","1");
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionNoData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
+                        if (appDataBean.getResult().equals("success")){
+                            mSVProgressHUD.showSuccessWithStatus("删除项目成功");
+                            attentionProjectListview.setRefreshing();
+                            homeProjectlsitAdapter.notifyDataSetChanged();
+                        }else {
+                            mSVProgressHUD.showErrorWithStatus("删除项目失败");
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    Log.e("取消关注项目",s);
+                }
+            });
+        }
+
+
+
+
 
 
 
@@ -223,7 +308,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("关注的项目");
         retrunText.setOnClickListener(this);
-
+        mSVProgressHUD = new SVProgressHUD(this);
 
     }
 

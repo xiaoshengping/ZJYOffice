@@ -25,6 +25,7 @@
     <color name="background">#e6e6e6</color>
     <color name="phont_background">#f3f3f3</color>
     <color name="nodata_background">#c0c0c0</color>
+    <color name="color_dedede">#dedede</color>
 
 <!--  popwin-->
     <color name="popup_left_bg">#eee</color>

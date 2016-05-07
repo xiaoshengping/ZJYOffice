@@ -131,7 +131,7 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                             }
                             notDataLayout.setVisibility(View.VISIBLE);
                             competitveTenderLsitview.onRefreshComplete();
-                            MyAppliction.showToast("没有更多数据");
+                            //MyAppliction.showToast("没有更多数据");
                         }
 
                         myCompetitveAdapter.notifyDataSetChanged();

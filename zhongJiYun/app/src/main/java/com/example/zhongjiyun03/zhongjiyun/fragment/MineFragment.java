@@ -23,6 +23,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.SystemMessageDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.main.PersonageInformationBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
@@ -35,6 +36,7 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.MessageActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MyCompetitveTenderActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MyRedPacketActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.PersonageInformationActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.RatingHelpActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.StingActivity;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -99,6 +101,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @ViewInject(R.id.giftBag_remind_image)
     private ImageView giftBagRemindImage; //红包红点
     private String date;
+    private PersonageInformationBean personageInformation;
+    @ViewInject(R.id.rating_help)
+    private TextView ratingHelpText;
 
 
     public MineFragment() {
@@ -136,6 +141,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         //获取系统时间
         SimpleDateFormat sDateFormat    =   new    SimpleDateFormat("yyyy-MM-dd    HH:mm:ss");
         date=sDateFormat.format(new java.util.Date());
+        ratingHelpText.setOnClickListener(this);
 
     }
 
@@ -172,48 +178,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 stringBuffer.replace(3,7,"****");
                 phoneText.setText(stringBuffer.toString());
             }
-            if (!TextUtils.isEmpty(StarRate)){
-                if (StarRate.equals("1")){
-                    ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                    ratingThree.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                    ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                    ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                }else if (StarRate.equals("2")){
-
-                    ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingThree.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                    ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                    ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
-
-                }else if (StarRate.equals("3")){
-
-                    ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                    ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
-
-                }else if (StarRate.equals("4")){
-
-                    ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingFour.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
-
-                }else if (StarRate.equals("5")){
-
-                    ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingFour.setBackgroundResource(R.mipmap.ratingbar_check);
-                    ratingFive.setBackgroundResource(R.mipmap.ratingbar_check);
-
-                }
-            }
-
+            initPersonageInformationData();//获取用户消息
         }else {
             loginLayout.setVisibility(View.VISIBLE);
             loingXshiLayout.setVisibility(View.GONE);
@@ -221,6 +186,110 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         }
         initSystenMessage(uid); //获得系统消息提醒
+
+
+
+    }
+
+    private void initPersonageInformationData() {
+        SQLhelper sqLhelper=new SQLhelper(getActivity());
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        if (!TextUtils.isEmpty(uid)){
+            HttpUtils httpUtils=new HttpUtils();
+            RequestParams requestParams=new RequestParams();
+            requestParams.addBodyParameter("ID",uid);
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+            //Log.e("uid",uids+"");
+
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getUserInformationData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    if (!TextUtils.isEmpty(responseInfo.result)) {
+                        AppBean<PersonageInformationBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<PersonageInformationBean>>() {
+                        });
+                        if (appBean.getResult().equals("success")) {
+
+                            personageInformation = appBean.getData();
+                            if (personageInformation != null) {
+                                if (!TextUtils.isEmpty(personageInformation.getStarRate())) {
+                                    String StarRate = personageInformation.getStarRate();
+
+                                    if (StarRate.equals("1")) {
+                                        ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                                        ratingThree.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                                        ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                                        ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                                    } else if (StarRate.equals("2")) {
+
+                                        ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingThree.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                                        ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                                        ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
+
+                                    } else if (StarRate.equals("3")) {
+
+                                        ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
+                                        ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
+
+                                    } else if (StarRate.equals("4")) {
+
+                                        ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingFour.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
+
+                                    } else if (StarRate.equals("5")) {
+
+                                        ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingFour.setBackgroundResource(R.mipmap.ratingbar_check);
+                                        ratingFive.setBackgroundResource(R.mipmap.ratingbar_check);
+
+                                    }
+                                }
+
+                            } else {
+                                MyAppliction.showToast(appBean.getMsg());
+
+
+                            }
+
+
+                        }
+
+
+                    }
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+
+                    MyAppliction.showToast("网络异常，请稍后重试！");
+                }
+            });
+
+
+        }
+
+
+
 
 
 
@@ -300,10 +369,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                                 projectReplyeminDImage.setVisibility(View.GONE);
                             }
 
-                            /*if (TextUtils.isEmpty(finalMessageRemindId)){
-                                SystemMessageSQLhelper sqLhelper=new SystemMessageSQLhelper(getActivity());
-                                insertData(sqLhelper,SystemMessageSQLhelper.MESSAGEREMINDID,"hshhdhhdhdhs");
-                            }*/
+
 
                         }
 
@@ -480,6 +546,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent3);
                     getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 }
+
+                break;
+            case R.id.rating_help:
+                Intent ratingHelpIntent=new Intent(getActivity(), RatingHelpActivity.class);
+                getActivity().startActivity(ratingHelpIntent);
+                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
 
                 break;
 

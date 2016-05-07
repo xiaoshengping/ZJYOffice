@@ -92,6 +92,7 @@
     <string name="title_activity_advertisement_particulsrs">AdvertisementParticulsrsActivity
     </string>
     <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="title_activity_rating_help">RatingHelpActivity</string>
 
 
 </resources>

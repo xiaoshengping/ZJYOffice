@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.RatingHelpActivity">
+    <include android:id="@+id/head_layout" android:layout_width="match_parent"
+        android:layout_height="wrap_content"  layout="@layout/app_head_layout" />
+
+
+    <TextView
+        android:id="@+id/tailt_text"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:textColor="@color/tailt_dark"
+        android:textSize="@dimen/home_Size_20"
+        android:layout_below="@+id/head_layout"
+        android:text="机主星级分类详细说明"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <ImageView
+        android:id="@+id/tailt_image"
+        android:layout_below="@+id/tailt_text"
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+    <ImageView
+        android:id="@+id/tailt_one_image"
+        android:layout_below="@+id/tailt_image"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+    <TextView
+       android:id="@+id/content_text"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:textColor="@color/content_color"
+        android:textSize="@dimen/home_Size_18"
+        android:layout_below="@+id/tailt_one_image"
+        android:text="机主分为5个星级:\n1、一星机主：在中基云平台注册，并审核通过;\n2、二星机主：成功添加一台钻机,可在中基云商城享受9折优惠；\n3、三星机主：项目投标并通过业主选择，项目启动,可在中基云商城享受8折优惠；\n4、四星机主；投标项目累计获得业主给予 150 个星，并且平均好评度不低于3星,可在中基云商城享受7折优惠；\n5、五星机主：投标项目累计获得业主给予 1500 个星，并且平均好评度不低于4星,可在中基云商城享受6折优惠!"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_below="@+id/content_text"
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+
+</RelativeLayout>

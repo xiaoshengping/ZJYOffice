@@ -21,6 +21,15 @@ public class PersonageInformationBean implements Serializable {
     private String Headthumb ;//string 头像
     private int BossType ;//int 个人：1，企业：2
     private String Role ;//string boss机主，owner业主，driver机手
+    private String StarRate;
+
+    public String getStarRate() {
+        return StarRate;
+    }
+
+    public void setStarRate(String starRate) {
+        StarRate = starRate;
+    }
 
     public String getId() {
         return Id;
