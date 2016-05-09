@@ -117,8 +117,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_mine,container, false);
         ViewUtils.inject(this,view);
-
-           init();
+        init();
         return view;
     }
 
@@ -142,7 +141,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         SimpleDateFormat sDateFormat    =   new    SimpleDateFormat("yyyy-MM-dd    HH:mm:ss");
         date=sDateFormat.format(new java.util.Date());
         ratingHelpText.setOnClickListener(this);
-
     }
 
     @Override

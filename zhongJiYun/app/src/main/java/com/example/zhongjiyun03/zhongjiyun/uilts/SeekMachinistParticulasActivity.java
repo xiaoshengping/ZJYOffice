@@ -97,6 +97,8 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     private TextView petyTextOne;
     @ViewInject(R.id.miaoshi_text_one)
     private TextView miaoshiTextOne;
+    @ViewInject(R.id.work_experience_rlayout)
+    private RelativeLayout workExperienceRlayout;
     @ViewInject(R.id.work_experience_layout_one)
     private RelativeLayout workExperienceLayoutOne;
     @ViewInject(R.id.message_rlauout)
@@ -146,63 +148,184 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
 
             if (seekMachinisDataBean.getWorkInfoItemDtos()!=null&&seekMachinisDataBean.getWorkInfoItemDtos().size()!=0){
                 if (seekMachinisDataBean.getWorkInfoItemDtos().size()==1){
-                    messageRlauout.setVisibility(View.VISIBLE);
+                    workExperienceRlayout.setVisibility(View.VISIBLE);
+
                     workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"月-"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
-                    petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture());
-                    miaoShiText.setText("工作描述:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing());
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture())&&
+                            !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture())){
+                        petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    }else {
+                        petyText.setText("钻机机型:暂无。");
+
+                    }
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing())) {
+                        miaoShiText.setVisibility(View.VISIBLE);
+                        miaoShiText.setText("工作描述:" + seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing());
+                    }else {
+                        miaoShiText.setText("工作描述:暂无。");
+                    }
                 }else if (seekMachinisDataBean.getWorkInfoItemDtos().size()==2){
-                    messageRlauout.setVisibility(View.VISIBLE);
+                    workExperienceRlayout.setVisibility(View.VISIBLE);
                     workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"月-"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
-                    petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture());
-                    miaoShiText.setText("工作描述:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing());
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture())&&
+                            !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture())){
+                        petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    }else {
+                        petyText.setText("钻机机型:暂无。");
+                    }
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing())) {
+                        miaoShiText.setVisibility(View.VISIBLE);
+                        miaoShiText.setText("工作描述:" + seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing());
+                    }else {
+                        miaoShiText.setText("工作描述:暂无。");
+                    }
                     workExperienceLayoutOne.setVisibility(View.VISIBLE);
                     imageLini.setVisibility(View.VISIBLE);
                     workTimeTextOne.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"月-"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth()+"月-"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear()+"年"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth()+"月");
-                    petyTextOne.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture()+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture());
-                    miaoshiTextOne.setText("工作描述:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing());
-                }else if (seekMachinisDataBean.getWorkInfoItemDtos().size()==3){
-                    messageRlauout.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture())&&
+                            !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture())){
+                        petyTextOne.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture()+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture());
+                    }else {
+                        petyTextOne.setText("钻机机型:暂无。");
+                    }
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing())) {
+                        miaoshiTextOne.setVisibility(View.VISIBLE);
+                        miaoshiTextOne.setText("工作描述:" + seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing());
+                    }else {
+                        miaoshiTextOne.setText("工作描述:暂无。");
+                    }
+                    }else if (seekMachinisDataBean.getWorkInfoItemDtos().size()==3){
+                    workExperienceRlayout.setVisibility(View.VISIBLE);
                     workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"月-"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
-                    petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture());
-                    miaoShiText.setText("工作描述:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing());
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture())&&
+                            !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture())){
+                        petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    }else {
+                        petyText.setText("钻机机型:暂无。");
+                    }
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing())) {
+                        miaoShiText.setVisibility(View.VISIBLE);
+                        miaoShiText.setText("工作描述:" + seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing());
+                    }else {
+                        miaoShiText.setText("工作描述:暂无。");
+                    }
                     workExperienceLayoutOne.setVisibility(View.VISIBLE);
                     imageLini.setVisibility(View.VISIBLE);
                     workTimeTextOne.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"月-"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth()+"月-"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear()+"年"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth()+"月");
-                    petyTextOne.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture()+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture());
-                    miaoshiTextOne.setText("工作描述:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing());
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture())&&
+                            !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture())){
+                        petyTextOne.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture()+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture());
+                    }else {
+                        petyTextOne.setText("钻机机型:暂无。");
+                    }
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing())) {
+                        miaoshiTextOne.setVisibility(View.VISIBLE);
+                        miaoshiTextOne.setText("工作描述:" + seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing());
+                    }else {
+                        miaoshiTextOne.setText("工作描述:暂无。");
+                    }
                     workExperienceLayoutTwo.setVisibility(View.VISIBLE);
                     imageLiniOne.setVisibility(View.VISIBLE);
                     workTimeTextTwo.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginYear()+"月-"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginMonth()+"月-"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndYear()+"年"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndMonth()+"月");
-                    petyTextTwo.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture()+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getNoOfManufacture());
-                    miaoshiTextTwo.setText("工作描述:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing());
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getManufacture())&&
+                            !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getNoOfManufacture())){
+                        petyTextTwo.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getManufacture()+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(2).getNoOfManufacture());
+                    }else {
+                        petyTextTwo.setText("钻机机型:暂无。");
+                    }
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getDescribing())){
+                        miaoshiTextTwo.setVisibility(View.VISIBLE);
+                        miaoshiTextTwo.setText("工作描述:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getDescribing());
+                    }else {
+                        miaoshiTextTwo.setText("工作描述:暂无。");
+                    }
+
+                }else {
+                    workExperienceRlayout.setVisibility(View.VISIBLE);
+                    workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture())&&
+                            !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture())){
+                        petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    }else {
+                        petyText.setText("钻机机型:暂无。");
+                    }
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing())) {
+                        miaoShiText.setVisibility(View.VISIBLE);
+                        miaoShiText.setText("工作描述:" + seekMachinisDataBean.getWorkInfoItemDtos().get(0).getDescribing());
+                    }else {
+                        miaoShiText.setText("工作描述:暂无。");
+                    }
+                    workExperienceLayoutOne.setVisibility(View.VISIBLE);
+                    imageLini.setVisibility(View.VISIBLE);
+                    workTimeTextOne.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"年"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth()+"月-"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear()+"年"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth()+"月");
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture())&&
+                            !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture())){
+                        petyTextOne.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture()+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture());
+                    }else {
+                        petyTextOne.setText("钻机机型:暂无。");
+                    }
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing())) {
+                        miaoshiTextOne.setVisibility(View.VISIBLE);
+                        miaoshiTextOne.setText("工作描述:" + seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing());
+                    }else {
+                        miaoshiTextOne.setText("工作描述:暂无。");
+                    }
+                    workExperienceLayoutTwo.setVisibility(View.VISIBLE);
+                    imageLiniOne.setVisibility(View.VISIBLE);
+                    workTimeTextTwo.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginYear()+"年"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginMonth()+"月-"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndYear()+"年"+
+                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndMonth()+"月");
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getManufacture())&&
+                            !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getNoOfManufacture())){
+                        petyTextTwo.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getManufacture()+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(2).getNoOfManufacture());
+                    }else {
+                        petyTextTwo.setText("钻机机型:暂无。");
+                    }
+                    if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getDescribing())){
+                        miaoshiTextTwo.setVisibility(View.VISIBLE);
+                        miaoshiTextTwo.setText("工作描述:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getDescribing());
+                    }else {
+                        miaoshiTextTwo.setText("工作描述:暂无。");
+                    }
+
                 }
 
             }else {
-                messageRlauout.setVisibility(View.GONE);
+                workExperienceRlayout.setVisibility(View.GONE);
                 workExperienceLayoutOne.setVisibility(View.GONE);
                 workExperienceLayoutTwo.setVisibility(View.GONE);
             }

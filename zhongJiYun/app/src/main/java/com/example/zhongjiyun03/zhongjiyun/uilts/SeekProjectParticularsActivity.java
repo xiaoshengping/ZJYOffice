@@ -362,7 +362,8 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
               competitiveButton.setTextColor(getResources().getColor(R.color.white));
               competitiveButton.setBackgroundResource(R.drawable.loing_button_corners);
           }else if (seekProjectBean.getCanReply().equals("联系业主")){
-
+              competitiveButton.setTextColor(getResources().getColor(R.color.white));
+              competitiveButton.setBackgroundResource(R.drawable.loing_button_corners);
               competitiveButton.setText(seekProjectBean.getCanReply());
           }else {
 
@@ -417,7 +418,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         mSVProgressHUD = new SVProgressHUD(this);
         competitiveButton.setOnClickListener(this);
         checkBoxCheck.setOnCheckedChangeListener(this);
-        time = new TimeCount(5000, 1000);//构造CountDownTimer对象
+        time = new TimeCount(3000, 1000);//构造CountDownTimer对象
         dlg = new AlertDialog.Builder(SeekProjectParticularsActivity.this).create();
 
     }
@@ -535,7 +536,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         Window window = dlg.getWindow();
         // *** 主要就是在这里实现这种效果的.
         // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
-        window.setContentView(R.layout.my_redpacked_alert_layout);
+        window.setContentView(R.layout.cell_alert_layout);
         TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
         TextView tailteTv = (TextView) window.findViewById(R.id.tv);
         tailteTv.setText(text);

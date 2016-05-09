@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- 退出游戏的背景图 -->
+    <!--<ImageView android:id="@+id/exitGameBackground"
+        android:layout_centerInParent="true"
+        android:layout_height="150dp"
+        android:layout_width="300dp"
+        android:src="#1b052b" />-->
+    <ImageView android:id="@+id/exitGameBackground"
+        android:layout_centerInParent="true"
+        android:layout_height="180dp"
+        android:layout_width="250dp"
+        android:src="#ffffff" />
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignLeft="@+id/exitGameBackground"
+        android:layout_alignParentTop="@+id/exitGameBackground"
+        android:layout_alignTop="@+id/exitGameBackground"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content">
+      <!--  <TextView
+            android:textSize="@dimen/home_Size_16"
+            android:id="@+id/text_view"
+            android:text="共领取"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />-->
+        <TextView
+            android:layout_marginRight="5dp"
+            android:id="@+id/tv"
+            android:text="88.00"
+            android:textSize="@dimen/home_Size_20"
+            android:gravity="center"
+            android:textColor="@color/red"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            />
+        <!--<TextView
+            android:textSize="@dimen/home_Size_16"
+            android:text="云币"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />-->
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="75dp"
+        android:gravity="center"
+        android:layout_alignLeft="@+id/exitGameBackground"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/exitGameBackground"
+        android:id="@+id/tailt_layout"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:paddingRight="3dp"
+            android:paddingLeft="3dp"
+            android:id="@+id/tailte_tv"
+            android:textSize="@dimen/home_Size_16"
+            android:text="您当前的云币数为"
+            android:layout_marginRight="5dp"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content" />
+      <!--  <TextView
+            android:paddingRight="1dp"
+            android:paddingLeft="1dp"
+            android:text="888"
+            android:textSize="@dimen/home_Size_16"
+            android:id="@+id/tailte_tv"
+            android:textColor="@color/red_light"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            />-->
+        <!--<TextView
+            android:textSize="@dimen/home_Size_16"
+            android:text="个"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />-->
+
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="20dp"
+        android:textSize="@dimen/home_Size_16"
+        android:text="确定"
+        android:layout_below="@+id/tailt_layout"
+        android:id="@+id/btn_ok"
+        android:layout_marginRight="35dp"
+        android:gravity="center"
+        android:background="@drawable/loing_button_corners"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_height="40dp"
+        android:layout_width="150dp"
+        />
+</RelativeLayout>

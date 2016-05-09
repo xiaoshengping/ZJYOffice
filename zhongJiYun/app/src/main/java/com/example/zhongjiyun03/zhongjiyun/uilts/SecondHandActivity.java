@@ -578,7 +578,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         //设备厂商
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("DeviceJsonType","2");
+        requestParams.addBodyParameter("DeviceJsonType","4");
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {

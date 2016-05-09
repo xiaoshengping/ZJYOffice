@@ -156,14 +156,7 @@
               android:layout_height="wrap_content" />
       </RelativeLayout>
 
-         <!-- <LinearLayout
-              android:layout_marginTop="10dp"
-              android:background="@color/ic_white"
-              android:layout_marginBottom="20dp"
-              android:orientation="vertical"
-              android:layout_below="@+id/message_rlauout"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">-->
+
     <RelativeLayout
         android:layout_marginTop="5dp"
         android:layout_below="@+id/message_rlauout"
@@ -176,28 +169,26 @@
             android:id="@+id/work_experience_text_view"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
+
             android:textColor="@color/tailt_dark"
             android:textSize="@dimen/home_Size_18"
             android:text="工作经验"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="30dp" />
 
         <RelativeLayout
             android:visibility="gone"
-            android:id="@+id/message_rlayout"
+            android:id="@+id/work_experience_rlayout"
             android:layout_below="@+id/work_experience_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-
         <TextView
 
             android:id="@+id/work_time_text"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:textSize="@dimen/home_Size_16"
-            android:text="工作时间:2001年03月-2004年05月"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -207,7 +198,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:textSize="@dimen/home_Size_16"
-            android:text="钻机机型:三一重工SR80"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
@@ -217,7 +208,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:textSize="@dimen/home_Size_16"
-            android:text="工作描述:三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -244,7 +235,7 @@
                   android:layout_marginLeft="20dp"
                   android:layout_marginTop="5dp"
                   android:textSize="@dimen/home_Size_16"
-                  android:text="工作时间:2001年03月-2004年05月"
+
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content" />
 
@@ -264,7 +255,7 @@
                   android:layout_marginLeft="20dp"
                   android:layout_marginTop="5dp"
                   android:textSize="@dimen/home_Size_16"
-                  android:text="工作描述:三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80"
+
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content" />
           </RelativeLayout>
@@ -290,7 +281,7 @@
                   android:layout_marginLeft="20dp"
                   android:layout_marginTop="5dp"
                   android:textSize="@dimen/home_Size_16"
-                  android:text="工作时间:2001年03月-2004年05月"
+
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content" />
 
@@ -300,7 +291,7 @@
                   android:layout_marginLeft="20dp"
                   android:layout_marginTop="5dp"
                   android:textSize="@dimen/home_Size_16"
-                  android:text="钻机机型:三一重工SR80"
+
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content" />
               <TextView
@@ -310,7 +301,7 @@
                   android:layout_marginLeft="20dp"
                   android:layout_marginTop="5dp"
                   android:textSize="@dimen/home_Size_16"
-                  android:text="工作描述:三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80三一重工SR80"
+
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content" />
           </RelativeLayout>
