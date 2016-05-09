@@ -146,7 +146,6 @@
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-
             android:textColor="@color/ic_white"
             android:background="@drawable/loing_button_corners"
             android:textSize="@dimen/home_Size_18"

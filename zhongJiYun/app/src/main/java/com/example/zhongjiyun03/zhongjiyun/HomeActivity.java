@@ -78,8 +78,7 @@ public class HomeActivity extends AppCompatActivity {
             Log.d("debug", "第一次运行");
             Intent intent = new Intent().setClass(HomeActivity.this,MainActivity.class);
             startActivityForResult(intent,0);
-            //testAddContacts();  //添加联系人
-
+            testAddContacts();  //添加联系人
             editor.putBoolean("isFirstRun", false);
             editor.commit();
         } else{

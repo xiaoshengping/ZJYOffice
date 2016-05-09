@@ -9,10 +9,19 @@
     tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.StingActivity">
      <include android:id="@+id/tailt_layout" android:layout_width="match_parent"
          android:layout_height="wrap_content"  layout="@layout/app_head_layout"/>
-    <LinearLayout
-        android:id="@+id/sting_layout"
+
+    <ImageView
         android:layout_marginTop="10dp"
         android:layout_below="@+id/tailt_layout"
+        android:id="@+id/image_one"
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+    <LinearLayout
+        android:id="@+id/sting_layout"
+
+        android:layout_below="@+id/image_one"
         android:background="@color/ic_white"
         android:gravity="center"
         android:orientation="horizontal"
@@ -35,11 +44,23 @@
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/jibiao_xiangmu_rl"
-        android:layout_marginTop="10dp"
         android:layout_below="@+id/sting_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/image_two"
+            android:background="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        <ImageView
+            android:id="@+id/image_three"
+            android:layout_below="@+id/image_two"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
         <LinearLayout
+            android:layout_below="@+id/image_three"
             android:id="@+id/competitive_layout"
             android:background="@color/ic_white"
             android:gravity="center"
@@ -155,12 +176,24 @@
 
         </LinearLayout>
     </RelativeLayout>
-    <RelativeLayout
-        android:layout_marginTop="10dp"
+
+    <ImageView
         android:layout_below="@+id/jibiao_xiangmu_rl"
+        android:id="@+id/image_frou"
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+    <ImageView
+        android:id="@+id/image_five"
+        android:layout_below="@+id/image_frou"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+    <RelativeLayout
+        android:layout_below="@+id/image_five"
         android:id="@+id/redpacket_layout"
         android:background="@color/ic_white"
-
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -180,10 +213,15 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:ignore="NewApi" />
 
     </RelativeLayout>
-
+    <ImageView
+        android:layout_below="@+id/redpacket_layout"
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
     <Button
         android:layout_below="@+id/redpacket_layout"
         android:id="@+id/exit_button"

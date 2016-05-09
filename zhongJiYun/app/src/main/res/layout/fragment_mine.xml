@@ -155,18 +155,17 @@
                 android:layout_toRightOf="@+id/rating_four"
                 android:layout_below="@+id/phone_text"
                 android:id="@+id/rating_five"
-
                 android:layout_width="12dp"
                 android:layout_height="15dp" />
 
             <TextView
-                android:background="@mipmap/ic_launcher"
+                android:background="@mipmap/star_rule_icon"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="8dp"
                 android:layout_toRightOf="@+id/rating_five"
                 android:layout_below="@+id/phone_text"
                 android:id="@+id/rating_help"
-                android:layout_width="12dp"
+                android:layout_width="15dp"
                 android:layout_height="15dp" />
             <ImageView
                 android:layout_marginRight="20dp"
@@ -179,10 +178,24 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_marginTop="10dp"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/image_one"
+                android:background="#dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+            <ImageView
+                android:id="@+id/image_two"
+                android:layout_below="@+id/image_one"
+                android:layout_marginTop="10dp"
+                android:background="#dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+
             <LinearLayout
+                android:layout_below="@+id/image_two"
                 android:id="@+id/redpacket_layout"
                 android:background="@color/ic_white"
                 android:gravity="center"
@@ -264,11 +277,24 @@
         </LinearLayout>
         <RelativeLayout
             android:id="@+id/jibiao_xiangmu_rl"
-            android:layout_marginTop="10dp"
+
             android:layout_below="@+id/message_houbao_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/image_three"
+                android:background="#dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+            <ImageView
+                android:id="@+id/image_frou"
+                android:layout_below="@+id/image_three"
+                android:layout_marginTop="10dp"
+                android:background="#dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
             <LinearLayout
+                android:layout_below="@+id/image_frou"
                 android:id="@+id/competitive_layout"
                 android:background="@color/ic_white"
                 android:gravity="center"
@@ -415,18 +441,31 @@
             </LinearLayout>
 
         </RelativeLayout>
+        <ImageView
+            android:layout_below="@+id/jibiao_xiangmu_rl"
+            android:id="@+id/image_five"
+            android:background="#dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        <ImageView
+            android:id="@+id/image_sit"
+            android:layout_below="@+id/image_five"
+            android:layout_marginTop="10dp"
+            android:background="#dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+
 
         <LinearLayout
             android:id="@+id/sting_layout"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/jibiao_xiangmu_rl"
+
+            android:layout_below="@+id/image_sit"
             android:background="@color/ic_white"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="50dp">
             <ImageView
-
                 android:layout_marginLeft="20dp"
                 android:src="@mipmap/my_setting_icon"
                 android:layout_width="30dp"
@@ -447,7 +486,11 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
-
+        <ImageView
+            android:layout_below="@+id/sting_layout"
+            android:background="#dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
 
 
 

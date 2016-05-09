@@ -457,7 +457,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                     requestParams.addBodyParameter("City",selectedName);
                 }*/
 
-                projectListView.setRefreshing();
+
             }
         });
     }
@@ -495,7 +495,9 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         mainTab1TV.setCompoundDrawables(null, null, img, null);
         seekProjectBeans.clear();
+        PageIndex=1;
         initListData(PageIndex,cityName,State,Order);
+        projectListView.setRefreshing();
     }
 
 
@@ -559,9 +561,9 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                     Order=arg2+"";
                 }
                 seekProjectBeans.clear();
-                projectListView.setRefreshing();
+                PageIndex=1;
                 initListData(PageIndex,cityName,State,Order);
-
+                projectListView.setRefreshing();
 
             }
 
@@ -632,8 +634,9 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                     State=arg2+"";
                 }
                 seekProjectBeans.clear();
-                projectListView.setRefreshing();
+                PageIndex=1;
                 initListData(PageIndex,cityName,State,Order);
+                projectListView.setRefreshing();
 
             }
 

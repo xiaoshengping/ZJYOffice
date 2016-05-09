@@ -84,7 +84,7 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
-public class SecondHandActivity extends AppCompatActivity implements OnClickListener  ,PullToRefreshBase.OnRefreshListener2<ListView>{
+public class SecondHandActivity extends AppCompatActivity implements OnClickListener, PullToRefreshBase.OnRefreshListener2<ListView> {
 
     @ViewInject(R.id.second_hand_listview)
     private PullToRefreshListView secondHandListview; //列表
@@ -101,7 +101,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     PopupWindow popupWindowTime;
     private List<String> list;
     int cur_pos = -1;// 当前显示的一行
-    int popTag=1;
+    int popTag = 1;
 
     //项目进展
     @ViewInject(R.id.evolve_text_view)
@@ -126,8 +126,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     //弹出PopupWindow时，背景变暗的动画
     private Animation animIn, animOut;
 
-    private int pageIndex=1; //page
-    private  List<SecondHandBean> secondHandBeens;
+    private int pageIndex = 1; //page
+    private List<SecondHandBean> secondHandBeens;
 
     //设备产商
     private PopupWindow popupWindowFacilly;
@@ -151,9 +151,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private String Longitude;
     private String Latitude;
     private HomeSecondHandListAdapter homeSecondHandListAdapter;
-    private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+    private boolean isPullDownRefresh = true; //判断是下拉，还是上拉的标记
     private String province;
-
 
 
     @Override
@@ -168,13 +167,13 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     }
 
     private void inti() {
-        secondHandBeens=new ArrayList<>();
+        secondHandBeens = new ArrayList<>();
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 showSortPopupWindow(sortButton);
-                popTag=1;
+                popTag = 1;
 
             }
         });
@@ -183,7 +182,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             public void onClick(View v) {
 
                 showEvolvePopupWindow(evolveButton);
-                popTag=2;
+                popTag = 2;
             }
         });
 
@@ -246,20 +245,18 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
 
 
-
-
     }
 
 
-    public void intiPullToRefresh(){
+    public void intiPullToRefresh() {
         secondHandListview.setMode(PullToRefreshBase.Mode.BOTH);
         secondHandListview.setOnRefreshListener(this);
-        ILoadingLayout endLabels  = secondHandListview
+        ILoadingLayout endLabels = secondHandListview
                 .getLoadingLayoutProxy(false, true);
         endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
         endLabels.setRefreshingLabel("正在刷新...");// 刷新时
         endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
-        ILoadingLayout startLabels  = secondHandListview
+        ILoadingLayout startLabels = secondHandListview
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
@@ -267,14 +264,15 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         secondHandListview.setRefreshing();
 
     }
+
     private void intiListView() {
         homeSecondHandListAdapter = new HomeSecondHandListAdapter(secondHandBeens, this);
         secondHandListview.setAdapter(homeSecondHandListAdapter);
         secondHandListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(SecondHandActivity.this,ExturderParticularsActivity.class);
-                intent.putExtra("secondHandData",secondHandBeens.get(position-1).getId());
+                Intent intent = new Intent(SecondHandActivity.this, ExturderParticularsActivity.class);
+                intent.putExtra("secondHandData", secondHandBeens.get(position - 1).getId());
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
             }
@@ -297,79 +295,81 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
         }
     }
-    private void initListData(int pageIndex,String type,String city,String year,String order ) {
-        HttpUtils httpUtils=new HttpUtils();
-        final RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(SecondHandActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
+
+    private void initListData(int pageIndex, String type, String city, String year, String order) {
+        HttpUtils httpUtils = new HttpUtils();
+        final RequestParams requestParams = new RequestParams();
+        SQLhelper sqLhelper = new SQLhelper(SecondHandActivity.this);
+        SQLiteDatabase db = sqLhelper.getWritableDatabase();
+        Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid = null;  //用户id
 
         while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
+            uid = cursor.getString(0);
 
         }
-        if (!TextUtils.isEmpty(uid)){
-            requestParams.addBodyParameter("Id",uid);
+        if (!TextUtils.isEmpty(uid)) {
+            requestParams.addBodyParameter("Id", uid);
             //步骤1：创建一个SharedPreferences接口对象
             SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
             //步骤2：获取文件中的值
-            String sesstionId = read.getString("code","");
+            String sesstionId = read.getString("code", "");
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         }
 
-        if (!TextUtils.isEmpty(city)){
+        if (!TextUtils.isEmpty(city)) {
 
-            if (province.equals("全部")){
+            if (province.equals("全部")) {
 
-            }else {
-                if (city.equals("全部")){
-                    requestParams.addBodyParameter("province",province);
-                }else {
-                    requestParams.addBodyParameter("city",city);
+            } else {
+                if (city.equals("全部")) {
+                    requestParams.addBodyParameter("province", province);
+                } else {
+                    requestParams.addBodyParameter("city", city);
                 }
 
             }
 
 
         }
-        if (getIntent().getStringExtra("tage").equals("matingFacily")){
-            if (!TextUtils.isEmpty(getIntent().getStringExtra("data"))){
-                requestParams.addBodyParameter("province",getIntent().getStringExtra("data").toString());
+        if (getIntent().getStringExtra("tage").equals("matingFacily")) {
+            if (!TextUtils.isEmpty(getIntent().getStringExtra("data"))) {
+                requestParams.addBodyParameter("province", getIntent().getStringExtra("data").toString());
             }
 
         }
-        if (!TextUtils.isEmpty(type)){
-            requestParams.addBodyParameter("type",type);
+        if (!TextUtils.isEmpty(type)) {
+            requestParams.addBodyParameter("type", type);
         }
-        if (!TextUtils.isEmpty(year)){
-            requestParams.addBodyParameter("year",year);
+        if (!TextUtils.isEmpty(year)) {
+            requestParams.addBodyParameter("year", year);
         }
-        if (!TextUtils.isEmpty(order)){
-            requestParams.addBodyParameter("order",order);
+        if (!TextUtils.isEmpty(order)) {
+            requestParams.addBodyParameter("order", order);
         }
-        if (!TextUtils.isEmpty(Latitude)){
-            requestParams.addBodyParameter("latitude",Latitude);
+        if (!TextUtils.isEmpty(Latitude)) {
+            requestParams.addBodyParameter("latitude", Latitude);
         }
-        if (!TextUtils.isEmpty(Longitude)){
-            requestParams.addBodyParameter("longitude",Longitude);
+        if (!TextUtils.isEmpty(Longitude)) {
+            requestParams.addBodyParameter("longitude", Longitude);
         }
-        requestParams.addBodyParameter("pageIndex",pageIndex+"");
-        requestParams.addBodyParameter("pageSize","10");
+        requestParams.addBodyParameter("pageIndex", pageIndex + "");
+        requestParams.addBodyParameter("pageSize", "10");
 
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderData(),requestParams, new RequestCallBack<String>() {
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("二手钻机",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<SecondHandDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandDataBean>>(){});
-                    if ((appListDataBean.getResult()).equals("success")){
-                        SecondHandDataBean secondHandDataBean=  appListDataBean.getData();
-                        if (secondHandDataBean!=null){
-                           List<SecondHandBean> secondHandBeen=  secondHandDataBean.getPagerData();
+                Log.e("二手钻机", responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)) {
+                    AppBean<SecondHandDataBean> appListDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SecondHandDataBean>>() {
+                    });
+                    if ((appListDataBean.getResult()).equals("success")) {
+                        SecondHandDataBean secondHandDataBean = appListDataBean.getData();
+                        if (secondHandDataBean != null) {
+                            List<SecondHandBean> secondHandBeen = secondHandDataBean.getPagerData();
 
-                            if (secondHandBeen!=null){
-                                if (isPullDownRefresh){
+                            if (secondHandBeen != null) {
+                                if (isPullDownRefresh) {
                                     secondHandBeens.clear();
                                 }
                                 secondHandBeens.addAll(secondHandBeen);
@@ -377,12 +377,12 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                             }
                         }
                         secondHandListview.onRefreshComplete();
-                    }else if ((appListDataBean.getResult()).equals("nomore")){
+                    } else if ((appListDataBean.getResult()).equals("nomore")) {
                         MyAppliction.showToast("已到最底了");
                         homeSecondHandListAdapter.notifyDataSetChanged();
                         secondHandListview.onRefreshComplete();
-                    }else if ((appListDataBean.getResult()).equals("empty")){
-                        if (isPullDownRefresh){
+                    } else if ((appListDataBean.getResult()).equals("empty")) {
+                        if (isPullDownRefresh) {
                             secondHandBeens.clear();
                         }
                         homeSecondHandListAdapter.notifyDataSetChanged();
@@ -397,33 +397,32 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("二手钻机",s);
+                Log.e("二手钻机", s);
                 homeSecondHandListAdapter.notifyDataSetChanged();
                 secondHandListview.onRefreshComplete();
             }
         });
 
 
-
-
-
     }
+
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 
-         pageIndex=1;
-        isPullDownRefresh=true;
-        initListData(pageIndex,type,city,year,order);
+        pageIndex = 1;
+        isPullDownRefresh = true;
+        initListData(pageIndex, type, city, year, order);
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
-        isPullDownRefresh=false;
-        initListData(pageIndex,type,city,year,order);
+        isPullDownRefresh = false;
+        initListData(pageIndex, type, city, year, order);
 
 
     }
+
     // 位置监听
     private LocationListener locationListener = new LocationListener() {
 
@@ -437,6 +436,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             Log.i(TAG, "纬度：" + location.getLatitude());
             Log.i(TAG, "海拔：" + location.getAltitude());
         }
+
         /**
          * GPS状态变化时触发
          */
@@ -461,6 +461,16 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
          * GPS开启时触发
          */
         public void onProviderEnabled(String provider) {
+            if (ActivityCompat.checkSelfPermission(SecondHandActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(SecondHandActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             Location location = lm.getLastKnownLocation(provider);
             updateView(location);
         }
@@ -1012,8 +1022,10 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
                   }
                 isPullDownRefresh=true;
+
                 secondHandListview.setRefreshing();
                 initListData(pageIndex,type,city,year,order);
+
             }
 
 

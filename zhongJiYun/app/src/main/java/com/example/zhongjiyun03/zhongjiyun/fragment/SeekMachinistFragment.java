@@ -40,7 +40,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.example.zhongjiyun03.zhongjiyun.HomeActivity;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.SeekMachinistListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
@@ -220,6 +219,16 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         // 如果不设置查询要求，getLastKnownLocation方法传人的参数为LocationManager.GPS_PROVIDER
 
 
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         Location location = lm.getLastKnownLocation(bestProvider);
         updateView(location);
         // 监听状态
@@ -238,78 +247,78 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
     }
 
-    private void initListData(int pageIndex,String type,String city,String year ,String order) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(getActivity());
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
+    private void initListData(int pageIndex, String type, String city, String year, String order) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requestParams = new RequestParams();
+        SQLhelper sqLhelper = new SQLhelper(getActivity());
+        SQLiteDatabase db = sqLhelper.getWritableDatabase();
+        Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid = null;  //用户id
         while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
+            uid = cursor.getString(0);
 
         }
-        if (!TextUtils.isEmpty(uid)){
-            requestParams.addBodyParameter("Id",uid);
+        if (!TextUtils.isEmpty(uid)) {
+            requestParams.addBodyParameter("Id", uid);
         }
 
-        requestParams.addBodyParameter("pageIndex",pageIndex+"");
-        requestParams.addBodyParameter("pageSize","10");
-        if (!TextUtils.isEmpty(type)){
-            if (brandType.equals("全部")){
+        requestParams.addBodyParameter("pageIndex", pageIndex + "");
+        requestParams.addBodyParameter("pageSize", "10");
+        if (!TextUtils.isEmpty(type)) {
+            if (brandType.equals("全部")) {
 
-            }else {
-                if (type.equals("全部")){
-                    if (!TextUtils.isEmpty(brandType)){
-                        requestParams.addBodyParameter("manufacture",brandType);
+            } else {
+                if (type.equals("全部")) {
+                    if (!TextUtils.isEmpty(brandType)) {
+                        requestParams.addBodyParameter("manufacture", brandType);
                     }
 
-                }else {
-                    requestParams.addBodyParameter("type",type);
+                } else {
+                    requestParams.addBodyParameter("type", type);
                 }
             }
 
         }
-        if (!TextUtils.isEmpty(city)){
-            if (province.equals("全部")){
+        if (!TextUtils.isEmpty(city)) {
+            if (province.equals("全部")) {
 
-            }else {
-                if (city.equals("全部")){
-                    requestParams.addBodyParameter("province",province);
-                }else {
-                    requestParams.addBodyParameter("city",city);
+            } else {
+                if (city.equals("全部")) {
+                    requestParams.addBodyParameter("province", province);
+                } else {
+                    requestParams.addBodyParameter("city", city);
                 }
 
             }
 
 
+        }
+        if (!TextUtils.isEmpty(year)) {
+            requestParams.addBodyParameter("year", year);
+        }
+        if (!TextUtils.isEmpty(order)) {
+            requestParams.addBodyParameter("order", order);
+        }
+        if (!TextUtils.isEmpty(Latitude)) {
+            requestParams.addBodyParameter("latitude", Latitude);
+        }
+        if (!TextUtils.isEmpty(Longitude)) {
+            requestParams.addBodyParameter("longitude", Longitude);
+        }
 
-        }
-        if (!TextUtils.isEmpty(year)){
-            requestParams.addBodyParameter("year",year);
-        }
-        if (!TextUtils.isEmpty(order)){
-            requestParams.addBodyParameter("order",order);
-        }
-        if (!TextUtils.isEmpty(Latitude)){
-            requestParams.addBodyParameter("latitude",Latitude);
-        }
-        if (!TextUtils.isEmpty(Longitude)){
-            requestParams.addBodyParameter("longitude",Longitude);
-        }
-
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMachinisData(),requestParams, new RequestCallBack<String>() {
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMachinisData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
 
-                Log.e("找机手",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
+                Log.e("找机手", responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)) {
 
-                    AppBean<SeekMachinisBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SeekMachinisBean>>(){});
-                    if ((appListDataBean.getResult()).equals("success")){
-                        SeekMachinisBean seekMachinisBean= appListDataBean.getData();
-                        List<SekkMachinisDataBean> sekkMachinisDataBeen=seekMachinisBean.getPagerData();
-                        if (isPullDownRefresh){
+                    AppBean<SeekMachinisBean> appListDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SeekMachinisBean>>() {
+                    });
+                    if ((appListDataBean.getResult()).equals("success")) {
+                        SeekMachinisBean seekMachinisBean = appListDataBean.getData();
+                        List<SekkMachinisDataBean> sekkMachinisDataBeen = seekMachinisBean.getPagerData();
+                        if (isPullDownRefresh) {
                             sekkMachinisDataBeens.clear();
                         }
                         sekkMachinisDataBeens.addAll(sekkMachinisDataBeen);
@@ -317,63 +326,59 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
 
-                    }else if ((appListDataBean.getResult()).equals("nomore")){
+                    } else if ((appListDataBean.getResult()).equals("nomore")) {
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
                         MyAppliction.showToast("已到最底了");
-                    }else if ((appListDataBean.getResult()).equals("empty")){
+                    } else if ((appListDataBean.getResult()).equals("empty")) {
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
                         MyAppliction.showToast("没有更多数据");
                     }
 
 
-
-                }else {
+                } else {
                     homeServiceListAdapter.notifyDataSetChanged();
                     seekMachinistListview.onRefreshComplete();
                 }
-
-
 
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("找机手",s);
+                Log.e("找机手", s);
                 seekMachinistListview.onRefreshComplete();
             }
         });
     }
 
     private void initListView() {
-        homeServiceListAdapter=new SeekMachinistListAdapter(sekkMachinisDataBeens,getActivity());
+        homeServiceListAdapter = new SeekMachinistListAdapter(sekkMachinisDataBeens, getActivity());
         seekMachinistListview.setAdapter(homeServiceListAdapter);
         seekMachinistListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(getActivity(),SeekMachinistParticulasActivity.class);
-                intent.putExtra("seekData",sekkMachinisDataBeens.get(position-1));
+                Intent intent = new Intent(getActivity(), SeekMachinistParticulasActivity.class);
+                intent.putExtra("seekData", sekkMachinisDataBeens.get(position - 1));
                 getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 startActivity(intent);
             }
         });
 
 
-
     }
 
 
-    public void intiPullToRefresh(){
+    public void intiPullToRefresh() {
         seekMachinistListview.setMode(PullToRefreshBase.Mode.BOTH);
         seekMachinistListview.setOnRefreshListener(this);
-        ILoadingLayout endLabels  = seekMachinistListview
+        ILoadingLayout endLabels = seekMachinistListview
                 .getLoadingLayoutProxy(false, true);
         endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
         endLabels.setRefreshingLabel("正在刷新...");// 刷新时
         endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
-        ILoadingLayout startLabels  = seekMachinistListview
+        ILoadingLayout startLabels = seekMachinistListview
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
@@ -382,13 +387,12 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         seekMachinistListview.setRefreshing();
 
     }
+
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-        pageIndex=1;
-        isPullDownRefresh=true;
-        initListData(pageIndex,type,city,year,order);  //列表数据
-
-
+        pageIndex = 1;
+        isPullDownRefresh = true;
+        initListData(pageIndex, type, city, year, order);  //列表数据
 
 
     }
@@ -396,8 +400,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex++;
-        isPullDownRefresh=false;
-        initListData(pageIndex,type,city,year,order);  //列表数据
+        isPullDownRefresh = false;
+        initListData(pageIndex, type, city, year, order);  //列表数据
 
     }
 
@@ -439,6 +443,16 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
          * GPS开启时触发
          */
         public void onProviderEnabled(String provider) {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             Location location = lm.getLastKnownLocation(provider);
             updateView(location);
         }
@@ -876,9 +890,9 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         province=firstId;
         city=selectedName;
         sekkMachinisDataBeens.clear();
-        seekMachinistListview.setRefreshing();
+        pageIndex=1;
         initListData(pageIndex,type,city,year,order);
-
+        seekMachinistListview.setRefreshing();
     }
 
 
@@ -945,8 +959,9 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
               }
 
                 sekkMachinisDataBeens.clear();
-                seekMachinistListview.setRefreshing();
+                pageIndex=1;
                 initListData(pageIndex,type,city,year,order);
+                seekMachinistListview.setRefreshing();
             }
 
 
@@ -1019,8 +1034,9 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 }
 
                 sekkMachinisDataBeens.clear();
-                seekMachinistListview.setRefreshing();
+                pageIndex=1;
                 initListData(pageIndex,type,city,year,order);
+                seekMachinistListview.setRefreshing();
 
             }
 

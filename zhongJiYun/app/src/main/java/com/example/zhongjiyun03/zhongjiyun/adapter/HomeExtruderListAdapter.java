@@ -124,6 +124,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
             }
             if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
                   if (data.get(position).getSecondHandState()==1){
+
                       if (data.get(position).getSecondHandType()==0){
                           viewHold.sellTextView.setText("撤回出租");
                           viewHold.sellImage.setBackgroundResource(R.mipmap.retract_icon);

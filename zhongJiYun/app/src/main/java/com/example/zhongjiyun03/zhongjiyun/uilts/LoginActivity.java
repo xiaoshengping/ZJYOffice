@@ -167,6 +167,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 if (appBean.getResult().equals("success")){
                                     AppUserDataBean appUserDataBean=appBean.getData();
                                     LoginDataBean loginDataBean= (LoginDataBean) appUserDataBean.getUser();
+                                    MyAppliction.setProjectRequestTage("login");
                                     // 取得sessionid.........................
                                     DefaultHttpClient dh = (DefaultHttpClient) httpUtils.getHttpClient();
                                     MyCookieStore.cookieStore = dh.getCookieStore();

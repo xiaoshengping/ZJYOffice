@@ -107,7 +107,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     private String State;//项目状态
     private String Order ;//排序
     private RequestParams requestParams;
-
+    private SeekProjectDataBean seekProjectBeanList;
     private List<SeekProjectBean> seekProjectBeens;
     private HomeProjectListAdapter homeProjectlsitAdapter;
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
@@ -157,7 +157,6 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         findView(view);
         initData();
         initPopup();
-
         OnClickListenerImpl l = new OnClickListenerImpl();
         mainTab1TV.setOnClickListener(l);
         initListView();
@@ -173,7 +172,19 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     @Override
     public void onResume()  {
         super.onResume();
-        projectListView.setRefreshing();
+        if (!TextUtils.isEmpty(MyAppliction.getProjectRequestTage())){
+            if (MyAppliction.getProjectRequestTage().equals("login")){
+                projectListView.setRefreshing();
+                MyAppliction.setProjectRequestTage("project");
+            }else if (MyAppliction.getProjectRequestTage().equals("competitive")){
+                projectListView.setRefreshing();
+                MyAppliction.setProjectRequestTage("project");
+            }
+        }else {
+            MyAppliction.setProjectRequestTage("project");
+        }
+
+
     }
 
     private void initListData(int PageIndex , String cityName, String State , String Order) {
@@ -218,11 +229,9 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         if (!TextUtils.isEmpty(State)){
             Log.e("项目状态",State);
             requestParams.addBodyParameter("State",State);
-
         }
         if (!TextUtils.isEmpty(Order)){
             requestParams.addBodyParameter("Order",Order);
-
         }
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctListData(),requestParams, new RequestCallBack<String>() {
@@ -232,11 +241,12 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<SeekProjectDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SeekProjectDataBean>>(){});
                     if ((appBean.getResult()).equals("success")){
-                        SeekProjectDataBean seekProjectBeanList=appBean.getData();
+                        seekProjectBeanList=appBean.getData();
                         if (seekProjectBeanList!=null){
                             List<SeekProjectBean> seekProjectBean= seekProjectBeanList.getPagerData();
                             if (isPullDownRefresh){
                                 seekProjectBeens.clear();
+                                Log.e("sdhdhdh","jjdfj");
                             }
                             seekProjectBeens.addAll(seekProjectBean);
                             homeProjectlsitAdapter.notifyDataSetChanged();
@@ -246,9 +256,11 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                     }else  if ((appBean.getResult()).equals("empty")){
                         MyAppliction.showToast("没有更多数据");
                         projectListView.onRefreshComplete();
+                        homeProjectlsitAdapter.notifyDataSetChanged();
                     }else if ((appBean.getResult()).equals("nomore")){
                         MyAppliction.showToast("已到底部了");
                         projectListView.onRefreshComplete();
+                        homeProjectlsitAdapter.notifyDataSetChanged();
                     }
 
 
@@ -305,21 +317,18 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         PageIndex=1;
         isPullDownRefresh=true;
-
         initListData(PageIndex,cityName,State,Order);
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-
-        PageIndex++;
+            PageIndex++;
         isPullDownRefresh=false;
         initListData(PageIndex,cityName,State,Order);
     }
     private void findView(View view) {
         mainTab1TV = (TextView) view.findViewById(R.id.main_tab1);
         darkView = view.findViewById(R.id.main_darkview);
-
         animIn = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in_anim);
         animOut = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out_anim);
     }
@@ -329,8 +338,6 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
         if (provinceCityDataBean!=null){
             firstList=provinceCityDataBean.getProvinceCity();
-
-
         }
 
     }
@@ -440,7 +447,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                     requestParams.addBodyParameter("City",selectedName);
                 }*/
 
-                projectListView.setRefreshing();
+
             }
         });
     }
@@ -465,7 +472,6 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         secondList.addAll(list2);
         secondAdapter.notifyDataSetChanged();
     }
-
     //处理点击结果
     private void handleResult(String firstId, String secondId, String selectedName){
         String text = "first id:" + firstId + ",second id:" + secondId;
@@ -478,7 +484,9 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         mainTab1TV.setCompoundDrawables(null, null, img, null);
         seekProjectBeens.clear();
+        PageIndex=1;
         initListData(PageIndex,cityName,State,Order);
+        projectListView.setRefreshing();
     }
 
 
@@ -544,9 +552,9 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                     Order=arg2+"";
                 }
                 seekProjectBeens.clear();
-                projectListView.setRefreshing();
+                PageIndex=1;
                 initListData(PageIndex,cityName,State,Order);
-
+                projectListView.setRefreshing();
 
             }
 
@@ -616,9 +624,9 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                     State=arg2+"";
                 }
                 seekProjectBeens.clear();
-                projectListView.setRefreshing();
+                PageIndex=1;
                 initListData(PageIndex,cityName,State,Order);
-
+                projectListView.setRefreshing();
 
             }
 

@@ -148,6 +148,8 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             }
                             homeExtruderAdapter.notifyDataSetChanged();
                             extruderListView.onRefreshComplete();
+                        }else if (appBean.getResult().equals("unlogin")){
+                            MyAppliction.showToast(appBean.getMsg());
                         }
 
 

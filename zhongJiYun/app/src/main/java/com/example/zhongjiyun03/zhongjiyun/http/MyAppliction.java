@@ -25,6 +25,25 @@ public class MyAppliction extends Application {
     public static DisplayImageOptions RoundedOptions;
     public static DisplayImageOptions RoundedOptionsOne;
     private static MyAppliction app = null;
+    private static String homeRequestTage;  //首页二手钻机请求标志
+    private static String projectRequestTage;//项目刷新请求标志
+
+    public static String getHomeRequestTage() {
+        return homeRequestTage;
+    }
+
+    public static void setHomeRequestTage(String homeRequestTage) {
+        MyAppliction.homeRequestTage = homeRequestTage;
+    }
+
+    public static String getProjectRequestTage() {
+        return projectRequestTage;
+    }
+
+    public static void setProjectRequestTage(String projectRequestTage) {
+        MyAppliction.projectRequestTage = projectRequestTage;
+    }
+
     @Override
     public void onCreate() {
         // TODO Auto-generated method stub

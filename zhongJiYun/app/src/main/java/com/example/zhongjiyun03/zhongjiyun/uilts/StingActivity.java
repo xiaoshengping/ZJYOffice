@@ -1,5 +1,6 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -72,6 +73,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    @SuppressLint("NewApi")
     private void intiView() {
         switchButton.setChecked(true);
         modificationLayout.setOnClickListener(this);

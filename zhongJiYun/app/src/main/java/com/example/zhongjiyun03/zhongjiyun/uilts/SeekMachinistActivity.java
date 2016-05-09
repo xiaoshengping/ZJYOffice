@@ -767,8 +767,9 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
         brandType=firstId;
         type = selectedName;
         sekkMachinisDataBeens.clear();
-        seekMachinistListview.setRefreshing();
+        pageIndex=1;
         initListData(pageIndex, type, city, year, order);
+        seekMachinistListview.setRefreshing();
 
     }
 
@@ -906,8 +907,9 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
         province=firstId;
         city = selectedName;
         sekkMachinisDataBeens.clear();
-        seekMachinistListview.setRefreshing();
+        pageIndex=1;
         initListData(pageIndex, type, city, year, order);
+        seekMachinistListview.setRefreshing();
 
     }
 
@@ -974,8 +976,9 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                 }
 
                 sekkMachinisDataBeens.clear();
-                seekMachinistListview.setRefreshing();
+                pageIndex=1;
                 initListData(pageIndex, type, city, year, order);
+                seekMachinistListview.setRefreshing();
             }
 
 
@@ -1048,8 +1051,9 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                 }
 
                 sekkMachinisDataBeens.clear();
-                seekMachinistListview.setRefreshing();
+                pageIndex=1;
                 initListData(pageIndex, type, city, year, order);
+                seekMachinistListview.setRefreshing();
 
             }
 

@@ -359,11 +359,13 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
           if (seekProjectBean.getCanReply().equals("success")){
               competitiveButton.setText("我要竞标");
+              competitiveButton.setTextColor(getResources().getColor(R.color.white));
+              competitiveButton.setBackgroundResource(R.drawable.loing_button_corners);
           }else if (seekProjectBean.getCanReply().equals("联系业主")){
-              /*competitiveButton.setTextColor(getResources().getColor(R.color.tailt_dark));
-              competitiveButton.setBackgroundResource(R.drawable.gray_button_corners);*/
+
               competitiveButton.setText(seekProjectBean.getCanReply());
           }else {
+
               competitiveButton.setTextColor(getResources().getColor(R.color.tailt_dark));
               competitiveButton.setBackgroundResource(R.drawable.gray_button_corners);
               competitiveButton.setText(seekProjectBean.getCanReply());
@@ -372,25 +374,19 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         String StarRate=seekProjectBean.getBossStarLevel();
         if (StarRate.equals("1")){
             ratingOne.setBackgroundResource(R.mipmap.eval_icon);
-           /*ratingTwo.setBackgroundResource(R.mipmap.star_icon);
-           ratingThree.setBackgroundResource(R.mipmap.star_icon);
-            ratingFour.setBackgroundResource(R.mipmap.star_icon);
-         ratingFive.setBackgroundResource(R.mipmap.star_icon);*/
+
         }else if (StarRate.equals("2")){
 
             ratingOne.setBackgroundResource(R.mipmap.eval_icon);
             ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
-           /* ratingThree.setBackgroundResource(R.mipmap.star_icon);
-            ratingFour.setBackgroundResource(R.mipmap.star_icon);
-            ratingFive.setBackgroundResource(R.mipmap.star_icon);*/
+
 
         }else if (StarRate.equals("3")){
 
             ratingOne.setBackgroundResource(R.mipmap.eval_icon);
             ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
             ratingThree.setBackgroundResource(R.mipmap.eval_icon);
-           /* ratingFour.setBackgroundResource(R.mipmap.star_icon);
-            ratingFive.setBackgroundResource(R.mipmap.star_icon);*/
+
 
         }else if (StarRate.equals("4")){
 
@@ -398,7 +394,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
             ratingThree.setBackgroundResource(R.mipmap.eval_icon);
             ratingFour.setBackgroundResource(R.mipmap.eval_icon);
-           /* ratingFive.setBackgroundResource(R.mipmap.star_icon);*/
+
 
         }else if (StarRate.equals("5")){
 

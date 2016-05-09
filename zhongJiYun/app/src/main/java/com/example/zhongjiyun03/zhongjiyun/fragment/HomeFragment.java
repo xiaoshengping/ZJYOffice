@@ -158,7 +158,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         initGridView();
         moreTextView.setOnClickListener(this);
         projectMoreText.setOnClickListener(this);
-
+        initListRecommentMachinist();
 
 
 
@@ -416,7 +416,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         super.onResume();
         autoPager.startAutoScroll();
         initListData();
-        initListRecommentMachinist();
+
     }
 
 
