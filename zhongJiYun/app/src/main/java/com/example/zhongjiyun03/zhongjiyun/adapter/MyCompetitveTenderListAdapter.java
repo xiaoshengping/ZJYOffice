@@ -175,7 +175,7 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
                         commentIntent.putExtra("projectId",data.get(position).getProjectId());
                         context.startActivity(commentIntent);
                     }else if (data.get(position).getIsEvaluete()==1){
-                        MyAppliction.showToast("您已评论该业主");
+                        MyAppliction.showToast("您已评价该业主");
                     }
 
                     //Log.e("steta________", position + "");

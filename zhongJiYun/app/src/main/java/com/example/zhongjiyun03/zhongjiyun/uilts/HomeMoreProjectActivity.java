@@ -117,6 +117,8 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
     private HomeProjectListAdapter homeProjectlsitAdapter;
     private String province;//省份
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,12 +245,15 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                             homeProjectlsitAdapter.notifyDataSetChanged();
                             projectListView.onRefreshComplete();
                         }
+                        notDataLayout.setVisibility(View.GONE);
                     }else if ((appBean.getResult()).equals("nomore")){
                         MyAppliction.showToast("已到底部了");
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         projectListView.onRefreshComplete();
+                        notDataLayout.setVisibility(View.GONE);
                     }else  if ((appBean.getResult()).equals("empty")){
-                        MyAppliction.showToast("没有更多数据");
+                        //MyAppliction.showToast("没有更多数据");
+                        notDataLayout.setVisibility(View.VISIBLE);
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         projectListView.onRefreshComplete();
                     }

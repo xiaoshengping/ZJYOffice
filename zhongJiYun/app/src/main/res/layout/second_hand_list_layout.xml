@@ -138,9 +138,9 @@
 
             android:layout_below="@+id/image_view"
             android:id="@+id/image_ligin_end"
-            android:src="#9d9d9d"
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="1dp" />
 
     </RelativeLayout>
 

@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,10 +7,14 @@
     tools:context="com.example.zhongjiyun03.zhongjiyun.fragment.SeekMachinistFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <include android:layout_width="match_parent"
+    <include
+        android:id="@+id/head_layout"
+        android:layout_width="match_parent"
+
         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
     <LinearLayout
-
+        android:id="@+id/facilly_layout"
+        android:layout_below="@+id/head_layout"
         android:background="@color/ic_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -90,12 +94,15 @@
     </LinearLayout>
 
     <View
+        android:layout_below="@+id/facilly_layout"
         android:id="@+id/main_div_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/div_gray"/>
 
     <RelativeLayout
+        android:id="@+id/main_div_layout"
+        android:layout_below="@+id/main_div_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -115,11 +122,32 @@
 
     </RelativeLayout>
     <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:layout_below="@+id/main_div_layout"
         android:dividerHeight="5dp"
         android:divider="@color/background"
         android:id="@+id/seek_machinist_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/not_data_layout"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <ImageView
+            android:src="@mipmap/no_driver"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <TextView
+            android:textColor="@color/nodata_background"
+            android:layout_marginTop="5dp"
+            android:text="还没有找到机手哦"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-</LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

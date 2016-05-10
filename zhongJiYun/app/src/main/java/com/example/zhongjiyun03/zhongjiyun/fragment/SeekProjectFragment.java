@@ -112,6 +112,8 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     private HomeProjectListAdapter homeProjectlsitAdapter;
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
     private String province;
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
 
 
@@ -252,15 +254,17 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                             homeProjectlsitAdapter.notifyDataSetChanged();
                             projectListView.onRefreshComplete();
                         }
-
+                        notDataLayout.setVisibility(View.GONE);
                     }else  if ((appBean.getResult()).equals("empty")){
-                        MyAppliction.showToast("没有更多数据");
+                        //MyAppliction.showToast("没有更多数据");
                         projectListView.onRefreshComplete();
                         homeProjectlsitAdapter.notifyDataSetChanged();
+                        notDataLayout.setVisibility(View.VISIBLE);
                     }else if ((appBean.getResult()).equals("nomore")){
                         MyAppliction.showToast("已到底部了");
                         projectListView.onRefreshComplete();
                         homeProjectlsitAdapter.notifyDataSetChanged();
+                        notDataLayout.setVisibility(View.GONE);
                     }
 
 

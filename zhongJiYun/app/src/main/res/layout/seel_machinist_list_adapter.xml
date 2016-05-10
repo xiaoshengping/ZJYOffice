@@ -6,9 +6,9 @@
 
     <ImageView
         android:id="@+id/image_ligin"
-        android:src="#9d9d9d"
+        android:src="@color/color_dedede"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0.5dp" />
     <ImageView
         android:layout_below="@+id/image_ligin"
         android:src="@mipmap/service_image"
@@ -146,10 +146,9 @@
         android:layout_height="wrap_content" />
     <ImageView
         android:id="@+id/image_liginr"
-
         android:layout_marginTop="5dp"
         android:layout_below="@+id/text_view"
-        android:src="#9d9d9d"
+        android:src="@color/color_dedede"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0.5dp" />
 </RelativeLayout>

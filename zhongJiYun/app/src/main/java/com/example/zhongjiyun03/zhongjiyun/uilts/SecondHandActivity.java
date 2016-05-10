@@ -140,6 +140,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     /**右侧二级分类的数据*/
     private List<FacillyChildsBean> facillySecondList;
     private String type; //型号
+    private String facillyTaye;//商家
     private String city;   //城市
     private String year; //出厂时间
     private String order;  //排序
@@ -153,7 +154,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private HomeSecondHandListAdapter homeSecondHandListAdapter;
     private boolean isPullDownRefresh = true; //判断是下拉，还是上拉的标记
     private String province;
-
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -339,7 +341,16 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
         }
         if (!TextUtils.isEmpty(type)) {
-            requestParams.addBodyParameter("type", type);
+            if (facillyTaye.equals("全部")){
+
+            }else {
+                if (type.equals("全部")){
+                    requestParams.addBodyParameter("manufacture",facillyTaye);
+                }else {
+                    requestParams.addBodyParameter("type", type);
+                }
+            }
+
         }
         if (!TextUtils.isEmpty(year)) {
             requestParams.addBodyParameter("year", year);
@@ -377,17 +388,20 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                             }
                         }
                         secondHandListview.onRefreshComplete();
+                        notDataLayout.setVisibility(View.GONE);
                     } else if ((appListDataBean.getResult()).equals("nomore")) {
                         MyAppliction.showToast("已到最底了");
                         homeSecondHandListAdapter.notifyDataSetChanged();
                         secondHandListview.onRefreshComplete();
+                        notDataLayout.setVisibility(View.GONE);
                     } else if ((appListDataBean.getResult()).equals("empty")) {
                         if (isPullDownRefresh) {
                             secondHandBeens.clear();
                         }
                         homeSecondHandListAdapter.notifyDataSetChanged();
                         secondHandListview.onRefreshComplete();
-                        MyAppliction.showToast("没有更多数据");
+                        //MyAppliction.showToast("没有更多数据");
+                        notDataLayout.setVisibility(View.VISIBLE);
                     }
 
 
@@ -613,12 +627,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         View view = LayoutInflater.from(SecondHandActivity.this).inflate(R.layout.facilly_popup_layout, null);
         facillyLeftLV = (ListView) view.findViewById(R.id.facilly_pop_listview_left);
         facillyRightLV = (ListView) view.findViewById(R.id.facilly_pop_listview_right);
-       /* FacillyDataBean facillyDataBean=new FacillyDataBean();
-        facillyDataBean.setText("全部");
-        facilluyFirstList.add(facillyDataBean);
-        FacillyChildsBean facillyChildsBean=new FacillyChildsBean();
-        facillyChildsBean.setText("全部");
-        facillySecondList.add(facillyChildsBean);*/
+
 
 
         popupWindowFacilly.setContentView(view);
@@ -661,7 +670,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                 if (list2 == null || list2.size() == 0) {
                     popupWindowFacilly.dismiss();
 
-                    String  firstId = facilluyFirstList.get(position).getValue();
+                    String  firstId = facilluyFirstList.get(position).getText();
                     String selectedName = facilluyFirstList.get(position).getText();
                     facillyHandleResult(firstId, "-1", selectedName);
                     return;
@@ -690,7 +699,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                 popupWindowFacilly.dismiss();
 
                 int firstPosition = firstAdapter.getSelectedPosition();
-                String  firstId = facilluyFirstList.get(firstPosition).getValue();
+                String  firstId = facilluyFirstList.get(firstPosition).getText();
                 String secondId = facilluyFirstList.get(firstPosition).getChilds().get(position).getValue();
                 String selectedName = facilluyFirstList.get(firstPosition).getChilds().get(position)
                         .getText();
@@ -730,6 +739,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         facillyText.setCompoundDrawables(null, null, img, null);
+        facillyTaye=firstId;
         type=selectedName;
         //secondHandBeens.clear();
         isPullDownRefresh=true;

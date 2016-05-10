@@ -148,6 +148,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     private String Latitude;    //纬度
     private boolean isPullDownRefresh = true; //判断是下拉，还是上拉的标记
     private String province;
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
     public SeekMachinistFragment() {
         // Required empty public constructor
@@ -325,15 +327,17 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
-
+                        notDataLayout.setVisibility(View.GONE);
                     } else if ((appListDataBean.getResult()).equals("nomore")) {
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
                         MyAppliction.showToast("已到最底了");
+                        notDataLayout.setVisibility(View.GONE);
                     } else if ((appListDataBean.getResult()).equals("empty")) {
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
-                        MyAppliction.showToast("没有更多数据");
+                        notDataLayout.setVisibility(View.VISIBLE);
+                        //MyAppliction.showToast("没有更多数据");
                     }
 
 

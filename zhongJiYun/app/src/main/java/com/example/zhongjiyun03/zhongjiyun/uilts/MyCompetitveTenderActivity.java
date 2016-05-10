@@ -92,9 +92,7 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
 
         while (cursor.moveToNext()) {
             uid=cursor.getString(0);
-
         }
-
         if (!TextUtils.isEmpty(uid)){
             //步骤1：创建一个SharedPreferences接口对象
             SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,6 +59,8 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
       private List<MyExtruderBean> myExtruderBeens;
       private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
       private HomeExtruderListAdapter homeExtruderAdapter;
+      @ViewInject(R.id.not_data_layout)
+      private LinearLayout notDataLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,15 +135,15 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             }else {
                                 homeExtruderAdapter.notifyDataSetChanged();
                                 extruderListView.onRefreshComplete();
-                                MyAppliction.showToast("您还没有添加钻机,请添加钻机");
+                               // MyAppliction.showToast("您还没有添加钻机,请添加钻机");
                             }
-
+                            notDataLayout.setVisibility(View.GONE);
 
                         }else if ((appBean.getResult()).equals("nomore")){
                             MyAppliction.showToast("已到底部");
                             homeExtruderAdapter.notifyDataSetChanged();
                             extruderListView.onRefreshComplete();
-
+                            notDataLayout.setVisibility(View.GONE);
                         }else  if ((appBean.getResult()).equals("empty")){
                             MyAppliction.showToast("没有更多数据");
                             if (isPullDownRefresh){
@@ -148,6 +151,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             }
                             homeExtruderAdapter.notifyDataSetChanged();
                             extruderListView.onRefreshComplete();
+                            notDataLayout.setVisibility(View.VISIBLE);
                         }else if (appBean.getResult().equals("unlogin")){
                             MyAppliction.showToast(appBean.getMsg());
                         }

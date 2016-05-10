@@ -79,18 +79,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:layout_toLeftOf="@+id/more_imag"
             android:id="@+id/more_text_view"
             android:layout_marginTop="8dp"
+            android:gravity="right"
             android:textColor="@color/red_light"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="5dp"
             android:textSize="@dimen/home_Size_14"
-            android:layout_alignParentRight="true"
             android:drawablePadding="3dp"
             android:text="更多"
-            android:drawableRight="@mipmap/right_symbol"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:layout_width="50dp"
+            android:layout_height="30dp" />
+        <ImageView
+            android:id="@+id/more_imag"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/arrow_red_icon"
+            android:layout_width="10dp"
+            android:layout_height="13dp" />
         <ImageView
             android:layout_marginBottom="10dp"
             android:id="@+id/image_ligin"
@@ -171,15 +178,22 @@
                 android:id="@+id/project_more_text"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/red_light"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="5dp"
                 android:textSize="@dimen/home_Size_14"
-                android:layout_alignParentRight="true"
+                android:layout_toLeftOf="@+id/project_more_imag"
                 android:drawablePadding="3dp"
                 android:text="更多"
-                android:drawableRight="@mipmap/right_symbol"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
+                android:gravity="right"
+                android:layout_width="40dp"
+                android:layout_height="30dp" />
+            <ImageView
+                android:id="@+id/project_more_imag"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/arrow_red_icon"
+                android:layout_width="10dp"
+                android:layout_height="13dp" />
             <ImageView
                 android:id="@+id/project_image"
                 android:layout_marginTop="5dp"

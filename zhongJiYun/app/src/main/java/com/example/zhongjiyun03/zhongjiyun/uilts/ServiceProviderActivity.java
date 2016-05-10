@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,6 +80,8 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
     private String Longitude;
     private String Latitude;
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -307,14 +310,16 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
                              serviceProviderBean.addAll(serviceProviderBeans);
                          }
                          serviceProviderListview.onRefreshComplete();
+                         notDataLayout.setVisibility(View.GONE);
                         // mSVProgressHUD.dismiss();
                      }else if ((appBean.getResult()).equals("nomore")){
                          MyAppliction.showToast("已到最底了");
                          serviceProviderListview.onRefreshComplete();
-
+                         notDataLayout.setVisibility(View.GONE);
                      }else if ((appBean.getResult()).equals("empty")){
-                         MyAppliction.showToast("没有更多数据");
+                         //MyAppliction.showToast("没有更多数据");
                          serviceProviderListview.onRefreshComplete();
+                         notDataLayout.setVisibility(View.VISIBLE);
 
                      }
                     homeServiceListAdapter.notifyDataSetChanged();

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/ic_white"
-
     android:layout_height="match_parent">
 
 
@@ -31,7 +30,7 @@
                             android:textSize="@dimen/home_Size_18"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="15dp"
-                            android:text="注册大派送"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
@@ -41,7 +40,7 @@
                             android:textSize="@dimen/home_Size_16"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
-                            android:text="有效期至:2015-11-18"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
@@ -71,14 +70,18 @@
                             android:textSize="@dimen/home_Size_18"
                             android:layout_marginRight="20dp"
                             android:layout_marginTop="5dp"
-                            android:text="13"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
         </RelativeLayout>
-
+<ImageView
+    android:background="@color/color_dedede"
+    android:layout_below="@+id/red_pack_image"
+    android:layout_width="match_parent"
+    android:layout_height="0.5dp" />
 
 
 

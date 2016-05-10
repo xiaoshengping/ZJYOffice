@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +9,7 @@
 
 
     <LinearLayout
-
+        android:id="@+id/project_layout"
         android:background="@color/ic_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,12 +70,15 @@
     </LinearLayout>
 
     <View
+        android:layout_below="@+id/project_layout"
         android:id="@+id/main_div_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/div_gray"/>
 
     <RelativeLayout
+        android:id="@+id/main_div_layout"
+        android:layout_below="@+id/main_div_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -95,12 +98,33 @@
 
     </RelativeLayout>
     <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:layout_below="@+id/main_div_layout"
         android:id="@+id/project_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
 
+    <LinearLayout
+
+        android:id="@+id/not_data_layout"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <ImageView
+            android:src="@mipmap/no_project_icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+        <TextView
+            android:textColor="@color/nodata_background"
+            android:layout_marginTop="5dp"
+            android:text="还没有找到项目哦"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
+    </LinearLayout>
 
-</LinearLayout>
+
+</RelativeLayout>

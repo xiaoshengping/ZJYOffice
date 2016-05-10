@@ -214,7 +214,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     }
-
+      //推荐二手机
     private void intiGridView(final List<SecondHandBean> secondHandBeen) {
         RecommendMachinistAdapter recommendMachinistAdapter=new RecommendMachinistAdapter(secondHandBeen,getActivity());
         machinistGridview.setAdapter(recommendMachinistAdapter);

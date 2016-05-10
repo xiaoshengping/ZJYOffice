@@ -3,7 +3,14 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@color/ic_white"
     android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/image_view"
+
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
    <RelativeLayout
+       android:layout_below="@+id/image_view"
        android:id="@+id/content_layout"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content">
@@ -21,7 +28,7 @@
            android:id="@+id/company_text"
            android:textSize="@dimen/home_Size_15"
            android:layout_marginLeft="20dp"
-           android:layout_marginTop="5dp"
+           android:layout_marginTop="3dp"
            android:text="发布公司:碧桂园马来西亚"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content" />
@@ -40,7 +47,7 @@
     android:id="@+id/address_text"
     android:textSize="@dimen/home_Size_15"
     android:layout_marginLeft="20dp"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="3dp"
     android:text="所在地:广州市天和区"
     android:layout_marginBottom="5dp"
     android:layout_width="wrap_content"
@@ -51,7 +58,7 @@
         android:id="@+id/data_text"
         android:textSize="@dimen/home_Size_16"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:text="2015-12-15"
         android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
@@ -61,7 +68,7 @@
        android:layout_marginLeft="20dp"
        android:layout_marginRight="20dp"
        android:layout_below="@+id/address_text"
-       android:background="@color/background"
+       android:background="@color/color_dedede"
        android:layout_width="match_parent"
        android:layout_height="1dp" />
     <ImageView
@@ -106,6 +113,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/cash_deposit_image"
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
 
 
 </RelativeLayout>

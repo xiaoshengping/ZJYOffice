@@ -162,6 +162,8 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     private String Latitude;    //纬度
     private boolean isPullDownRefresh = true; //判断是下拉，还是上拉的标记
     private String province;
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;
 
 
     @Override
@@ -348,15 +350,17 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
 
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
-
+                        notDataLayout.setVisibility(View.GONE);
                     } else if ((appListDataBean.getResult()).equals("nomore")) {
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
+                        notDataLayout.setVisibility(View.GONE);
                         MyAppliction.showToast("已到最底了");
                     } else if ((appListDataBean.getResult()).equals("empty")) {
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
-                        MyAppliction.showToast("没有更多数据");
+                        //MyAppliction.showToast("没有更多数据");
+                        notDataLayout.setVisibility(View.VISIBLE);
                     }
 
 
