@@ -264,7 +264,6 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
         startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         secondHandListview.setRefreshing();
-
     }
 
     private void intiListView() {
@@ -422,7 +421,6 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-
         pageIndex = 1;
         isPullDownRefresh = true;
         initListData(pageIndex, type, city, year, order);

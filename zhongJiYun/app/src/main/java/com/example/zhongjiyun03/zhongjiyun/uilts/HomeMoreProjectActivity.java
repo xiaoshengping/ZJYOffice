@@ -247,7 +247,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                         }
                         notDataLayout.setVisibility(View.GONE);
                     }else if ((appBean.getResult()).equals("nomore")){
-                        MyAppliction.showToast("已到底部了");
+                        MyAppliction.showToast("已到最底了");
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         projectListView.onRefreshComplete();
                         notDataLayout.setVisibility(View.GONE);

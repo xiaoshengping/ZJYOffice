@@ -140,7 +140,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             notDataLayout.setVisibility(View.GONE);
 
                         }else if ((appBean.getResult()).equals("nomore")){
-                            MyAppliction.showToast("已到底部");
+                            MyAppliction.showToast("已到最底了");
                             homeExtruderAdapter.notifyDataSetChanged();
                             extruderListView.onRefreshComplete();
                             notDataLayout.setVisibility(View.GONE);

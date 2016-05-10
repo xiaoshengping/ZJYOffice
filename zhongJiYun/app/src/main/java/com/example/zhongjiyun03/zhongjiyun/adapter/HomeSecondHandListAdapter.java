@@ -84,7 +84,6 @@ public class HomeSecondHandListAdapter extends AppBaseAdapter<SecondHandBean> {
                }else {
                    viewHold.priceTextView.setText(data.get(position).getPriceStr()+"万");
                }
-
            }
             viewHold.updateTimeTextViewl.setText(data.get(position).getUpdateDateStr()+"更新");
             if (data.get(position).getSecondHandType()==0){

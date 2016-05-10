@@ -51,7 +51,7 @@
 
         </RelativeLayout>
         <RelativeLayout
-
+             android:visibility="gone"
             android:id="@+id/loing_xshi_layout"
             android:background="@color/ic_white"
 
@@ -164,9 +164,16 @@
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@+id/rating_five"
                 android:layout_below="@+id/phone_text"
-                android:id="@+id/rating_help"
+
                 android:layout_width="15dp"
                 android:layout_height="15dp" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/rating_five"
+                android:layout_below="@+id/phone_text"
+                android:id="@+id/rating_help"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
             <ImageView
                 android:layout_marginRight="20dp"
                 android:layout_centerVertical="true"

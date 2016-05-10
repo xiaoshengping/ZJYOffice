@@ -265,7 +265,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("PhoneNumber",phone);
         requestParams.addBodyParameter("SmsType","1");
-        if (!TextUtils.isEmpty(phone)&&phone.length()==11) {
+
+        if (!TextUtils.isEmpty(phone)) {
+            if (phone.length()==11){
+            if (isMobileNO(phone)){
+            codeButton.setTextColor(getResources().getColor(R.color.tailt_dark));
+             codeButton.setBackgroundResource(R.drawable.gray_button_corners);
             time.start();
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCodeData(),requestParams, new RequestCallBack<String>() {
                 @Override
@@ -292,13 +297,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     MyAppliction.showToast("网络异常,请稍后重试");
                 }
             });
+            }else {
+                MyAppliction.showToast("请输入正确的手机号码");
+            }
         }else {
-            MyAppliction.showToast("您输入的手机号码有误");
+            MyAppliction.showToast("您输入长度为11位的手机号码");
 
+        }
+        }else {
+            MyAppliction.showToast("您输入的手机号码不能为空");
 
         }
 
     }
+
+    public static boolean isMobileNO(String mobiles) {
+               String telRegex = "13\\d{9}|14[57]\\d{8}|15[012356789]\\d{8}|18[01256789]\\d{8}|17[0678]\\d{8}";
+                if (TextUtils.isEmpty(mobiles)) return false;
+                 else return mobiles.matches(telRegex);
+          }
 
     class TimeCount extends CountDownTimer {
         public TimeCount(long millisInFuture, long countDownInterval) {

@@ -2,6 +2,8 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.SekkMachinisDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.view.CircleImageView;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -381,12 +384,21 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
 
     @Override
     public void onClick(View v) {
+        SQLhelper sqLhelper=new SQLhelper(SeekMachinistParticulasActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
         switch (v.getId()){
             case R.id.retrun_text_view:
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
             case R.id.phone_tell:
+                if (!TextUtils.isEmpty(uid)){
                 if (!TextUtils.isEmpty(seekMachinisDataBean.getDriverPhoneNumber())){
                     //意图：打电话
                     Intent intent = new Intent();
@@ -398,6 +410,10 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                     startActivity(intent);
                 }else {
                     MyAppliction.showToast("该机手没有联系方式");
+                }
+                }else {
+                    Intent intent=new Intent(SeekMachinistParticulasActivity.this,LoginActivity.class);
+                    startActivity(intent);
                 }
                 break;
 

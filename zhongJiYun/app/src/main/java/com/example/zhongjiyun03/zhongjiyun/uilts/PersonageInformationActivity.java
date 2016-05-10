@@ -231,7 +231,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
 
     private void initView() {
         retrunText.setOnClickListener(this);
-        registerTv.setText("完成");
+        registerTv.setVisibility(View.GONE);
         registerTv.setOnClickListener(this);
         tailtText.setText("个人资料");
         areaText.setOnClickListener(this);
@@ -259,14 +259,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
 
     @Override
     public void onClick(View v) {
-        SQLhelper sqLhelper=new SQLhelper(PersonageInformationActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
 
-        }
         switch (v.getId()){
             case R.id.retrun_text_view:
                 finish();
@@ -274,19 +267,6 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                 break;
             case R.id.image_rlayout:
                 showDialog(ConstantSet.TAKEPICTURE,ConstantSet.SELECTPICTURE,imageUri);
-
-                break;
-            case R.id.register_tv:
-                if (!TextUtils.isEmpty(uid)){
-                    if (!TextUtils.isEmpty(imagePath)){
-                        updateImage(uid,"16",imagePath);
-                        Log.e("imagePath",imagePath);
-                    }else {
-                        MyAppliction.showToast("请选择照片");
-                    }
-                }else {
-                    MyAppliction.showToast("上传失败");
-                }
 
                 break;
             case R.id.idcard_front_iamge:
@@ -349,8 +329,8 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                                 update(modifatyHeadImage.getId(),modifatyHeadImage.getURL());
                             }
                             mSVProgressHUD.dismiss();
-                            mSVProgressHUD.showSuccessWithStatus("修改资料成功");
-                            finish();
+                            mSVProgressHUD.showSuccessWithStatus("修改头像成功");
+
                         }else {
                             mSVProgressHUD.showErrorWithStatus(appBean.getMsg(), SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
 
@@ -390,6 +370,15 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        SQLhelper sqLhelper=new SQLhelper(PersonageInformationActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+
         if (resultCode != RESULT_OK) {
 
             return;
@@ -422,6 +411,16 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                 File frontFile = getFile(bis, "/sdcard/zhongJiYun/", frontName);
                 if (!TextUtils.isEmpty(frontFile.getPath())) {
                     imagePath = frontFile.getPath();
+                    if (!TextUtils.isEmpty(uid)){
+                        if (!TextUtils.isEmpty(imagePath)){
+                            updateImage(uid,"16",imagePath);
+                            Log.e("imagePath",imagePath);
+                        }else {
+                            MyAppliction.showToast("请选择照片");
+                        }
+                    }else {
+                        MyAppliction.showToast("上传失败");
+                    }
                 }
 
                 break;

@@ -105,7 +105,7 @@
 
 
     <LinearLayout
-
+          android:visibility="gone"
         android:id="@+id/not_data_layout"
         android:gravity="center"
         android:orientation="vertical"

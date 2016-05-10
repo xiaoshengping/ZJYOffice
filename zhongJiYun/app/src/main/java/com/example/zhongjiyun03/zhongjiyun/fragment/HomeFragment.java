@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private LinearLayout dotLL;
     private ImagePagerAdapter pagerAdapter;
     private ArrayList<AdvertisementBean> imageUrls = new ArrayList<>();
-    private String url = "http://mobapi.meilishuo.com/2.0/activity/selected?imei=000000000000000&mac=08%3A00%3A27%3A51%3A2e%3Aaa&qudaoid=11601&access_token=d154111f2e870ea8e58198e0f8c59339";
+    //private String url = "http://mobapi.meilishuo.com/2.0/activity/selected?imei=000000000000000&mac=08%3A00%3A27%3A51%3A2e%3Aaa&qudaoid=11601&access_token=d154111f2e870ea8e58198e0f8c59339";
 
 
 
@@ -209,10 +209,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Log.e("找项目",s);
             }
         });
-
-
-
-
     }
       //推荐二手机
     private void intiGridView(final List<SecondHandBean> secondHandBeen) {

@@ -49,23 +49,18 @@
             android:id="@+id/shard_tv"
             android:layout_marginRight="15dp"
             android:layout_toLeftOf="@+id/checkBox_check"
-            android:layout_width="18dp"
-            android:layout_height="20dp"
-            android:gravity="center"
-            android:textColor="@color/ic_white"
-            android:textSize="@dimen/home_Size_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
             android:layout_centerInParent="true"/>
-        <CheckBox
-            android:button="@null"
-            android:background="@drawable/check_collect_selector"
+        <ImageView
+
             android:id="@+id/checkBox_check"
             android:layout_marginRight="15dp"
             android:layout_alignParentRight="true"
-            android:layout_width="18dp"
-            android:layout_height="20dp"
-            android:gravity="center"
-            android:textColor="@color/ic_white"
-            android:textSize="@dimen/home_Size_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
             android:layout_centerInParent="true"/>
     </RelativeLayout>
     <ScrollView
@@ -74,12 +69,11 @@
       <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
+
           <RelativeLayout
               android:id="@+id/advertisement_rlayout"
               android:layout_width="match_parent"
-              android:layout_height="173dp"
-              >
-
+              android:layout_height="173dp">
               <com.example.zhongjiyun03.zhongjiyun.widget.AutoScrollViewPager
                   android:id="@+id/home_banner_viewpager"
                   android:layout_width="match_parent"
@@ -94,7 +88,12 @@
                   android:gravity="center"
                   android:layout_alignParentBottom="true"
                   android:layout_centerHorizontal="true"></LinearLayout>
-
+              <ImageView
+                  android:visibility="gone"
+                  android:id="@+id/advertisement_image"
+                  android:scaleType="centerCrop"
+                  android:layout_width="match_parent"
+                  android:layout_height="173dp" />
           </RelativeLayout>
            <RelativeLayout
                android:id="@+id/extruder_jies_layout"

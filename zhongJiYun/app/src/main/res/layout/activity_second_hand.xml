@@ -50,11 +50,9 @@
             android:id="@+id/shard_tv"
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
-            android:layout_width="18dp"
-            android:layout_height="20dp"
-            android:gravity="center"
-            android:textColor="@color/ic_white"
-            android:textSize="@dimen/home_Size_18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
             android:layout_centerInParent="true"/>
 
     </RelativeLayout>
@@ -75,7 +73,7 @@
             android:padding="12dp"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:text="品牌筛选"
+            android:text="品牌"
             android:maxEms="4"
             android:singleLine="true"
             android:ellipsize="end"
@@ -96,7 +94,7 @@
             android:padding="12dp"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:text="区域筛选"
+            android:text="区域"
             android:gravity="center" />
         <ImageView
             android:layout_marginTop="8dp"
@@ -114,7 +112,7 @@
             android:padding="12dp"
             android:layout_weight="1"
             android:textSize="15sp"
-            android:text="时间筛选"
+            android:text="时间"
             android:gravity="center" />
         <ImageView
             android:layout_marginTop="8dp"

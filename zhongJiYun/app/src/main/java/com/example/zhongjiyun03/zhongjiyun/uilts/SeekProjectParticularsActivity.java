@@ -23,8 +23,6 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -57,7 +55,7 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
 
-public class SeekProjectParticularsActivity extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
+public class SeekProjectParticularsActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     @ViewInject(R.id.shard_tv)
@@ -115,7 +113,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     private View projectParticularsView;
     private  View matingFacilyView;
     @ViewInject(R.id.checkBox_check)
-    private CheckBox checkBoxCheck;
+    private ImageView checkBoxCheck;
     private String seekProjectId;
     private SVProgressHUD mSVProgressHUD;//loding
     @ViewInject(R.id.competitive_button)
@@ -123,6 +121,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     private SeekProjectBean seekProjectBean;
     private TimeCount time;      //获取计时线程
     private  AlertDialog dlg;
+    private boolean isChecked=true;//是否关注
 
 
 
@@ -354,7 +353,9 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         }
 
          if (seekProjectBean.getIsCollection()==1){
-             checkBoxCheck.setChecked(true);
+             checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon_cur);
+         }else {
+             checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon);
          }
 
           if (seekProjectBean.getCanReply().equals("success")){
@@ -417,7 +418,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
         competitiveButton.setOnClickListener(this);
-        checkBoxCheck.setOnCheckedChangeListener(this);
+        checkBoxCheck.setOnClickListener(this);
         time = new TimeCount(3000, 1000);//构造CountDownTimer对象
         dlg = new AlertDialog.Builder(SeekProjectParticularsActivity.this).create();
 
@@ -459,8 +460,14 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                         }
                     }else {
                         if (!TextUtils.isEmpty(seekProjectId)){
-                            //意图：打电话
-                            CellOwnerData(uid,seekProjectId);
+                            if (!TextUtils.isEmpty(uid)){
+                                //意图：打电话
+                                CellOwnerData(uid,seekProjectId);
+                            }else {
+                                Intent intent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
+                                startActivity(intent);
+                            }
+
                             }else {
                             MyAppliction.showToast("该业主没有联系方式");
                         }
@@ -471,9 +478,30 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                     Intent loginIntent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
                     startActivity(loginIntent);
                 }
+                break;
+            case R.id.checkBox_check:
 
+                //步骤1：创建一个SharedPreferences接口对象
+                SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+                //步骤2：获取文件中的值
+                String sesstionId = read.getString("code","");
+                if (!TextUtils.isEmpty(uid)){
+                    if (isChecked){
+                        if (seekProjectBean.getIsCollection()!=1){
+                            isCheckedRequest(uid,sesstionId);
+                        }
+                        checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon_cur);
+                        isChecked=false;
+                    }else {
+                        isNoCheckedRequest(uid,sesstionId);
+                        checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon);
+                        isChecked=true;
+                    }
+                }else {
+                    Intent intent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
+                    startActivity(intent);
 
-
+                }
                 break;
 
 
@@ -879,33 +907,5 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         oks.show(this);
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        SQLhelper sqLhelper=new SQLhelper(SeekProjectParticularsActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
 
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-
-        }
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        if (!TextUtils.isEmpty(uid)){
-            if (isChecked){
-                if (seekProjectBean.getIsCollection()!=1){
-                    isCheckedRequest(uid,sesstionId);
-                }
-            }else {
-                isNoCheckedRequest(uid,sesstionId);
-            }
-        }else {
-            Intent intent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
-            startActivity(intent);
-
-        }
-    }
 }

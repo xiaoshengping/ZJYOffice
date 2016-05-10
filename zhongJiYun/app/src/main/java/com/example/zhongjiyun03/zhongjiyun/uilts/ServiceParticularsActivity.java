@@ -96,6 +96,7 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
 
     //用于计算手指滑动的速度。
     private VelocityTracker mVelocityTracker;
+    private String uid=null;  //用户id
 
 
     @Override
@@ -120,7 +121,7 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
         SQLhelper sqLhelper=new SQLhelper(ServiceParticularsActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
+
 
         while (cursor.moveToNext()) {
             uid=cursor.getString(0);
@@ -215,18 +216,25 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
             case R.id.cell_service_button:
-                if (!TextUtils.isEmpty(serviceProviderBean.getPhoneNumber())){
-                    //意图：打电话
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_DIAL);
-                    //url:统一资源定位符
-                    //uri:统一资源标示符（更广）
-                    intent.setData(Uri.parse("tel:" + serviceProviderBean.getPhoneNumber()));
-                    //开启系统拨号器
-                    startActivity(intent);
-                }else {
-                    MyAppliction.showToast("该服务商没有联系方式");
-                }
+
+                    if (!TextUtils.isEmpty(uid)) {
+                        if (!TextUtils.isEmpty(serviceProviderBean.getPhoneNumber())){
+                        //意图：打电话
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_DIAL);
+                        //url:统一资源定位符
+                        //uri:统一资源标示符（更广）
+                        intent.setData(Uri.parse("tel:" + serviceProviderBean.getPhoneNumber()));
+                        //开启系统拨号器
+                        startActivity(intent);
+                        }else {
+                            MyAppliction.showToast("该服务商没有联系方式");
+                        }
+                    }else {
+                        Intent intent=new Intent(ServiceParticularsActivity.this,LoginActivity.class);
+                        startActivity(intent);
+                    }
+
                 break;
 
 

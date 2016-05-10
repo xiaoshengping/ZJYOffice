@@ -54,6 +54,8 @@ public class MyAppliction extends Application {
                 .showImageOnLoading(R.mipmap.default_img)//加载等待时显示的图片
                 .showImageForEmptyUri(R.mipmap.default_img)//加载数据为空时显示的图片
                 .showImageOnFail(R.mipmap.default_img)//加载失败时显示的图片
+                .cacheInMemory()
+                .cacheOnDisc()
                 .build();
         RoundedOptions = new DisplayImageOptions.Builder()
                 .showStubImage(R.mipmap.default_img)//加载等待 时显示的图片

@@ -261,7 +261,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         notDataLayout.setVisibility(View.VISIBLE);
                     }else if ((appBean.getResult()).equals("nomore")){
-                        MyAppliction.showToast("已到底部了");
+                        MyAppliction.showToast("已到最底了");
                         projectListView.onRefreshComplete();
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         notDataLayout.setVisibility(View.GONE);

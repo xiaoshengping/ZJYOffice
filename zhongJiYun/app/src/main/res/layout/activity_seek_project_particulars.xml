@@ -59,23 +59,20 @@
                 android:id="@+id/shard_tv"
                 android:layout_marginRight="15dp"
                 android:layout_toLeftOf="@+id/checkBox_check"
-                android:layout_width="18dp"
-                android:layout_height="20dp"
-                android:gravity="center"
-                android:textColor="@color/ic_white"
-                android:textSize="@dimen/home_Size_18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
                 android:layout_centerInParent="true"/>
-            <CheckBox
-                android:button="@null"
-                android:background="@drawable/check_collect_selector"
+            <ImageView
                 android:id="@+id/checkBox_check"
                 android:layout_marginRight="15dp"
                 android:layout_alignParentRight="true"
-                android:layout_width="18dp"
-                android:layout_height="20dp"
-                android:gravity="center"
-                android:textColor="@color/ic_white"
-                android:textSize="@dimen/home_Size_18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+
                 android:layout_centerInParent="true"/>
 
         </RelativeLayout>

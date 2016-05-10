@@ -13,8 +13,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -154,7 +152,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     @ViewInject(R.id.advertisement_rlayout)
     private RelativeLayout advertisementRlayout;
     @ViewInject(R.id.checkBox_check)
-    private CheckBox checkBoxCheck;
+    private ImageView checkBoxCheck;
     private SVProgressHUD mSVProgressHUD;//loding
     @ViewInject(R.id.image_view_one)
     private ImageView imageViewOne;
@@ -164,7 +162,10 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     private ImageView imageViewThree;
     @ViewInject(R.id.image_view_foru)
     private ImageView imageViewForu;
-
+    private   String uid=null;  //用户id
+    @ViewInject(R.id.advertisement_image)
+    private ImageView advertisementImage;
+    private boolean isChecked=true;
 
 
 
@@ -198,7 +199,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
           SQLhelper sqLhelper=new SQLhelper(ExturderParticularsActivity.this);
           SQLiteDatabase db= sqLhelper.getWritableDatabase();
            Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-           String uid=null;  //用户id
+
 
              while (cursor.moveToNext()) {
                  uid=cursor.getString(0);
@@ -274,8 +275,6 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                                     dirllDepthText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDepth());
                                 }
                             }
-
-
                             if (!TextUtils.isEmpty(secondHandBean.getProvince())&&!TextUtils.isEmpty(secondHandBean.getAddress())){
                              addressText.setText(secondHandBean.getProvince()+secondHandBean.getAddress());
                             }else if (!TextUtils.isEmpty(secondHandBean.getProvince())){
@@ -370,14 +369,27 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                             }
                               if (secondHandBean.getDeviceBaseDto().getDeviceImages()!=null&&
                                      secondHandBean.getDeviceBaseDto().getDeviceImages().size()!=0){
-                                 advertisementRlayout.setVisibility(View.VISIBLE);
-                                 imageUrls.addAll(secondHandBean.getDeviceBaseDto().getDeviceImages());
-                                 pagerAdapter.refreshData(true);
+                                  advertisementRlayout.setVisibility(View.VISIBLE);
+                                  if (secondHandBean.getDeviceBaseDto().getDeviceImages().size()==1){
+                                      autoPager.setVisibility(View.GONE);
+                                      dotLL.setVisibility(View.GONE);
+                                      advertisementImage.setVisibility(View.VISIBLE);
+                                      MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceBaseDto().getDeviceImages().get(0).getUrl(),advertisementImage,MyAppliction.options);
+                                  }else {
+                                      advertisementImage.setVisibility(View.GONE);
+                                      autoPager.setVisibility(View.VISIBLE);
+                                      dotLL.setVisibility(View.VISIBLE);
+                                      imageUrls.addAll(secondHandBean.getDeviceBaseDto().getDeviceImages());
+                                      pagerAdapter.refreshData(true);
+                                  }
+
                              }else {
-                                 advertisementRlayout.setVisibility(View.GONE);
+                                  advertisementRlayout.setVisibility(View.GONE);
                              }
                             if (secondHandBean.getIsCollection()==1){
-                                checkBoxCheck.setChecked(true);
+                                checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon_cur);
+                            }else {
+                                checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon);
                             }
                             mSVProgressHUD.dismiss();
 
@@ -418,41 +430,33 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         shardText.setOnClickListener(this);
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
-
-
-
-            checkBoxCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
+        checkBoxCheck.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SQLhelper sqLhelper=new SQLhelper(ExturderParticularsActivity.this);
-                SQLiteDatabase db= sqLhelper.getWritableDatabase();
-                Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-                String uid=null;  //用户id
-                while (cursor.moveToNext()) {
-                    uid=cursor.getString(0);
-
-                }
+            public void onClick(View v) {
                 //步骤1：创建一个SharedPreferences接口对象
                 SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
                 //步骤2：获取文件中的值
                 String sesstionId = read.getString("code","");
                 if (!TextUtils.isEmpty(uid)){
-                if (isChecked){
+
+                    if (isChecked){
                         if (secondHandBean.getIsCollection()!=1){
                             isCheckedRequest(uid,sesstionId);
                         }
-                }else {
-                isNoCheckedRequest(uid,sesstionId);
-                }
+                        checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon_cur);
+                        isChecked=false;
+                    }else {
+                        checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon);
+                        isNoCheckedRequest(uid,sesstionId);
+                        isChecked=true;
+                    }
                 }else {
                     Intent intent=new Intent(ExturderParticularsActivity.this,LoginActivity.class);
                     startActivity(intent);
                 }
             }
-
-
         });
+
 
 
     }
@@ -601,6 +605,10 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.phone_text_view:
+
+                if (!TextUtils.isEmpty(uid)){
+
+
                   if (!TextUtils.isEmpty(secondHandBean.getBossPhoneNumber())){
                       //意图：打电话
                       Intent intent = new Intent();
@@ -613,7 +621,10 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                   }else {
                       MyAppliction.showToast("该机主没有联系方式");
                   }
-
+                }else {
+                    Intent intent=new Intent(ExturderParticularsActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                }
 
                 break;
             case R.id.shard_tv:
