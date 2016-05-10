@@ -103,6 +103,8 @@
 
         </RelativeLayout>
         <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:dividerHeight="0dp"
+            android:divider="#00000000"
             android:id="@+id/project_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

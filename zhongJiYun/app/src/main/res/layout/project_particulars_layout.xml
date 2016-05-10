@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/information_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -114,9 +115,17 @@
 
 
 
-
+      <ImageView
+          android:background="@color/color_dedede"
+          android:layout_width="match_parent"
+          android:layout_height="0.5dp" />
+        <ImageView
+            android:layout_marginTop="2dp"
+            android:background="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
     <RelativeLayout
-        android:layout_marginTop="2dp"
+
         android:background="@color/ic_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -206,6 +215,7 @@
                 android:layout_toRightOf="@+id/goncheng_text"
                 android:id="@+id/goncheng_content_text"
                 android:textSize="@dimen/home_Size_16"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:text="32222米"
@@ -238,11 +248,13 @@
 
     </LinearLayout>
     <ImageView
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:id="@+id/image_ligin"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/content_rlayout"
-        android:src="@color/background"
+        android:src="@color/color_dedede"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
         <TextView
@@ -277,7 +289,7 @@
             android:layout_height="wrap_content" />
 
         <RelativeLayout
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:layout_below="@id/leixing_text"
             android:layout_toRightOf="@+id/xingji_text"
             android:layout_width="match_parent"
@@ -285,47 +297,54 @@
             <TextView
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
-
                 android:id="@+id/rating_one"
-                android:layout_width="12dp"
-                android:layout_height="15dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/rating_one"
 
                 android:id="@+id/rating_two"
 
-                android:layout_width="12dp"
-                android:layout_height="15dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/rating_two"
 
                 android:id="@+id/rating_three"
 
-                android:layout_width="12dp"
-                android:layout_height="15dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/rating_three"
                 android:id="@+id/rating_four"
-                android:layout_width="12dp"
-                android:layout_height="15dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_toRightOf="@+id/rating_four"
                 android:id="@+id/rating_five"
-                android:layout_width="12dp"
-                android:layout_height="15dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     </RelativeLayout>
-
+        <ImageView
+            android:background="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        <ImageView
+            android:layout_marginTop="2dp"
+            android:background="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
     <RelativeLayout
-        android:layout_marginTop="2dp"
+
         android:background="@color/ic_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -357,9 +376,16 @@
 
 
     </RelativeLayout>
-
+        <ImageView
+            android:background="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        <ImageView
+            android:layout_marginTop="2dp"
+            android:background="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
     <RelativeLayout
-        android:layout_marginTop="2dp"
         android:background="@color/ic_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -391,8 +417,16 @@
 
 
     </RelativeLayout>
+        <ImageView
+            android:background="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        <ImageView
+            android:background="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
         <RelativeLayout
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="60dp"
             android:layout_marginTop="2dp"
             android:background="@color/ic_white"
             android:layout_width="match_parent"
@@ -430,11 +464,14 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="40dp" />
+                android:layout_height="20dp" />
 
 
         </RelativeLayout>
-
+        <ImageView
+            android:background="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
     </LinearLayout>
 
 

@@ -130,6 +130,9 @@
 
 
     </LinearLayout>
+
+
+
     <LinearLayout
         android:gravity="center"
         android:background="@color/white"
@@ -137,6 +140,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
         <Button
+            android:gravity="center"
             android:layout_alignParentBottom="true"
             android:id="@+id/competitive_button"
             android:layout_width="match_parent"
@@ -144,9 +148,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:textColor="@color/ic_white"
-            android:background="@drawable/loing_button_corners"
-            android:textSize="@dimen/home_Size_18"
-            android:text="我要竞标" />
+            android:textSize="@dimen/home_Size_16"
+             />
     </LinearLayout>
 
 

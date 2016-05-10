@@ -93,15 +93,18 @@
                 />
 
             <Button
+                android:textColor="@color/white"
+                android:background="@drawable/loing_button_corners"
                 android:id="@+id/code_button"
                 android:layout_centerHorizontal="true"
                 android:layout_alignTop="@id/edit_new_phone"
                 android:text="获取验证码"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="3dp"
                 android:layout_marginRight="22dp"
                 android:layout_alignParentRight="true"
                 android:layout_width="100dp"
-                android:layout_height="45dp" />
+                android:layout_height="40dp" />
 
         </RelativeLayout>
 

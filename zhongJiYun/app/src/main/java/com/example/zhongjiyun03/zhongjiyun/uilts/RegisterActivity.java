@@ -1450,8 +1450,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void intiVcodeData(final int tage, String phoneNumber) {
 
-        if (!TextUtils.isEmpty(phoneNumber)&&phoneNumber.length()==11) {
-
+        if (!TextUtils.isEmpty(phoneNumber)) {
+            if (phoneNumber.length()==11){
+            if (isMobileNO(phoneNumber)){
             HttpUtils httpUtils=new HttpUtils();
             RequestParams requestParams=new RequestParams();
             requestParams.addBodyParameter("PhoneNumber",phoneNumber);
@@ -1465,8 +1466,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         MyAppliction.showToast("验证码已发送成功");
                         if (tage==1){
                             time.start();
+                            codeButton.setTextColor(getResources().getColor(R.color.tailt_dark));
+                            codeButton.setBackgroundResource(R.drawable.gray_button_corners);
                         }else {
-
+                            companyCodeButton.setTextColor(getResources().getColor(R.color.tailt_dark));
+                            companyCodeButton.setBackgroundResource(R.drawable.gray_button_corners);
                             companyTime.start();
 
                         }
@@ -1481,15 +1485,27 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     MyAppliction.showToast("网络异常,请稍后重试");
                 }
             });
+            }else {
+                MyAppliction.showToast("请输入正确的手机号码");
+            }
+            }else {
+                MyAppliction.showToast("请输入长度为11位的手机号码");
+
+
+            }
         }else {
-            MyAppliction.showToast("您输入的手机号码有误");
+            MyAppliction.showToast("您输入的手机号码不能为空");
 
 
         }
 
     }
 
-
+    public static boolean isMobileNO(String mobiles) {
+        String telRegex = "13\\d{9}|14[57]\\d{8}|15[012356789]\\d{8}|18[01256789]\\d{8}|17[0678]\\d{8}";
+        if (TextUtils.isEmpty(mobiles)) return false;
+        else return mobiles.matches(telRegex);
+    }
 
     /**
      * 根据byte数组，生成文件

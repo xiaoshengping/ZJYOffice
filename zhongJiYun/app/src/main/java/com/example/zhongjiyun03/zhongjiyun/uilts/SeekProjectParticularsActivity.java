@@ -93,7 +93,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     private VelocityTracker mVelocityTracker;
 
 
-
     @ViewInject(R.id.viewPager)
     private ViewPager viewPager;
     @ViewInject(R.id.cursor)
@@ -111,7 +110,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     @ViewInject(R.id.textView2)
     private TextView textView2;
     private View projectParticularsView;
-    private  View matingFacilyView;
+    private View matingFacilyView;
     @ViewInject(R.id.checkBox_check)
     private ImageView checkBoxCheck;
     private String seekProjectId;
@@ -120,8 +119,10 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     private Button competitiveButton; //竞标按钮
     private SeekProjectBean seekProjectBean;
     private TimeCount time;      //获取计时线程
-    private  AlertDialog dlg;
-    private boolean isChecked=true;//是否关注
+    private AlertDialog dlg;
+    private boolean isChecked = true;//是否关注
+   /* @ViewInject(R.id.image_view)
+    private ImageView imageViewFcto;*/
 
 
 
@@ -142,7 +143,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         initData();
 
 
-
     }
 
     @Override
@@ -152,47 +152,50 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     }
 
     private void initData() {
-        seekProjectId= getIntent().getStringExtra("seekProjectId");
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
-        if (!TextUtils.isEmpty(seekProjectId)){
-            SQLhelper sqLhelper=new SQLhelper(SeekProjectParticularsActivity.this);
-            SQLiteDatabase db= sqLhelper.getWritableDatabase();
-            Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-            String uid=null;  //用户id
+        seekProjectId = getIntent().getStringExtra("seekProjectId");
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requestParams = new RequestParams();
+        if (!TextUtils.isEmpty(seekProjectId)) {
+            SQLhelper sqLhelper = new SQLhelper(SeekProjectParticularsActivity.this);
+            SQLiteDatabase db = sqLhelper.getWritableDatabase();
+            Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
+            String uid = null;  //用户id
             while (cursor.moveToNext()) {
-                uid=cursor.getString(0);
+                uid = cursor.getString(0);
             }
-            if (!TextUtils.isEmpty(uid)){
+            if (!TextUtils.isEmpty(uid)) {
                 //步骤1：创建一个SharedPreferences接口对象
                 SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
                 //步骤2：获取文件中的值
-                String sesstionId = read.getString("code","");
+                String sesstionId = read.getString("code", "");
                 requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-                requestParams.addBodyParameter("id",uid);
+                requestParams.addBodyParameter("id", uid);
             }
-            requestParams.addBodyParameter("projectId",seekProjectId);
+            requestParams.addBodyParameter("projectId", seekProjectId);
             mSVProgressHUD.showWithStatus("加载中...");
-            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctParticularsData(),requestParams, new RequestCallBack<String>() {
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctParticularsData(), requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("项目详情",responseInfo.result);
-                    if (!TextUtils.isEmpty(responseInfo.result)){
-                        AppBean<SeekProjectBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SeekProjectBean>>(){});
-                        if (appBean.getResult().equals("success")){
-                            seekProjectBean=appBean.getData();
-                            if (seekProjectBean!=null){
+                    Log.e("项目详情", responseInfo.result);
+                    if (!TextUtils.isEmpty(responseInfo.result)) {
+                        AppBean<SeekProjectBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SeekProjectBean>>() {
+                        });
+                        if (appBean.getResult().equals("success")) {
+                            seekProjectBean = appBean.getData();
+                            if (seekProjectBean != null) {
                                 initProjectView(seekProjectBean);
                                 initMatingFacliyView(seekProjectBean);
+                                //imageViewFcto.setVisibility(View.GONE);
                                 mSVProgressHUD.dismiss();
                             }
 
 
-                        }else {
+                        } else {
+                            //imageViewFcto.setVisibility(View.GONE);
                             mSVProgressHUD.dismiss();
                         }
 
-                    }else {
+                    } else {
                         mSVProgressHUD.dismiss();
                     }
 
@@ -200,40 +203,40 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
                 @Override
                 public void onFailure(HttpException e, String s) {
-                    Log.e("项目详情",s);
+                    Log.e("项目详情", s);
                     mSVProgressHUD.dismiss();
                 }
             });
-        }else {
+        } else {
             MyAppliction.showToast("数据加载失败");
         }
 
 
-
     }
-      //配置设施
+
+    //配置设施
     private void initMatingFacliyView(final SeekProjectBean seekProjectBean) {
-             TextView fuwuNumberText= (TextView) matingFacilyView.findViewById(R.id.fuwu_number_text);
-             TextView exturdNumberText= (TextView) matingFacilyView.findViewById(R.id.exturd_number_text);
-             TextView jshouNUmberText= (TextView) matingFacilyView.findViewById(R.id.jshou_number_text);
-             TextView peiJNumberText= (TextView) matingFacilyView.findViewById(R.id.peij_number_text);
-             fuwuNumberText.setText(seekProjectBean.getServiceProviderCount()+"");
-             exturdNumberText.setText(seekProjectBean.getSecondHandCount()+"");
-             jshouNUmberText.setText(seekProjectBean.getDriverCount()+"");
-             peiJNumberText.setText(seekProjectBean.getDeviceCount()+"");
-        RelativeLayout serviceLayout= (RelativeLayout) matingFacilyView.findViewById(R.id.service_layout);
-        RelativeLayout secondHandLayout= (RelativeLayout) matingFacilyView.findViewById(R.id.second_hand_layout);
-        RelativeLayout exturdLayout= (RelativeLayout) matingFacilyView.findViewById(R.id.exturd_layout);
+        TextView fuwuNumberText = (TextView) matingFacilyView.findViewById(R.id.fuwu_number_text);
+        TextView exturdNumberText = (TextView) matingFacilyView.findViewById(R.id.exturd_number_text);
+        TextView jshouNUmberText = (TextView) matingFacilyView.findViewById(R.id.jshou_number_text);
+        TextView peiJNumberText = (TextView) matingFacilyView.findViewById(R.id.peij_number_text);
+        fuwuNumberText.setText(seekProjectBean.getServiceProviderCount() + "");
+        exturdNumberText.setText(seekProjectBean.getSecondHandCount() + "");
+        jshouNUmberText.setText(seekProjectBean.getDriverCount() + "");
+        peiJNumberText.setText(seekProjectBean.getDeviceCount() + "");
+        RelativeLayout serviceLayout = (RelativeLayout) matingFacilyView.findViewById(R.id.service_layout);
+        RelativeLayout secondHandLayout = (RelativeLayout) matingFacilyView.findViewById(R.id.second_hand_layout);
+        RelativeLayout exturdLayout = (RelativeLayout) matingFacilyView.findViewById(R.id.exturd_layout);
 
         serviceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (seekProjectBean.getServiceProviderCount()==0){
+                if (seekProjectBean.getServiceProviderCount() == 0) {
                     MyAppliction.showToast("您附近没有服务商");
-                }else {
-                    Intent intent=new Intent(SeekProjectParticularsActivity.this,ServiceProviderActivity.class);
-                    intent.putExtra("data",seekProjectBean.getProvince());
-                    intent.putExtra("tage","matingFacily");
+                } else {
+                    Intent intent = new Intent(SeekProjectParticularsActivity.this, ServiceProviderActivity.class);
+                    intent.putExtra("data", seekProjectBean.getProvince());
+                    intent.putExtra("tage", "matingFacily");
                     startActivity(intent);
                 }
 
@@ -242,12 +245,12 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         secondHandLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (seekProjectBean.getSecondHandCount()==0){
+                if (seekProjectBean.getSecondHandCount() == 0) {
                     MyAppliction.showToast("您附近没有二手钻机");
-                }else {
-                    Intent intent=new Intent(SeekProjectParticularsActivity.this,SecondHandActivity.class);
-                    intent.putExtra("data",seekProjectBean.getProvince());
-                    intent.putExtra("tage","matingFacily");
+                } else {
+                    Intent intent = new Intent(SeekProjectParticularsActivity.this, SecondHandActivity.class);
+                    intent.putExtra("data", seekProjectBean.getProvince());
+                    intent.putExtra("tage", "matingFacily");
                     startActivity(intent);
                 }
 
@@ -256,12 +259,12 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         exturdLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (seekProjectBean.getDriverCount()==0){
+                if (seekProjectBean.getDriverCount() == 0) {
                     MyAppliction.showToast("您附近没有机手");
-                }else {
-                    Intent intent=new Intent(SeekProjectParticularsActivity.this,SeekMachinistActivity.class);
-                    intent.putExtra("data",seekProjectBean.getProvince());
-                    intent.putExtra("tage","matingFacily");
+                } else {
+                    Intent intent = new Intent(SeekProjectParticularsActivity.this, SeekMachinistActivity.class);
+                    intent.putExtra("data", seekProjectBean.getProvince());
+                    intent.putExtra("tage", "matingFacily");
                     startActivity(intent);
                 }
 
@@ -274,123 +277,123 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
     private void initProjectView(final SeekProjectBean seekProjectBean) {
 
-        TextView tailtText= (TextView) projectParticularsView.findViewById(R.id.tailt_text);
-        TextView phoneContentText= (TextView) projectParticularsView.findViewById(R.id.phone_content_text);
-        TextView dateContentText= (TextView) projectParticularsView.findViewById(R.id.date_content_text);
-        TextView addressContentText= (TextView) projectParticularsView.findViewById(R.id.address_content_text);
-        TextView companyContentText= (TextView) projectParticularsView.findViewById(R.id.company_content_text);
-        TextView workDateContentText= (TextView) projectParticularsView.findViewById(R.id.work_date_content_text);
-        TextView gonchengContentText= (TextView) projectParticularsView.findViewById(R.id.goncheng_content_text);
-        TextView diameterContentText= (TextView) projectParticularsView.findViewById(R.id.diameter_content_text);
-        TextView pileContentText= (TextView) projectParticularsView.findViewById(R.id.pile_content_text);
-        TextView leixingContentText= (TextView) projectParticularsView.findViewById(R.id.leixing_content_text);
-        TextView projectIntroduceContent= (TextView) projectParticularsView.findViewById(R.id.project_introduce_content);
-        TextView extruderContenText= (TextView) projectParticularsView.findViewById(R.id.extruder_conten_text);
-        TextView addressContentTextView= (TextView) projectParticularsView.findViewById(R.id.address_content_text_view);
-        
-        TextView ratingOne=(TextView) projectParticularsView.findViewById(R.id.rating_one);
+        TextView tailtText = (TextView) projectParticularsView.findViewById(R.id.tailt_text);
+        TextView phoneContentText = (TextView) projectParticularsView.findViewById(R.id.phone_content_text);
+        TextView dateContentText = (TextView) projectParticularsView.findViewById(R.id.date_content_text);
+        TextView addressContentText = (TextView) projectParticularsView.findViewById(R.id.address_content_text);
+        TextView companyContentText = (TextView) projectParticularsView.findViewById(R.id.company_content_text);
+        TextView workDateContentText = (TextView) projectParticularsView.findViewById(R.id.work_date_content_text);
+        TextView gonchengContentText = (TextView) projectParticularsView.findViewById(R.id.goncheng_content_text);
+        TextView diameterContentText = (TextView) projectParticularsView.findViewById(R.id.diameter_content_text);
+        TextView pileContentText = (TextView) projectParticularsView.findViewById(R.id.pile_content_text);
+        TextView leixingContentText = (TextView) projectParticularsView.findViewById(R.id.leixing_content_text);
+        TextView projectIntroduceContent = (TextView) projectParticularsView.findViewById(R.id.project_introduce_content);
+        TextView extruderContenText = (TextView) projectParticularsView.findViewById(R.id.extruder_conten_text);
+        TextView addressContentTextView = (TextView) projectParticularsView.findViewById(R.id.address_content_text_view);
 
-         TextView ratingTwo=(TextView) projectParticularsView.findViewById(R.id.rating_two);
+        TextView ratingOne = (TextView) projectParticularsView.findViewById(R.id.rating_one);
 
-         TextView ratingThree=(TextView) projectParticularsView.findViewById(R.id.rating_three);
+        TextView ratingTwo = (TextView) projectParticularsView.findViewById(R.id.rating_two);
 
-         TextView ratingFour=(TextView) projectParticularsView.findViewById(R.id.rating_four);
+        TextView ratingThree = (TextView) projectParticularsView.findViewById(R.id.rating_three);
 
-         TextView ratingFive=(TextView) projectParticularsView.findViewById(R.id.rating_five);
+        TextView ratingFour = (TextView) projectParticularsView.findViewById(R.id.rating_four);
+
+        TextView ratingFive = (TextView) projectParticularsView.findViewById(R.id.rating_five);
 
 
-         if (!TextUtils.isEmpty(seekProjectBean.getTitle())){
+        if (!TextUtils.isEmpty(seekProjectBean.getTitle())) {
 
-             tailtText.setText(seekProjectBean.getTitle());
-         }
-        if (!TextUtils.isEmpty(seekProjectBean.getName())){
+            tailtText.setText(seekProjectBean.getTitle());
+        }
+        if (!TextUtils.isEmpty(seekProjectBean.getName())) {
 
             phoneContentText.setText(seekProjectBean.getName());
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getCreateDateStr())){
+        if (!TextUtils.isEmpty(seekProjectBean.getCreateDateStr())) {
 
             dateContentText.setText(seekProjectBean.getCreateDateStr());
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getProvince())&&!TextUtils.isEmpty(seekProjectBean.getCity())){
+        if (!TextUtils.isEmpty(seekProjectBean.getProvince()) && !TextUtils.isEmpty(seekProjectBean.getCity())) {
 
-            addressContentText.setText(seekProjectBean.getProvince()+seekProjectBean.getCity());
+            addressContentText.setText(seekProjectBean.getProvince() + seekProjectBean.getCity());
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getProjectCompany())){
+        if (!TextUtils.isEmpty(seekProjectBean.getProjectCompany())) {
 
             companyContentText.setText(seekProjectBean.getProjectCompany());
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getTimeLimit())){
+        if (!TextUtils.isEmpty(seekProjectBean.getTimeLimit())) {
 
-            workDateContentText.setText(seekProjectBean.getTimeLimit()+"个月");
+            workDateContentText.setText(seekProjectBean.getTimeLimit() + "个月");
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getWorkAmount())){
+        if (!TextUtils.isEmpty(seekProjectBean.getWorkAmount())) {
 
-            gonchengContentText.setText(seekProjectBean.getWorkAmount()+"米");
+            gonchengContentText.setText(seekProjectBean.getWorkAmount() + "米");
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getDiameter())){
+        if (!TextUtils.isEmpty(seekProjectBean.getDiameter())) {
 
-            diameterContentText.setText(seekProjectBean.getDiameter()+"米");
+            diameterContentText.setText(seekProjectBean.getDiameter() + "米");
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getPileDepth())){
+        if (!TextUtils.isEmpty(seekProjectBean.getPileDepth())) {
 
-            pileContentText.setText(seekProjectBean.getPileDepth()+"米");
+            pileContentText.setText(seekProjectBean.getPileDepth() + "米");
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getProjectRequirementTypeStr())){
+        if (!TextUtils.isEmpty(seekProjectBean.getProjectRequirementTypeStr())) {
 
             leixingContentText.setText(seekProjectBean.getProjectRequirementTypeStr());
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getProfile())){
+        if (!TextUtils.isEmpty(seekProjectBean.getProfile())) {
 
             projectIntroduceContent.setText(seekProjectBean.getProfile());
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getDeviceRequirement())){
+        if (!TextUtils.isEmpty(seekProjectBean.getDeviceRequirement())) {
 
             extruderContenText.setText(seekProjectBean.getDeviceRequirement());
         }
-        if (!TextUtils.isEmpty(seekProjectBean.getGeologicReport())){
+        if (!TextUtils.isEmpty(seekProjectBean.getGeologicReport())) {
 
             addressContentTextView.setText(seekProjectBean.getGeologicReport());
         }
 
-         if (seekProjectBean.getIsCollection()==1){
-             checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon_cur);
-         }else {
-             checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon);
-         }
+        if (seekProjectBean.getIsCollection() == 1) {
+            checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon_cur);
+        } else {
+            checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon);
+        }
 
-          if (seekProjectBean.getCanReply().equals("success")){
-              competitiveButton.setText("我要竞标");
-              competitiveButton.setTextColor(getResources().getColor(R.color.white));
-              competitiveButton.setBackgroundResource(R.drawable.loing_button_corners);
-          }else if (seekProjectBean.getCanReply().equals("联系业主")){
-              competitiveButton.setTextColor(getResources().getColor(R.color.white));
-              competitiveButton.setBackgroundResource(R.drawable.loing_button_corners);
-              competitiveButton.setText(seekProjectBean.getCanReply());
-          }else {
+        if (seekProjectBean.getCanReply().equals("success")) {
+            competitiveButton.setText("我要竞标");
+            competitiveButton.setTextColor(getResources().getColor(R.color.white));
+            competitiveButton.setBackgroundResource(R.drawable.loing_button_corners);
+        } else if (seekProjectBean.getCanReply().equals("联系业主")) {
+            competitiveButton.setTextColor(getResources().getColor(R.color.white));
+            competitiveButton.setBackgroundResource(R.drawable.loing_button_corners);
+            competitiveButton.setText(seekProjectBean.getCanReply());
+        } else {
 
-              competitiveButton.setTextColor(getResources().getColor(R.color.tailt_dark));
-              competitiveButton.setBackgroundResource(R.drawable.gray_button_corners);
-              competitiveButton.setText(seekProjectBean.getCanReply());
-          }
+            competitiveButton.setTextColor(getResources().getColor(R.color.tailt_dark));
+            competitiveButton.setBackgroundResource(R.drawable.gray_button_corners);
+            competitiveButton.setText(seekProjectBean.getCanReply());
+        }
 
-        String StarRate=seekProjectBean.getBossStarLevel();
-        if (StarRate.equals("1")){
+        String StarRate = seekProjectBean.getBossStarLevel();
+        if (StarRate.equals("1")) {
             ratingOne.setBackgroundResource(R.mipmap.eval_icon);
 
-        }else if (StarRate.equals("2")){
+        } else if (StarRate.equals("2")) {
 
             ratingOne.setBackgroundResource(R.mipmap.eval_icon);
             ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
 
 
-        }else if (StarRate.equals("3")){
+        } else if (StarRate.equals("3")) {
 
             ratingOne.setBackgroundResource(R.mipmap.eval_icon);
             ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
             ratingThree.setBackgroundResource(R.mipmap.eval_icon);
 
 
-        }else if (StarRate.equals("4")){
+        } else if (StarRate.equals("4")) {
 
             ratingOne.setBackgroundResource(R.mipmap.eval_icon);
             ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
@@ -398,8 +401,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             ratingFour.setBackgroundResource(R.mipmap.eval_icon);
 
 
-        }else if (StarRate.equals("5")){
-
+        } else if (StarRate.equals("5")) {
             ratingOne.setBackgroundResource(R.mipmap.eval_icon);
             ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
             ratingThree.setBackgroundResource(R.mipmap.eval_icon);
@@ -407,7 +409,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             ratingFive.setBackgroundResource(R.mipmap.eval_icon);
 
         }
-
 
 
     }
@@ -426,18 +427,18 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        SQLhelper sqLhelper=new SQLhelper(SeekProjectParticularsActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        String states=null;  //用户星级
+        SQLhelper sqLhelper = new SQLhelper(SeekProjectParticularsActivity.this);
+        SQLiteDatabase db = sqLhelper.getWritableDatabase();
+        Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid = null;  //用户id
+        String states = null;  //用户星级
 
         while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-            states=cursor.getString(3);
+            uid = cursor.getString(0);
+            states = cursor.getString(3);
 
         }
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.retrun_text_view:
                 finish();
@@ -448,34 +449,34 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
                 break;
             case R.id.competitive_button:
-                if (!TextUtils.isEmpty(uid)){
-                    if (seekProjectBean.getIsCallOwnerFlag()==0){
-                        if (seekProjectBean.getCanReply().equals("success")){
-                            Intent intent=new Intent(SeekProjectParticularsActivity.this,CompetitiveDescribeActivity.class);
-                            intent.putExtra("ProjectId",seekProjectId);
+                if (!TextUtils.isEmpty(uid)) {
+                    if (seekProjectBean.getIsCallOwnerFlag() == 0) {
+                        if (seekProjectBean.getCanReply().equals("success")) {
+                            Intent intent = new Intent(SeekProjectParticularsActivity.this, CompetitiveDescribeActivity.class);
+                            intent.putExtra("ProjectId", seekProjectId);
                             startActivity(intent);
 
-                        }else {
+                        } else {
                             MyAppliction.showToast(seekProjectBean.getCanReply());
                         }
-                    }else {
-                        if (!TextUtils.isEmpty(seekProjectId)){
-                            if (!TextUtils.isEmpty(uid)){
+                    } else {
+                        if (!TextUtils.isEmpty(seekProjectId)) {
+                            if (!TextUtils.isEmpty(uid)) {
                                 //意图：打电话
-                                CellOwnerData(uid,seekProjectId);
-                            }else {
-                                Intent intent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
+                                CellOwnerData(uid, seekProjectId);
+                            } else {
+                                Intent intent = new Intent(SeekProjectParticularsActivity.this, LoginActivity.class);
                                 startActivity(intent);
                             }
 
-                            }else {
+                        } else {
                             MyAppliction.showToast("该业主没有联系方式");
                         }
 
                     }
 
-                }else {
-                    Intent loginIntent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
+                } else {
+                    Intent loginIntent = new Intent(SeekProjectParticularsActivity.this, LoginActivity.class);
                     startActivity(loginIntent);
                 }
                 break;
@@ -484,59 +485,57 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 //步骤1：创建一个SharedPreferences接口对象
                 SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
                 //步骤2：获取文件中的值
-                String sesstionId = read.getString("code","");
-                if (!TextUtils.isEmpty(uid)){
-                    if (isChecked){
-                        if (seekProjectBean.getIsCollection()!=1){
-                            isCheckedRequest(uid,sesstionId);
+                String sesstionId = read.getString("code", "");
+                if (!TextUtils.isEmpty(uid)) {
+                    if (isChecked) {
+                        if (seekProjectBean.getIsCollection() != 1) {
+                            isCheckedRequest(uid, sesstionId);
                         }
                         checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon_cur);
-                        isChecked=false;
-                    }else {
-                        isNoCheckedRequest(uid,sesstionId);
+                        isChecked = false;
+                    } else {
+                        isNoCheckedRequest(uid, sesstionId);
                         checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon);
-                        isChecked=true;
+                        isChecked = true;
                     }
-                }else {
-                    Intent intent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
+                } else {
+                    Intent intent = new Intent(SeekProjectParticularsActivity.this, LoginActivity.class);
                     startActivity(intent);
 
                 }
                 break;
 
 
-
-
         }
 
 
-
-
     }
-     //拨打电话
-    private void CellOwnerData(String uid,String seekProjectId) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
+
+    //拨打电话
+    private void CellOwnerData(String uid, String seekProjectId) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requestParams = new RequestParams();
         //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
         //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        if (!TextUtils.isEmpty(seekProjectId)){
+        String sesstionId = read.getString("code", "");
+        if (!TextUtils.isEmpty(seekProjectId)) {
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-            requestParams.addBodyParameter("id",uid);
-            requestParams.addBodyParameter("projectId",seekProjectId);
-            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCallOwerData(),requestParams, new RequestCallBack<String>() {
+            requestParams.addBodyParameter("id", uid);
+            requestParams.addBodyParameter("projectId", seekProjectId);
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCallOwerData(), requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("拨打业主电话",responseInfo.result);
-                    if (!TextUtils.isEmpty(responseInfo.result)){
-                        AppDataBean appDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
-                        if (appDataBean!=null){
-                            if (appDataBean.getResult().equals("success")){
+                    Log.e("拨打业主电话", responseInfo.result);
+                    if (!TextUtils.isEmpty(responseInfo.result)) {
+                        AppDataBean appDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppDataBean>() {
+                        });
+                        if (appDataBean != null) {
+                            if (appDataBean.getResult().equals("success")) {
                                 time.start();
-                                showExitGameAlert("正在为您拨打电话中","尊敬的用户，中基云平台正在为您拨打机主电话，请耐心等待10秒钟");
-                            }else {
-                              MyAppliction.showToast("拨打电话失败");
+                                showExitGameAlert("正在为您拨打电话中", "尊敬的用户，中基云平台正在为您拨打机主电话，请耐心等待10秒钟");
+                            } else {
+                                MyAppliction.showToast("拨打电话失败");
                             }
                         }
                     }
@@ -544,21 +543,20 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
                 @Override
                 public void onFailure(HttpException e, String s) {
-                    Log.e("拨打业主电话",s);
+                    Log.e("拨打业主电话", s);
                 }
             });
 
-        }else {
-            Intent intent=new Intent(SeekProjectParticularsActivity.this,LoginActivity.class);
+        } else {
+            Intent intent = new Intent(SeekProjectParticularsActivity.this, LoginActivity.class);
             startActivity(intent);
         }
-
 
 
     }
 
     //电话框
-    private void showExitGameAlert(String text,String textTv) {
+    private void showExitGameAlert(String text, String textTv) {
 
         dlg.show();
         Window window = dlg.getWindow();
@@ -590,6 +588,8 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         });*/
     }
 
+
+
     class TimeCount extends CountDownTimer {
         public TimeCount(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);//参数依次为总时长,和计时的时间间隔
@@ -607,23 +607,24 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
     }
 
-    private void isNoCheckedRequest(String uid,String sesstionId) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
+    private void isNoCheckedRequest(String uid, String sesstionId) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requestParams = new RequestParams();
 
-        if (!TextUtils.isEmpty(uid)){
+        if (!TextUtils.isEmpty(uid)) {
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-            requestParams.addBodyParameter("Id",uid);
-            requestParams.addBodyParameter("collectId",seekProjectId);
-            requestParams.addBodyParameter("collectType","1");
-            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionNoData(),requestParams, new RequestCallBack<String>() {
+            requestParams.addBodyParameter("Id", uid);
+            requestParams.addBodyParameter("collectId", seekProjectId);
+            requestParams.addBodyParameter("collectType", "1");
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionNoData(), requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    if (!TextUtils.isEmpty(responseInfo.result)){
-                        AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
-                        if (appDataBean.getResult().equals("success")){
+                    if (!TextUtils.isEmpty(responseInfo.result)) {
+                        AppDataBean appDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppDataBean>() {
+                        });
+                        if (appDataBean.getResult().equals("success")) {
                             mSVProgressHUD.showSuccessWithStatus("您已取消关注！");
-                        }else {
+                        } else {
                             mSVProgressHUD.showErrorWithStatus("噢噢,取消关注失败");
                         }
                     }
@@ -632,35 +633,32 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
                 @Override
                 public void onFailure(HttpException e, String s) {
-                    Log.e("取消关注项目",s);
+                    Log.e("取消关注项目", s);
                 }
             });
         }
 
 
-
-
-
-
-
     }
-    private void isCheckedRequest(String uid,String sesstionId) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
 
-        if (!TextUtils.isEmpty(uid)){
+    private void isCheckedRequest(String uid, String sesstionId) {
+        HttpUtils httpUtils = new HttpUtils();
+        RequestParams requestParams = new RequestParams();
+
+        if (!TextUtils.isEmpty(uid)) {
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-            requestParams.addBodyParameter("Id",uid);
-            requestParams.addBodyParameter("collectId",seekProjectId);
-            requestParams.addBodyParameter("collectType","1");
-            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionData(),requestParams, new RequestCallBack<String>() {
+            requestParams.addBodyParameter("Id", uid);
+            requestParams.addBodyParameter("collectId", seekProjectId);
+            requestParams.addBodyParameter("collectType", "1");
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionData(), requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    if (!TextUtils.isEmpty(responseInfo.result)){
-                        AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
-                        if (appDataBean.getResult().equals("success")){
+                    if (!TextUtils.isEmpty(responseInfo.result)) {
+                        AppDataBean appDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppDataBean>() {
+                        });
+                        if (appDataBean.getResult().equals("success")) {
                             mSVProgressHUD.showSuccessWithStatus("关注成功！");
-                        }else {
+                        } else {
                             mSVProgressHUD.showErrorWithStatus("噢噢,关注失败");
                         }
                     }
@@ -673,9 +671,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 }
             });
         }
-
-
-
 
 
     }
@@ -694,8 +689,8 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
 
     private void initViewPager() {
-       projectParticularsView=getLayoutInflater().inflate(R.layout.project_particulars_layout, null);
-       matingFacilyView=getLayoutInflater().inflate(R.layout.mating_facility_layout, null);
+        projectParticularsView = getLayoutInflater().inflate(R.layout.project_particulars_layout, null);
+        matingFacilyView = getLayoutInflater().inflate(R.layout.mating_facility_layout, null);
 
         lists.add(projectParticularsView);
         lists.add(matingFacilyView);
@@ -720,7 +715,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                         break;
                     case 1:
                         if (currentItem == 0) {
-                            animation = new TranslateAnimation(0,offSet * 2
+                            animation = new TranslateAnimation(0, offSet * 2
                                     + bmWidth, 0, 0);
                         } else if (currentItem == 2) {
                             //TODO
@@ -728,7 +723,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                                     * bmWidth, offSet * 2 + bmWidth, 0, 0);
                         }
                         break;
-
 
 
                 }
@@ -772,8 +766,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         });
 
 
-
-
     }
 
     private void initeCursor() {
@@ -801,17 +793,17 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 break;
             case MotionEvent.ACTION_MOVE:
                 xMove = event.getRawX();
-                yMove= event.getRawY();
+                yMove = event.getRawY();
                 //滑动的距离
                 int distanceX = (int) (xMove - xDown);
-                int distanceY= (int) (yMove - yDown);
+                int distanceY = (int) (yMove - yDown);
                 //获取顺时速度
                 int ySpeed = getScrollVelocity();
                 //关闭Activity需满足以下条件：
                 //1.x轴滑动的距离>XDISTANCE_MIN
                 //2.y轴滑动的距离在YDISTANCE_MIN范围内
                 //3.y轴上（即上下滑动的速度）<XSPEED_MIN，如果大于，则认为用户意图是在上下滑动而非左滑结束Activity
-                if(distanceX > XDISTANCE_MIN &&(distanceY<YDISTANCE_MIN&&distanceY>-YDISTANCE_MIN)&& ySpeed < YSPEED_MIN) {
+                if (distanceX > XDISTANCE_MIN && (distanceY < YDISTANCE_MIN && distanceY > -YDISTANCE_MIN) && ySpeed < YSPEED_MIN) {
                     finish();
                 }
                 break;
@@ -828,7 +820,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
      * 创建VelocityTracker对象，并将触摸界面的滑动事件加入到VelocityTracker当中。
      *
      * @param event
-     *
      */
     private void createVelocityTracker(MotionEvent event) {
         if (mVelocityTracker == null) {
@@ -846,7 +837,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     }
 
     /**
-     *
      * @return 滑动速度，以每秒钟移动了多少像素值为单位。
      */
     private int getScrollVelocity() {
@@ -854,6 +844,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         int velocity = (int) mVelocityTracker.getYVelocity();
         return Math.abs(velocity);
     }
+
     @Override
     public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
         super.startActivityForResult(intent, requestCode, options);
@@ -874,7 +865,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         oks.disableSSOWhenAuthorize();
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
             @Override
-            public void onShare(Platform platform, cn.sharesdk.framework.Platform.ShareParams paramsToShare) {
+            public void onShare(Platform platform, Platform.ShareParams paramsToShare) {
                 if ("Wechat".equals(platform.getName())) {
                     paramsToShare.setShareType(Platform.SHARE_WEBPAGE);
 
@@ -887,22 +878,22 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
         //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle(seekProjectBean.getTitle()+"_"+seekProjectBean.getTimeLimit()+"月_"+seekProjectBean.getProvince()+seekProjectBean.getCity()+"_中基云项目信息中心");
+        oks.setTitle(seekProjectBean.getTitle() + "_" + seekProjectBean.getTimeLimit() + "月_" + seekProjectBean.getProvince() + seekProjectBean.getCity() + "_中基云项目信息中心");
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id="+seekProjectId);
+        oks.setTitleUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id=" + seekProjectId);
         // text是分享文本，所有平台都需要这个字段
-        oks.setText(seekProjectBean.getTitle()+"_"+seekProjectBean.getTimeLimit()+"月_"+seekProjectBean.getProvince()+seekProjectBean.getCity()+"_中基云项目信息中心");
+        oks.setText(seekProjectBean.getTitle() + "_" + seekProjectBean.getTimeLimit() + "月_" + seekProjectBean.getProvince() + seekProjectBean.getCity() + "_中基云项目信息中心");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
         // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id="+seekProjectId);
+        oks.setUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id=" + seekProjectId);
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment(seekProjectBean.getTitle()+"_"+seekProjectBean.getTimeLimit()+"月_"+seekProjectBean.getProvince()+seekProjectBean.getCity()+"_中基云项目信息中心");
+        oks.setComment(seekProjectBean.getTitle() + "_" + seekProjectBean.getTimeLimit() + "月_" + seekProjectBean.getProvince() + seekProjectBean.getCity() + "_中基云项目信息中心");
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id="+seekProjectId);
+        oks.setSiteUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id=" + seekProjectId);
         // 启动分享GUI
         oks.show(this);
     }

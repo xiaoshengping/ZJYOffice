@@ -50,8 +50,9 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
             }
             if (!TextUtils.isEmpty(data.get(position).getDistanceStr())){
                 viewHold.addressText.setText(data.get(position).getDistanceStr()+"Km");
+                viewHold.addressText.setVisibility(View.VISIBLE);
             }else {
-                viewHold.addressText.setText("0.0Km");
+                viewHold.addressText.setVisibility(View.GONE);
 
             }
             if (!TextUtils.isEmpty(data.get(position).getLastUpdateTimeSubStr())){
@@ -70,10 +71,7 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
                 MyAppliction.imageLoader.displayImage(data.get(position).getDriverHeader(),viewHold.imageView,MyAppliction.RoundedOptionsOne);
             }
             if (data.get(position).getWorkInfoItemDtos()!=null&&data.get(position).getWorkInfoItemDtos().size()!=0){
-                viewHold.imageLiginEnd.setVisibility(View.VISIBLE);
-                viewHold.imageLiginr.setVisibility(View.VISIBLE);
                 if (data.get(position).getWorkInfoItemDtos().size()==1){
-
                     if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getManufacture())&&
                             !TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture())){
                         viewHold.imageLiginEnd.setVisibility(View.VISIBLE);
@@ -84,7 +82,6 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
                     }else {
                         viewHold.imageLiginEnd.setVisibility(View.GONE);
                         viewHold.imageLiginr.setVisibility(View.GONE);
-                        viewHold.imageLiginEnd.setVisibility(View.GONE);
                         viewHold.textView.setVisibility(View.GONE);
                     }
 
@@ -93,13 +90,80 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
                     viewHold.imageLiginEnd.setVisibility(View.VISIBLE);
                     viewHold.imageLiginr.setVisibility(View.VISIBLE);
                     viewHold.textView.setVisibility(View.VISIBLE);
-                    viewHold.textView.setText(data.get(position).getWorkInfoItemDtos().get(0).getManufacture()+
-                            data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getManufacture())&&
+                            !TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture())) {
+                        viewHold.textView.setText(data.get(position).getWorkInfoItemDtos().get(0).getManufacture() +
+                                data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    }
                     viewHold.textViewOne.setVisibility(View.VISIBLE);
                     if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(1).getManufacture())&&!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(1).getNoOfManufacture())){
                         viewHold.textViewOne.setText(data.get(position).getWorkInfoItemDtos().get(1).getManufacture() +
                                 data.get(position).getWorkInfoItemDtos().get(1).getNoOfManufacture());
+                    }
+                }else if (data.get(position).getWorkInfoItemDtos().size()==3){
+                    viewHold.imageLiginEnd.setVisibility(View.VISIBLE);
+                    viewHold.imageLiginr.setVisibility(View.VISIBLE);
+                    viewHold.textView.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getManufacture())&&
+                            !TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture())) {
+                        viewHold.textView.setText(data.get(position).getWorkInfoItemDtos().get(0).getManufacture() +
+                                data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    }
+                    viewHold.textViewOne.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(1).getManufacture())&&!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(1).getNoOfManufacture())){
+                        viewHold.textViewOne.setText(data.get(position).getWorkInfoItemDtos().get(1).getManufacture() +
+                                data.get(position).getWorkInfoItemDtos().get(1).getNoOfManufacture());
+                    }
+
+
+                }else if (data.get(position).getWorkInfoItemDtos().size()==4){
+                    viewHold.imageLiginEnd.setVisibility(View.VISIBLE);
+                    viewHold.imageLiginr.setVisibility(View.VISIBLE);
+                    viewHold.textView.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getManufacture())&&
+                            !TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture())) {
+                        viewHold.textView.setText(data.get(position).getWorkInfoItemDtos().get(0).getManufacture() +
+                                data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture());
+                    }
+                    viewHold.textViewOne.setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(1).getManufacture())&&!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(1).getNoOfManufacture())){
+                        viewHold.textViewOne.setText(data.get(position).getWorkInfoItemDtos().get(1).getManufacture() +
+                                data.get(position).getWorkInfoItemDtos().get(1).getNoOfManufacture());
+                    }
+
+
+                }
+
+
+            }else {
+                viewHold.textView.setVisibility(View.GONE);
+                viewHold.imageLiginEnd.setVisibility(View.GONE);
+                viewHold.textViewOne.setVisibility(View.GONE);
+                viewHold.imageLiginr.setVisibility(View.GONE);
+            }
+
+
+
+
+
+            /*if (data.get(position).getWorkInfoItemDtos()!=null&&data.get(position).getWorkInfoItemDtos().size()!=0){
+                viewHold.imageLiginEnd.setVisibility(View.VISIBLE);
+                viewHold.imageLiginr.setVisibility(View.VISIBLE);
+                if (data.get(position).getWorkInfoItemDtos().size()==1){
+
+                    if (!TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getManufacture())&&
+                            !TextUtils.isEmpty(data.get(position).getWorkInfoItemDtos().get(0).getNoOfManufacture())){
+
                     }else {
+
+                    }
+
+
+                }else if (data.get(position).getWorkInfoItemDtos().size()==2){
+
+
+
+                    else {
                         viewHold.textView.setVisibility(View.GONE);
                         viewHold.textViewOne.setVisibility(View.GONE);
                     }
@@ -135,11 +199,8 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
                 }
 
             }else {
-                viewHold.textView.setVisibility(View.GONE);
-                viewHold.imageLiginEnd.setVisibility(View.GONE);
-                viewHold.textViewOne.setVisibility(View.GONE);
-                viewHold.imageLiginr.setVisibility(View.GONE);
-            }
+
+            }*/
 
         }
 

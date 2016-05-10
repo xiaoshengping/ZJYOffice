@@ -72,7 +72,6 @@ public class HomeProjectListAdapter extends AppBaseAdapter<SeekProjectBean> {
             String uid=null;  //用户id
             while (cursor.moveToNext()) {
                 uid=cursor.getString(0);
-
             }
             if (!TextUtils.isEmpty(uid)){
                 if (data.get(position).getReplyStatus()>0){

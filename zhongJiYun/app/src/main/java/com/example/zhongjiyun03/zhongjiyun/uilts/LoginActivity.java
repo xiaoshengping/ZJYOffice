@@ -269,9 +269,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (!TextUtils.isEmpty(phone)) {
             if (phone.length()==11){
             if (isMobileNO(phone)){
-            codeButton.setTextColor(getResources().getColor(R.color.tailt_dark));
-             codeButton.setBackgroundResource(R.drawable.gray_button_corners);
-            time.start();
+
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCodeData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -280,7 +278,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                         if ((appDataBean.getResult()).equals("success")){
                             MyAppliction.showToast("验证码已发送成功");
-
+                            codeButton.setTextColor(getResources().getColor(R.color.tailt_dark));
+                            codeButton.setBackgroundResource(R.drawable.gray_button_corners);
+                            time.start();
                         }else {
                             MyAppliction.showToast(appDataBean.getMsg());
                         }
@@ -301,7 +301,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 MyAppliction.showToast("请输入正确的手机号码");
             }
         }else {
-            MyAppliction.showToast("您输入长度为11位的手机号码");
+            MyAppliction.showToast("请输入长度为11位的手机号码");
 
         }
         }else {

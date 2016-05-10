@@ -131,6 +131,9 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
 
         if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())) {
             if (phoneNewEdit.getText().toString().length()==11){
+              if (isMobileNO(phoneNewEdit.getText().toString())){
+
+
               if (phoneNewEdit.getText().toString().equals(phone)){
 
 
@@ -163,8 +166,11 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
               }else {
                   MyAppliction.showToast("请输入新的手机号码");
               }
+              }else {
+                  MyAppliction.showToast("请输入正确的手机号码");
+              }
             }else {
-                MyAppliction.showToast("您输入的手机号码有误");
+                MyAppliction.showToast("请输入长度为11位的手机号码");
             }
         }else {
             MyAppliction.showToast("请输入您的手机号码");
@@ -172,6 +178,11 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
 
         }
 
+    }
+    public static boolean isMobileNO(String mobiles) {
+        String telRegex = "13\\d{9}|14[57]\\d{8}|15[012356789]\\d{8}|18[01256789]\\d{8}|17[0678]\\d{8}";
+        if (TextUtils.isEmpty(mobiles)) return false;
+        else return mobiles.matches(telRegex);
     }
 
     class TimeCount extends CountDownTimer {
