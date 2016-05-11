@@ -95,6 +95,10 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
     private LinearLayout layout;
     private SVProgressHUD mSVProgressHUD;//loding
     private MyExtruderBean myExtruderBean;
+    @ViewInject(R.id.text_view_tailt)
+    private TextView textViewTailt;
+    @ViewInject(R.id.text_view_tailt_one)
+    private TextView textViewTailtOne;
 
 
 
@@ -142,28 +146,53 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
                 addressText.setText(myExtruderBean.getProvince()+myExtruderBean.getCity());
             }
             if (!TextUtils.isEmpty(myExtruderBean.getDeviceNoPhoto())){
-                //Log.e("图片路径",myExtruderBean.getDeviceNoPhoto());
                 MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceNoPhoto(),brandImage,MyAppliction.options);
             }
             if (!TextUtils.isEmpty(myExtruderBean.getDevicePhoto())){
-
                 MyAppliction.imageLoader.displayImage(myExtruderBean.getDevicePhoto(),panoramaIamge,MyAppliction.options);
             }
             if (!TextUtils.isEmpty(myExtruderBean.getDeviceInvoicePhoto())){
-
                 MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceInvoicePhoto(),invoiceImage,MyAppliction.options);
-            }
-            if (!TextUtils.isEmpty(myExtruderBean.getDeviceContractPhoto())){
+                if (!TextUtils.isEmpty(myExtruderBean.getDeviceContractPhoto())) {
+                    contractLayout.setVisibility(View.VISIBLE);
+                    MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceContractPhoto(), contractImage, MyAppliction.options);
+                    if (!TextUtils.isEmpty(myExtruderBean.getDeviceCertificatePhoto())){
+                        qualifiedLayout.setVisibility(View.VISIBLE);
+                        MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceCertificatePhoto(),qualifiedImage,MyAppliction.options);
+                    }else {
+                        qualifiedLayout.setVisibility(View.GONE);
 
-                MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceContractPhoto(),contractImage,MyAppliction.options);
-            }
-            if (!TextUtils.isEmpty(myExtruderBean.getDeviceCertificatePhoto())){
-                qualifiedLayout.setVisibility(View.VISIBLE);
-                MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceCertificatePhoto(),qualifiedImage,MyAppliction.options);
+                    }
+                }else {
+                    if (!TextUtils.isEmpty(myExtruderBean.getDeviceCertificatePhoto())){
+                        contractLayout.setVisibility(View.VISIBLE);
+                        textViewTailtOne.setText("合格照");
+                        MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceCertificatePhoto(),contractImage,MyAppliction.options);
+                    }else {
+                        contractLayout.setVisibility(View.GONE);
+
+                    }
+
+                }
             }else {
-                qualifiedLayout.setVisibility(View.GONE);
+                if (!TextUtils.isEmpty(myExtruderBean.getDeviceContractPhoto())){
+                    invoiceLayout.setVisibility(View.VISIBLE);
+                    MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceContractPhoto(),invoiceImage,MyAppliction.options);
+                    textViewTailt.setText("合同照");
+                    if (!TextUtils.isEmpty(myExtruderBean.getDeviceCertificatePhoto())){
+                        contractLayout.setVisibility(View.VISIBLE);
+                        textViewTailtOne.setText("合格照");
+                        MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceCertificatePhoto(),contractImage,MyAppliction.options);
+                    }else {
+                        contractLayout.setVisibility(View.GONE);
 
+                    }
+                }else {
+                    invoiceLayout.setVisibility(View.GONE);
+                }
             }
+
+
             layout.setVisibility(View.VISIBLE);
             mSVProgressHUD.dismiss();
         }else {

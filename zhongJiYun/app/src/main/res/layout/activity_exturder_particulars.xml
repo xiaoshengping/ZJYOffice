@@ -169,13 +169,25 @@
 
 
            </RelativeLayout>
-
+            <ImageView
+                android:id="@+id/image_ligin_one"
+                android:src="@color/color_dedede"
+                android:layout_below="@+id/extruder_jies_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+          <ImageView
+              android:layout_marginTop="3dp"
+              android:id="@+id/image_ligin_two"
+              android:src="@color/color_dedede"
+              android:layout_below="@+id/image_ligin_one"
+              android:layout_width="match_parent"
+              android:layout_height="0.5dp" />
             <LinearLayout
                 android:id="@+id/boss_layout"
                 android:orientation="horizontal"
                 android:background="@color/ic_white"
-                android:layout_below="@+id/extruder_jies_layout"
-                android:layout_marginTop="3dp"
+                android:layout_below="@+id/image_ligin_two"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -221,11 +233,25 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+          <ImageView
+              android:id="@+id/image_ligin_three"
+              android:src="@color/color_dedede"
+              android:layout_below="@+id/boss_layout"
+              android:layout_width="match_parent"
+              android:layout_height="0.5dp" />
+          <ImageView
+              android:layout_marginTop="3dp"
+              android:id="@+id/image_ligin_frou"
+              android:src="@color/color_dedede"
+              android:layout_below="@+id/image_ligin_three"
+              android:layout_width="match_parent"
+              android:layout_height="0.5dp" />
+
           <RelativeLayout
               android:id="@+id/extruder_content_rlayout"
               android:background="@color/ic_white"
-              android:layout_marginTop="3dp"
-              android:layout_below="@+id/boss_layout"
+
+              android:layout_below="@+id/image_ligin_frou"
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
               <TextView
@@ -424,11 +450,24 @@
                     </LinearLayout>
                 </LinearLayout>
           </RelativeLayout>
+
+          <ImageView
+              android:id="@+id/image_ligin_five"
+              android:src="@color/color_dedede"
+              android:layout_below="@+id/extruder_content_rlayout"
+              android:layout_width="match_parent"
+              android:layout_height="0.5dp" />
+          <ImageView
+              android:layout_marginTop="3dp"
+              android:id="@+id/image_ligin_six"
+              android:src="@color/color_dedede"
+              android:layout_below="@+id/image_ligin_five"
+              android:layout_width="match_parent"
+              android:layout_height="0.5dp" />
             <RelativeLayout
                 android:id="@+id/infomation_rlayout"
-                android:layout_marginTop="3dp"
                 android:background="@color/ic_white"
-                android:layout_below="@+id/extruder_content_rlayout"
+                android:layout_below="@+id/image_ligin_six"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
               <ImageView
@@ -477,6 +516,13 @@
 
             </RelativeLayout>
           <ImageView
+
+              android:id="@+id/image_ligin_seven"
+              android:src="@color/color_dedede"
+              android:layout_below="@+id/infomation_rlayout"
+              android:layout_width="match_parent"
+              android:layout_height="0.5dp" />
+          <ImageView
               android:visibility="gone"
               android:id="@+id/image_view"
               android:layout_marginTop="10dp"
@@ -484,7 +530,7 @@
               android:src="@mipmap/home_used_rig_img"
               android:layout_marginRight="10dp"
               android:layout_marginLeft="10dp"
-              android:layout_below="@+id/infomation_rlayout"
+              android:layout_below="@+id/image_ligin_seven"
               android:layout_width="match_parent"
               android:layout_height="200dp" />
 

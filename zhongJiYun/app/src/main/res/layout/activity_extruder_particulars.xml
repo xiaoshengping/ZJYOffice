@@ -99,16 +99,17 @@
                         />
 
                 </LinearLayout>
-                <ImageView
-                    android:src="@color/background"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+
             </LinearLayout>
             <ImageView
-                android:layout_marginTop="3dp"
-                android:src="@color/background"
+                android:src="@color/color_dedede"
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="0.5dp" />
+            <ImageView
+                android:layout_marginTop="3dp"
+                android:src="@color/color_dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
             <LinearLayout
                 android:background="@color/ic_white"
                 android:orientation="vertical"
@@ -222,10 +223,10 @@
                         />
 
                 </LinearLayout>
-                <ImageView
+                <!--<ImageView
                     android:src="@color/background"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+                    android:layout_height="1dp" />-->
 
 
 
@@ -233,12 +234,15 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_marginTop="3dp"
-                android:src="@color/background"
+                android:src="@color/color_dedede"
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="0.5dp" />
+            <ImageView
+                android:layout_marginTop="3dp"
+                android:src="@color/color_dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
             <RelativeLayout
-                android:layout_marginBottom="30dp"
                 android:background="@color/ic_white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -309,6 +313,7 @@
                     android:layout_width="150dp"
                     android:layout_height="170dp">
                     <TextView
+                        android:id="@+id/text_view_tailt"
                         android:gravity="center"
                         android:textColor="@color/tailt_dark"
                         android:textSize="@dimen/home_Size_15"
@@ -338,6 +343,7 @@
                     android:layout_width="150dp"
                     android:layout_height="170dp">
                     <TextView
+                        android:id="@+id/text_view_tailt_one"
                         android:gravity="center"
                         android:textColor="@color/tailt_dark"
                         android:textSize="@dimen/home_Size_15"
@@ -383,6 +389,11 @@
                 </LinearLayout>
 
             </RelativeLayout>
+            <ImageView
+                android:layout_marginBottom="30dp"
+                android:src="@color/color_dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
         </LinearLayout>
 
 

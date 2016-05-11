@@ -139,14 +139,16 @@
             android:layout_height="30dp" />
         
         <ProgressBar
+            android:background="@color/white"
             android:layout_marginTop="15dp"
             style="?android:attr/progressBarStyleHorizontal"
             android:id="@+id/progress_bar"
+            android:max="100"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
-        <!--<TextView
+        <TextView
             android:id="@+id/progress_bar_text"
             android:layout_marginTop="5dp"
             android:gravity="right"
@@ -155,7 +157,7 @@
             android:text="20/100"
             android:layout_marginRight="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />-->
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 

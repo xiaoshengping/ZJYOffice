@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -59,8 +60,11 @@ public class HomeActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     @ViewInject(R.id.loding_layout)
     private LinearLayout loodingLayout;
-   /* @ViewInject(R.id.progress_bar_text)
-    private TextView progressBarText;*/
+    @ViewInject(R.id.progress_bar_text)
+    private TextView progressBarText;
+    private Handler mHandler;
+    private int MSG=-1;
+    private int pro=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,7 @@ public class HomeActivity extends AppCompatActivity {
             Log.d("debug", "不是第一次运行");
             Intent intent=new Intent(HomeActivity.this,WelcomeActivity.class);
             startActivity(intent);
+            getVersontData();
         }
 
 
@@ -132,8 +137,24 @@ public class HomeActivity extends AppCompatActivity {
                          VersontDataBean versontDataBean=  appBean.getData();
                            if (versontDataBean!=null){
                                if (versontDataBean.getUpdateLevel()==1){ //不强制更新
+                                   try {
+                                     /* if (!versontDataBean.getNo().equals(getVersionName())){
+                                          showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
+                                      }*/
+
+                                   } catch (Exception e) {
+                                       e.printStackTrace();
+                                   }
                                    showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
                                }else if (versontDataBean.getUpdateLevel()==2){  //强制更新
+                                   try {
+                                       /*if (!versontDataBean.getNo().equals(getVersionName())){
+                                           showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
+                                       }*/
+
+                                   } catch (Exception e) {
+                                       e.printStackTrace();
+                                   }
                                    showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
                                }
                            }
@@ -155,7 +176,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private void LodingApkData(String url) {
         HttpUtils httpUtils=new HttpUtils();
-        Log.e("path",url);
         httpUtils.configSoTimeout(1200000);
         String filePath= Environment.getExternalStorageDirectory()+"/zhongJiYun/";
         String fileName="ZhongJiYun.apk";
@@ -183,7 +203,8 @@ public class HomeActivity extends AppCompatActivity {
                 super.onLoading(total, current, isUploading);
                 progressBar.setMax((int)total);
                 progressBar.setProgress((int)current);
-                //progressBarText.setText((int)current+"/"+(int)total);
+                progressBarText.setText((int)current+"/"+(int)total);
+
 
             }
 
@@ -202,7 +223,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
     }
+
+
+
 
     private void openFile(File file) {
         // TODO Auto-generated method stub

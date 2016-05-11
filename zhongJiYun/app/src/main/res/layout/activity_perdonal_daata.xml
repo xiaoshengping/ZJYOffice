@@ -131,9 +131,9 @@
         android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
+
     <LinearLayout
         android:background="@color/ic_white"
-
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:gravity="center"
@@ -164,14 +164,14 @@
 
     </LinearLayout>
     <ImageView
-        android:background="@color/background"
+        android:background="@color/color_dedede"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="0.5dp" />
     <ImageView
-        android:background="@color/background"
+        android:background="@color/color_dedede"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="0.5dp" />
 
     <LinearLayout
         android:background="@color/ic_white"
@@ -242,15 +242,15 @@
 
     </LinearLayout>
     <ImageView
-         android:background="@color/background"
+         android:background="@color/color_dedede"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
     <ImageView
-        android:background="@color/background"
+        android:background="@color/color_dedede"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="0.5dp" />
     <LinearLayout
         android:background="@color/ic_white"
         android:gravity="center_vertical"
@@ -269,7 +269,7 @@
             android:id="@+id/idcard_front_iamge"
             android:layout_marginLeft="10dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"
+
             android:layout_width="90dp"
             android:layout_height="70dp" />
 
@@ -277,7 +277,7 @@
             android:id="@+id/idcard_verso_iamge"
             android:layout_marginLeft="5dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"
+
             android:layout_width="90dp"
             android:layout_height="70dp" />
         <ImageView
@@ -286,11 +286,15 @@
             android:scaleType="centerCrop"
             android:id="@+id/personage_image"
             android:layout_marginLeft="5dp"
-            android:src="@mipmap/ic_launcher"
+
             android:layout_width="100dp"
             android:layout_height="100dp" />
 
     </LinearLayout>
+        <ImageView
+            android:src="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
     </LinearLayout>
     <View
         android:id="@+id/vMasker"
@@ -301,10 +305,7 @@
 
 
 
-    <ImageView
 
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
 
 
 

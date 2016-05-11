@@ -76,11 +76,10 @@
         android:layout_height="3dp"
         android:scaleType="matrix"
         android:src="@color/red_light" />
-    <!--<ImageView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:scaleType="matrix"
-        android:src="@color/background" />-->
+        android:layout_height="1dp"
+        android:src="@color/color_dedede" />
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -88,31 +87,6 @@
 
 
 
-   <!-- <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
 
-        <com.camnter.easyslidingtabs.widget.EasySlidingTabs
-            android:id="@+id/easy_sliding_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:easyIndicatorColor="#ffff4444"
-            app:easyUnderlineColor="#ffdddddd"
-            app:easyTabTextColor="#ff000000"
-
-            app:easySelectedTagTextColor="#ffff4444"
-            android:paddingBottom="16dp"
-            android:paddingTop="16dp" />
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/easy_vp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-    </LinearLayout>-->
 
 </LinearLayout>

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -82,7 +83,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @ViewInject(R.id.comment_layout)
     private LinearLayout commentLayout;
-    @ViewInject(R.id.rating_one)
+    /*@ViewInject(R.id.rating_one)
     private TextView ratingOne;
     @ViewInject(R.id.rating_two)
     private TextView ratingTwo;
@@ -91,7 +92,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @ViewInject(R.id.rating_four)
     private TextView ratingFour;
     @ViewInject(R.id.rating_five)
-    private TextView ratingFive;
+    private TextView ratingFive;*/
     @ViewInject(R.id.evaluate_remind_image)
     private ImageView evaluateRemindImage; //评论红点
     @ViewInject(R.id.projectReply_remind_image)
@@ -104,6 +105,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private PersonageInformationBean personageInformation;
     @ViewInject(R.id.rating_help)
     private TextView ratingHelpText;
+    @ViewInject(R.id.rating_bar)
+    private RatingBar ratingBar;
 
 
     public MineFragment() {
@@ -221,8 +224,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                             if (personageInformation != null) {
                                 if (!TextUtils.isEmpty(personageInformation.getStarRate())) {
                                     String StarRate = personageInformation.getStarRate();
-
-                                    if (StarRate.equals("1")) {
+                                    ratingBar.setRating(Integer.valueOf(StarRate));
+                                    /*if (StarRate.equals("1")) {
                                         ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
                                         ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check_no);
                                         ratingThree.setBackgroundResource(R.mipmap.ratingbar_check_no);
@@ -260,7 +263,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                                         ratingFour.setBackgroundResource(R.mipmap.ratingbar_check);
                                         ratingFive.setBackgroundResource(R.mipmap.ratingbar_check);
 
-                                    }
+                                    }*/
                                 }
 
                             } else {
@@ -534,7 +537,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                         if (!TextUtils.isEmpty(date)){
                             insertData(systemMessageSQLhelper,SystemMessageSQLhelper.EVALUATE,date);
                         }
-
                     }
                     Intent commentIntent=new Intent(getActivity(), CommentActivity.class);
                     startActivity(commentIntent);

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.SekkMachinisDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
@@ -119,7 +120,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     @ViewInject(R.id.image_lini_one)
     private ImageView imageLiniOne;
     private SekkMachinisDataBean seekMachinisDataBean;
-
+    private SVProgressHUD mSVProgressHUD;//loding
 
 
 
@@ -139,7 +140,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     }
 
     private void initSeekData() {
-
+         //mSVProgressHUD.showWithStatus("正在加载中...");
         seekMachinisDataBean= (SekkMachinisDataBean) getIntent().getSerializableExtra("seekData");
         if (seekMachinisDataBean!=null){
             MyAppliction.imageLoader.displayImage(seekMachinisDataBean.getDriverHeader(),circleImageView,MyAppliction.options);
@@ -152,7 +153,6 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
             if (seekMachinisDataBean.getWorkInfoItemDtos()!=null&&seekMachinisDataBean.getWorkInfoItemDtos().size()!=0){
                 if (seekMachinisDataBean.getWorkInfoItemDtos().size()==1){
                     workExperienceRlayout.setVisibility(View.VISIBLE);
-
                     workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
                             seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
@@ -368,11 +368,13 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
             Bitmap bitmap=fastblur(SeekMachinistParticulasActivity.this,bitmaps,30);
             if (bitmap!=null){
                 bsrImage.setImageBitmap(bitmap);
+                //mSVProgressHUD.dismiss();
             }
         }
 
     };
     private void initView() {
+        mSVProgressHUD = new SVProgressHUD(this);
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("机手资料");
         retrunText.setOnClickListener(this);

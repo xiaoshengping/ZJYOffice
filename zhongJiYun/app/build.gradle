@@ -9,7 +9,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 23
         versionCode 1
-        versionName "1.9.3"
+        versionName "1.9.4"
     }
     buildTypes {
         release {
@@ -26,10 +26,6 @@ dependencies {
     compile files('libs/xUtils-2.6.14.jar')
     compile project(':PushSDK')
     compile project(':ptrlibrary')
-
-    compile files('libs/gson-2.2.4.jar')
-    compile files('libs/okhttp-2.0.0-RC1.jar')
-    compile files('libs/okio-1.0.0.jar')
     compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'com.android.support:design:23.2.0'
     compile 'com.android.support:support-v4:23.2.0'

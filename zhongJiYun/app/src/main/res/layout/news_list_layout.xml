@@ -4,8 +4,13 @@
     android:background="@color/ic_white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+     <ImageView
+         android:id="@+id/image_ligin_one"
+         android:src="@color/color_dedede"
+         android:layout_width="match_parent"
+         android:layout_height="0.5dp" />
     <ImageView
+        android:layout_below="@+id/image_ligin_one"
         android:layout_marginBottom="10dp"
         android:id="@+id/news_icon"
         android:scaleType="centerCrop"
@@ -41,5 +46,13 @@
         android:text="受到很大很大的好多好多好多的活动实施的活动活动活动活动活动实施的大好打好大号....."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_below="@+id/news_icon"
+        android:id="@+id/image_ligin_two"
+        android:src="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+
 
 </RelativeLayout>

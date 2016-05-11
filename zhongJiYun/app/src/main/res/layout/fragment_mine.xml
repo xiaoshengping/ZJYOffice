@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:scrollbars="none"
     tools:context="com.example.zhongjiyun03.zhongjiyun.fragment.MineFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -57,7 +58,7 @@
 
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="120dp">
             <ImageView
 
                 android:scaleType="centerCrop"
@@ -65,16 +66,25 @@
                 android:id="@+id/loing_xshi_user"
                 android:layout_marginLeft="20dp"
                 android:src="@mipmap/default_avatar"
-                android:layout_width="70dp"
-                android:layout_height="70dp" />
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
             <TextView
                 android:id="@+id/name_text"
                 android:layout_toRightOf="@+id/loing_xshi_user"
                 android:textColor="@color/tailt_dark"
                 android:textSize="@dimen/home_Size_16"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="15dp"
-
+                android:layout_marginTop="18dp"
+                android:layout_alignParentRight="@+id/loing_xshi_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:id="@+id/phone_text_image"
+                android:layout_below="@+id/name_text"
+                android:layout_toRightOf="@+id/loing_xshi_user"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="5dp"
+                android:background="@mipmap/login_phone"
                 android:layout_alignParentRight="@+id/loing_xshi_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -82,12 +92,12 @@
                 android:id="@+id/phone_text"
                 android:layout_below="@+id/name_text"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/loing_xshi_user"
+                android:layout_toRightOf="@+id/phone_text_image"
                 android:textColor="@color/tailt_dark"
-                android:textSize="@dimen/home_Size_14"
-                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:drawableLeft="@mipmap/login_phone"
+
                 android:drawablePadding="5dp"
                 android:layout_alignParentRight="@+id/loing_xshi_user"
                 android:layout_width="wrap_content"
@@ -98,23 +108,25 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/loing_xshi_user"
                 android:textColor="@color/tailt_dark"
-                android:textSize="@dimen/home_Size_14"
+                android:textSize="@dimen/home_Size_16"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:text="星级"
                 android:layout_alignParentRight="@+id/loing_xshi_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-               <!--<RatingBar
-                   android:id="@+id/rating_bar"
-                   android:layout_marginLeft="5dp"
-                   android:layout_marginTop="7dp"
-                   style="@style/roomRatingBar"
-                   android:layout_toRightOf="@+id/dengji_text"
-                   android:layout_below="@+id/phone_text"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content" />-->
-            <TextView
+            <RatingBar
+                android:stepSize="1"
+                android:isIndicator="false"
+                android:id="@+id/rating_bar"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="2dp"
+                style="@style/homeRoomRatingBar"
+                android:layout_toRightOf="@+id/dengji_text"
+                android:layout_below="@+id/phone_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <!--<TextView
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="7dp"
                 android:layout_toRightOf="@+id/dengji_text"
@@ -156,20 +168,20 @@
                 android:layout_below="@+id/phone_text"
                 android:id="@+id/rating_five"
                 android:layout_width="12dp"
-                android:layout_height="15dp" />
+                android:layout_height="15dp" />-->
 
-            <TextView
+            <ImageView
                 android:background="@mipmap/star_rule_icon"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_toRightOf="@+id/rating_five"
+                android:layout_marginTop="2dp"
+                android:layout_toRightOf="@+id/rating_bar"
                 android:layout_below="@+id/phone_text"
 
-                android:layout_width="15dp"
-                android:layout_height="15dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginLeft="5dp"
-                android:layout_toRightOf="@+id/rating_five"
+                android:layout_toRightOf="@+id/rating_bar"
                 android:layout_below="@+id/phone_text"
                 android:id="@+id/rating_help"
                 android:layout_width="30dp"
@@ -494,6 +506,7 @@
 
         </LinearLayout>
         <ImageView
+            android:layout_marginBottom="20dp"
             android:layout_below="@+id/sting_layout"
             android:background="#dedede"
             android:layout_width="match_parent"
