@@ -3,6 +3,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,7 +21,6 @@ import com.example.zhongjiyun03.zhongjiyun.adapter.MessageListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.MessageDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
-import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -50,8 +50,9 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     private WebView webView;*/
     private List<MessageDataBean> list=new ArrayList<>();
     @ViewInject(R.id.not_data_layout)
-    private LinearLayout notDataLayout;
-
+    private LinearLayout notDataLayout;//没有数据提示
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout; //网络提示
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,14 +102,15 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 }
 
 
-
+                networkRemindLayout.setVisibility(View.GONE);
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("系统消息列表",s);
-                MyAppliction.showToast("网络异常,请稍后重试");
+                networkRemindLayout.setVisibility(View.VISIBLE);
+                //MyAppliction.showToast("网络异常,请稍后重试");
             }
         });
 
@@ -134,6 +136,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("消息");
         retrunText.setOnClickListener(this);
+        networkRemindLayout.setOnClickListener(this);
         //webView.getSettings().setJavaScriptEnabled(true);
         //webView.loadUrl(AppUtilsUrl.BaseUrl+"/app/index.html#/tab/system-message?id=50b7d6cb-809f-434c-aa06-79fb40681068");
 
@@ -149,7 +152,11 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
-
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
 
 
 

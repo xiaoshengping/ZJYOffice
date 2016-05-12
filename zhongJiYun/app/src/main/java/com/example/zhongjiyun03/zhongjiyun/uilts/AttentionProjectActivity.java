@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -63,6 +64,8 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
     @ViewInject(R.id.not_data_layout)
     private LinearLayout notDataLayout;
     private SVProgressHUD mSVProgressHUD;//loding
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout; //网络提示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,20 +159,22 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                             attentionProjectListview.onRefreshComplete();
                             homeProjectlsitAdapter.notifyDataSetChanged();
                         }else if ((appBean.getResult()).equals("nomore")){
-                            notDataLayout.setVisibility(View.GONE);
+                            //notDataLayout.setVisibility(View.GONE);
                             attentionProjectListview.onRefreshComplete();
-                            MyAppliction.showToast("已到最低了");
+                            MyAppliction.showToast("已到最底了");
                             homeProjectlsitAdapter.notifyDataSetChanged();
                         }
 
 
                     }
+                    networkRemindLayout.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onFailure(HttpException e, String s) {
                     attentionProjectListview.onRefreshComplete();
                     Log.e("找项目",s);
+                    networkRemindLayout.setVisibility(View.VISIBLE);
                 }
             });
 
@@ -277,6 +282,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
 
                 @Override
                 public void onFailure(HttpException e, String s) {
+
                     Log.e("取消关注项目",s);
                 }
             });
@@ -309,6 +315,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
         titleNemeTv.setText("关注的项目");
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
+        networkRemindLayout.setOnClickListener(this);
 
     }
 
@@ -320,7 +327,11 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
-
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
 
 
 

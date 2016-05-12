@@ -62,9 +62,10 @@ public class HomeActivity extends AppCompatActivity {
     private LinearLayout loodingLayout;
     @ViewInject(R.id.progress_bar_text)
     private TextView progressBarText;
-    private Handler mHandler;
-    private int MSG=-1;
-    private int pro=0;
+    private static final int MSG_PROGRESS_UPDATE = 0x110;
+    private TextView tailteTv;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,24 +139,25 @@ public class HomeActivity extends AppCompatActivity {
                            if (versontDataBean!=null){
                                if (versontDataBean.getUpdateLevel()==1){ //不强制更新
                                    try {
-                                     /* if (!versontDataBean.getNo().equals(getVersionName())){
-                                          showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
-                                      }*/
+                                      if (!versontDataBean.getNo().equals(getVersionName())){
+                                          noShowExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
+                                      }
 
                                    } catch (Exception e) {
                                        e.printStackTrace();
                                    }
-                                   showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
+                                   //showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
                                }else if (versontDataBean.getUpdateLevel()==2){  //强制更新
                                    try {
-                                       /*if (!versontDataBean.getNo().equals(getVersionName())){
+                                       if (!versontDataBean.getNo().equals(getVersionName())){
                                            showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
-                                       }*/
+
+                                       }
 
                                    } catch (Exception e) {
                                        e.printStackTrace();
                                    }
-                                   showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
+                                   //showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
                                }
                            }
                        }
@@ -194,16 +196,16 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onStart() {
                 super.onStart();
-
                 loodingLayout.setVisibility(View.VISIBLE);
+                mHandler.sendEmptyMessage(MSG_PROGRESS_UPDATE);
             }
 
             @Override
             public void onLoading(long total, long current, boolean isUploading) {
                 super.onLoading(total, current, isUploading);
-                progressBar.setMax((int)total);
-                progressBar.setProgress((int)current);
-                progressBarText.setText((int)current+"/"+(int)total);
+                //progressBar.setMax((int)total);
+                //progressBar.setProgress((int)current);
+                //progressBarText.setText((int)current+"/"+(int)total);
 
 
             }
@@ -212,7 +214,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onSuccess(ResponseInfo<File> responseInfo) {
                 Log.e("下载",responseInfo.result.toString());
                 loodingLayout.setVisibility(View.GONE);
-                MyAppliction.showToast("下载成功");
+
                 openFile(responseInfo.result);
             }
 
@@ -226,7 +228,23 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    private Handler mHandler = new Handler() {
+        public void handleMessage(android.os.Message msg) {
+            int progress = progressBar.getProgress();
+            progressBar.setProgress(++progress);
+            if (progress >= 100) {
+                mHandler.removeMessages(MSG_PROGRESS_UPDATE);
+            }
+            if (progress<=100){
+                progressBarText.setText(progress+"/100");
+            }
+            if (progress==100){
+                MyAppliction.showToast("下载成功,正在准备安装");
 
+            }
+            mHandler.sendEmptyMessageDelayed(MSG_PROGRESS_UPDATE, 100);
+        }
+    };
 
 
     private void openFile(File file) {
@@ -240,8 +258,8 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    //对话框
-    private void showExitGameAlert(String versionNo, String text, final String url) {
+    //不强制下载对话框
+    private void noShowExitGameAlert(String versionNo, String text, final String url) {
         final AlertDialog dlg = new AlertDialog.Builder(HomeActivity.this).create();
         dlg.show();
         Window window = dlg.getWindow();
@@ -273,6 +291,41 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+      //强制下载对话框
+    private void showExitGameAlert(String text, String textTv, final String url) {
+        final AlertDialog dlg = new AlertDialog.Builder(HomeActivity.this).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.cell_alert_layout);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailteTv = (TextView) window.findViewById(R.id.tv);
+        tailteTv.setText(text);
+        tailteTv.setTextColor(getResources().getColor(R.color.tailt_dark));
+        tailte.setText(textTv);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("确定");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                LodingApkData(url);
+                dlg.cancel();
+            }
+        });
+
+        /*// 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });*/
+    }
+
+
 
     private String getVersionName() throws Exception {
         // 获取packagemanager的实例

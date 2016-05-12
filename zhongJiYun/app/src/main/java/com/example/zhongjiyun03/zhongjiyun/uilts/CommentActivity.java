@@ -1,5 +1,6 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -85,6 +87,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
     private LinearLayout notDataLayout;
     private LinearLayout commentNotDataLayout;
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout; //网络提示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,8 +159,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                     mineCommentListView.onRefreshComplete();
 
                                 }else if ((appBean.getResult()).equals("nomore")){
-                                    MyAppliction.showToast("已到底部了");
-                                    notDataLayout.setVisibility(View.GONE);
+                                    MyAppliction.showToast("已到最底了");
+                                    //notDataLayout.setVisibility(View.GONE);
                                     mineCommentListView.onRefreshComplete();
                                 }
 
@@ -169,12 +173,13 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                         }
 
 
-
+                        networkRemindLayout.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onFailure(HttpException e, String s) {
                         Log.e("我的评论",s);
+                        networkRemindLayout.setVisibility(View.VISIBLE);
                         mineCommentListView.onRefreshComplete();
                     }
                 });
@@ -241,8 +246,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                     commentMineListView.onRefreshComplete();
 
                                 }else if ((appBean.getResult()).equals("nomore")){
-                                    MyAppliction.showToast("已到底部了");
-                                    commentNotDataLayout.setVisibility(View.GONE);
+                                    MyAppliction.showToast("已到最底了");
+                                    //commentNotDataLayout.setVisibility(View.GONE);
                                     commentMineListView.onRefreshComplete();
                                 }
 
@@ -256,11 +261,14 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                             MyAppliction.showToast("加载数据失败");
                         }
 
+                        networkRemindLayout.setVisibility(View.GONE);
+
                     }
 
                     @Override
                     public void onFailure(HttpException e, String s) {
                         Log.e("我的评论",s);
+                        networkRemindLayout.setVisibility(View.VISIBLE);
                         commentMineListView.onRefreshComplete();
                     }
                 });
@@ -355,6 +363,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         retrunText.setOnClickListener(this);
         mineCommentDataBeens=new ArrayList<>();
         commentMineDataBeens=new ArrayList<>();
+        networkRemindLayout.setOnClickListener(this);
 
     }
     @Override
@@ -364,7 +373,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
-
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
         }
     }
 

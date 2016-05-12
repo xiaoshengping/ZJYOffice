@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -16,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -96,7 +98,8 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
      private boolean isPullDownRefresh3=true; //判断企业新闻是下拉，还是上拉的标记
      private HomeNewsListAdapter bidsNewsListAdapter;//招标新闻
      private boolean isPullDownRefresh4=true; //判断招标新闻是下拉，还是上拉的标记
-
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout;//网络提示
 
 
 
@@ -130,7 +133,7 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
         andustryNewsDataBeen=new ArrayList<>(); //行业新闻数据
         enterpriseNewsDataBeen=new ArrayList<>(); //企业新闻数据
         bidsNewsDataBeen=new ArrayList<>(); //企业新闻数据
-
+        networkRemindLayout.setOnClickListener(this);
     }
 
     private void intiData1(int pageIndex) {
@@ -157,13 +160,14 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                     dynamicListView.onRefreshComplete();
 
                 }
-
+                networkRemindLayout.setVisibility(View.GONE);
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("新闻",s);
+                networkRemindLayout.setVisibility(View.VISIBLE);
                 dynamicListView.onRefreshComplete();
             }
         });
@@ -195,12 +199,13 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                     andustryListView.onRefreshComplete();
                 }
 
-
+                networkRemindLayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("新闻",s);
+                networkRemindLayout.setVisibility(View.VISIBLE);
                 andustryListView.onRefreshComplete();
             }
         });
@@ -232,12 +237,13 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                 }
 
                 enterpriseListView.onRefreshComplete();
-
+                networkRemindLayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("新闻",s);
+                networkRemindLayout.setVisibility(View.VISIBLE);
                 enterpriseListView.onRefreshComplete();
             }
         });
@@ -268,13 +274,14 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                      bidsNewsListAdapter.notifyDataSetChanged();
                      bidsListView.onRefreshComplete();
                 }
-
+                networkRemindLayout.setVisibility(View.GONE);
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("新闻",s);
+                networkRemindLayout.setVisibility(View.VISIBLE);
                 bidsListView.onRefreshComplete();
             }
         });
@@ -290,7 +297,11 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
-
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
 
 
         }

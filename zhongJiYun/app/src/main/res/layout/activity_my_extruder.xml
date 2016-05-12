@@ -10,8 +10,38 @@
     tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.MyExtruderActivity">
     <include android:id="@+id/head_layout" android:layout_width="match_parent"
         android:layout_height="wrap_content"  layout="@layout/app_head_layout"/>
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+
+    <LinearLayout
         android:layout_below="@+id/head_layout"
+        android:visibility="gone"
+        android:id="@+id/network_remind_layout"
+        android:gravity="center_vertical"
+        android:background="@color/network_remind_color"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:background="@mipmap/tip_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textSize="@dimen/home_Size_15"
+            android:textColor="@color/tailt_dark"
+            android:layout_marginLeft="10dp"
+
+            android:text="世界上最遥远的距离就是没网。检查设置"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:paddingRight="20dp"
+            android:drawableRight="@mipmap/gray_arrow_icon"
+            android:layout_alignParentRight="@+id/loing_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:layout_below="@+id/network_remind_layout"
         android:divider="#00000000"
         android:dividerHeight="5dp"
         android:id="@+id/extruder_list_view"

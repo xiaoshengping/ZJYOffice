@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -56,7 +57,9 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
     private MyCompetitveTenderListAdapter myCompetitveAdapter;
     @ViewInject(R.id.not_data_layout)
-    private LinearLayout notDataLayout;
+    private LinearLayout notDataLayout; //没有数据提示
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout; //网络提示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +123,7 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                             notDataLayout.setVisibility(View.GONE);
                         }else if (( appBean.getResult()).equals("nomore")){
                             MyAppliction.showToast("已到最底了");
-                            notDataLayout.setVisibility(View.GONE);
+                            //notDataLayout.setVisibility(View.GONE);
                             competitveTenderLsitview.onRefreshComplete();
                         }else if ((appBean.getResult()).equals("empty")){
                             //secondHandBeen.clear();]
@@ -136,11 +139,13 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                     }else {
                         competitveTenderLsitview.onRefreshComplete();
                     }
+                    networkRemindLayout.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onFailure(HttpException e, String s) {
                     Log.e("我的竞标",s);
+                    networkRemindLayout.setVisibility(View.VISIBLE);
                     competitveTenderLsitview.onRefreshComplete();
                 }
             });
@@ -191,6 +196,7 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
         titleNemeTv.setText("我的竞标");
         retrunText.setOnClickListener(this);
         projectlistDataBeanLists=new ArrayList<>();
+        networkRemindLayout.setOnClickListener(this);
 
 
     }
@@ -217,7 +223,11 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
-
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
 
 
 

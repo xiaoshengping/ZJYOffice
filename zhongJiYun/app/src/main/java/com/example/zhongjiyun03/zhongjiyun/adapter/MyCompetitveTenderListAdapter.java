@@ -137,6 +137,7 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
                     isChecked.put(position, true);   // 根据点击的情况来将其位置和相应的状态存入
                     if (data.get(position).getPayMarginStatus()==0){
                         Intent cashDepositIntent=new Intent(context, CommitCashDepositActivity.class);
+                        cashDepositIntent.putExtra("zfuTage","project");
                         context.startActivity(cashDepositIntent);
                     }else {
                         MyAppliction.showToast("您已缴纳保证金");

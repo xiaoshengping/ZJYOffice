@@ -82,7 +82,8 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
     @ViewInject(R.id.not_data_layout)
     private LinearLayout notDataLayout;
-
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +102,7 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
     }
 
     private void initView() {
+        networkRemindLayout.setOnClickListener(this);
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("配套服务");
         retrunText.setOnClickListener(this);
@@ -315,7 +317,7 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
                      }else if ((appBean.getResult()).equals("nomore")){
                          MyAppliction.showToast("已到最底了");
                          serviceProviderListview.onRefreshComplete();
-                         notDataLayout.setVisibility(View.GONE);
+                         //notDataLayout.setVisibility(View.GONE);
                      }else if ((appBean.getResult()).equals("empty")){
                          //MyAppliction.showToast("没有更多数据");
                          serviceProviderListview.onRefreshComplete();
@@ -325,13 +327,14 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
                     homeServiceListAdapter.notifyDataSetChanged();
 
                 }
-
+                networkRemindLayout.setVisibility(View.GONE);
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 serviceProviderListview.onRefreshComplete();
+                networkRemindLayout.setVisibility(View.VISIBLE);
                 mSVProgressHUD.dismiss();
                 Log.e("服务商数据",s);
             }
@@ -380,7 +383,11 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
-
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
 
 
 

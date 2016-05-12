@@ -81,7 +81,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SeekMachinistFragment extends Fragment implements PullToRefreshBase.OnRefreshListener2<ListView> {
+public class SeekMachinistFragment extends Fragment implements PullToRefreshBase.OnRefreshListener2<ListView>,View.OnClickListener {
 
 
     //排序
@@ -149,7 +149,9 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     private boolean isPullDownRefresh = true; //判断是下拉，还是上拉的标记
     private String province;
     @ViewInject(R.id.not_data_layout)
-    private LinearLayout notDataLayout;
+    private LinearLayout notDataLayout; //没有数据显示
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout; //没有网络显示
 
     public SeekMachinistFragment() {
         // Required empty public constructor
@@ -188,7 +190,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 popTag = 2;
             }
         });
-
+        networkRemindLayout.setOnClickListener(this);
         findView(view);
         initData();
         initPopup();
@@ -332,7 +334,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
                         MyAppliction.showToast("已到最底了");
-                        notDataLayout.setVisibility(View.GONE);
+                        //notDataLayout.setVisibility(View.GONE);
                     } else if ((appListDataBean.getResult()).equals("empty")) {
                         homeServiceListAdapter.notifyDataSetChanged();
                         seekMachinistListview.onRefreshComplete();
@@ -346,12 +348,13 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                     seekMachinistListview.onRefreshComplete();
                 }
 
-
+                networkRemindLayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("找机手", s);
+                networkRemindLayout.setVisibility(View.VISIBLE);
                 seekMachinistListview.onRefreshComplete();
             }
         });
@@ -759,6 +762,18 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
+
+        }
+    }
 
 
     //点击事件

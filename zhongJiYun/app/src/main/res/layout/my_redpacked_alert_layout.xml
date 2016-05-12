@@ -25,7 +25,7 @@
         <TextView
             android:textSize="@dimen/home_Size_16"
             android:id="@+id/text_view"
-            android:text="共领取"
+            android:text="本次共领取"
             android:layout_marginRight="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -56,8 +56,9 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content">
         <TextView
-            android:textSize="@dimen/home_Size_16"
-            android:text="您当前的云币数为"
+
+            android:textSize="@dimen/home_Size_18"
+            android:text="您共有"
             android:layout_marginRight="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -65,17 +66,17 @@
             android:paddingRight="1dp"
             android:paddingLeft="1dp"
             android:text="888"
-            android:textSize="@dimen/home_Size_16"
+            android:textSize="@dimen/home_Size_18"
             android:id="@+id/tailte_tv"
-            android:textColor="@color/red_light"
+            android:textColor="@color/red"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             />
         <TextView
-            android:textSize="@dimen/home_Size_16"
-            android:text="个"
+            android:textSize="@dimen/home_Size_18"
+            android:text="云币"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

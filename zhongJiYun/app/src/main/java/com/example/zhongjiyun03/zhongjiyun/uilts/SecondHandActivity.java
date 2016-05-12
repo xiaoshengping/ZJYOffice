@@ -155,7 +155,9 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private boolean isPullDownRefresh = true; //判断是下拉，还是上拉的标记
     private String province;
     @ViewInject(R.id.not_data_layout)
-    private LinearLayout notDataLayout;
+    private LinearLayout notDataLayout;//没有数据显示
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout; //没有网络提示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,6 +201,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         retrunText.setOnClickListener(this);
         intiListView();
         intiPullToRefresh();
+        networkRemindLayout.setOnClickListener(this);
+
         facillyTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -291,6 +295,11 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             case R.id.retrun_text_view:
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                break;
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
                 break;
 
 
@@ -392,7 +401,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                         MyAppliction.showToast("已到最底了");
                         homeSecondHandListAdapter.notifyDataSetChanged();
                         secondHandListview.onRefreshComplete();
-                        notDataLayout.setVisibility(View.GONE);
+                        //notDataLayout.setVisibility(View.GONE);
                     } else if ((appListDataBean.getResult()).equals("empty")) {
                         if (isPullDownRefresh) {
                             secondHandBeens.clear();
@@ -405,12 +414,14 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
 
                 }
+                networkRemindLayout.setVisibility(View.GONE);
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("二手钻机", s);
+                networkRemindLayout.setVisibility(View.VISIBLE);
                 homeSecondHandListAdapter.notifyDataSetChanged();
                 secondHandListview.onRefreshComplete();
             }

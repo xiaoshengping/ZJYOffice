@@ -52,7 +52,7 @@
 
         </RelativeLayout>
         <RelativeLayout
-             android:visibility="gone"
+
             android:id="@+id/loing_xshi_layout"
             android:background="@color/ic_white"
 
@@ -84,7 +84,7 @@
                 android:layout_toRightOf="@+id/loing_xshi_user"
                 android:layout_marginLeft="13dp"
                 android:layout_marginTop="5dp"
-                android:background="@mipmap/login_phone"
+                android:background="@mipmap/mine_phone_icon"
                 android:layout_alignParentRight="@+id/loing_xshi_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

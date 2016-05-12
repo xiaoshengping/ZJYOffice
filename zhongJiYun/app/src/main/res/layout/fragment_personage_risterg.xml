@@ -70,6 +70,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
+            android:maxLength="4"
              android:id="@+id/code_edit"
             android:layout_centerHorizontal="true"
              android:layout_toRightOf="@+id/code_textview"

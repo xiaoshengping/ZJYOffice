@@ -9,7 +9,10 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -119,6 +122,8 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     private String province;//省份
     @ViewInject(R.id.not_data_layout)
     private LinearLayout notDataLayout;
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +180,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         tailtNameTv.setText("寻找项目");
         registerTv.setVisibility(View.GONE);
         seekProjectBeans=new ArrayList<>();
+        networkRemindLayout.setOnClickListener(this);
 
     }
 
@@ -250,7 +256,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                         MyAppliction.showToast("已到最底了");
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         projectListView.onRefreshComplete();
-                        notDataLayout.setVisibility(View.GONE);
+                        //notDataLayout.setVisibility(View.GONE);
                     }else  if ((appBean.getResult()).equals("empty")){
                         //MyAppliction.showToast("没有更多数据");
                         notDataLayout.setVisibility(View.VISIBLE);
@@ -263,11 +269,13 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                     homeProjectlsitAdapter.notifyDataSetChanged();
                     projectListView.onRefreshComplete();
                 }
+                networkRemindLayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("找项目",s);
+                networkRemindLayout.setVisibility(View.VISIBLE);
                 homeProjectlsitAdapter.notifyDataSetChanged();
                 projectListView.onRefreshComplete();
             }
@@ -350,14 +358,27 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                  finish();
                  overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                  break;
-
+             case R.id.network_remind_layout:
+                 //跳转到设置界面
+                 Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                 startActivity(intent);
+                 break;
 
 
          }
 
 
     }
-
+    //判断网络
+    public static boolean isConn(Context context){
+        boolean bisConnFlag=false;
+        ConnectivityManager conManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo network = conManager.getActiveNetworkInfo();
+        if(network!=null){
+            bisConnFlag=conManager.getActiveNetworkInfo().isAvailable();
+        }
+        return bisConnFlag;
+    }
 
     //点击事件
     class OnClickListenerImpl implements View.OnClickListener {

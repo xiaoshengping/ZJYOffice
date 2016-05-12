@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -64,7 +65,8 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     @ViewInject(R.id.not_data_layout)
     private LinearLayout notDataLayout;
     private SVProgressHUD mSVProgressHUD;//loding
-
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout; //网络提示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
         titleNemeTv.setText("关注的钻机");
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
+        networkRemindLayout.setOnClickListener(this);
 
     }
 
@@ -142,7 +145,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                             }
                             notDataLayout.setVisibility(View.GONE);
                         }else if ((appListDataBean.getResult()).equals("nomore")){
-                            notDataLayout.setVisibility(View.GONE);
+                            //notDataLayout.setVisibility(View.GONE);
                             attentionExtrunLsitview.onRefreshComplete();
                             MyAppliction.showToast("已到最底了");
                             homeSecondHandListAdapter.notifyDataSetChanged();
@@ -159,12 +162,13 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
 
 
                     }
-
+                    networkRemindLayout.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onFailure(HttpException e, String s) {
                     Log.e("关注钻机",s);
+                    networkRemindLayout.setVisibility(View.VISIBLE);
                     attentionExtrunLsitview.onRefreshComplete();
                 }
             });
@@ -328,7 +332,11 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
-
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
 
 
 

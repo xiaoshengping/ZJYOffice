@@ -57,6 +57,9 @@
     <color name="yellow">#c29700</color>
 
 
+    //网络提示
+    <color name="network_remind_color">#feefb8</color>
+
 
 
 </resources>

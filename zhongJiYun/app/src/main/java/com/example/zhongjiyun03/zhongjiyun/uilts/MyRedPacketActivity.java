@@ -1,7 +1,9 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -62,7 +64,9 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
     private boolean isRefresh=true;//判断是上啦还是下拉
     private MyRedPatckListAdapter myredAdapter;
     @ViewInject(R.id.not_data_layout)
-    private LinearLayout notDataLayout;
+    private LinearLayout notDataLayout; //没有数据提示
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout; //网络提示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,19 +141,20 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
 
                     }else if ((appBean.getResult()).equals("nomore")) {
                         MyAppliction.showToast("已到最底了");
-                        notDataLayout.setVisibility(View.GONE);
+                        //notDataLayout.setVisibility(View.GONE);
                     }
                     myredAdapter.notifyDataSetChanged();
                     redPatckListview.onRefreshComplete();
                     //mSVProgressHUD.dismiss();
-
+                    networkRemindLayout.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onFailure(HttpException e, String s) {
                     Log.e("我的红包", s);
                     //mSVProgressHUD.dismiss();
-                    MyAppliction.showToast("网络异常,请稍后重试!");
+                    networkRemindLayout.setVisibility(View.VISIBLE);
+                    //MyAppliction.showToast("网络异常,请稍后重试!");
                     redPatckListview.onRefreshComplete();
                 }
             });
@@ -168,6 +173,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
         titleNemeTv.setText("我的红包");
         retrunText.setOnClickListener(this);
         getPackedButton.setOnClickListener(this);
+        networkRemindLayout.setOnClickListener(this);
 
 
     }
@@ -210,7 +216,11 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                 getPackedData();
 
                 break;
-
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
 
 
 
@@ -238,7 +248,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                     if ((appBean.getData().getGetCloudMoney()).equals("0")){
                         MyAppliction.showToast("您暂时还没有新红包");
                     }else {
-                        showExitGameAlert(appBean.getData().getGetCloudMoney(),"您当前的云币数为"+appBean.getData().getTotalCloudMoney()+"个");
+                        showExitGameAlert(appBean.getData().getGetCloudMoney(),appBean.getData().getTotalCloudMoney()+"");
 
                     }
                    mSVProgressHUD.dismiss();
@@ -280,8 +290,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
         ok.setText("确定");
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                  finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                redPatckListview.setRefreshing();
                 dlg.cancel();
             }
         });

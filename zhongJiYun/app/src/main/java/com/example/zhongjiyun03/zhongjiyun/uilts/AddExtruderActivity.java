@@ -124,7 +124,8 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
        private String invoicePath;
        private String contractPath;
        private String qualifiedPath;
-       private List<String> phoneListPath=new ArrayList<>();
+       private List<String> phoneListPath=new ArrayList<>();//图片路径集合
+       private List<String> ImageTypeList =new ArrayList<>();
         private String DateOfManufacture; //年份
         private String DateMonthOfManufacture; //月份
        private String Manufacture;  //设备厂商
@@ -264,18 +265,23 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                             if (!TextUtils.isEmpty(addressText.getText().toString())){
                                 if (!TextUtils.isEmpty(leavePath)){
                                     phoneListPath.add(leavePath);
+                                    ImageTypeList.add("6");
                                     if (!TextUtils.isEmpty(panoramaPath)){
                                         phoneListPath.add(panoramaPath);
+                                        ImageTypeList.add("7");
                                         if (!TextUtils.isEmpty(invoicePath)||!TextUtils.isEmpty(contractPath)){
                                             if (!TextUtils.isEmpty(invoicePath)){
                                                 phoneListPath.add(invoicePath);
+                                                ImageTypeList.add("8");
                                             }
 
                                             if (!TextUtils.isEmpty(contractPath)){
                                                 phoneListPath.add(contractPath);
+                                                ImageTypeList.add("9");
                                             }
                                             if (!TextUtils.isEmpty(qualifiedPath)){
                                                     phoneListPath.add(qualifiedPath);
+                                                    ImageTypeList.add("10");
                                             }
                                     HttpUtils httpUtils=new HttpUtils();
                                     RequestParams requestParams=new RequestParams();
@@ -314,10 +320,10 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                                     ExtruderDataBean extruderDataBean=appBean.getData();
                                                     if (extruderDataBean!=null&&!TextUtils.isEmpty(extruderDataBean.getId())){
                                                         if (phoneListPath!=null&&phoneListPath.size()!=0) {
-                                                            int imageType=6;
+
                                                             for (int i = 0; i <phoneListPath.size() ; i++) {
-                                                                intiPhontData7(uid, imageType, phoneListPath.get(i), extruderDataBean.getId(),i);
-                                                                imageType++;
+                                                                intiPhontData7(uid, ImageTypeList.get(i), phoneListPath.get(i), extruderDataBean.getId(),i);
+
                                                             }
 
 
@@ -396,11 +402,11 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void intiPhontData7(String id, int imageType, String imagePath, String ownId, final int tages) {
+    private void intiPhontData7(String id, String imageType, String imagePath, String ownId, final int tages) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requwstParams=new RequestParams();
         requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",imageType+"");
+        requwstParams.addBodyParameter("ImageType",imageType);
         requwstParams.addBodyParameter("UserType","boss");
         requwstParams.addBodyParameter("SourceType","3");
         requwstParams.addBodyParameter("File", new File(imagePath));

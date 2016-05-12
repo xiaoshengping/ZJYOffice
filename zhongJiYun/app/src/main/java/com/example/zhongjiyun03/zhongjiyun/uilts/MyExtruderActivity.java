@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -61,6 +62,8 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
       private HomeExtruderListAdapter homeExtruderAdapter;
       @ViewInject(R.id.not_data_layout)
       private LinearLayout notDataLayout;
+      @ViewInject(R.id.network_remind_layout)
+      private LinearLayout networkRemindLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
         addExtruderTv.setText("新增");
         titleNemeTv.setText("我的钻机");
         retrunText.setOnClickListener(this);
+        networkRemindLayout.setOnClickListener(this);
         intiListView();
         intiPullToRefresh();
 
@@ -143,7 +147,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             MyAppliction.showToast("已到最底了");
                             homeExtruderAdapter.notifyDataSetChanged();
                             extruderListView.onRefreshComplete();
-                            notDataLayout.setVisibility(View.GONE);
+                            //notDataLayout.setVisibility(View.GONE);
                         }else  if ((appBean.getResult()).equals("empty")){
                             MyAppliction.showToast("没有更多数据");
                             if (isPullDownRefresh){
@@ -158,14 +162,14 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
 
 
                     }
-
+                    networkRemindLayout.setVisibility(View.GONE);
 
                 }
 
                 @Override
                 public void onFailure(HttpException e, String s) {
                     extruderListView.onRefreshComplete();
-                    MyAppliction.showToast(s);
+                    networkRemindLayout.setVisibility(View.VISIBLE);
                     Log.e("我的钻机列表",s);
                 }
             });
@@ -240,7 +244,11 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
-
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
 
 
 

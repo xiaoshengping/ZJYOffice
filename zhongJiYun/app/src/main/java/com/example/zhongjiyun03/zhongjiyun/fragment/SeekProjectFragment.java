@@ -11,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -64,7 +65,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SeekProjectFragment extends Fragment implements PullToRefreshBase.OnRefreshListener2<ListView> {
+public class SeekProjectFragment extends Fragment implements PullToRefreshBase.OnRefreshListener2<ListView>,View.OnClickListener {
 
 
        //排序
@@ -114,7 +115,8 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     private String province;
     @ViewInject(R.id.not_data_layout)
     private LinearLayout notDataLayout;
-
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout;
 
 
 
@@ -155,7 +157,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                 popTag=2;
             }
         });
-
+        networkRemindLayout.setOnClickListener(this);
         findView(view);
         initData();
         initPopup();
@@ -248,7 +250,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                             List<SeekProjectBean> seekProjectBean= seekProjectBeanList.getPagerData();
                             if (isPullDownRefresh){
                                 seekProjectBeens.clear();
-                                Log.e("sdhdhdh","jjdfj");
+                                //Log.e("sdhdhdh","jjdfj");
                             }
                             seekProjectBeens.addAll(seekProjectBean);
                             homeProjectlsitAdapter.notifyDataSetChanged();
@@ -264,18 +266,20 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                         MyAppliction.showToast("已到最底了");
                         projectListView.onRefreshComplete();
                         homeProjectlsitAdapter.notifyDataSetChanged();
-                        notDataLayout.setVisibility(View.GONE);
+                        //notDataLayout.setVisibility(View.GONE);
                     }
 
 
                 }else {
                     projectListView.onRefreshComplete();
                 }
+                networkRemindLayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("找项目",s);
+                networkRemindLayout.setVisibility(View.VISIBLE);
                 projectListView.onRefreshComplete();
             }
         });
@@ -310,7 +314,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                 Intent intent=new Intent(getActivity(), SeekProjectParticularsActivity.class);
                 intent.putExtra("seekProjectId",seekProjectBeens.get(position-1).getId());
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                //getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
             }
         });
 
@@ -326,7 +330,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-            PageIndex++;
+         PageIndex++;
         isPullDownRefresh=false;
         initListData(PageIndex,cityName,State,Order);
     }
@@ -346,6 +350,18 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+                break;
+
+        }
+    }
 
 
     //点击事件
@@ -357,8 +373,8 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                 case R.id.main_tab1:
                     tab1OnClick();
                     break;
-                default:
-                    break;
+               default:
+                   break;
             }
         }
     }

@@ -430,8 +430,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
             case R.id.attention_layout:
                 if (!TextUtils.isEmpty(uid)){
-
-
                 Intent attentionIntent=new Intent(getActivity(), AttentionProjectActivity.class);
                 startActivity(attentionIntent);
                 getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
