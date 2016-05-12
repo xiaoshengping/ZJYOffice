@@ -152,7 +152,7 @@
     </LinearLayout>
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:layout_below="@+id/network_remind_layout"
-        android:dividerHeight="5dp"
+        android:dividerHeight="7dp"
         android:divider="@color/background"
         android:id="@+id/seek_machinist_listview"
         android:layout_width="match_parent"

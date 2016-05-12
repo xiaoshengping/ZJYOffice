@@ -83,11 +83,9 @@
             android:id="@+id/more_text_view"
             android:layout_marginTop="8dp"
             android:gravity="right"
-
             android:textColor="@color/red_light"
             android:layout_marginRight="5dp"
-            android:textSize="@dimen/home_Size_16"
-            android:drawablePadding="3dp"
+            android:textSize="@dimen/home_Size_15"
             android:text="更多"
             android:layout_width="50dp"
             android:layout_height="30dp" />
@@ -161,7 +159,7 @@
             <ImageView
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="13dp"
                 android:id="@+id/project_image_view"
                 android:src="@color/red_light"
                 android:layout_width="2dp"
@@ -180,9 +178,9 @@
                 android:layout_marginTop="8dp"
                 android:textColor="@color/red_light"
                 android:layout_marginRight="5dp"
-                android:textSize="@dimen/home_Size_16"
+                android:textSize="@dimen/home_Size_15"
                 android:layout_toLeftOf="@+id/project_more_imag"
-                android:drawablePadding="3dp"
+
                 android:text="更多"
                 android:gravity="right"
                 android:layout_width="40dp"

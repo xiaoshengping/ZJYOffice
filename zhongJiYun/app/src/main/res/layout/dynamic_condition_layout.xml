@@ -7,7 +7,7 @@
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:layout_marginRight="2dp"
-        android:dividerHeight="3dp"
+        android:dividerHeight="7dp"
         android:divider="@color/background"
         android:id="@+id/dynamic_condition_listview"
         android:layout_width="match_parent"

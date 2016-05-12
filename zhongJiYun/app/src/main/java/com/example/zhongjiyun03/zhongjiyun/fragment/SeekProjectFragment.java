@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,6 +118,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     private LinearLayout notDataLayout;
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout;
+    private boolean isOnClick=true;
 
 
 
@@ -311,9 +313,20 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         projectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Time t=new Time(); // or Time t=new Time("GMT+8"); 加上Time Zone资料。
+                t.setToNow(); // 取得系统时间。
+                int year = t.year;
+                int month = t.month;
+                int date = t.monthDay;
+                int hour = t.hour; // 0-23
+                int minute = t.minute;
+                int second = t.second;
+                Log.e("data",second+"");
                 Intent intent=new Intent(getActivity(), SeekProjectParticularsActivity.class);
-                intent.putExtra("seekProjectId",seekProjectBeens.get(position-1).getId());
-                startActivity(intent);
+                    intent.putExtra("seekProjectId",seekProjectBeens.get(position-1).getId());
+                    startActivity(intent);
+
+
                 //getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
             }
         });

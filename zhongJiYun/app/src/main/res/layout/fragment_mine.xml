@@ -72,7 +72,7 @@
                 android:id="@+id/name_text"
                 android:layout_toRightOf="@+id/loing_xshi_user"
                 android:textColor="@color/tailt_dark"
-                android:textSize="@dimen/home_Size_16"
+                android:textSize="@dimen/home_Size_17"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="18dp"
                 android:layout_alignParentRight="@+id/loing_xshi_user"
@@ -82,23 +82,21 @@
                 android:id="@+id/phone_text_image"
                 android:layout_below="@+id/name_text"
                 android:layout_toRightOf="@+id/loing_xshi_user"
-                android:layout_marginLeft="13dp"
+                android:layout_marginLeft="12dp"
                 android:layout_marginTop="5dp"
-                android:background="@mipmap/mine_phone_icon"
+                android:src="@mipmap/mine_phone_icon"
                 android:layout_alignParentRight="@+id/loing_xshi_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="13dp"
+                android:layout_height="20dp" />
             <TextView
                 android:id="@+id/phone_text"
                 android:layout_below="@+id/name_text"
-                android:layout_centerVertical="true"
+
                 android:layout_toRightOf="@+id/phone_text_image"
                 android:textColor="@color/tailt_dark"
                 android:textSize="@dimen/home_Size_16"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-
-                android:drawablePadding="5dp"
                 android:layout_alignParentRight="@+id/loing_xshi_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -120,7 +118,7 @@
                 android:isIndicator="false"
                 android:id="@+id/rating_bar"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="5dp"
                 style="@style/homeRoomRatingBar"
                 android:layout_toRightOf="@+id/dengji_text"
                 android:layout_below="@+id/phone_text"
