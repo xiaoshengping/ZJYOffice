@@ -9,73 +9,109 @@
     android:background="@color/ic_white"
     tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.SeekProjectParticularsActivity">
 
+    <RelativeLayout
+        android:id="@+id/home_title_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/red_light">
+        <TextView
+            android:id="@+id/retrun_tv"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="13dp"
+            android:layout_height="22dp"
+            android:background="@mipmap/return_icon"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <TextView
+
+            android:id="@+id/retrun_text_view"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/title_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登陆"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_20"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:background="@mipmap/share_icon"
+            android:id="@+id/shard_tv"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@+id/checkBox_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_centerInParent="true"/>
+        <ImageView
+            android:id="@+id/checkBox_check"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/home_title_bar_rl"
+        android:visibility="gone"
+        android:id="@+id/no_data_rlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/tailt_wifi"
+            android:src="@mipmap/no_wifi_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tailt_wifi"
+            android:layout_centerVertical="true"
+            android:textColor="@color/tailt_dark"
+            android:textSize="@dimen/home_Size_16"
+            android:gravity="center"
+            android:text="Wi-Fi和移动数据已断开"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tailt_wifi"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/home_Size_12"
+            android:gravity="center"
+            android:text="请连接网络后，点击空白刷新"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+    </RelativeLayout>
     <LinearLayout
+        android:id="@+id/message_data_layout"
+        android:layout_below="@+id/home_title_bar_rl"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-
-
-
-        <RelativeLayout
-            android:id="@+id/home_title_bar_rl"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="@color/red_light">
-            <TextView
-                android:id="@+id/retrun_tv"
-                android:layout_marginLeft="15dp"
-                android:layout_alignParentLeft="true"
-                android:layout_width="13dp"
-                android:layout_height="22dp"
-                android:background="@mipmap/return_icon"
-                android:gravity="center"
-                android:textColor="@color/ic_white"
-                android:textSize="@dimen/home_Size_18"
-                android:layout_centerInParent="true"/>
-            <TextView
-
-                android:id="@+id/retrun_text_view"
-                android:layout_marginLeft="15dp"
-                android:layout_alignParentLeft="true"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:textColor="@color/ic_white"
-                android:textSize="@dimen/home_Size_18"
-                android:layout_centerInParent="true"/>
-            <TextView
-                android:id="@+id/title_name_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="登陆"
-                android:gravity="center"
-                android:textColor="@color/ic_white"
-                android:textSize="@dimen/home_Size_20"
-                android:layout_centerInParent="true"/>
-            <TextView
-                android:background="@mipmap/share_icon"
-                android:id="@+id/shard_tv"
-                android:layout_marginRight="15dp"
-                android:layout_toLeftOf="@+id/checkBox_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-
-                android:layout_centerInParent="true"/>
-            <ImageView
-                android:id="@+id/checkBox_check"
-                android:layout_marginRight="15dp"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-
-
-                android:layout_centerInParent="true"/>
-
-        </RelativeLayout>
     <LinearLayout
         android:gravity="center_vertical"
         android:background="@color/ic_white"

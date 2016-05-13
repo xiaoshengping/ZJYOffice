@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -167,6 +168,10 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     @ViewInject(R.id.advertisement_image)
     private ImageView advertisementImage;
     private boolean isChecked=true;
+    @ViewInject(R.id.message_scrollView)
+    private ScrollView messageScrollView;
+    @ViewInject(R.id.no_data_rlayout)
+    private RelativeLayout noDataRlayout;//没有网络
 
 
 
@@ -186,7 +191,6 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         initView();
 
         initPager();
-        loadData();
         intiData();
 
 
@@ -210,7 +214,9 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
           requestParams.addBodyParameter("userId",uid);
           }
         requestParams.addBodyParameter("deviceId",secondHandBeanId);
+        messageScrollView.setVisibility(View.GONE);
         mSVProgressHUD.showWithStatus("正在加载中...");
+
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderParticualsData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -403,13 +409,14 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
 
                 }
 
-
-
+                messageScrollView.setVisibility(View.VISIBLE);
+                noDataRlayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-
+                mSVProgressHUD.dismiss();
+                noDataRlayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -426,6 +433,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     }
 
     private void initView() {
+        noDataRlayout.setOnClickListener(this);
         phoneTextView.setOnClickListener(this);
         titleNemeTv.setText("钻机详情");
         shardText.setOnClickListener(this);
@@ -555,39 +563,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     }
 
 
-    /**
-     * Gson
-     */
-    private void loadData() {
-        /*HttpUtils httpUtils = new HttpUtils();
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAdvertisementData(), new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("dsjfjfj",responseInfo.result);
 
-                if(!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<AdvertisementBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<AdvertisementBean>>(){});
-                    if (appListDataBean.getResult().equals("success")){
-                        List<AdvertisementBean> advertisementBeen=appListDataBean.getData();
-                        if (advertisementBeen!=null){
-
-
-                        }
-
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-
-            }
-        });*/
-
-
-    }
 
     @Override
     public void onResume() {
@@ -638,6 +614,9 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                 finish();
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
+            case R.id.no_data_rlayout:
+                intiData();
+                break;
 
 
         }
@@ -663,6 +642,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                 }
             }
         });
+        if (secondHandBean!=null){
         // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
         //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
@@ -687,6 +667,9 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         oks.setSiteUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig-details?id="+getIntent().getStringExtra("secondHandData"));
         // 启动分享GUI
         oks.show(this);
+        }else {
+            MyAppliction.showToast("网络异常，请稍后重试");
+        }
     }
 
 

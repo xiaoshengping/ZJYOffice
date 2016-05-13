@@ -248,6 +248,13 @@ public class AppUtilsUrl {
 
     }
 
+    //提交用户信息
+    public static String getRegistrationData(){
+        //  appapi/system/submitjpush
+        return BaseUrl+"appapi/system/submitjpush" ;
+
+    }
+
 
 
 

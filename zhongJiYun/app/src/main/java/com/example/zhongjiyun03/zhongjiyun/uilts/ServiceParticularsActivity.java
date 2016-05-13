@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -64,8 +66,8 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
     private SVProgressHUD mSVProgressHUD;//loding
     @ViewInject(R.id.image_view)
     private ImageView imageView;
-    @ViewInject(R.id.layout)
-    private LinearLayout layout;
+    @ViewInject(R.id.mssage_data_layout)
+    private ScrollView layout;
     @ViewInject(R.id.immob_image)
     private ImageView immobImage;
     @ViewInject(R.id.cell_service_button)
@@ -99,6 +101,11 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
     //用于计算手指滑动的速度。
     private VelocityTracker mVelocityTracker;
     private String uid=null;  //用户id
+
+    @ViewInject(R.id.no_data_rlayout)
+    private RelativeLayout noDataRlayout;
+    @ViewInject(R.id.button_layout)
+    private LinearLayout buttonLayout;
 
     @Override
     protected void onResume() {
@@ -150,6 +157,7 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
         requestParms.addBodyParameter("ServiceProviderId",getIntent().getStringExtra("ServiceProviderId"));
             layout.setVisibility(View.GONE);
             mSVProgressHUD.showWithStatus("加载中...");
+            buttonLayout.setVisibility(View.GONE);
         htpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getServiceParticularsData(),requestParms, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -189,15 +197,16 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
 
                     }
                 }
-
-
+                buttonLayout.setVisibility(View.VISIBLE);
+                noDataRlayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 mSVProgressHUD.dismiss();
-                mSVProgressHUD.showErrorWithStatus("网络异常,请稍后重试");
-                finish();
+                //mSVProgressHUD.showErrorWithStatus("网络异常,请稍后重试");
+                noDataRlayout.setVisibility(View.VISIBLE);
+                buttonLayout.setVisibility(View.GONE);
             }
         });
 
@@ -215,6 +224,7 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
         cellServiceButton.setOnClickListener(this);
+        noDataRlayout.setOnClickListener(this);
 
 
     }
@@ -247,6 +257,10 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
                         Intent intent=new Intent(ServiceParticularsActivity.this,LoginActivity.class);
                         startActivity(intent);
                     }
+
+                break;
+            case R.id.no_data_rlayout:
+                initParticularsData();
 
                 break;
 

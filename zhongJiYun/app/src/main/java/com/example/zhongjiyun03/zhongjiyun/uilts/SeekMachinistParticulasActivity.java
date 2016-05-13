@@ -16,6 +16,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
@@ -123,6 +124,8 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     private ImageView imageLiniOne;
     private SekkMachinisDataBean seekMachinisDataBean;
     private SVProgressHUD mSVProgressHUD;//loding
+    @ViewInject(R.id.message_layout)
+    private ScrollView messageLayout;
 
     @Override
     protected void onResume() {
@@ -153,6 +156,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     private void initSeekData() {
          //mSVProgressHUD.showWithStatus("正在加载中...");
         seekMachinisDataBean= (SekkMachinisDataBean) getIntent().getSerializableExtra("seekData");
+        messageLayout.setVisibility(View.GONE);
         if (seekMachinisDataBean!=null){
             MyAppliction.imageLoader.displayImage(seekMachinisDataBean.getDriverHeader(),circleImageView,MyAppliction.options);
             nameText.setText(seekMachinisDataBean.getDriverName());
@@ -337,7 +341,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                     }
 
                 }
-
+                messageLayout.setVisibility(View.VISIBLE);
             }else {
                 workExperienceRlayout.setVisibility(View.GONE);
                 workExperienceLayoutOne.setVisibility(View.GONE);

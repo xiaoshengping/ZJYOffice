@@ -24,6 +24,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -124,6 +125,10 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     private boolean isChecked = true;//是否关注
    /* @ViewInject(R.id.image_view)
     private ImageView imageViewFcto;*/
+    @ViewInject(R.id.message_data_layout)
+    private LinearLayout messageDataLayout;
+    @ViewInject(R.id.no_data_rlayout)
+    private RelativeLayout noDataRlayout;
 
 
     @Override
@@ -180,6 +185,8 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             }
             requestParams.addBodyParameter("projectId", seekProjectId);
             mSVProgressHUD.showWithStatus("加载中...");
+            messageDataLayout.setVisibility(View.GONE);
+            competitiveButton.setVisibility(View.GONE);
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctParticularsData(), requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -205,13 +212,17 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                     } else {
                         mSVProgressHUD.dismiss();
                     }
-
+                    messageDataLayout.setVisibility(View.VISIBLE);
+                    noDataRlayout.setVisibility(View.GONE);
+                    competitiveButton.setVisibility(View.VISIBLE);
                 }
 
                 @Override
                 public void onFailure(HttpException e, String s) {
                     Log.e("项目详情", s);
                     mSVProgressHUD.dismiss();
+                    noDataRlayout.setVisibility(View.VISIBLE);
+                    competitiveButton.setVisibility(View.GONE);
                 }
             });
         } else {
@@ -421,6 +432,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     }
 
     private void initView() {
+        noDataRlayout.setOnClickListener(this);
         shardText.setOnClickListener(this);
         titleNemeTv.setText("项目详情");
         retrunText.setOnClickListener(this);
@@ -510,6 +522,9 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                     startActivity(intent);
 
                 }
+                break;
+            case R.id.no_data_rlayout:
+                initData();
                 break;
 
 
@@ -882,27 +897,31 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 }
             }
         });
-        // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
-        //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
-        // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
-        oks.setTitle(seekProjectBean.getTitle() + "_" + seekProjectBean.getTimeLimit() + "月_" + seekProjectBean.getProvince() + seekProjectBean.getCity() + "_中基云项目信息中心");
-        // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id=" + seekProjectId);
-        // text是分享文本，所有平台都需要这个字段
-        oks.setText(seekProjectBean.getTitle() + "_" + seekProjectBean.getTimeLimit() + "月_" + seekProjectBean.getProvince() + seekProjectBean.getCity() + "_中基云项目信息中心");
-        // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
-        //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
-        // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id=" + seekProjectId);
-        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
-        oks.setComment(seekProjectBean.getTitle() + "_" + seekProjectBean.getTimeLimit() + "月_" + seekProjectBean.getProvince() + seekProjectBean.getCity() + "_中基云项目信息中心");
-        // site是分享此内容的网站名称，仅在QQ空间使用
-        oks.setSite(getString(R.string.app_name));
-        // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id=" + seekProjectId);
-        // 启动分享GUI
-        oks.show(this);
+        if (seekProjectBean!=null) {
+            // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
+            //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+            // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+            oks.setTitle(seekProjectBean.getTitle() + "_" + seekProjectBean.getTimeLimit() + "月_" + seekProjectBean.getProvince() + seekProjectBean.getCity() + "_中基云项目信息中心");
+            // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+            oks.setTitleUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id=" + seekProjectId);
+            // text是分享文本，所有平台都需要这个字段
+            oks.setText(seekProjectBean.getTitle() + "_" + seekProjectBean.getTimeLimit() + "月_" + seekProjectBean.getProvince() + seekProjectBean.getCity() + "_中基云项目信息中心");
+            // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+            //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
+            oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
+            // url仅在微信（包括好友和朋友圈）中使用
+            oks.setUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id=" + seekProjectId);
+            // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+            oks.setComment(seekProjectBean.getTitle() + "_" + seekProjectBean.getTimeLimit() + "月_" + seekProjectBean.getProvince() + seekProjectBean.getCity() + "_中基云项目信息中心");
+            // site是分享此内容的网站名称，仅在QQ空间使用
+            oks.setSite(getString(R.string.app_name));
+            // siteUrl是分享此内容的网站地址，仅在QQ空间使用
+            oks.setSiteUrl("http://h148a34804.iok.la/App/Index.html#/tab/my/owner-bid-project-details?id=" + seekProjectId);
+            // 启动分享GUI
+            oks.show(this);
+        }else {
+            MyAppliction.showToast("网络异常，请稍后重试");
+        }
     }
 
 

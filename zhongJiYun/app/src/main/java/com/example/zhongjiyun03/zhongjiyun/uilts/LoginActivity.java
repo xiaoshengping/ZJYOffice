@@ -147,6 +147,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     RequestParams requestParams=new RequestParams();
                     requestParams.addBodyParameter("PhoneNumber",phoneEdit.getText().toString());
                     requestParams.addBodyParameter("SmsCode",codeEdit.getText().toString());
+                    requestParams.addBodyParameter("jiGuangID",JPushInterface.getRegistrationID(LoginActivity.this));
                    // mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");
                    // mSVProgressHUD.showErrorWithStatus("不约，叔叔我们不约～", SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
                     mSVProgressHUD.showWithStatus("登录中...");
@@ -206,7 +207,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     insertData(sqLhelper, loginDataBean.getId(), loginDataBean.getPhoneNumber(), loginDataBean.getName(), loginDataBean.getStarRate()+"",
                                             loginDataBean.getHeadthumb(), loginDataBean.getRole());
 
-
                                     mSVProgressHUD.dismiss();
                                     mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");
                                     finish();
@@ -265,9 +265,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         db.insert(SQLhelper.tableName, SQLhelper.UID, values);
         db.close();
     }
-
-
-
 
 
     private void intiVcodeData() {

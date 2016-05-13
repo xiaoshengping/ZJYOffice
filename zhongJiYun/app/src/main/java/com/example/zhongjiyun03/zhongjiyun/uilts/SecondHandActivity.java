@@ -434,6 +434,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                 networkRemindLayout.setVisibility(View.VISIBLE);
                 homeSecondHandListAdapter.notifyDataSetChanged();
                 secondHandListview.onRefreshComplete();
+
             }
         });
 

@@ -10,13 +10,53 @@
 
     <include android:id="@+id/tailt_layout" android:layout_width="match_parent"
         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/tailt_layout"
+        android:visibility="gone"
+        android:id="@+id/no_data_rlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/tailt_wifi"
+            android:src="@mipmap/no_wifi_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tailt_wifi"
+            android:layout_centerVertical="true"
+            android:textColor="@color/tailt_dark"
+            android:textSize="@dimen/home_Size_16"
+            android:gravity="center"
+            android:text="Wi-Fi和移动数据已断开"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/tailt_wifi"
+            android:layout_centerVertical="true"
+            android:textSize="@dimen/home_Size_12"
+            android:gravity="center"
+            android:text="请连接网络后，点击空白刷新"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+    </RelativeLayout>
+
     <ScrollView
+        android:id="@+id/mssage_data_layout"
         android:layout_below="@+id/tailt_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@+id/layout"
+
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -192,6 +232,7 @@
 
 </ScrollView>
     <LinearLayout
+        android:id="@+id/button_layout"
         android:gravity="center_vertical"
         android:background="@color/white"
         android:layout_alignParentBottom="true"

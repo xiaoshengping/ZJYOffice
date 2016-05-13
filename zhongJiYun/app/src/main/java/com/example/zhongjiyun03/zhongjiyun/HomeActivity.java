@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -13,6 +14,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -63,6 +65,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView progressBarText;
     private static final int MSG_PROGRESS_UPDATE = 0x110;
     private TextView tailteTv;
+    private boolean isCommitData=true;//是否提交用户信息
 
     @Override
     protected void onResume() {
@@ -94,15 +97,17 @@ public class HomeActivity extends AppCompatActivity {
             testAddContacts();  //添加联系人
             editor.putBoolean("isFirstRun", false);
             editor.commit();
+
+
         } else{
             //Log.d("debug", "不是第一次运行");
             Intent intent=new Intent(HomeActivity.this,WelcomeActivity.class);
             startActivity(intent);
-            getVersontData();
+            getVersontData();//版本更新
+            if (isCommitData) {
+                initRegistration();//提交用户信息
+            }
         }
-
-
-
         //HomeFragment.setStart(0);
         //startPage();
 
@@ -121,9 +126,47 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         PushAgent.getInstance(this).onAppStart();*/
-        JPushInterface.setDebugMode(true);
         JPushInterface.init(this);
+        JPushInterface.setDebugMode(true);
     }
+
+    //提交用户信息
+    private void initRegistration() {
+        HttpUtils httpUtils=new HttpUtils();
+        TelephonyManager telephonyManager =( TelephonyManager )getSystemService( Context.TELEPHONY_SERVICE );
+        RequestParams requestParams=new RequestParams();
+        requestParams.addBodyParameter("deviceId",telephonyManager.getDeviceId());
+        requestParams.addBodyParameter("deviceOS",android.os.Build.VERSION.RELEASE);
+        requestParams.addBodyParameter("deviceType",android.os.Build.MODEL);
+        requestParams.addBodyParameter("versionType","0");
+        requestParams.addBodyParameter("softUserType","0");
+        requestParams.addBodyParameter("jiGuangID",JPushInterface.getRegistrationID(HomeActivity.this));
+        try {
+            requestParams.addBodyParameter("softVersion",getVersionName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        httpUtils.configSoTimeout(1200000);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegistrationData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.e("极光提交用户信息",responseInfo.result);
+                isCommitData=false;
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("极光提交用户信息onFailure",s);
+                isCommitData=true;
+            }
+        });
+
+
+
+    }
+
+
+
 
     private void getVersontData() {
         HttpUtils httpUtils=new HttpUtils();

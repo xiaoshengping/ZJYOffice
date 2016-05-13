@@ -11,6 +11,7 @@
         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
 
        <ScrollView
+           android:id="@+id/message_layout"
            android:layout_below="@+id/tailt_layout"
            android:layout_width="match_parent"
            android:layout_height="wrap_content">

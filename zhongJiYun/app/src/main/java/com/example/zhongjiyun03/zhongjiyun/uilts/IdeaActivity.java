@@ -2,6 +2,8 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -184,13 +186,19 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
         if (!TextUtils.isEmpty(textEdit.getText().toString())) {
             requestParams.addBodyParameter("Id", uid);
             requestParams.addBodyParameter("Content", textEdit.getText().toString());
-            if (selectedPicture.size() == 3) {
+            try {
+                requestParams.addBodyParameter("appVersion",getVersionName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            /*if (selectedPicture.size() == 3) {
                 mSVProgressHUD.showWithStatus("上传照片中(3)...");
             } else if (selectedPicture.size() == 2) {
                 mSVProgressHUD.showWithStatus("上传照片中(2)...");
             } else if (selectedPicture.size() == 1) {
                 mSVProgressHUD.showWithStatus("上传照片中(1)...");
-            }
+            }*/
+            mSVProgressHUD.showWithStatus("正在提交中...");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getIdeaFeedBackData(), requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -226,6 +234,16 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    //软件版本号
+    private String getVersionName() throws Exception {
+        // 获取packagemanager的实例
+        PackageManager packageManager = getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(),0);
+        String version = packInfo.versionName;
+        return version;
+    }
+
     private void intiPhontData0(final String id, String imageType, String imagePath, final String OwnId) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams requwstParams = new RequestParams();
@@ -246,10 +264,10 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
 
                     if (appBean.getResult().equals("success")) {
                         if (selectedPicture.size() == 3) {
-                            mSVProgressHUD.showWithStatus("上传照片中(2)...");
+
                             intiPhontData1(id, "17", selectedPicture.get(1), OwnId);
                         } else if (selectedPicture.size() == 2) {
-                            mSVProgressHUD.showWithStatus("上传照片中(1)...");
+
                             intiPhontData1(id, "17", selectedPicture.get(1), OwnId);
                         } else if (selectedPicture.size() == 1) {
                             mSVProgressHUD.showSuccessWithStatus("感谢您提供宝贵的意见");
@@ -298,7 +316,7 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
 
                     if (appBean.getResult().equals("success")) {
                         if (selectedPicture.size() == 3) {
-                            mSVProgressHUD.showWithStatus("上传照片中(1)...");
+
                             intiPhontData2(id, "17", selectedPicture.get(2), OwnId);
                         } else if (selectedPicture.size() == 2) {
 
