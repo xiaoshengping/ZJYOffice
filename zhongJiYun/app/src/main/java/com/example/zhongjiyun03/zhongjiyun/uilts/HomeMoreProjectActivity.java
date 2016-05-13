@@ -25,6 +25,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -123,9 +124,13 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     private HomeProjectListAdapter homeProjectlsitAdapter;
     private String province;//省份
     @ViewInject(R.id.not_data_layout)
-    private LinearLayout notDataLayout;
+    private LinearLayout notDataLayout; //没有数据
     @ViewInject(R.id.network_remind_layout)
-    private LinearLayout networkRemindLayout;
+    private LinearLayout networkRemindLayout; //没有网络
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
 
 
     @Override
@@ -270,6 +275,8 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                     }else  if ((appBean.getResult()).equals("empty")){
                         //MyAppliction.showToast("没有更多数据");
                         notDataLayout.setVisibility(View.VISIBLE);
+                        notDataImage.setBackgroundResource(R.mipmap.no_project_icon);
+                        notDataText.setText("还没有找到项目哦");
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         projectListView.onRefreshComplete();
                     }
@@ -284,10 +291,16 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("找项目",s);
+                Log.e("找项目onFailure",s);
                 networkRemindLayout.setVisibility(View.VISIBLE);
                 homeProjectlsitAdapter.notifyDataSetChanged();
                 projectListView.onRefreshComplete();
+                if (seekProjectBeans.size()==0){
+                notDataLayout.setVisibility(View.VISIBLE);
+                notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                notDataText.setText("没有网络哦");
+                }
+
             }
         });
 

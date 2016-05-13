@@ -33,6 +33,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -168,6 +169,13 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     private LinearLayout notDataLayout;
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout;
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
+    private List<FacillyDataBean> facillyDataBeens;//设备厂商数据
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -190,6 +198,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     }
 
     private void init() {
+        facillyDataBeens=new ArrayList<>();
         networkRemindLayout.setOnClickListener(this);
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("寻找机手");
@@ -225,7 +234,12 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
         facillyText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tabFacillynClick();
+                if (facillyDataBeens.size()!=0){
+                    tabFacillynClick();
+                }else {
+                    MyAppliction.showToast("网络异常，请稍后重试");
+                }
+
             }
         });
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -375,6 +389,8 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                         seekMachinistListview.onRefreshComplete();
                         //MyAppliction.showToast("没有更多数据");
                         notDataLayout.setVisibility(View.VISIBLE);
+                        notDataImage.setBackgroundResource(R.mipmap.no_driver);
+                        notDataText.setText("还没有找到机手哦");
                     }
 
 
@@ -391,6 +407,11 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                 Log.e("找机手", s);
                 networkRemindLayout.setVisibility(View.VISIBLE);
                 seekMachinistListview.onRefreshComplete();
+                if (sekkMachinisDataBeens.size()==0){
+                    notDataLayout.setVisibility(View.VISIBLE);
+                    notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                    notDataText.setText("没有网络哦");
+                }
             }
         });
 
@@ -649,7 +670,11 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                     if (appListDataBean.getResult().equals("success")) {
                         List<FacillyDataBean> facillyDataBeen = appListDataBean.getData();
                         //facilluyFirstList.addAll(facillyDataBeen);
-                        initPopupFacilly(facillyDataBeen);
+                        if (facillyDataBeen.size()!=0){
+                            facillyDataBeens.addAll(facillyDataBeen);
+                            initPopupFacilly(facillyDataBeens);
+                        }
+
 
                     }
 

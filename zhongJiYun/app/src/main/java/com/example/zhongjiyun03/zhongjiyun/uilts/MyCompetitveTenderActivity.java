@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -62,7 +63,10 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
     private LinearLayout notDataLayout; //没有数据提示
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //网络提示
-
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
 
     @Override
     protected void onPause() {
@@ -144,6 +148,8 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                             notDataLayout.setVisibility(View.VISIBLE);
                             competitveTenderLsitview.onRefreshComplete();
                             //MyAppliction.showToast("没有更多数据");
+                            notDataImage.setBackgroundResource(R.mipmap.no_project_icon);
+                            notDataText.setText("您还没有竞标项目哦");
                         }
 
                         myCompetitveAdapter.notifyDataSetChanged();
@@ -158,6 +164,11 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                     Log.e("我的竞标",s);
                     networkRemindLayout.setVisibility(View.VISIBLE);
                     competitveTenderLsitview.onRefreshComplete();
+                    if (projectlistDataBeanLists.size()==0){
+                        notDataLayout.setVisibility(View.VISIBLE);
+                        notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                        notDataText.setText("没有网络哦");
+                    }
                 }
             });
         }else {

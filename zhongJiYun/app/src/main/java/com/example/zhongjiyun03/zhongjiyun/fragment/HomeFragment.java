@@ -16,12 +16,12 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.adapter.HomeGridAdapter;
 import com.example.zhongjiyun03.zhongjiyun.adapter.HomeProjectListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.adapter.ImagePagerAdapter;
 import com.example.zhongjiyun03.zhongjiyun.adapter.RecommendMachinistAdapter;
@@ -60,7 +60,6 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -304,23 +303,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     //首页griview
     private void initGridView() {
-        ArrayList<HashMap<String, Object>> meumList = new ArrayList<HashMap<String, Object>>();
-        String[] gridText={"寻找项目","二手钻机","寻找机手","配套服务","商城","我的钻机","部落","黑名单","新闻动态","合作伙伴"};
-        int[] gridImage={R.mipmap.rig0,R.mipmap.rig1,R.mipmap.rig2,R.mipmap.rig3,R.mipmap.rig4,R.mipmap.rig5,R.mipmap.rig6,R.mipmap.rig7,R.mipmap.rig8,R.mipmap.rig9};
-        for(int i = 0;i < 10;i++) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("ItemImage",gridImage[i]);
-            map.put("ItemText", gridText[i]);
-            meumList.add(map);
-        }
-        SimpleAdapter saItem = new SimpleAdapter(getActivity(),
-                meumList, //数据源
-                R.layout.home_gridview_adapter_layout, //xml实现
-                new String[]{"ItemImage","ItemText"}, //对应map的Key
-                new int[]{R.id.home_grid_image,R.id.home_grid_title});  //对应R的Id
-
+        HomeGridAdapter homeGridViewAdapter=new HomeGridAdapter(getActivity());
         //添加Item到网格中
-        homeGridView.setAdapter(saItem);
+        homeGridView.setAdapter(homeGridViewAdapter);
         //添加点击事件
         homeGridView.setOnItemClickListener(
                 new AdapterView.OnItemClickListener()

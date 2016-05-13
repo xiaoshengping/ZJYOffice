@@ -38,12 +38,14 @@
     <com.example.zhongjiyun03.zhongjiyun.view.MyGridView
         android:background="@color/ic_white"
         android:id="@+id/home_gridView"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:horizontalSpacing="0.0dip"
+        android:listSelector="@null"
         android:numColumns="5"
-        android:columnWidth="90dp"
+        android:scrollbars="none"
         android:stretchMode="columnWidth"
-        android:gravity="center"
+        android:verticalSpacing="0.0dip"
         >
 
     </com.example.zhongjiyun03.zhongjiyun.view.MyGridView>
@@ -129,7 +131,6 @@
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         />
                 </LinearLayout>
             </FrameLayout>

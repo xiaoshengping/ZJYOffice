@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -66,7 +67,10 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
       private LinearLayout notDataLayout;
       @ViewInject(R.id.network_remind_layout)
       private LinearLayout networkRemindLayout;
-
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
 
     @Override
     protected void onPause() {
@@ -159,13 +163,15 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             extruderListView.onRefreshComplete();
                             //notDataLayout.setVisibility(View.GONE);
                         }else  if ((appBean.getResult()).equals("empty")){
-                            MyAppliction.showToast("没有更多数据");
+                            //MyAppliction.showToast("没有更多数据");
                             if (isPullDownRefresh){
                                 myExtruderBeens.clear();
                             }
                             homeExtruderAdapter.notifyDataSetChanged();
                             extruderListView.onRefreshComplete();
                             notDataLayout.setVisibility(View.VISIBLE);
+                            notDataImage.setBackgroundResource(R.mipmap.no_rig_icon);
+                            //notDataText.setText("您还没有添加钻机哦");
                         }else if (appBean.getResult().equals("unlogin")){
                             MyAppliction.showToast(appBean.getMsg());
                         }
@@ -181,6 +187,11 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                     extruderListView.onRefreshComplete();
                     networkRemindLayout.setVisibility(View.VISIBLE);
                     Log.e("我的钻机列表",s);
+                    if (myExtruderBeens.size()==0){
+                        notDataLayout.setVisibility(View.VISIBLE);
+                        notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                        notDataText.setText("没有网络哦");
+                    }
                 }
             });
         }else {

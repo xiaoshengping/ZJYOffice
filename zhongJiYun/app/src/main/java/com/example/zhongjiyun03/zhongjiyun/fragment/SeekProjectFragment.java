@@ -24,6 +24,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -118,7 +119,10 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
     private LinearLayout notDataLayout;
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout;
-    private boolean isOnClick=true;
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
 
 
 
@@ -264,6 +268,8 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                         projectListView.onRefreshComplete();
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         notDataLayout.setVisibility(View.VISIBLE);
+                        notDataImage.setBackgroundResource(R.mipmap.no_project_icon);
+                        notDataText.setText("还没有找到项目哦");
                     }else if ((appBean.getResult()).equals("nomore")){
                         MyAppliction.showToast("已到最底了");
                         projectListView.onRefreshComplete();
@@ -283,6 +289,11 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                 Log.e("找项目",s);
                 networkRemindLayout.setVisibility(View.VISIBLE);
                 projectListView.onRefreshComplete();
+                if (seekProjectBeens.size()==0){
+                    notDataLayout.setVisibility(View.VISIBLE);
+                    notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                    notDataText.setText("没有网络哦");
+                }
             }
         });
 

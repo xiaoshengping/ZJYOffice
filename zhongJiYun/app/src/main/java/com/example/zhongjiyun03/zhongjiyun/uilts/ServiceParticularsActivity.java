@@ -141,8 +141,6 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
         SQLhelper sqLhelper=new SQLhelper(ServiceParticularsActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-
-
         while (cursor.moveToNext()) {
             uid=cursor.getString(0);
 

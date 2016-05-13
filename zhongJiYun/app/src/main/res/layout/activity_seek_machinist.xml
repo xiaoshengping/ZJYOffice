@@ -158,7 +158,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-    <LinearLayout
+   <!-- <LinearLayout
         android:visibility="gone"
         android:id="@+id/not_data_layout"
         android:gravity="center"
@@ -171,6 +171,28 @@
             android:layout_width="100dp"
             android:layout_height="100dp" />
         <TextView
+            android:textColor="@color/nodata_background"
+            android:layout_marginTop="5dp"
+            android:text="还没有找到机手哦"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>-->
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/not_data_layout"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/not_data_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/not_data_text"
             android:textColor="@color/nodata_background"
             android:layout_marginTop="5dp"
             android:text="还没有找到机手哦"

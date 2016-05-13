@@ -146,14 +146,15 @@
         android:id="@+id/not_data_layout"
         android:gravity="center"
         android:orientation="vertical"
-        android:layout_marginTop="200dp"
+        android:layout_centerVertical="true"
         android:layout_width="match_parent"
-        android:layout_height="200dp">
+        android:layout_height="wrap_content">
         <ImageView
-            android:src="@mipmap/no_project_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:id="@+id/not_data_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/not_data_text"
             android:textColor="@color/nodata_background"
             android:layout_marginTop="5dp"
             android:text="还没有找到项目哦"

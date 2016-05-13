@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -55,6 +56,11 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     private LinearLayout notDataLayout;//没有数据提示
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //网络提示
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
+
 
     @Override
     protected void onResume() {
@@ -110,6 +116,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                             InitListView(messageDataBeen);
                         }else {
                             notDataLayout.setVisibility(View.VISIBLE);
+                            notDataImage.setBackgroundResource(R.mipmap.no_info_icon);
+                            notDataText.setText("您还没有收到消息哦");
                         }
 
                     }
@@ -125,6 +133,11 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                 Log.e("系统消息列表",s);
                 networkRemindLayout.setVisibility(View.VISIBLE);
                 //MyAppliction.showToast("网络异常,请稍后重试");
+                if (list.size()==0){
+                    notDataLayout.setVisibility(View.VISIBLE);
+                    notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                    notDataText.setText("没有网络哦");
+                }
             }
         });
 

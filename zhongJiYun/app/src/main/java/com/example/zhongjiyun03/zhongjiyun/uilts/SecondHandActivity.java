@@ -34,6 +34,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -159,6 +160,11 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private LinearLayout notDataLayout;//没有数据显示
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //没有网络提示
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
+    private List<FacillyDataBean> facillyDataBeens ;//设备厂商数据
     @Override
     protected void onResume() {
         super.onResume();
@@ -181,6 +187,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     }
 
     private void inti() {
+        facillyDataBeens=new ArrayList<>();
         secondHandBeens = new ArrayList<>();
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,7 +223,12 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         facillyTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                tabFacillynClick();
+                if (facillyDataBeens.size()!=0){
+                    tabFacillynClick();
+                }else {
+                    MyAppliction.showToast("网络异常，请稍后重试");
+                }
+
             }
         });
 
@@ -420,6 +432,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                         secondHandListview.onRefreshComplete();
                         //MyAppliction.showToast("没有更多数据");
                         notDataLayout.setVisibility(View.VISIBLE);
+                        notDataImage.setBackgroundResource(R.mipmap.no_rig_icon);
+                        notDataText.setText("还没有找到机手哦");
                     }
 
 
@@ -434,7 +448,11 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                 networkRemindLayout.setVisibility(View.VISIBLE);
                 homeSecondHandListAdapter.notifyDataSetChanged();
                 secondHandListview.onRefreshComplete();
-
+                if (secondHandBeens.size()==0){
+                    notDataLayout.setVisibility(View.VISIBLE);
+                    notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                    notDataText.setText("没有网络哦");
+                }
             }
         });
 
@@ -622,7 +640,11 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                     if (appListDataBean.getResult().equals("success")){
                         List<FacillyDataBean> facillyDataBeen=  appListDataBean.getData();
                         //facilluyFirstList.addAll(facillyDataBeen);
-                        initPopupFacilly(facillyDataBeen);
+                        if (facillyDataBeen.size()!=0){
+                            facillyDataBeens.addAll(facillyDataBeen);
+                            initPopupFacilly(facillyDataBeens);
+                        }
+
 
                     }
 

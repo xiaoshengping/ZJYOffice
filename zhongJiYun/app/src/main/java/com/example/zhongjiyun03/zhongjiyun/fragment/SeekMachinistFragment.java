@@ -32,6 +32,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -152,6 +153,11 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     private LinearLayout notDataLayout; //没有数据显示
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //没有网络显示
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
+    List<FacillyDataBean> facillyDataBeens;//设备厂商数据
 
     public SeekMachinistFragment() {
         // Required empty public constructor
@@ -172,6 +178,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     }
 
     private void init(View view) {
+        facillyDataBeens=new ArrayList<>();
         sekkMachinisDataBeens = new ArrayList<>();
         sortButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,7 +210,12 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         facillyText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tabFacillynClick();
+                if (facillyDataBeens.size()!=0){
+                    tabFacillynClick();
+                }else {
+                    MyAppliction.showToast("网络异常，请稍后重试");
+                }
+
             }
         });
         lm = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
@@ -340,6 +352,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                         seekMachinistListview.onRefreshComplete();
                         notDataLayout.setVisibility(View.VISIBLE);
                         //MyAppliction.showToast("没有更多数据");
+                        notDataImage.setBackgroundResource(R.mipmap.no_driver);
+                        notDataText.setText("还没有找到机手哦");
                     }
 
 
@@ -356,6 +370,11 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                 Log.e("找机手", s);
                 networkRemindLayout.setVisibility(View.VISIBLE);
                 seekMachinistListview.onRefreshComplete();
+                if (sekkMachinisDataBeens.size()==0){
+                    notDataLayout.setVisibility(View.VISIBLE);
+                    notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                    notDataText.setText("没有网络哦");
+                }
             }
         });
     }
@@ -618,7 +637,11 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
                     if (appListDataBean.getResult().equals("success")){
                        List<FacillyDataBean> facillyDataBeen=  appListDataBean.getData();
                         //facilluyFirstList.addAll(facillyDataBeen);
-                        initPopupFacilly(facillyDataBeen);
+                        if (facillyDataBeen.size()!=0){
+                            facillyDataBeens.addAll(facillyDataBeen);
+                            initPopupFacilly(facillyDataBeens);
+                        }
+
 
                     }
 

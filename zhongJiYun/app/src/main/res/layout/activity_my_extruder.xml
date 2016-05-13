@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></com.handmark.pulltorefresh.library.PullToRefreshListView>
 
-    <LinearLayout
+   <!-- <LinearLayout
          android:visibility="gone"
         android:id="@+id/not_data_layout"
         android:gravity="center"
@@ -68,5 +68,28 @@
             android:layout_height="wrap_content" />
 
 
+    </LinearLayout>-->
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/not_data_layout"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/not_data_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/not_data_text"
+            android:textColor="@color/nodata_background"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
     </LinearLayout>
+
+
 </RelativeLayout>

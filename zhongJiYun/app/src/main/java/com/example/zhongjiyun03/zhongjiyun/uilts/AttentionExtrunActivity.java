@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -69,6 +70,12 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     private SVProgressHUD mSVProgressHUD;//loding
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //网络提示
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
+
+
 
     @Override
     protected void onPause() {
@@ -165,6 +172,8 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                             attentionExtrunLsitview.onRefreshComplete();
                             //MyAppliction.showToast("您还没有关注钻机哦");
                             homeSecondHandListAdapter.notifyDataSetChanged();
+                            notDataImage.setBackgroundResource(R.mipmap.no_rig_icon);
+                            notDataText.setText("您还没有关注的二手钻机哦");
                         }
 
 
@@ -178,6 +187,11 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                     Log.e("关注钻机",s);
                     networkRemindLayout.setVisibility(View.VISIBLE);
                     attentionExtrunLsitview.onRefreshComplete();
+                    if (secondHandBeens.size()==0){
+                        notDataLayout.setVisibility(View.VISIBLE);
+                        notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                        notDataText.setText("没有网络哦");
+                    }
                 }
             });
         }else {

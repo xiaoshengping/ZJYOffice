@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -86,6 +87,10 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
     private LinearLayout notDataLayout;
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout;
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
 
     @Override
     protected void onResume() {
@@ -336,6 +341,8 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
                          //MyAppliction.showToast("没有更多数据");
                          serviceProviderListview.onRefreshComplete();
                          notDataLayout.setVisibility(View.VISIBLE);
+                         notDataImage.setBackgroundResource(R.mipmap.no_services_icon);
+                         notDataText.setText("还没有找到配套服务哦");
 
                      }
                     homeServiceListAdapter.notifyDataSetChanged();
@@ -350,7 +357,12 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
                 serviceProviderListview.onRefreshComplete();
                 networkRemindLayout.setVisibility(View.VISIBLE);
                 mSVProgressHUD.dismiss();
-                Log.e("服务商数据",s);
+                //Log.e("服务商数据",s);
+                if (serviceProviderBean.size()==0){
+                    notDataLayout.setVisibility(View.VISIBLE);
+                    notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                    notDataText.setText("没有网络哦");
+                }
             }
         });
 
