@@ -71,6 +71,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class AddExtruderActivity extends AppCompatActivity implements View.OnClickListener {
 
         @ViewInject(R.id.title_name_tv)
@@ -143,7 +145,16 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
 
 
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

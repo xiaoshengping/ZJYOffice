@@ -50,6 +50,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -125,6 +126,11 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     private ImageView imageViewFcto;*/
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +154,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
+        JPushInterface.onResume(this);
         initData();
     }
 

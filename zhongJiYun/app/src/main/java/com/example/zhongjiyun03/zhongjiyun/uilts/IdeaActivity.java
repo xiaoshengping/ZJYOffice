@@ -32,8 +32,6 @@ import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.SelectPictureActivity;
 import com.example.zhongjiyun03.zhongjiyun.view.MyGridView;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -50,6 +48,8 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class IdeaActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -71,12 +71,17 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
     @ViewInject(R.id.image_layout)
     private LinearLayout imageLayout;
     private SVProgressHUD mSVProgressHUD;//loding
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,9 +89,7 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
         ViewUtils.inject(this);
         inti();
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     private void inti() {

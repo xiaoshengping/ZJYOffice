@@ -13,6 +13,8 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class RegisterFishActivity extends AppCompatActivity implements View.OnClickListener {
 
     @ViewInject(R.id.register_tv)
@@ -24,6 +26,17 @@ public class RegisterFishActivity extends AppCompatActivity implements View.OnCl
 
     @ViewInject(R.id.call_phone_layout)
     private LinearLayout callPhoneLayout;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

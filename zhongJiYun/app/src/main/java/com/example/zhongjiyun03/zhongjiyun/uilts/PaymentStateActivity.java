@@ -10,6 +10,8 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class PaymentStateActivity extends AppCompatActivity implements View.OnClickListener {
     @ViewInject(R.id.register_tv)
     private TextView addExtruderTv;   //头部右边
@@ -19,6 +21,18 @@ public class PaymentStateActivity extends AppCompatActivity implements View.OnCl
     private TextView retrunText;     //头部左边
     @ViewInject(R.id.cash_comtent_text_view)
     private TextView cashComtentTextView;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -32,6 +32,8 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class  CompetitiveDescribeActivity extends AppCompatActivity implements View.OnClickListener {
 
     @ViewInject(R.id.register_tv)
@@ -45,7 +47,16 @@ public class  CompetitiveDescribeActivity extends AppCompatActivity implements V
     private Button competitiveButton;
     @ViewInject(R.id.edit_text)
     private EditText editText;
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

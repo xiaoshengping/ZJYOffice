@@ -45,6 +45,8 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class AttentionExtrunActivity extends AppCompatActivity implements View.OnClickListener,PullToRefreshBase.OnRefreshListener2<ListView> {
 
 
@@ -68,6 +70,11 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //网络提示
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +107,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     protected void onResume() {
         super.onResume();
         attentionExtrunLsitview.setRefreshing();
+        JPushInterface.onResume(this);
     }
 
     private void intiListData(int pageIndex) {

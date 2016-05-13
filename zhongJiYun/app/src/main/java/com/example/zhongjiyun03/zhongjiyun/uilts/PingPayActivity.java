@@ -6,9 +6,20 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class PingPayActivity extends AppCompatActivity {
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

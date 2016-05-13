@@ -51,6 +51,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 /*
 *   服务商
@@ -84,6 +86,18 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
     private LinearLayout notDataLayout;
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

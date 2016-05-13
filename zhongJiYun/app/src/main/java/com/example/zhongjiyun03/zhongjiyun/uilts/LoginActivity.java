@@ -45,6 +45,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     @ViewInject(R.id.register_tv)
@@ -66,7 +68,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @ViewInject(R.id.code_button)
     private Button codeButton;  //获取验证码按钮
     public static String PHPSESSID = null;
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -45,6 +45,8 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class AttentionProjectActivity extends AppCompatActivity implements View.OnClickListener,PullToRefreshBase.OnRefreshListener2<ListView> {
 
     @ViewInject(R.id.register_tv)
@@ -67,6 +69,16 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //网络提示
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +92,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
     protected void onResume() {
         super.onResume();
         attentionProjectListview.setRefreshing();
+        JPushInterface.onResume(this);
     }
 
     private void init() {

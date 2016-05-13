@@ -63,6 +63,8 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class HomeMoreProjectActivity extends AppCompatActivity implements PullToRefreshBase.OnRefreshListener2<ListView>,View.OnClickListener {
 
      //排序
@@ -125,6 +127,13 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout;
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +149,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     protected void onResume() {
         super.onResume();
         projectListView.setRefreshing();
+        JPushInterface.onResume(this);
 
     }
 

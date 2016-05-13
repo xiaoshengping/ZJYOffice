@@ -43,12 +43,11 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UmengRegistrar;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class HomeActivity extends AppCompatActivity {
     private ArrayList<Fragment> fragments=new ArrayList<Fragment>();
@@ -65,7 +64,16 @@ public class HomeActivity extends AppCompatActivity {
     private static final int MSG_PROGRESS_UPDATE = 0x110;
     private TextView tailteTv;
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +88,14 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (isFirstRun)
         {
-            Log.d("debug", "第一次运行");
+            //Log.d("debug", "第一次运行");
             Intent intent = new Intent().setClass(HomeActivity.this,MainActivity.class);
             startActivityForResult(intent,0);
             testAddContacts();  //添加联系人
             editor.putBoolean("isFirstRun", false);
             editor.commit();
         } else{
-            Log.d("debug", "不是第一次运行");
+            //Log.d("debug", "不是第一次运行");
             Intent intent=new Intent(HomeActivity.this,WelcomeActivity.class);
             startActivity(intent);
             getVersontData();
@@ -98,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
         //HomeFragment.setStart(0);
         //startPage();
 
-        PushAgent mPushAgent = PushAgent.getInstance(this);
+        /*PushAgent mPushAgent = PushAgent.getInstance(this);
         mPushAgent.enable();
         String device_token = UmengRegistrar.getRegistrationId(this);
         //Log.e("shdhdhdh",device_token);
@@ -112,7 +120,9 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        PushAgent.getInstance(this).onAppStart();
+        PushAgent.getInstance(this).onAppStart();*/
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
     }
 
     private void getVersontData() {

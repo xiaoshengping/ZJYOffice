@@ -14,6 +14,8 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class AdvertisementParticulsrsActivity extends AppCompatActivity implements View.OnClickListener {
     @ViewInject(R.id.webview)
     private WebView webView;
@@ -25,7 +27,16 @@ public class AdvertisementParticulsrsActivity extends AppCompatActivity implemen
     private TextView retrunText;     //头部左边
     private SVProgressHUD mSVProgressHUD;//loding
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

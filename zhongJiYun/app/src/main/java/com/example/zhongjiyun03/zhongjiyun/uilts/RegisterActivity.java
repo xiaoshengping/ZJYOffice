@@ -71,6 +71,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import cn.jpush.android.api.JPushInterface;
+
 /*
 *  注册
 * */
@@ -174,7 +176,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private String companyCity;         //城市
 
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

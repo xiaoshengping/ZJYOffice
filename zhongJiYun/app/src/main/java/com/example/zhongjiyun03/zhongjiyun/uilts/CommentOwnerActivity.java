@@ -31,6 +31,8 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class CommentOwnerActivity extends AppCompatActivity implements View.OnClickListener {
 
     @ViewInject(R.id.register_tv)
@@ -54,7 +56,16 @@ public class CommentOwnerActivity extends AppCompatActivity implements View.OnCl
     private SVProgressHUD mSVProgressHUD;//loding
     private int ratings;
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

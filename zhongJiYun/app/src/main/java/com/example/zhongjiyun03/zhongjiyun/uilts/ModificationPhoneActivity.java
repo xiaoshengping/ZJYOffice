@@ -32,6 +32,8 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class ModificationPhoneActivity extends AppCompatActivity  implements View.OnClickListener {
 
     @ViewInject(R.id.register_tv)
@@ -56,6 +58,13 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
     private Button codeButton;
     private TimeCount time;
     private String phone=null;  //用户手机号
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
 
     @Override
@@ -90,6 +99,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
             //value.replace("3","*");
 
         }
+        JPushInterface.onResume(this);
     }
 
     private void intiView() {

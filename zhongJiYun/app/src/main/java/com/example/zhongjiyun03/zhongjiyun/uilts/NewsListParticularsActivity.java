@@ -18,6 +18,8 @@ import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class NewsListParticularsActivity extends AppCompatActivity implements View.OnClickListener {
 
     @ViewInject(R.id.register_tv)
@@ -58,7 +60,16 @@ public class NewsListParticularsActivity extends AppCompatActivity implements Vi
     private WebView webView;
     private SVProgressHUD mSVProgressHUD;//loding
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

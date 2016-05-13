@@ -79,6 +79,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -158,7 +159,16 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private LinearLayout notDataLayout;//没有数据显示
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //没有网络提示
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -42,6 +42,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 
+import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -592,12 +593,14 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     public void onResume() {
         super.onResume();
         autoPager.startAutoScroll();
+        JPushInterface.onResume(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         autoPager.stopAutoScroll();
+        JPushInterface.onPause(this);
     }
 
 

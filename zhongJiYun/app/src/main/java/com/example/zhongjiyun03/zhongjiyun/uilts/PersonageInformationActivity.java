@@ -57,6 +57,8 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Locale;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class PersonageInformationActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -99,6 +101,11 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
     private PersonageInformationBean personageInformation;
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
 
     @Override
@@ -119,7 +126,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
     @Override
     protected void onResume() {
         super.onResume();
-
+       JPushInterface.onResume(this);
 
 
     }

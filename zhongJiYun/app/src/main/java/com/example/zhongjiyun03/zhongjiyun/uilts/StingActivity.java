@@ -23,10 +23,11 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.umeng.message.PushAgent;
 
 import java.io.File;
 import java.math.BigDecimal;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class StingActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -96,11 +97,15 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked){
-                    PushAgent mPushAgent = PushAgent.getInstance(StingActivity.this);
-                    mPushAgent.enable();// 打开推送
+                    /*PushAgent mPushAgent = PushAgent.getInstance(StingActivity.this);
+                    mPushAgent.enable();*/
+                    JPushInterface.resumePush(getApplicationContext());
+                    // 打开推送
                 }else {
-                    PushAgent mPushAgent = PushAgent.getInstance(StingActivity.this);
-                    mPushAgent.disable(); //关闭推送
+                    /*PushAgent mPushAgent = PushAgent.getInstance(StingActivity.this);
+                    mPushAgent.disable();*/
+                    JPushInterface.stopPush(getApplicationContext());
+                    //关闭推送
                 }
             }
         });

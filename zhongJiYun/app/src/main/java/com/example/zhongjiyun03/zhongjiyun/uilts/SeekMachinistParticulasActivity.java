@@ -31,6 +31,8 @@ import com.lidroid.xutils.bitmap.callback.BitmapLoadFrom;
 import com.lidroid.xutils.bitmap.callback.DefaultBitmapLoadCallBack;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class SeekMachinistParticulasActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -122,7 +124,16 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     private SekkMachinisDataBean seekMachinisDataBean;
     private SVProgressHUD mSVProgressHUD;//loding
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

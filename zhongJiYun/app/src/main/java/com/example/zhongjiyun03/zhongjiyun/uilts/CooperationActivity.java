@@ -15,6 +15,8 @@ import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class CooperationActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -29,7 +31,16 @@ public class CooperationActivity extends AppCompatActivity implements View.OnCli
     @ViewInject(R.id.web_view)
     private WebView webView;
     private SVProgressHUD mSVProgressHUD;//loding
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

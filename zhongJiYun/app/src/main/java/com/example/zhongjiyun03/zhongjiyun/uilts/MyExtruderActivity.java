@@ -42,6 +42,8 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 /*
 * 我的钻机
 * */
@@ -64,6 +66,13 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
       private LinearLayout notDataLayout;
       @ViewInject(R.id.network_remind_layout)
       private LinearLayout networkRemindLayout;
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +105,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
     protected void onResume() {
         super.onResume();
         extruderListView.setRefreshing();
+        JPushInterface.onResume(this);
 
     }
 

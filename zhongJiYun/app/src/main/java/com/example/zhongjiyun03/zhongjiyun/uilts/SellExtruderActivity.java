@@ -68,6 +68,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class SellExtruderActivity extends AppCompatActivity implements View.OnClickListener {
 
     @ViewInject(R.id.register_tv)
@@ -138,6 +140,17 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private String contractImageID;//全景照4ID
     private String qualifiedImageID;//全景照5ID
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -14,6 +14,8 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class CommitCashDepositActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -30,7 +32,16 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
     @ViewInject(R.id.contract_check)
     private RadioButton cntractCheck;
     private String zfuTage;
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

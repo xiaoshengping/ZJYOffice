@@ -35,6 +35,8 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class ServiceParticularsActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -97,6 +99,17 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
     //用于计算手指滑动的速度。
     private VelocityTracker mVelocityTracker;
     private String uid=null;  //用户id
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
 
     @Override

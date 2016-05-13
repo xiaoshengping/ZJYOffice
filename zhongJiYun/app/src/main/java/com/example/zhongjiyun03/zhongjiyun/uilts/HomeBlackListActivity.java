@@ -18,6 +18,8 @@ import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class HomeBlackListActivity extends AppCompatActivity implements View.OnClickListener {
     @ViewInject(R.id.web_view)
     private WebView webView;
@@ -28,6 +30,17 @@ public class HomeBlackListActivity extends AppCompatActivity implements View.OnC
     @ViewInject(R.id.retrun_text_view)
     private TextView retrunText;     //头部左边
     private SVProgressHUD mSVProgressHUD;//loding
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

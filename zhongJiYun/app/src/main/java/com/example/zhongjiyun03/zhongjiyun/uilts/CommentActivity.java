@@ -49,6 +49,8 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class CommentActivity extends AppCompatActivity implements View.OnClickListener{
     @ViewInject(R.id.viewPager)
     private ViewPager viewPager;
@@ -89,7 +91,16 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private LinearLayout commentNotDataLayout;
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //网络提示
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

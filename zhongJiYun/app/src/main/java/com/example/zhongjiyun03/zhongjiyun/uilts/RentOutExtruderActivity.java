@@ -68,6 +68,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import cn.jpush.android.api.JPushInterface;
+
 /*
 * 出租
 * */
@@ -151,7 +153,16 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
     private SecondHandListProjectBean secondHandListProjectBean;//修改钻机数据
 
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -41,6 +41,8 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class MyCompetitveTenderActivity extends AppCompatActivity implements View.OnClickListener,PullToRefreshBase.OnRefreshListener2<ListView> {
 
     @ViewInject(R.id.register_tv)
@@ -60,6 +62,14 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
     private LinearLayout notDataLayout; //没有数据提示
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //网络提示
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +93,7 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
     protected void onResume() {
         super.onResume();
         competitveTenderLsitview.setRefreshing();
+        JPushInterface.onResume(this);
     }
 
     private void initListData(int pageIndex) {
