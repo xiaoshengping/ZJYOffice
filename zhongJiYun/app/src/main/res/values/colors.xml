@@ -32,7 +32,7 @@
     <color name="popup_right_bg">#ddd</color>
     <color name="popup_right_bg_selected">#ccc</color>
     <color name="div_gray">#ccc</color>
-    <color name="dark_bg">#8000</color>
+    <color name="dark_bg">#1000</color>
 
     <!--图片选择-->
     <color name="statusbar_bg">#09A7F0</color>
