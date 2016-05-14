@@ -27,27 +27,22 @@ public class MyAppliction extends Application {
     private static MyAppliction app = null;
     private static String homeRequestTage;  //首页二手钻机请求标志
     private static String projectRequestTage;//项目刷新请求标志
+    private static MyAppliction instance;
 
-    public static String getHomeRequestTage() {
-        return homeRequestTage;
+    public static MyAppliction getInstance() {
+        if (instance == null) {
+            instance = new MyAppliction();
+        }
+        return instance;
     }
 
-    public static void setHomeRequestTage(String homeRequestTage) {
-        MyAppliction.homeRequestTage = homeRequestTage;
-    }
 
-    public static String getProjectRequestTage() {
-        return projectRequestTage;
-    }
-
-    public static void setProjectRequestTage(String projectRequestTage) {
-        MyAppliction.projectRequestTage = projectRequestTage;
-    }
 
     @Override
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
+        CrashHandler.getInstance().init(getApplicationContext());
         app=this;
         initImageLoader(getApplicationContext());
         options = new DisplayImageOptions.Builder()
@@ -74,6 +69,8 @@ public class MyAppliction extends Application {
                 .displayer(new RoundedBitmapDisplayer(20))
                 .build();
     }
+
+
     public static void initImageLoader(Context context) {
         // This configuration tuning is custom. You can tune every option, you may tune some of them,
         // or you can create default configuration by
@@ -105,7 +102,21 @@ public class MyAppliction extends Application {
     public static void showToast(String msg){
         Toast.makeText(app, msg, Toast.LENGTH_SHORT).show();
     }
+    public static String getHomeRequestTage() {
+        return homeRequestTage;
+    }
 
+    public static void setHomeRequestTage(String homeRequestTage) {
+        MyAppliction.homeRequestTage = homeRequestTage;
+    }
+
+    public static String getProjectRequestTage() {
+        return projectRequestTage;
+    }
+
+    public static void setProjectRequestTage(String projectRequestTage) {
+        MyAppliction.projectRequestTage = projectRequestTage;
+    }
     //对话框
     public static void showExitGameAlert(String text,Context app) {
         final AlertDialog dlg = new AlertDialog.Builder(app).create();

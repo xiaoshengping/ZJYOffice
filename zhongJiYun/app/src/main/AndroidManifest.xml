@@ -148,7 +148,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <data android:scheme="tencent100371282" />
+                <data android:scheme="tencent1105208097" />
 
                 <action android:name="android.intent.action.VIEW" />
 
@@ -165,7 +165,7 @@
         </activity>
         <!-- 微信分享回调 -->
         <activity
-            android:name="cn.sharesdk.demo.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"

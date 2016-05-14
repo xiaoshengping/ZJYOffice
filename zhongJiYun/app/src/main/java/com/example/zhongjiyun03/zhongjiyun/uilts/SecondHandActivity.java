@@ -77,11 +77,13 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
@@ -1191,8 +1193,68 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig");
 
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                shareRedPacket();
+                Log.e("分享成功","分享回调成功");
+                //MyAppliction.showToast("分享回调成功");
+
+
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Log.e("分享onError","分享回调onError");
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        });
         // 启动分享GUI
         oks.show(this);
+
+    }
+      //分享成功获得云币
+    private void shareRedPacket() {
+        //MyAppliction.showToast("分享回调成功");
+        SQLhelper sqLhelper=new SQLhelper(SecondHandActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        Log.e("id",uid);
+        if (!TextUtils.isEmpty(uid)){
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        requestParams.addBodyParameter("id",uid);
+
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getShareRedPacketData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.e("分享获取红包",responseInfo.result);
+                MyAppliction.showToast("分享成功");
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("分享获取红包onFailure",s);
+            }
+        });
+        }
+
+
     }
 
 

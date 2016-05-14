@@ -255,7 +255,12 @@ public class AppUtilsUrl {
 
     }
 
+    //分享二手机列表获取红包
+    public static String getShareRedPacketData(){
+        //  appapi/shopapi/sharpsecondhandlist
+        return BaseUrl+"appapi/shopapi/sharpsecondhandlist" ;
 
+    }
 
 
 
