@@ -1156,6 +1156,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private void showShare() {
         ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
+
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
         oks.setShareContentCustomizeCallback(new ShareContentCustomizeCallback() {
@@ -1180,7 +1181,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         oks.setText("中基云二手钻机市场海量二手钻，实名认证机主等你来拿");
         // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
-        oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
+        oks.setImageUrl("http://www.zhongjiyun.cn/app/img/logo1.png");
         // url仅在微信（包括好友和朋友圈）中使用
          oks.setUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig");
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用

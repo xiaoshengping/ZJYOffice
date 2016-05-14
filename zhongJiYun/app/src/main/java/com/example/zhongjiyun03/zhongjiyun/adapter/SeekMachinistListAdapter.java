@@ -51,8 +51,10 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
             if (!TextUtils.isEmpty(data.get(position).getDistanceStr())){
                 viewHold.addressText.setText(data.get(position).getDistanceStr()+"Km");
                 viewHold.addressText.setVisibility(View.VISIBLE);
+                viewHold.addressImage.setVisibility(View.VISIBLE);
             }else {
                 viewHold.addressText.setVisibility(View.GONE);
+                viewHold.addressImage.setVisibility(View.GONE);
 
             }
             if (!TextUtils.isEmpty(data.get(position).getLastUpdateTimeSubStr())){
@@ -233,8 +235,8 @@ public class SeekMachinistListAdapter extends AppBaseAdapter<SekkMachinisDataBea
         private ImageView imageLiginEnd;
         @ViewInject(R.id.image_liginr)
         private ImageView imageLiginr;
-        /*@ViewInject(R.id.text_view_2)
-        private TextView textViewTwo;*/
+        @ViewInject(R.id.address_image)
+        private ImageView addressImage;
 
         public ViewHold(View view) {
             ViewUtils.inject(this, view);

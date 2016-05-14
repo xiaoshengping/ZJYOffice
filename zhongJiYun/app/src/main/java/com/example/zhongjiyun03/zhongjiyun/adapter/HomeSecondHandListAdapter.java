@@ -70,9 +70,10 @@ public class HomeSecondHandListAdapter extends AppBaseAdapter<SecondHandBean> {
 
 
             if (!TextUtils.isEmpty(data.get(position).getDistanceStr())){
+                viewHold.distanceTextView.setVisibility(View.VISIBLE);
                 viewHold.distanceTextView.setText(data.get(position).getDistanceStr()+"Km");
             }else {
-                viewHold.distanceTextView.setText("0.0Km");
+                viewHold.distanceTextView.setVisibility(View.GONE);
             }
 
             viewHold.addressTextView.setText(data.get(position).getProvince());

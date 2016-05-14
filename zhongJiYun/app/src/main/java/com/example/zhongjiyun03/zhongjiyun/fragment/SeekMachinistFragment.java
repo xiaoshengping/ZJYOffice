@@ -902,13 +902,17 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     private void tab1OnClick() {
         if (popupWindow.isShowing()) {
             popupWindow.dismiss();
+
         } else {
-            popupWindowFacilly.dismiss();
+            if (popupWindowFacilly.isShowing()){
+                popupWindowFacilly.dismiss();
+            }
             popupWindow.showAsDropDown(getActivity().findViewById(R.id.main_div_line));
             popupWindow.setAnimationStyle(-1);
             //背景变暗
             darkView.startAnimation(animIn);
             darkView.setVisibility(View.VISIBLE);
+
 
         }
     }

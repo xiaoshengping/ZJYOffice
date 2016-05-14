@@ -13,7 +13,7 @@ public class ServiceProviderBean implements Serializable {
     private String ProviderName;  //服务商公司名字
     private int ProviderType;    //服务商类型
     private String ProviderTypeStr;  //  服务商类型
-    private Double Distance; //  距离：KM
+    private String  Distance; //  距离：KM
 
     public String getId() {
         return id;
@@ -63,11 +63,11 @@ public class ServiceProviderBean implements Serializable {
         ProviderTypeStr = providerTypeStr;
     }
 
-    public Double getDistance() {
+    public String getDistance() {
         return Distance;
     }
 
-    public void setDistance(Double distance) {
+    public void setDistance(String  distance) {
         Distance = distance;
     }
 

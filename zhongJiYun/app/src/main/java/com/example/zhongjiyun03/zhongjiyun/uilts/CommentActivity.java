@@ -88,9 +88,16 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
     private  CommentListAdapter mineCommentListAdapter;
 
     private LinearLayout notDataLayout;
+    private ImageView notDataImage; //没有网络和没有数据显示
+    private TextView notDataText;   //没有网络文字提醒
+
     private LinearLayout commentNotDataLayout;
+    private ImageView commentNotDataImage; //没有网络和没有数据显示
+    private TextView commentNotDataText;   //没有网络文字提醒
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //网络提示
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -168,6 +175,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                     //MyAppliction.showToast("没有更多评论");
                                     notDataLayout.setVisibility(View.VISIBLE);
                                     mineCommentListView.onRefreshComplete();
+                                    notDataImage.setBackgroundResource(R.mipmap.no_eval_icon);
+                                    notDataText.setText("还没有业主评价您哦");
 
                                 }else if ((appBean.getResult()).equals("nomore")){
                                     MyAppliction.showToast("已到最底了");
@@ -192,6 +201,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                         Log.e("我的评论",s);
                         networkRemindLayout.setVisibility(View.VISIBLE);
                         mineCommentListView.onRefreshComplete();
+                        if (mineCommentDataBeens.size()==0){
+                            notDataLayout.setVisibility(View.VISIBLE);
+                            notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                            notDataText.setText("没有网络哦");
+                        }
                     }
                 });
 
@@ -255,6 +269,8 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                                     //MyAppliction.showToast("没有更多评论");
                                     commentNotDataLayout.setVisibility(View.VISIBLE);
                                     commentMineListView.onRefreshComplete();
+                                    commentNotDataImage.setBackgroundResource(R.mipmap.no_eval_icon);
+                                    commentNotDataText.setText("您还没有评价哦");
 
                                 }else if ((appBean.getResult()).equals("nomore")){
                                     MyAppliction.showToast("已到最底了");
@@ -281,6 +297,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                         Log.e("我的评论",s);
                         networkRemindLayout.setVisibility(View.VISIBLE);
                         commentMineListView.onRefreshComplete();
+                        if (commentMineDataBeens.size()==0){
+                            commentNotDataLayout.setVisibility(View.VISIBLE);
+                            commentNotDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                            commentNotDataText.setText("没有网络哦");
+                        }
                     }
                 });
 
@@ -398,7 +419,11 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
         lists.add(mineCommentView);
         lists.add(commentMineView);
         notDataLayout= (LinearLayout) mineCommentView.findViewById(R.id.not_data_layout);
+        notDataImage= (ImageView) mineCommentView.findViewById(R.id.not_data_image);
+        notDataText= (TextView) mineCommentView.findViewById(R.id.not_data_text);
         commentNotDataLayout= (LinearLayout) commentMineView.findViewById(R.id.comment_not_data_layout);
+        commentNotDataImage= (ImageView) commentMineView.findViewById(R.id.comment_not_data_image);
+        commentNotDataText= (TextView) commentMineView.findViewById(R.id.comment_not_data_text);
         initeCursor();
         myAdapter = new MyAdapter(lists);
         viewPager.setAdapter(myAdapter);
