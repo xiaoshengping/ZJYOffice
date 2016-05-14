@@ -19,6 +19,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -167,6 +170,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     @ViewInject(R.id.not_data_text)
     private TextView notDataText;
     private List<FacillyDataBean> facillyDataBeens ;//设备厂商数据
+    private SecondHandHandler secondHandHandler;
     @Override
     protected void onResume() {
         super.onResume();
@@ -221,6 +225,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         intiListView();
         intiPullToRefresh();
         networkRemindLayout.setOnClickListener(this);
+        secondHandHandler=new SecondHandHandler();
 
         facillyTextView.setOnClickListener(new OnClickListener() {
             @Override
@@ -1155,6 +1160,33 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         return true;
     }
 
+    /**
+     * 接受消息，处理消息 ，此Handler会与当前主线程一块运行
+     * */
+
+    class SecondHandHandler extends Handler {
+        public SecondHandHandler() {
+        }
+
+        public SecondHandHandler(Looper L) {
+            super(L);
+        }
+
+        // 子类必须重写此方法，接受数据
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            //Log。d("MyHandler"， "handleMessage。。。。。。");
+            super.handleMessage(msg);
+            // 此处可以更新UI
+           /* Bundle b = msg.getData();
+            String color = b.getString("color");*/
+            shareRedPacket();
+
+
+        }
+    }
+
     private void showShare() {
         ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();
@@ -1196,10 +1228,14 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         oks.setCallback(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                shareRedPacket();
+
                 Log.e("分享成功","分享回调成功");
                 //MyAppliction.showToast("分享回调成功");
-
+                Message msg = new Message();
+                Bundle b = new Bundle();// 存放数据
+                b.putString("color", "我的");
+                msg.setData(b);
+                SecondHandActivity.this.secondHandHandler.sendMessage(msg); // 向Handler发送消息，更新UI
 
             }
 
