@@ -44,8 +44,9 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <com.handmark.pulltorefresh.library.PullToRefreshListView
-         android:layout_marginBottom="50dp"
+         android:layout_marginBottom="70dp"
          android:dividerHeight="0dp"
+         android:divider="#00000000"
          android:id="@+id/red_patck_listview"
          android:layout_width="match_parent"
          android:layout_height="match_parent"/>
@@ -93,19 +94,23 @@
 
 
     </LinearLayout>
+<LinearLayout
 
+    android:gravity="center_vertical"
+    android:background="@color/white"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
     <Button
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
         android:id="@+id/get_packed_button"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
         android:textColor="@color/ic_white"
-        android:background="@drawable/loing_button_corners"
         android:textSize="@dimen/home_Size_18"
         android:text="一键领取" />
+
+</LinearLayout>
+
 </RelativeLayout>

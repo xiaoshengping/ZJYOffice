@@ -104,12 +104,17 @@
         <item name="android:minHeight">40dip</item>
         <item name="android:maxHeight">40dip</item>
     </style>
-    <!--RatingBar星星-->
+    <!--个人中心RatingBar星星-->
     <style name="homeRoomRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/home_room_rating_bar</item>
         <item name="android:minHeight">40dip</item>
         <item name="android:maxHeight">40dip</item>
     </style>
-
+    <!--评价RatingBar星星-->
+    <style name="commintRoomRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/commit_room_rating_bar</item>
+        <item name="android:minHeight">40dip</item>
+        <item name="android:maxHeight">40dip</item>
+    </style>
 
 </resources>

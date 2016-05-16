@@ -22,11 +22,13 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -218,14 +220,22 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
             }
         });
+
+        intiGps(); //GPS
+
+
+
+    }
+
+    private void intiGps() {
         lm = (LocationManager) getActivity().getSystemService(getActivity().LOCATION_SERVICE);
 
         // 判断GPS是否正常启动
         if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Toast.makeText(getActivity(), "请开启GPS导航...", Toast.LENGTH_SHORT).show();
             // 返回开启GPS导航设置界面
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivityForResult(intent, 0);
+            showExitGameAlert("是否打开GPS？");
+
             return;
         }
 
@@ -259,7 +269,6 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         // 1秒更新一次，或最小位移变化超过1米更新一次；
         // 注意：此处更新准确度非常低，推荐在service里面启动一个Thread，在run中sleep(10000);然后执行handler.sendMessage(),更新位置
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
-
 
     }
 
@@ -974,8 +983,9 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         //设置popupWindow弹出窗体的背景
         popupWindowTime.setBackgroundDrawable(new BitmapDrawable(null, ""));
         WindowManager manager = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        popupWindowTime.setBackgroundDrawable(new BitmapDrawable());
         popupWindowTime.setOutsideTouchable(true);
-        popupWindowTime.setFocusable(true);
+
         @SuppressWarnings("deprecation")
         //获取xoff
                 int xpos = manager.getDefaultDisplay().getWidth() / 30 - popupWindowTime.getWidth() / 30;
@@ -1018,6 +1028,9 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
 
 
     }
+
+
+
     public void showEvolvePopupWindow(View parent) {
         LinearLayout layout;
         ListView listView;
@@ -1096,7 +1109,6 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
     }
 
 
-
     private class MyAdapter extends BaseAdapter {
         private LayoutInflater inflater;
 
@@ -1145,8 +1157,38 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         }
     }
 
+    //对话框
+    private void showExitGameAlert(String text) {
+        final AlertDialog dlg = new AlertDialog.Builder(getActivity()).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("确定");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
 
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivityForResult(intent, 0);
 
+                dlg.cancel();
+            }
+        });
+
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });
+    }
 
 
 }

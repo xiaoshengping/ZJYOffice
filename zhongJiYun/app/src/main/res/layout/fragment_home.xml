@@ -1,9 +1,10 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.handmark.pulltorefresh.library.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:clipToPadding="true"
+    android:id="@+id/home_scrollView"
     android:fitsSystemWindows="true"
     android:background="@color/background"
     tools:context="com.example.zhongjiyun03.zhongjiyun.fragment.HomeFragment">
@@ -35,20 +36,23 @@
             android:layout_centerHorizontal="true"></LinearLayout>
 
     </RelativeLayout>
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <com.example.zhongjiyun03.zhongjiyun.view.MyGridView
-        android:background="@color/ic_white"
         android:id="@+id/home_gridView"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:horizontalSpacing="0.0dip"
         android:listSelector="@null"
         android:numColumns="5"
+        android:layout_marginBottom="15dp"
         android:scrollbars="none"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="0.0dip"
         >
 
     </com.example.zhongjiyun03.zhongjiyun.view.MyGridView>
+    </LinearLayout>
         <ImageView
         android:background="@color/color_dedede"
         android:layout_width="match_parent"
@@ -223,4 +227,4 @@
 
     </LinearLayout>
 
-</ScrollView>
+</com.handmark.pulltorefresh.library.PullToRefreshScrollView>

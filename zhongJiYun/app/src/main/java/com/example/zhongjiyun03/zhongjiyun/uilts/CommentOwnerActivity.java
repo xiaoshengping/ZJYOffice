@@ -159,16 +159,16 @@ public class CommentOwnerActivity extends AppCompatActivity implements View.OnCl
                         AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                         if (appDataBean.getResult().equals("success")){
                             mSVProgressHUD.dismiss();
-                            MyAppliction.showToast("评论成功");
+                            MyAppliction.showToast("评价成功");
                             finish();
                         }else {
                             mSVProgressHUD.dismiss();
-                            MyAppliction.showToast("评论失败");
+                            MyAppliction.showToast("评价失败");
                         }
 
                     }else {
                         mSVProgressHUD.dismiss();
-                        MyAppliction.showToast("评论失败");
+                        MyAppliction.showToast("评价失败");
                     }
 
                 }
@@ -181,7 +181,7 @@ public class CommentOwnerActivity extends AppCompatActivity implements View.OnCl
             });
 
             }else {
-                MyAppliction.showToast("请填写一下评论内容");
+                MyAppliction.showToast("请填写一下评价内容");
 
             }
             }else {

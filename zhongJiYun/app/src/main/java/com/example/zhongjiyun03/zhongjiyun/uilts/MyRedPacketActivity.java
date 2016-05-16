@@ -75,6 +75,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
     private ImageView notDataImage; //没有网络和没有数据显示
     @ViewInject(R.id.not_data_text)
     private TextView notDataText;
+    private AppBean<RedPacketDataBean> appBean;
 
     @Override
     protected void onResume() {
@@ -135,12 +136,16 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     Log.e("我的红包", responseInfo.result);
-                    AppBean<RedPacketDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<RedPacketDataBean>>() {
+                    appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<RedPacketDataBean>>() {
                     });
                     if (appBean.getActions()!=null&&appBean.getActions().equals("nogifget")){
-                        getPackedButton.setVisibility(View.GONE);
+                        getPackedButton.setTextColor(getResources().getColor(R.color.tailt_dark));
+                        getPackedButton.setBackgroundResource(R.drawable.gray_button_corners);
+
                     }else {
-                        getPackedButton.setVisibility(View.VISIBLE);
+                        getPackedButton.setTextColor(getResources().getColor(R.color.white));
+                        getPackedButton.setBackgroundResource(R.drawable.loing_button_corners);
+
                     }
                     if ((appBean.getResult()).equals("success")) {
                         RedPacketDataBean redPacketDataBean = appBean.getData();
@@ -238,8 +243,12 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 break;
             case R.id.get_packed_button:
+                if (appBean.getActions()!=null&&appBean.getActions().equals("nogifget")){
+                  MyAppliction.showToast("还没有新红包哦");
+                }else {
+                    getPackedData();
+                }
 
-                getPackedData();
 
                 break;
             case R.id.network_remind_layout:

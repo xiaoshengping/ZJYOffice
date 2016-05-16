@@ -1049,7 +1049,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         TextView ok = (TextView) window.findViewById(R.id.btn_ok);
         TextView tailtVt= (TextView) window.findViewById(R.id.tv);
         tailtVt.setText(tailtText);
-        ok.setText("交纳保证金");
+        ok.setText("缴纳保证金");
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent=new Intent(SellExtruderActivity.this,CommitCashDepositActivity.class);
@@ -1061,7 +1061,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         });
         // 关闭alert对话框架
         TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
-        cancel.setText("取消");
+        cancel.setText("关闭");
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dlg.cancel();

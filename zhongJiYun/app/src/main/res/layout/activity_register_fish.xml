@@ -31,7 +31,7 @@
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/text_one"
-        android:text="如您有关于注册方面的问题,可点击下方"
+        android:text="如您有关于注册方面的问题,可点击"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
@@ -40,7 +40,7 @@
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/text_two"
-        android:text="的‘人工服务’按钮,拨打我们的客服热线,谢谢"
+        android:text="下方按钮,立即拨打我们的客服专线，谢谢"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -50,6 +52,9 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.ServiceProviderActivity;
 import com.example.zhongjiyun03.zhongjiyun.view.CustomHomeScrollListView;
 import com.example.zhongjiyun03.zhongjiyun.view.MyGridView;
 import com.example.zhongjiyun03.zhongjiyun.widget.AutoScrollViewPager;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -87,6 +92,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView projectMoreText;
     @ViewInject(R.id.home_rg)
     private RadioGroup homeRG;
+    @ViewInject(R.id.home_scrollView)
+    private PullToRefreshScrollView homePullToScrollView;
 
 
 
@@ -127,6 +134,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 if(!TextUtils.isEmpty(responseInfo.result)){
                     AppListDataBean<AdvertisementBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<AdvertisementBean>>(){});
                     if (appListDataBean.getResult().equals("success")){
+                        //MyAppliction.showToast("执行刷新了");
                         List<AdvertisementBean> advertisementBeen=appListDataBean.getData();
                         if (advertisementBeen!=null){
                             imageUrls.addAll(advertisementBeen);
@@ -161,6 +169,50 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
 
+    }
+    public void intiPullToRefresh(){
+        homePullToScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+        ILoadingLayout startLabels  = homePullToScrollView
+                .getLoadingLayoutProxy(true, false);
+        startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
+        startLabels.setRefreshingLabel("正在刷新...");// 刷新时
+        startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        //上拉监听函数
+        homePullToScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+
+            @Override
+            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                //执行刷新函数
+
+                new GetDataTask().execute();
+            }
+        });
+
+    }
+
+    private class GetDataTask extends AsyncTask<Void, Void, LinearLayout> {
+
+        @Override
+        protected LinearLayout doInBackground(Void... params) {
+            // Simulates a background job.
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(LinearLayout result) {
+            // Do some stuff here
+
+            loadData();
+            initListRecommentMachinist();
+
+            // Call onRefreshComplete when the list has been refreshed.
+            //在更新UI后，无需其它Refresh操作，系统会自己加载新的listView
+            homePullToScrollView.onRefreshComplete();
+
+
+            super.onPostExecute(result);
+        }
     }
        //推荐二手机
     private void initListRecommentMachinist() {
@@ -423,4 +475,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         }
     }
+
+
 }

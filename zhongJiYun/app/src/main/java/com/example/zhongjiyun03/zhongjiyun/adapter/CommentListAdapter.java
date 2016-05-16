@@ -55,43 +55,43 @@ public class CommentListAdapter extends AppBaseAdapter<CommentPagerDataBean> {
             //viewHold.ratingBar.setRating(Float.parseFloat(data.get(position).getScore()));
             if (!TextUtils.isEmpty(data.get(position).getScore())){
                 String StarRate=data.get(position).getScore();
+                //viewHold.ratingBar.setRating(Integer.valueOf(StarRate));
                 if (StarRate.equals("1")){
-                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.star_icon);
-                    viewHold.ratingThree.setBackgroundResource(R.mipmap.star_icon);
-                    viewHold.ratingFour.setBackgroundResource(R.mipmap.star_icon);
-                    viewHold.ratingFive.setBackgroundResource(R.mipmap.star_icon);
+                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_star);
+                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_star);
+                    viewHold.ratingFour.setBackgroundResource(R.mipmap.eval_star);
+                    viewHold.ratingFive.setBackgroundResource(R.mipmap.eval_star);
                 }else if (StarRate.equals("2")){
 
-                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingThree.setBackgroundResource(R.mipmap.star_icon);
-                    viewHold.ratingFour.setBackgroundResource(R.mipmap.star_icon);
-                    viewHold.ratingFive.setBackgroundResource(R.mipmap.star_icon);
+                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_star);
+                    viewHold.ratingFour.setBackgroundResource(R.mipmap.eval_star);
+                    viewHold.ratingFive.setBackgroundResource(R.mipmap.eval_star);
 
                 }else if (StarRate.equals("3")){
 
-                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingFour.setBackgroundResource(R.mipmap.star_icon);
-                    viewHold.ratingFive.setBackgroundResource(R.mipmap.star_icon);
+                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingFour.setBackgroundResource(R.mipmap.eval_star);
+                    viewHold.ratingFive.setBackgroundResource(R.mipmap.eval_star);
 
                 }else if (StarRate.equals("4")){
 
-                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingFour.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingFive.setBackgroundResource(R.mipmap.star_icon);
+                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingFour.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingFive.setBackgroundResource(R.mipmap.eval_star);
 
                 }else if (StarRate.equals("5")){
-
-                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingFour.setBackgroundResource(R.mipmap.eval_icon);
-                    viewHold.ratingFive.setBackgroundResource(R.mipmap.eval_icon);
+                    viewHold.ratingOne.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingTwo.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingThree.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingFour.setBackgroundResource(R.mipmap.eval_star_cur);
+                    viewHold.ratingFive.setBackgroundResource(R.mipmap.eval_star_cur);
 
                 }
             }
@@ -119,6 +119,8 @@ public class CommentListAdapter extends AppBaseAdapter<CommentPagerDataBean> {
         private TextView ratingFour;
         @ViewInject(R.id.rating_five)
         private TextView ratingFive;
+        /*@ViewInject(R.id.rating_bar)
+        private RatingBar ratingBar;*/
 
 
         public ViewHold(View view) {

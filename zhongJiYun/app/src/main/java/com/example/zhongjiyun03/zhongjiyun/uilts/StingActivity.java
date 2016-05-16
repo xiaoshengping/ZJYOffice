@@ -3,6 +3,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -76,7 +77,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
 
     @SuppressLint("NewApi")
     private void intiView() {
-        switchButton.setChecked(true);
+
         modificationLayout.setOnClickListener(this);
         clearLayout.setOnClickListener(this);
         ideaLayout.setOnClickListener(this);
@@ -109,7 +110,16 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+        SharedPreferences sharedPreferences = this.getSharedPreferences("switchButton", MODE_PRIVATE);
+        boolean isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (isFirstRun)
+        {
+            switchButton.setChecked(true);
 
+        } else{
+
+        }
 
     }
     public String bytes2kb(long bytes) {

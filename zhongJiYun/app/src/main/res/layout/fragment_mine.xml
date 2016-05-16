@@ -66,8 +66,8 @@
                 android:id="@+id/loing_xshi_user"
                 android:layout_marginLeft="20dp"
                 android:src="@mipmap/default_avatar"
-                android:layout_width="80dp"
-                android:layout_height="80dp" />
+                android:layout_width="70dp"
+                android:layout_height="70dp" />
             <TextView
                 android:id="@+id/name_text"
                 android:layout_toRightOf="@+id/loing_xshi_user"

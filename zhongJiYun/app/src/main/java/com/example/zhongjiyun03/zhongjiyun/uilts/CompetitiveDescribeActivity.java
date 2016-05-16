@@ -193,7 +193,7 @@ public class  CompetitiveDescribeActivity extends AppCompatActivity implements V
 
         // 关闭alert对话框架
         TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
-        cancel.setText("取消");
+        cancel.setText("关闭");
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dlg.cancel();
