@@ -172,6 +172,12 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     private ScrollView messageScrollView;
     @ViewInject(R.id.no_data_rlayout)
     private RelativeLayout noDataRlayout;//没有网络
+    @ViewInject(R.id.extruder_content_rlayout)
+    private RelativeLayout extruderContentRlayout;
+    @ViewInject(R.id.image_ligin_three)
+    private ImageView imageLiginHhree;
+    @ViewInject(R.id.image_ligin_frou)
+    private ImageView imageLiginFrou;
 
 
 
@@ -252,6 +258,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                                  brandText.setText("0");
                              }
                             if (secondHandBean.getDeviceBaseDto()!=null){
+                                extruderContentRlayout.setVisibility(View.VISIBLE);
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getChassisMode()+"")){
                                     chassisTypeText.setText(secondHandBean.getDeviceBaseDto().getChassisMode()+"");
                                 }else {
@@ -281,7 +288,38 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxHoleDepth())){
                                     dirllDepthText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDepth());
                                 }
+
+                                if (secondHandBean.getDeviceBaseDto().getDeviceImages()!=null&&
+                                        secondHandBean.getDeviceBaseDto().getDeviceImages().size()!=0){
+                                    advertisementRlayout.setVisibility(View.VISIBLE);
+                                    if (secondHandBean.getDeviceBaseDto().getDeviceImages().size()==1){
+                                        autoPager.setVisibility(View.GONE);
+                                        dotLL.setVisibility(View.GONE);
+                                        advertisementImage.setVisibility(View.VISIBLE);
+                                        MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceBaseDto().getDeviceImages().get(0).getUrl(),advertisementImage,MyAppliction.options);
+                                    }else {
+                                        advertisementImage.setVisibility(View.GONE);
+                                        autoPager.setVisibility(View.VISIBLE);
+                                        dotLL.setVisibility(View.VISIBLE);
+                                        imageUrls.addAll(secondHandBean.getDeviceBaseDto().getDeviceImages());
+                                        pagerAdapter.refreshData(true);
+                                    }
+
+                                }else {
+
+                                    advertisementRlayout.setVisibility(View.GONE);
+                                }
+
+
+                            }else {
+                                advertisementRlayout.setVisibility(View.GONE);
+                                imageLiginFrou.setVisibility(View.GONE);
+                                imageLiginHhree.setVisibility(View.GONE);
+                                extruderContentRlayout.setVisibility(View.GONE);
                             }
+
+
+
                             if (!TextUtils.isEmpty(secondHandBean.getProvince())&&!TextUtils.isEmpty(secondHandBean.getAddress())){
                              addressText.setText(secondHandBean.getProvince()+secondHandBean.getAddress());
                             }else if (!TextUtils.isEmpty(secondHandBean.getProvince())){
@@ -374,25 +412,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                                 imageViewThree.setVisibility(View.GONE);
                                 imageViewForu.setVisibility(View.GONE);
                             }
-                              if (secondHandBean.getDeviceBaseDto().getDeviceImages()!=null&&
-                                     secondHandBean.getDeviceBaseDto().getDeviceImages().size()!=0){
-                                  advertisementRlayout.setVisibility(View.VISIBLE);
-                                  if (secondHandBean.getDeviceBaseDto().getDeviceImages().size()==1){
-                                      autoPager.setVisibility(View.GONE);
-                                      dotLL.setVisibility(View.GONE);
-                                      advertisementImage.setVisibility(View.VISIBLE);
-                                      MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceBaseDto().getDeviceImages().get(0).getUrl(),advertisementImage,MyAppliction.options);
-                                  }else {
-                                      advertisementImage.setVisibility(View.GONE);
-                                      autoPager.setVisibility(View.VISIBLE);
-                                      dotLL.setVisibility(View.VISIBLE);
-                                      imageUrls.addAll(secondHandBean.getDeviceBaseDto().getDeviceImages());
-                                      pagerAdapter.refreshData(true);
-                                  }
 
-                             }else {
-                                  advertisementRlayout.setVisibility(View.GONE);
-                             }
                             if (secondHandBean.getIsCollection()==1){
                                 checkBoxCheck.setBackgroundResource(R.mipmap.collect_icon_cur);
                             }else {

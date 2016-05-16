@@ -67,7 +67,7 @@ public class RegisterFishActivity extends AppCompatActivity implements View.OnCl
         switch (v.getId()){
             case R.id.call_phone_layout:
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                Uri data = Uri.parse("tel:" + "13500000000 ");
+                Uri data = Uri.parse("tel:" + "4000209797");
                 intent.setData(data);
                 startActivity(intent);
 

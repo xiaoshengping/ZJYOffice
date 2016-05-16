@@ -262,6 +262,11 @@ public class AppUtilsUrl {
 
     }
 
+    //向服务器提交错误信息
+    public static String getLoggerData(){
+        //  appapi/logger/upload
+        return BaseUrl+"appapi/logger/upload" ;
 
+    }
 
 }

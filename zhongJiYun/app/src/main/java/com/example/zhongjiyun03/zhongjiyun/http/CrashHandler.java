@@ -11,7 +11,13 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -84,7 +90,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * @param ex
      * @return true:如果处理了该异常信息;否则返回false.
      */
-    private boolean handleException(Throwable ex) {
+    private boolean handleException(final Throwable ex) {
         if (ex == null) {
             return false;
         }
@@ -95,7 +101,20 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_SHORT).show();
+              /*  Intent intent=new Intent(mContext, HomeActivity.class);
+                mContext.startActivity(intent);*/
+               /* Writer writer = new StringWriter();
+                PrintWriter printWriter = new PrintWriter(writer);
+                ex.printStackTrace(printWriter);
+                Throwable cause = ex.getCause();
+                while (cause != null) {
+                    cause.printStackTrace(printWriter);
+                    cause = cause.getCause();
+                }
+                printWriter.close();
+                String result = writer.toString();*/
+
                 Looper.loop();
             }
         }.start();
@@ -167,6 +186,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         }
         printWriter.close();
         String result = writer.toString();
+        //Log.e("exResult",result);
         sb.append(result);
         try {
             long timestamp = System.currentTimeMillis();
@@ -185,7 +205,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(sb.toString().getBytes());
             //发送给开发人员
-            sendCrashLog2PM(file_dir + fileName);
+            //sendCrashLog2PM(file_dir + fileName);
+            sendCrashLog2PM(result);
             fos.close();
             //          }
             return fileName;
@@ -198,7 +219,28 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * 将捕获的导致崩溃的错误信息发送给开发人员
      * 目前只将log日志保存在sdcard 和输出到LogCat中，并未发送给后台。
      */
-    private void sendCrashLog2PM(String fileName) {
+    private void sendCrashLog2PM(String result) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        requestParams.addBodyParameter("contents",result);
+        requestParams.addBodyParameter("equipmentInfo",android.os.Build.VERSION.RELEASE+android.os.Build.MODEL);
+        requestParams.addBodyParameter("aPPVesion",infos.get("versionName")+infos.get("versionCode"));
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getLoggerData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                  Log.e("提交错误信息onSuccess","提交错误信息");
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("提交错误信息onFailure","提交错误信息");
+            }
+        });
+
+
+
+
+
         //      if (!new File(fileName).exists()) {
         //          Toast.makeText(mContext, "日志文件不存在！", Toast.LENGTH_SHORT).show();
         //          return;
@@ -229,4 +271,8 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         //          }
         //      }
     }
+
+
+
+
 }
