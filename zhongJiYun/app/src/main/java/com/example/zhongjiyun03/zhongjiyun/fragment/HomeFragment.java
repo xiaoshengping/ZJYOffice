@@ -252,7 +252,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         machinistGridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Intent intent=new Intent(getActivity(),ExturderParticularsActivity.class);
                 intent.putExtra("secondHandData",secondHandBeen.get(position).getId());
                 startActivity(intent);

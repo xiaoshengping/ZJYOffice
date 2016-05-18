@@ -8,6 +8,7 @@
     android:orientation="vertical"
     android:background="@color/background"
     tools:context=".uilts.PersonageInformationActivity">
+
      <include  android:layout_width="match_parent"
          android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
     <LinearLayout
@@ -258,6 +259,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+
             android:textColor="@color/tailt_dark"
             android:textSize="@dimen/home_Size_15"
             android:layout_marginLeft="20dp"
@@ -269,7 +271,6 @@
             android:id="@+id/idcard_front_iamge"
             android:layout_marginLeft="10dp"
             android:scaleType="centerCrop"
-
             android:layout_width="90dp"
             android:layout_height="70dp" />
 
@@ -302,10 +303,6 @@
         android:background="@color/window_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
-
-
-
 
 
 

@@ -42,7 +42,7 @@ public class MyAppliction extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-        CrashHandler.getInstance().init(getApplicationContext());
+        //CrashHandler.getInstance().init(getApplicationContext());
         app=this;
         initImageLoader(getApplicationContext());
         options = new DisplayImageOptions.Builder()

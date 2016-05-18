@@ -81,7 +81,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //透明状态栏
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN ,WindowManager.LayoutParams. FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_home);
         ViewUtils.inject(this);
         init();
@@ -129,6 +132,8 @@ public class HomeActivity extends AppCompatActivity {
         JPushInterface.init(this);
         JPushInterface.setDebugMode(true);
     }
+
+
 
     //提交用户信息
     private void initRegistration() {

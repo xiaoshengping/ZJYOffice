@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:clipToPadding="true"
+    android:scrollbars="none"
     android:id="@+id/home_scrollView"
     android:fitsSystemWindows="true"
     android:background="@color/background"

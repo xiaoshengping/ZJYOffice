@@ -46,4 +46,5 @@ dependencies {
     compile 'com.commit451:PhotoView:1.2.4'
     //查看图片
     compile files('libs/jpush-android-2.1.5.jar')
+    /*compile 'com.android.support:percent:22.2.0'*/ //百分比
 }

@@ -11,8 +11,8 @@
             android:scaleType="centerCrop"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
-            android:layout_width="50dp"
-            android:layout_height="70dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <RelativeLayout
             android:gravity="center_horizontal"
@@ -27,7 +27,7 @@
 
                             android:id="@+id/tailt_text"
                             android:textColor="@color/tailt_dark"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="15dp"
 
@@ -37,7 +37,7 @@
 
                             android:layout_below="@+id/tailt_text"
                             android:id="@+id/data_text"
-                            android:textSize="@dimen/home_Size_16"
+                            android:textSize="@dimen/home_Size_14"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
 

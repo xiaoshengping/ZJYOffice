@@ -108,7 +108,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="@color/ic_white"
-        android:textSize="@dimen/home_Size_18"
+        android:textSize="@dimen/home_Size_16"
         android:text="一键领取" />
 
 </LinearLayout>

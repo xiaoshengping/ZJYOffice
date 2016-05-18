@@ -424,6 +424,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                                 homeSecondHandListAdapter.notifyDataSetChanged();
                             }
                         }
+
+
                         secondHandListview.onRefreshComplete();
                         notDataLayout.setVisibility(View.GONE);
                     } else if ((appListDataBean.getResult()).equals("nomore")) {

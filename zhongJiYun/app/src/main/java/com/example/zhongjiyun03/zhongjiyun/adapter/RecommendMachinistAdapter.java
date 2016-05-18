@@ -44,11 +44,11 @@ public class RecommendMachinistAdapter extends AppBaseAdapter<SecondHandBean> {
     private void init(int position) {
         if (data!=null){
 
-            if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getManufacture())&&!TextUtils.isEmpty(data.get(position).getDeviceDto().getNoOfManufacture())){
-                holderView.nameText.setText(data.get(position).getDeviceDto().getManufacture()+data.get(position).getDeviceDto().getNoOfManufacture());
+            if (!TextUtils.isEmpty(data.get(position).getManufacture())&&!TextUtils.isEmpty(data.get(position).getNoOfManufacture())){
+                holderView.nameText.setText(data.get(position).getManufacture()+data.get(position).getNoOfManufacture());
             }
-            if (!TextUtils.isEmpty(data.get(position).getDeviceDto().getDevicePhoto())){
-                MyAppliction.imageLoader.displayImage(data.get(position).getDeviceDto().getDevicePhoto(),holderView.imageView,MyAppliction.options);
+            if (!TextUtils.isEmpty(data.get(position).getDevicePhoto())){
+                MyAppliction.imageLoader.displayImage(data.get(position).getDevicePhoto(),holderView.imageView,MyAppliction.options);
             }
 
             if (data.get(position).getPriceStr().equals("面议")){

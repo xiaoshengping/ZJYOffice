@@ -23,6 +23,53 @@ public class SecondHandBean implements Serializable {
     private String StatusStr;	//string	二手机状态图片
     private int Tenancy;	//int	租期
     private String UpdateDateStr;	//string	更新时间
+    private String DevicePhoto;  //	string	设备全景照片
+    private String Manufacture;  //	string	钻机厂商
+    private String NoOfManufacture;//	string	钻机型号
+    private String DateOfManufacture;
+    private String HourOfWork;
+
+
+
+    public String getHourOfWork() {
+        return HourOfWork;
+    }
+
+    public void setHourOfWork(String hourOfWork) {
+        HourOfWork = hourOfWork;
+    }
+
+    public String getDateOfManufacture() {
+        return DateOfManufacture;
+    }
+
+    public void setDateOfManufacture(String dateOfManufacture) {
+        DateOfManufacture = dateOfManufacture;
+    }
+
+    public String getDevicePhoto() {
+        return DevicePhoto;
+    }
+
+    public void setDevicePhoto(String devicePhoto) {
+        DevicePhoto = devicePhoto;
+    }
+
+    public String getManufacture() {
+        return Manufacture;
+    }
+
+    public void setManufacture(String manufacture) {
+        Manufacture = manufacture;
+    }
+
+    public String getNoOfManufacture() {
+        return NoOfManufacture;
+    }
+
+    public void setNoOfManufacture(String noOfManufacture) {
+        NoOfManufacture = noOfManufacture;
+    }
 
     public String getAddress() {
         return Address;
@@ -171,6 +218,11 @@ public class SecondHandBean implements Serializable {
                 ", StatusStr='" + StatusStr + '\'' +
                 ", Tenancy=" + Tenancy +
                 ", UpdateDateStr='" + UpdateDateStr + '\'' +
+                ", DevicePhoto='" + DevicePhoto + '\'' +
+                ", Manufacture='" + Manufacture + '\'' +
+                ", NoOfManufacture='" + NoOfManufacture + '\'' +
+                ", DateOfManufacture='" + DateOfManufacture + '\'' +
+                ", HourOfWork='" + HourOfWork + '\'' +
                 '}';
     }
 }
