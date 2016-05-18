@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -70,7 +69,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment implements View.OnClickListener {
+public class HomeFragment extends Fragment implements View.OnClickListener,PullToRefreshBase.OnRefreshListener {
 
     @ViewInject(R.id.home_gridView)
     private MyGridView homeGridView;
@@ -82,7 +81,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private ImagePagerAdapter pagerAdapter;
     private ArrayList<AdvertisementBean> imageUrls = new ArrayList<>();
     //private String url = "http://mobapi.meilishuo.com/2.0/activity/selected?imei=000000000000000&mac=08%3A00%3A27%3A51%3A2e%3Aaa&qudaoid=11601&access_token=d154111f2e870ea8e58198e0f8c59339";
-
+    private boolean isRefresh=true;
 
 
     //项目推荐listView
@@ -102,6 +101,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private TextView moreTextView;
     @ViewInject(R.id.project_gridview)
     private GridView machinistGridview;
+
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -137,10 +140,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                         //MyAppliction.showToast("执行刷新了");
                         List<AdvertisementBean> advertisementBeen=appListDataBean.getData();
                         if (advertisementBeen!=null){
+                            imageUrls.clear();
                             imageUrls.addAll(advertisementBeen);
                             pagerAdapter.refreshData(true);
+                            isRefresh=true;
                         }
 
+                    }else {
+                        isRefresh=false;
                     }
 
 
@@ -151,6 +158,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("dsjfjfj",s);
+                isRefresh=false;
             }
         });
 
@@ -159,12 +167,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
 
     private void init() {
+        networkRemindLayout.setOnClickListener(this);
         pagerAdapter = new ImagePagerAdapter(getActivity(), imageUrls, dotLL);
         autoPager.setAdapter(pagerAdapter);
         autoPager.setOnPageChangeListener(pagerAdapter);
         initGridView();
         moreTextView.setOnClickListener(this);
         projectMoreText.setOnClickListener(this);
+        intiPullToRefresh();
         initListRecommentMachinist();
 
 
@@ -178,42 +188,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
         startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         //上拉监听函数
-        homePullToScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
-
-            @Override
-            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                //执行刷新函数
-
-                new GetDataTask().execute();
-            }
-        });
+        homePullToScrollView.setOnRefreshListener(this);
 
     }
 
-    private class GetDataTask extends AsyncTask<Void, Void, LinearLayout> {
 
-        @Override
-        protected LinearLayout doInBackground(Void... params) {
-            // Simulates a background job.
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(LinearLayout result) {
-            // Do some stuff here
-
-            loadData();
-            initListRecommentMachinist();
-
-            // Call onRefreshComplete when the list has been refreshed.
-            //在更新UI后，无需其它Refresh操作，系统会自己加载新的listView
-            homePullToScrollView.onRefreshComplete();
-
-
-            super.onPostExecute(result);
-        }
-    }
        //推荐二手机
     private void initListRecommentMachinist() {
         HttpUtils httpUtils=new HttpUtils();
@@ -253,11 +232,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     }
 
                 }
+                networkRemindLayout.setVisibility(View.GONE);
+                homePullToScrollView.onRefreshComplete();
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("找项目",s);
+                homePullToScrollView.onRefreshComplete();
+                networkRemindLayout.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -469,7 +452,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 projectIntent.putExtra("tage","MoreProject");
                 startActivity(projectIntent);
                 break;
-
+            case R.id.network_remind_layout:
+                //跳转到设置界面
+                Intent networkIntent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(networkIntent);
+                break;
 
 
 
@@ -477,4 +464,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    @Override
+    public void onRefresh(PullToRefreshBase refreshView) {
+        if (!isRefresh){
+            loadData();
+        }
+        initListRecommentMachinist();
+        initListData();
+    }
 }
