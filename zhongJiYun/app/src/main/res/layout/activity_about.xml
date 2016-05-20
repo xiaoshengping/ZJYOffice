@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:clipToPadding="true"
     android:background="@color/window_background"
     tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.AboutActivity">
     <include android:id="@+id/head_layout" android:layout_width="match_parent" android:layout_height="wrap_content"  layout="@layout/app_head_layout" />

@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:background="@color/background"
     tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.RegisterActivity">
     <include  android:layout_width="match_parent" android:layout_height="wrap_content" layout="@layout/app_head_layout"/>

@@ -1,5 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts.showPicture;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +9,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
@@ -14,6 +18,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.PersonageInformationBean;
 import com.example.zhongjiyun03.zhongjiyun.fragment.ImageDetailFragment;
 import com.example.zhongjiyun03.zhongjiyun.view.HackyViewPager;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +37,13 @@ public class ImagePagerActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //改变状态栏
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.red_light);//通知栏所需颜色
+        }
         setContentView(R.layout.activity_image_pager);
 
         pagerPosition = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
@@ -92,7 +104,18 @@ public class ImagePagerActivity extends ActionBarActivity {
 
         mPager.setCurrentItem(pagerPosition);
     }
-
+    @TargetApi(19)
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(STATE_POSITION, mPager.getCurrentItem());
