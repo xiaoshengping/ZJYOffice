@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -13,11 +14,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -57,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @ViewInject(R.id.retrun_text_view)
     private TextView retrunText;     //头部左边
     @ViewInject(R.id.root_layout)
-    private RelativeLayout rootLayout;
+    private ScrollView rootLayout;
 
 
     @ViewInject(R.id.login_button)
@@ -92,8 +94,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.red_light);//通知栏所需颜色
         }
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_login);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ViewUtils.inject(this);
         inti();
 
@@ -118,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initView() {
-        //controlKeyboardLayout(rootLayout,loginButton);
+        controlKeyboardLayout(rootLayout,loginButton);
         time = new TimeCount(60000, 1000);//构造CountDownTimer对象
         mSVProgressHUD = new SVProgressHUD(this);
         retrunText.setOnClickListener(this);
@@ -376,10 +378,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         return true;
     }
-   /* *//**
+   /**
      * @param root 最外层布局，需要调整的布局
      * @param scrollToView 被键盘遮挡的scrollToView，滚动root,使scrollToView在root可视区域的底部
-     *//*
+     */
     private void controlKeyboardLayout(final View root, final View scrollToView) {
         root.getViewTreeObserver().addOnGlobalLayoutListener( new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -403,7 +405,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-    }*/
+    }
 
 
 

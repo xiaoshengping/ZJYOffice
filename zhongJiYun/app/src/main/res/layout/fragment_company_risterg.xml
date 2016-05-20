@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/company_root_layout"
-    android:background="@color/background"
+    android:background="@color/white"
     tools:context="com.example.zhongjiyun03.zhongjiyun.fragment.PersonageRistergFragment">
 
     <ScrollView
+        android:id="@+id/company_root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -52,6 +52,7 @@
 
         </LinearLayout>
         <ImageView
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
             android:layout_height="1dp" />
         <RelativeLayout
@@ -103,6 +104,7 @@
                 android:layout_height="35dp" />
         </RelativeLayout>
         <ImageView
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
             android:layout_height="1dp" />
         <LinearLayout
@@ -135,13 +137,20 @@
 
         </LinearLayout>
 
-
         <ImageView
+            android:src="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <ImageView
+            android:src="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+        <ImageView
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
             android:layout_height="1dp" />
         <LinearLayout
             android:background="@color/ic_white"
-            android:layout_marginTop="3dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:gravity="center"
@@ -170,6 +179,7 @@
 
         </LinearLayout>
         <ImageView
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
             android:layout_height="1dp" />
 
@@ -203,6 +213,7 @@
 
         </LinearLayout>
         <ImageView
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
             android:layout_height="1dp" />
         <LinearLayout
@@ -236,7 +247,17 @@
 
         </LinearLayout>
         <ImageView
-            android:layout_marginTop="3dp"
+            android:src="@color/color_dedede"
+
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <ImageView
+            android:src="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+        <ImageView
+            android:src="@color/color_dedede"
+
             android:layout_width="match_parent"
             android:layout_height="1dp" />
 
@@ -268,6 +289,20 @@
                 />
 
         </LinearLayout>
+        <ImageView
+            android:src="@color/color_dedede"
+
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <ImageView
+            android:src="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+        <ImageView
+            android:src="@color/color_dedede"
+
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
         <LinearLayout
 
             android:layout_marginTop="3dp"

@@ -32,7 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -233,7 +233,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     //企业注册初始化
     private void intiCompanyView() {
-        RelativeLayout rootTlayout= (RelativeLayout) companyRisterView.findViewById(R.id.company_root_layout);
+        ScrollView rootTlayout= (ScrollView) companyRisterView.findViewById(R.id.company_root_layout);
         companyCodeButton= (Button) companyRisterView.findViewById(R.id.company_code_button);
         companyRegisterButton= (Button) companyRisterView.findViewById(R.id.cpmpany_register_button);
         companyPhoneEdit= (EditText) companyRisterView.findViewById(R.id.company_edit_phone);
@@ -329,7 +329,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     //个人注册数据初始化
     private void intiPersonageView() {
 
-        RelativeLayout rootTlayout= (RelativeLayout) personageRisterView.findViewById(R.id.root_layout);
+        ScrollView rootTlayout= (ScrollView) personageRisterView.findViewById(R.id.root_layout);
         codeButton= (Button) personageRisterView.findViewById(R.id.code_button);
         submitButton= (Button) personageRisterView.findViewById(R.id.submit_button);
         phoneEdit= (EditText) personageRisterView.findViewById(R.id.edit_phone);
