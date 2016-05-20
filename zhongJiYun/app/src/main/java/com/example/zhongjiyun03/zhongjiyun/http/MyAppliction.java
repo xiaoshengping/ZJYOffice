@@ -1,7 +1,9 @@
 package com.example.zhongjiyun03.zhongjiyun.http;
 
 import android.app.Application;
+import android.app.Service;
 import android.content.Context;
+import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.Window;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.baidumap.LocationService;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -28,6 +31,11 @@ public class MyAppliction extends Application {
     private static String homeRequestTage;  //首页二手钻机请求标志
     private static String projectRequestTage;//项目刷新请求标志
     private static MyAppliction instance;
+    //百度地图
+    public LocationService locationService;
+    public Vibrator mVibrator;
+    private static String latitude;//纬度
+    private static String longitude; //经度
 
     public static MyAppliction getInstance() {
         if (instance == null) {
@@ -68,6 +76,13 @@ public class MyAppliction extends Application {
                 .cacheOnDisc()
                 .displayer(new RoundedBitmapDisplayer(20))
                 .build();
+        /***
+         * 初始化定位sdk，建议在Application中创建
+         */
+        locationService = new LocationService(getApplicationContext());
+        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+       // SDKInitializer.initialize(getApplicationContext());
+
     }
 
 
@@ -102,6 +117,23 @@ public class MyAppliction extends Application {
     public static void showToast(String msg){
         Toast.makeText(app, msg, Toast.LENGTH_SHORT).show();
     }
+
+    public static String getLatitude() {
+        return latitude;
+    }
+
+    public static void setLatitude(String latitude) {
+        MyAppliction.latitude = latitude;
+    }
+
+    public static String getLongitude() {
+        return longitude;
+    }
+
+    public static void setLongitude(String longitude) {
+        MyAppliction.longitude = longitude;
+    }
+
     public static String getHomeRequestTage() {
         return homeRequestTage;
     }

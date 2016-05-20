@@ -95,4 +95,8 @@
     <string name="title_activity_rating_help">RatingHelpActivity</string>
 
 
+    <!--百度地图-->
+    <string name="startlocation">开始定位</string>
+    <string name="stoplocation">停止定位</string>
+
 </resources>

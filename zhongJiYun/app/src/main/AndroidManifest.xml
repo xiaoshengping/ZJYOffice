@@ -114,6 +114,11 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <!--极光推送end-->
 
+    <!--百度地图star-->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <!--百度地图end-->
+
+
     <application
         android:name=".http.MyAppliction"
         android:allowBackup="true"
@@ -361,6 +366,22 @@
             android:name=".uilts.RatingHelpActivity"
             android:label="@string/title_activity_rating_help"
             android:theme="@style/AppTheme"></activity>
+        <!--百度地图star-->
+        <activity android:name=".baidumap.LocationActivity"></activity>
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="com.baidu.location.service_v2.2" >
+                </action>
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="yZhaMUsvTpoKTuCNT4VqfiPq1Hw9by9G" />  <!--http://lbsyun.baidu.com/apiconsole/key-->
+          <!--百度地图end-->
+
 
 
          <!--极光推送star-->

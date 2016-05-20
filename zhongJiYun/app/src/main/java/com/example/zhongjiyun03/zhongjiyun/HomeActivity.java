@@ -71,6 +71,9 @@ public class HomeActivity extends AppCompatActivity {
     private TextView tailteTv;
     private boolean isCommitData=true;//是否提交用户信息
 
+
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -117,6 +120,8 @@ public class HomeActivity extends AppCompatActivity {
             if (isCommitData) {
                 initRegistration();//提交用户信息
             }
+
+
         }
         //HomeFragment.setStart(0);
         //startPage();
@@ -508,6 +513,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+
     private void addFragment() {
         fragments.add(new HomeFragment());
         fragments.add(new SeekProjectFragment());
@@ -528,6 +534,9 @@ public class HomeActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+
+
 
 
 
