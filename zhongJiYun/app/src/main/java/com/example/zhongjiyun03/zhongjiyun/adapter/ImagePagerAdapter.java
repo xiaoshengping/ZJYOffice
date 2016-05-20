@@ -146,7 +146,7 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter implements ViewPage
             ImageView dotView = new ImageView(context);
             dotView.setScaleType(ImageView.ScaleType.FIT_XY);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            param.rightMargin = 5;
+            param.rightMargin = 30;
             dotView.setLayoutParams(param);
             if (i == 0) {
                 dotView.setImageResource(R.mipmap.dot_press);

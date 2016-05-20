@@ -269,6 +269,7 @@
 
         </LinearLayout>
         <LinearLayout
+
             android:layout_marginTop="3dp"
             android:background="@color/ic_white"
             android:orientation="horizontal"
@@ -278,14 +279,16 @@
 
 
             <LinearLayout
+                android:layout_weight="1"
                 android:id="@+id/company_front_layout"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginRight="5dp"
                 android:background="@color/phont_background"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="170dp">
                 <TextView
                     android:textColor="@color/tailt_dark"
@@ -310,14 +313,16 @@
 
             </LinearLayout>
             <LinearLayout
+                android:layout_weight="1"
                  android:id="@+id/company_verso_layout"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
                 android:background="@color/phont_background"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="170dp">
                 <TextView
                     android:textColor="@color/tailt_dark"
@@ -343,18 +348,21 @@
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
+
             android:background="@color/ic_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
+                android:layout_weight="1"
                  android:id="@+id/company_personge_layout"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginRight="5dp"
                 android:background="@color/phont_background"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="170dp">
                 <TextView
                     android:textColor="@color/tailt_dark"
@@ -380,14 +388,16 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_weight="1"
                   android:id="@+id/company_trading_layout"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
                 android:background="@color/phont_background"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="170dp">
                 <TextView
                     android:textColor="@color/tailt_dark"
@@ -419,14 +429,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
+                android:layout_weight="1"
                android:id="@+id/company_status_layout"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="40dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginRight="5dp"
                 android:background="@color/phont_background"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="170dp">
                 <TextView
                     android:textColor="@color/tailt_dark"
@@ -451,7 +463,21 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="170dp">
 
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -464,8 +490,8 @@
 
     </LinearLayout>
     </ScrollView>
-
     <LinearLayout
+     android:id="@+id/button_layout"
     android:gravity="center"
     android:background="@color/white"
     android:layout_alignParentBottom="true"

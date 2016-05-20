@@ -240,192 +240,225 @@
             android:background="@color/ic_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:id="@+id/leave_factory_layout"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_width="150dp"
-                android:layout_height="170dp">
-                <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:gravity="center"
-                   android:text="设备出厂牌"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/leave_factory_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
 
+            <LinearLayout
+                android:id="@+id/layout_one"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                     android:layout_weight="1"
+                    android:id="@+id/leave_factory_layout"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/phont_background"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp">
+                    <TextView
+                        android:textColor="@color/tailt_dark"
+                        android:textSize="@dimen/home_Size_15"
+                        android:gravity="center"
+                        android:text="设备出厂牌"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:textSize="@dimen/home_Size_16"
+                        android:gravity="center"
+                        android:background="@mipmap/dashed_icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp" />
+                    <ImageView
+                        android:id="@+id/leave_factory_image"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/camera_icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="128dp" />
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/panorama_layout"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/phont_background"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp">
+                    <TextView
+                        android:textColor="@color/tailt_dark"
+                        android:textSize="@dimen/home_Size_15"
+                        android:text="设备全景"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:textSize="@dimen/home_Size_16"
+                        android:gravity="center"
+                        android:background="@mipmap/dashed_icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp" />
+                    <ImageView
+                        android:id="@+id/panorama_image"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/camera_icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="128dp" />
+
+
+                </LinearLayout>
 
             </LinearLayout>
+           <LinearLayout
+
+               android:id="@+id/layout_two"
+               android:layout_below="@+id/layout_one"
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+               <LinearLayout
+                   android:layout_weight="1"
+                   android:layout_below="@+id/leave_factory_layout"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginRight="5dp"
+                   android:id="@+id/invoice_textview"
+                   android:layout_marginBottom="10dp"
+                   android:layout_marginLeft="20dp"
+
+                   android:background="@color/phont_background"
+                   android:gravity="center"
+                   android:orientation="vertical"
+                   android:layout_width="match_parent"
+                   android:layout_height="170dp">
+                   <TextView
+                       android:textColor="@color/tailt_dark"
+                       android:textSize="@dimen/home_Size_15"
+                       android:gravity="center"
+                       android:text="设备发票"
+                       android:layout_width="match_parent"
+                       android:layout_height="40dp" />
+                   <TextView
+                       android:textSize="@dimen/home_Size_16"
+                       android:gravity="center"
+                       android:background="@mipmap/dashed_icon"
+                       android:layout_width="match_parent"
+                       android:layout_height="2dp" />
+                   <ImageView
+                       android:id="@+id/invoice_image"
+                       android:scaleType="centerCrop"
+                       android:src="@mipmap/camera_icon"
+                       android:layout_width="match_parent"
+                       android:layout_height="128dp" />
+
+
+               </LinearLayout>
+               <LinearLayout
+                   android:layout_weight="1"
+                   android:id="@+id/contract_layout"
+                   android:layout_below="@+id/panorama_layout"
+                   android:layout_marginTop="10dp"
+                   android:layout_marginRight="20dp"
+                   android:layout_toRightOf="@+id/invoice_textview"
+                   android:layout_marginBottom="10dp"
+                   android:layout_marginLeft="5dp"
+                   android:background="@color/phont_background"
+                   android:gravity="center"
+                   android:orientation="vertical"
+                   android:layout_width="match_parent"
+                   android:layout_height="170dp">
+                   <TextView
+                       android:textColor="@color/tailt_dark"
+                       android:textSize="@dimen/home_Size_15"
+                       android:gravity="center"
+                       android:text="合同照"
+                       android:layout_width="match_parent"
+                       android:layout_height="40dp" />
+                   <TextView
+                       android:textSize="@dimen/home_Size_16"
+                       android:gravity="center"
+                       android:background="@mipmap/dashed_icon"
+                       android:layout_width="match_parent"
+                       android:layout_height="2dp" />
+                   <ImageView
+                       android:id="@+id/contract_image"
+                       android:scaleType="centerCrop"
+                       android:src="@mipmap/camera_icon"
+                       android:layout_width="match_parent"
+                       android:layout_height="128dp" />
+
+
+               </LinearLayout>
+           </LinearLayout>
             <LinearLayout
-                android:id="@+id/panorama_layout"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_width="150dp"
-                android:layout_height="170dp">
-                <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:text="设备全景"
+                android:layout_below="@+id/layout_two"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/qualified_layout"
+                    android:layout_below="@+id/invoice_textview"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="40dp"
+
+                    android:background="@color/phont_background"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/panorama_image"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
+                    android:layout_height="170dp">
+                    <TextView
+                        android:textColor="@color/tailt_dark"
+                        android:textSize="@dimen/home_Size_15"
+                        android:gravity="center"
+                        android:text="合格证(选填)"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp" />
+                    <TextView
+                        android:textSize="@dimen/home_Size_16"
+                        android:gravity="center"
+                        android:background="@mipmap/dashed_icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp" />
+                    <ImageView
+                        android:id="@+id/qualified_image"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/camera_icon"
+                        android:layout_width="match_parent"
+                        android:layout_height="128dp" />
 
 
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_toRightOf="@+id/qualified_layout"
+                    android:layout_below="@+id/invoice_textview"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+                    <TextView
+                        android:text="备注:1.设备出厂牌，设备编号为必填;2.设备发票和合同照必须上传一张照片3.合格证为选填"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_below="@+id/leave_factory_layout"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:id="@+id/invoice_textview"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_width="150dp"
-                android:layout_height="170dp">
-                <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:gravity="center"
-                    android:text="设备发票"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/invoice_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
 
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/contract_layout"
-                android:layout_below="@+id/panorama_layout"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_toRightOf="@+id/invoice_textview"
-                android:layout_marginBottom="10dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_width="150dp"
-                android:layout_height="170dp">
-                <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:gravity="center"
-                    android:text="合同照"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/contract_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/qualified_layout"
-                android:layout_below="@+id/invoice_textview"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-
-                android:layout_marginBottom="40dp"
-
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_width="150dp"
-                android:layout_height="170dp">
-                <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                     android:gravity="center"
-                    android:text="合格证(选填)"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/qualified_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_toRightOf="@+id/qualified_layout"
-                android:layout_below="@+id/invoice_textview"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="20dp"
-                android:orientation="vertical"
-                android:layout_width="150dp"
-                android:layout_height="150dp">
-                <TextView
-                    android:text="备注:1.设备出厂牌，设备编号为必填;2.设备发票和合同照必须上传一张照片3.合格证为选填"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-
-
-            </LinearLayout>
         </RelativeLayout>
 
         <View

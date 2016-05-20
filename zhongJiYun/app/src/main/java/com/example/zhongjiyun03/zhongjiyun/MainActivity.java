@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @ViewInject(R.id.experience_button)
     private TextView experienceButton;
+   /* @ViewInject(R.id.experience_button_image)
+    private TextView experienceButton_image;*/
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

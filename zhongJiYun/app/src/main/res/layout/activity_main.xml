@@ -13,12 +13,13 @@
 
 
     <LinearLayout
+        android:layout_alignParentBottom="true"
         android:id="@+id/ll"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24.0dip"
-        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80.0dip"
+
         android:layout_centerHorizontal="true">
 
         <ImageView
@@ -57,9 +58,9 @@
 
     <TextView
         android:visibility="gone"
-        android:layout_marginBottom="30dp"
         android:id="@+id/experience_button"
-        android:layout_above="@+id/ll"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
         android:layout_centerHorizontal="true"
         android:background="@mipmap/btn_icon"
         android:layout_width="wrap_content"

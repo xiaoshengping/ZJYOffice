@@ -282,6 +282,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                     projectListView.onRefreshComplete();
                 }
                 networkRemindLayout.setVisibility(View.GONE);
+                projectListView.onRefreshComplete();
             }
 
             @Override

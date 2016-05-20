@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAdvertisementData(), new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("图片联播",responseInfo.result);
+                //Log.e("图片联播",responseInfo.result);
                 if(!TextUtils.isEmpty(responseInfo.result)){
                     AppListDataBean<AdvertisementBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<AdvertisementBean>>(){});
                     if (appListDataBean.getResult().equals("success")){
@@ -218,7 +218,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("推荐二手机",responseInfo.result);
+                //Log.e("推荐二手机",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<SecondHandDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandDataBean>>(){});
                     if ((appListDataBean.getResult()).equals("success")){
@@ -292,7 +292,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctListData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("推荐的项目",responseInfo.result);
+                //Log.e("推荐的项目",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<SeekProjectDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SeekProjectDataBean>>(){});
                     if ((appBean.getResult()).equals("success")){
@@ -389,7 +389,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                 if (!TextUtils.isEmpty(uid)){
                                     Intent MyExtruderIntent=new Intent(getActivity(), MyExtruderActivity.class)  ;
                                     startActivity(MyExtruderIntent);
-                                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                                    //getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                                 }else {
                                     Intent intent=new Intent(getActivity(),LoginActivity.class);
                                     startActivity(intent);

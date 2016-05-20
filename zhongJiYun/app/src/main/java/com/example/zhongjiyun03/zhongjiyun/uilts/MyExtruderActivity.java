@@ -171,7 +171,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             extruderListView.onRefreshComplete();
                             notDataLayout.setVisibility(View.VISIBLE);
                             notDataImage.setBackgroundResource(R.mipmap.no_rig_icon);
-                            //notDataText.setText("您还没有添加钻机哦");
+                            notDataText.setText("您还没有添加钻机哦");
                         }else if (appBean.getResult().equals("unlogin")){
                             MyAppliction.showToast(appBean.getMsg());
                         }
