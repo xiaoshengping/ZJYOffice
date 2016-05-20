@@ -425,29 +425,29 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.loing_layout:
                 Intent intent=new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
 
             case R.id.attention_layout:
                 if (!TextUtils.isEmpty(uid)){
                 Intent attentionIntent=new Intent(getActivity(), AttentionProjectActivity.class);
                 startActivity(attentionIntent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }else {
                     Intent intent1=new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent1);
-                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
             case R.id.extruder_layout:
                 if (!TextUtils.isEmpty(uid)){
                 Intent attentionExtruderIntent=new Intent(getActivity(), AttentionExtrunActivity.class);
                 startActivity(attentionExtruderIntent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }else {
                     Intent intent2=new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent2);
-                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
             case R.id.competitive_layout:
@@ -464,11 +464,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     }
                 Intent competitveTenderIntent=new Intent(getActivity(), MyCompetitveTenderActivity.class);
                 startActivity(competitveTenderIntent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }else {
                     Intent intent3=new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent3);
-                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
             case R.id.message_layout:
@@ -486,11 +486,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 if (!TextUtils.isEmpty(uid)){
                     Intent messageIntent=new Intent(getActivity(), MessageActivity.class);
                     startActivity(messageIntent);
-                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }else {
                     Intent intent3=new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent3);
-                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
 
                 break;
@@ -508,22 +508,22 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     giftBagRemindImage.setVisibility(View.GONE);
                     Intent redPatckIntent=new Intent(getActivity(), MyRedPacketActivity.class);
                     startActivity(redPatckIntent);
-                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }else {
                     Intent intent3=new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent3);
-                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
             case R.id.loing_xshi_layout:
                 Intent personagerIntent=new Intent(getActivity(), PersonageInformationActivity.class);
                 startActivity(personagerIntent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.sting_layout:
                 Intent stingIntent=new Intent(getActivity(), StingActivity.class);
                 startActivity(stingIntent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.comment_layout:
                 if (!TextUtils.isEmpty(uid)){
@@ -538,18 +538,18 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     }
                     Intent commentIntent=new Intent(getActivity(), CommentActivity.class);
                     startActivity(commentIntent);
-                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }else {
                     Intent intent3=new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent3);
-                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
 
                 break;
             case R.id.rating_help:
                 Intent ratingHelpIntent=new Intent(getActivity(), RatingHelpActivity.class);
                 getActivity().startActivity(ratingHelpIntent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
                 break;
 

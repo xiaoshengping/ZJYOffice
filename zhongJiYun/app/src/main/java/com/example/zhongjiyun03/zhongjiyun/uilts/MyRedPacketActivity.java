@@ -240,7 +240,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.get_packed_button:
                 if (appBean.getActions()!=null&&appBean.getActions().equals("nogifget")){
@@ -255,6 +255,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                 //跳转到设置界面
                 Intent intent = new Intent(Settings.ACTION_SETTINGS);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
 
 
@@ -348,7 +349,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;

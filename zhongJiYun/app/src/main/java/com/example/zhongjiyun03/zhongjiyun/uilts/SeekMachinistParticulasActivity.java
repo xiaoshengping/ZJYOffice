@@ -412,7 +412,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
         switch (v.getId()){
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.phone_tell:
                 if (!TextUtils.isEmpty(uid)){
@@ -655,7 +655,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;
@@ -727,13 +727,13 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
     @Override
     public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
         super.startActivityForResult(intent, requestCode, options);
-        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
 
 

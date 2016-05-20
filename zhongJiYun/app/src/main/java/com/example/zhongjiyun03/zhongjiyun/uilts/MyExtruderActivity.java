@@ -76,6 +76,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
     protected void onPause() {
         super.onPause();
         JPushInterface.onPause(this);
+
     }
 
     @Override
@@ -215,7 +216,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                 Intent intent=new Intent(MyExtruderActivity.this,MyExtruderParticularsActivity.class);
                 intent.putExtra("myExtruderData",myExtruderBeens.get(position-1));
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 
@@ -253,11 +254,11 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                 if (!TextUtils.isEmpty(uid)){
                     Intent addExtruderIntent=new Intent(MyExtruderActivity.this,AddExtruderActivity.class);
                     startActivity(addExtruderIntent);
-                    overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }else {
                     Intent intent=new Intent(MyExtruderActivity.this,LoginActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
 
                 break;
@@ -306,8 +307,8 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
-
+            //overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
         }
         return true;
     }

@@ -106,7 +106,7 @@ public class CooperationActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
 
         }
@@ -127,7 +127,7 @@ public class CooperationActivity extends AppCompatActivity implements View.OnCli
             else
             {
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
             }
         }
         return super.onKeyDown(keyCode, event);

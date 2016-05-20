@@ -113,12 +113,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.register_tv:
                 Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.login_button:
                 loginData();  //用户登录
@@ -349,7 +349,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;

@@ -379,7 +379,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
          switch (v.getId()){
              case R.id.retrun_text_view:
                  finish();
-                 overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                 overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                  break;
              case R.id.network_remind_layout:
                  //跳转到设置界面
@@ -751,7 +751,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;

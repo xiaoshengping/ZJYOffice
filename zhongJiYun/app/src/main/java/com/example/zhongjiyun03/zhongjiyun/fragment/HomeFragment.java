@@ -255,7 +255,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                 Intent intent=new Intent(getActivity(),ExturderParticularsActivity.class);
                 intent.putExtra("secondHandData",secondHandBeen.get(position).getId());
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
             }
         });
@@ -328,6 +328,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                  Intent intent=new Intent(getActivity(), SeekProjectParticularsActivity.class);
                  intent.putExtra("seekProjectId",seekProjectBean.get(position).getId());
                  startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 
@@ -362,57 +363,65 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                             case 1:
                                 Intent projectIntent=new Intent(getActivity(),HomeMoreProjectActivity.class);
                                 startActivity(projectIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
 
                             case 2:
                                 Intent SecondHandIntent=new Intent(getActivity(), SecondHandActivity.class)  ;
                                 SecondHandIntent.putExtra("tage","secondHand");
                                 startActivity(SecondHandIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 3:
 
                                 Intent seekMachinistIntent=new Intent(getActivity(), SeekMachinistActivity.class)  ;
                                 seekMachinistIntent.putExtra("tage","seekMachinis");
                                 startActivity(seekMachinistIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 4:
                                 Intent serviceIntent=new Intent(getActivity(), ServiceProviderActivity.class)  ;
                                 serviceIntent.putExtra("tage","service");
                                 startActivity(serviceIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 5:
                                 Intent marketIntent=new Intent(getActivity(), HomeMarketActivity.class)  ;
                                 startActivity(marketIntent);
-
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 6:
                                 if (!TextUtils.isEmpty(uid)){
                                     Intent MyExtruderIntent=new Intent(getActivity(), MyExtruderActivity.class)  ;
                                     startActivity(MyExtruderIntent);
-                                    //getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 }else {
                                     Intent intent=new Intent(getActivity(),LoginActivity.class);
                                     startActivity(intent);
-                                    getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 }
                                 break;
                             case 7:
                                 Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
                                 startActivity(tribeIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                             break;
 
                             case 8:
                                 Intent blackListIntent=new Intent(getActivity(), HomeBlackListActivity.class)  ;
                                 startActivity(blackListIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 9:
                                 Intent newsIntent=new Intent(getActivity(), NewsCenterActivity.class)  ;
                                 startActivity(newsIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                             break;
 
                             case 10:
                                 Intent cooperationIntent=new Intent(getActivity(), CooperationActivity.class)  ;
                                 startActivity(cooperationIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
 
 
@@ -445,16 +454,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                 Intent intent=new Intent(getActivity(), SecondHandActivity.class);
                 intent.putExtra("tage","secondHand");
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.project_more_text:
                 Intent projectIntent=new Intent(getActivity(), HomeMoreProjectActivity.class);
                 projectIntent.putExtra("tage","MoreProject");
                 startActivity(projectIntent);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.network_remind_layout:
                 //跳转到设置界面
                 Intent networkIntent = new Intent(Settings.ACTION_SETTINGS);
                 startActivity(networkIntent);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
 
 

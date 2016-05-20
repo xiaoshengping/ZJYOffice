@@ -243,12 +243,13 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
 
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.network_remind_layout:
                 //跳转到设置界面
                 Intent intent = new Intent(Settings.ACTION_SETTINGS);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
 
 
@@ -266,7 +267,7 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;

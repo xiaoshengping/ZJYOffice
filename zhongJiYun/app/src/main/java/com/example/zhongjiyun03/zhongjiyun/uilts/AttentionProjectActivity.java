@@ -222,6 +222,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                 Intent intent=new Intent(AttentionProjectActivity.this, SeekProjectParticularsActivity.class);
                 intent.putExtra("seekProjectId",attentionProjectBeens.get(position-1).getId());
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -349,7 +350,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
 
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.network_remind_layout:
                 //跳转到设置界面
@@ -372,7 +373,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;

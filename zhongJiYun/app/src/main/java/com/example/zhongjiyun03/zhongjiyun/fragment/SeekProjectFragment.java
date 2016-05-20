@@ -337,7 +337,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                 Intent intent=new Intent(getActivity(), SeekProjectParticularsActivity.class);
                     intent.putExtra("seekProjectId",seekProjectBeens.get(position-1).getId());
                     startActivity(intent);
-
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
                 //getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
             }

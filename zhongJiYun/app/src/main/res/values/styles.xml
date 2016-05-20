@@ -9,7 +9,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
         <!--<item name="android:windowAnimationStyle">@android:style/Animation</item>-->
-        <item name="android:windowAnimationStyle">@style/Animation_Dialog_RightInRightOut</item>
+        <!--<item name="android:windowAnimationStyle">@style/Animation_Dialog_RightInRightOut</item>-->
+        <!-- 设置activity切换动画 -->
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+        <!--<item name="android:windowNoTitle">true</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -95,7 +98,6 @@
 
     <!--标题栏标题-->
     <style name="title_text">
-
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
@@ -117,7 +119,7 @@
         <item name="android:minHeight">40dip</item>
         <item name="android:maxHeight">40dip</item>
     </style>
-    <!-- 用于Dialog类型的Activity，其如果想设置动画必须用这个（继承Animation.Dialog） -->
+    <!-- 用于Dialog类型的Activity，其如果想设置动画必须用这个（继承Animation.Dialog）
     <style name="Theme_Animation_Dialog_RightInRightOut" parent="@android:style/Theme.Dialog">
         <item name="android:windowAnimationStyle">@style/Animation_Dialog_RightInRightOut</item>
     </style>
@@ -126,6 +128,14 @@
         <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>-->
+
+    <!-- animation 样式 -->
+    <style name="activityAnimation" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
     </style>
 
 

@@ -306,7 +306,7 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
         switch (v.getId()){
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.network_remind_layout:
                 //跳转到设置界面
@@ -358,7 +358,7 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                 Intent dynamicIntetn=new Intent(NewsCenterActivity.this,NewsListParticularsActivity.class);
                 dynamicIntetn.putExtra("newDataId",newsDataBeens.get(position).getId());
                 startActivity(dynamicIntetn);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 
@@ -403,7 +403,7 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                 Intent dynamicIntetn=new Intent(NewsCenterActivity.this,NewsListParticularsActivity.class);
                 dynamicIntetn.putExtra("newDataId",andustryNewsDataBeen.get(position).getId());
                 startActivity(dynamicIntetn);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 
@@ -447,7 +447,7 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                 Intent dynamicIntetn=new Intent(NewsCenterActivity.this,NewsListParticularsActivity.class);
                 dynamicIntetn.putExtra("newDataId",enterpriseNewsDataBeen.get(position).getId());
                 startActivity(dynamicIntetn);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 
@@ -491,7 +491,7 @@ public class NewsCenterActivity extends AppCompatActivity  implements View.OnCli
                 Intent dynamicIntetn=new Intent(NewsCenterActivity.this,NewsListParticularsActivity.class);
                 dynamicIntetn.putExtra("newDataId",bidsNewsDataBeen.get(position).getId());
                 startActivity(dynamicIntetn);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 
@@ -660,8 +660,7 @@ private void initViewPager() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
-
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
         }
         return true;
     }

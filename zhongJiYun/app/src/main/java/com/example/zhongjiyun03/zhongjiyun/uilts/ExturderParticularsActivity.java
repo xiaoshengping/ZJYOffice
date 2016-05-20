@@ -521,7 +521,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         }else {
             Intent loginIntent=new Intent(ExturderParticularsActivity.this,LoginActivity.class);
             startActivity(loginIntent);
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
 
         }
@@ -563,7 +563,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         }else {
             Intent loginIntent=new Intent(ExturderParticularsActivity.this,LoginActivity.class);
             startActivity(loginIntent);
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
 
         }
@@ -632,7 +632,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                 break;
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.no_data_rlayout:
                 intiData();
@@ -699,7 +699,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;
@@ -781,7 +781,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
 
 

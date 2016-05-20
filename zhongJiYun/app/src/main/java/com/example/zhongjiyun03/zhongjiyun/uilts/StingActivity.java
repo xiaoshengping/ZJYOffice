@@ -182,11 +182,11 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                 if (!TextUtils.isEmpty(uids)){
                     Intent intent=new Intent(StingActivity.this,ModificationPhoneActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }else {
                   Intent intent=new Intent(StingActivity.this,LoginActivity.class);
                   startActivity(intent);
-                  overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
             case R.id.competitive_layout:
@@ -195,7 +195,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
             case R.id.attention_layout:
                 Intent ideaIntent=new Intent(StingActivity.this,IdeaActivity.class);
                 startActivity(ideaIntent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.exit_button:
                 showExitGameAlert("是否退出登录","2");
@@ -203,12 +203,12 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.about_layout:
                 Intent aboutIntent=new Intent(StingActivity.this,AboutActivity.class);
                 startActivity(aboutIntent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
 
 
@@ -222,7 +222,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;

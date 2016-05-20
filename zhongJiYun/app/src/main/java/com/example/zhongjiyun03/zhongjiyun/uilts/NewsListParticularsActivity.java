@@ -140,7 +140,7 @@ public class NewsListParticularsActivity extends AppCompatActivity implements Vi
 
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
 
 
@@ -159,7 +159,7 @@ public class NewsListParticularsActivity extends AppCompatActivity implements Vi
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;

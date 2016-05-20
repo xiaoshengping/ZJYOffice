@@ -461,7 +461,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.shard_tv:
                 showShare();
@@ -703,7 +703,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;
@@ -876,7 +876,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
 
     //分享

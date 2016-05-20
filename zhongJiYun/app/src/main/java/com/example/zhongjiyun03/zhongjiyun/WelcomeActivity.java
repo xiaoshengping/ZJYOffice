@@ -24,7 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
         @Override
         public void onFinish() {//计时完毕时触发
             (WelcomeActivity.this).finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
         }
 
         @Override

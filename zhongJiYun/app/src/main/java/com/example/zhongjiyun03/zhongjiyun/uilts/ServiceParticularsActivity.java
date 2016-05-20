@@ -278,7 +278,7 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;
@@ -354,13 +354,13 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
     @Override
     public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
         super.startActivityForResult(intent, requestCode, options);
-        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
 
 

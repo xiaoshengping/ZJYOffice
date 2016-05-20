@@ -396,8 +396,8 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), SeekMachinistParticulasActivity.class);
                 intent.putExtra("seekData", sekkMachinisDataBeens.get(position - 1));
-                getActivity().overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 
