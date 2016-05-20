@@ -104,7 +104,7 @@
 
      <TextView
          android:focusable="false"
-         android:layout_marginBottom="10dp"
+         android:layout_marginBottom="5dp"
          android:drawablePadding="10dp"
          android:id="@+id/sell_text_view"
          android:layout_toLeftOf="@+id/middle_image"
@@ -115,7 +115,7 @@
          android:layout_marginLeft="5dp"
          android:textColor="@color/red_light"
          android:layout_width="wrap_content"
-         android:layout_height="wrap_content" />
+         android:layout_height="25dp" />
         <ImageView
             android:id="@+id/middle_image"
             android:layout_centerHorizontal="true"
@@ -138,21 +138,20 @@
     <TextView
         android:focusable="false"
         android:id="@+id/rent_out_textview"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:layout_below="@+id/content_rlative_layout"
         android:layout_toRightOf="@+id/rent_out_image"
         android:layout_marginTop="5dp"
-
         android:textSize="@dimen/home_Size_16"
         android:layout_marginLeft="5dp"
         android:textColor="@color/blue_light"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="25dp" />
         <ImageView
 
             android:layout_below="@+id/sell_text_view"
             android:id="@+id/image_ligin"
-            android:src="#9d9d9d"
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 </RelativeLayout>

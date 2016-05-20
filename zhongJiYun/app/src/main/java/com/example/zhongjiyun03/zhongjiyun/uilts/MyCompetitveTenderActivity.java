@@ -187,7 +187,7 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                 Intent intent=new Intent(MyCompetitveTenderActivity.this, SeekProjectParticularsActivity.class);
                 intent.putExtra("seekProjectId",projectlistDataBeanLists.get(position-1).getProjectId());
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 

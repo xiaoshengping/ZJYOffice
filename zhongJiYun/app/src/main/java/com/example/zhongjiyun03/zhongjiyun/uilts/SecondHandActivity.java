@@ -308,7 +308,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                 Intent intent = new Intent(SecondHandActivity.this, ExturderParticularsActivity.class);
                 intent.putExtra("secondHandData", secondHandBeens.get(position - 1).getId());
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 

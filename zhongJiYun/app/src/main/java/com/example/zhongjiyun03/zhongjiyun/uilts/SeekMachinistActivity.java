@@ -426,7 +426,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(SeekMachinistActivity.this, SeekMachinistParticulasActivity.class);
                 intent.putExtra("seekData", sekkMachinisDataBeens.get(position - 1));
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 startActivity(intent);
             }
         });

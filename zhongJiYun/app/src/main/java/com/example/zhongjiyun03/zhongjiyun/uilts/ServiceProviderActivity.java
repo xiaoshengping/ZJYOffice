@@ -395,7 +395,7 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
                 Intent intent=new Intent(ServiceProviderActivity.this,ServiceParticularsActivity.class);
                 intent.putExtra("ServiceProviderId",serviceProviderBean.get(position-1).getId());
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 

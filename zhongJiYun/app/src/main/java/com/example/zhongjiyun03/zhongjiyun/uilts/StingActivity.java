@@ -260,7 +260,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                    /* SharedPreferences.Editor editor = getSharedPreferences("lock", MODE_WORLD_WRITEABLE).edit();
                     editor.clear().commit();*/
                     finish();
-                    overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 }else if (tage.equals("1")){
                    // cleanInternalCache(StingActivity.this);
                     textNumber.setText("0M");

@@ -71,19 +71,19 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
         switch (v.getId()) {
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.zfu_state_layout:
                 Intent intent=new Intent(CommitCashDepositActivity.this,PaymentStateActivity.class);
                 intent.putExtra("tage",zfuTage);
                 startActivity(intent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.zfu_button:
                 Intent zfuIntent=new Intent(CommitCashDepositActivity.this,PaymentStateActivity.class);
                 zfuIntent.putExtra("tage",zfuTage);
                 startActivity(zfuIntent);
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
         }
     }
@@ -93,7 +93,7 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;

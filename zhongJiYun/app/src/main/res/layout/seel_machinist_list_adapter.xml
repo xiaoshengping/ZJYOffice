@@ -47,7 +47,7 @@
         android:layout_width="2dp"
         android:layout_height="15dp" />
     <TextView
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/time_text_view"
 
         android:layout_marginTop="10dp"
@@ -94,19 +94,19 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/company_text_view"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp"
-        android:textSize="@dimen/home_Size_18"
+        android:layout_marginRight="10dp"
+        android:textSize="@dimen/home_Size_16"
         android:text="8年"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageView
 
         android:layout_marginLeft="110dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/neirong_text_view"
         android:id="@+id/image_ligin_end"
-        android:src="#9d9d9d"
+        android:src="@color/color_dedede"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -118,7 +118,7 @@
         android:layout_below="@+id/image_ligin_end"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
-        android:textSize="@dimen/home_Size_18"
+        android:textSize="@dimen/home_Size_16"
         android:singleLine="true"
         android:ellipsize="end"
         android:layout_width="wrap_content"
@@ -128,7 +128,7 @@
         android:id="@+id/text_view_1"
         android:layout_below="@+id/image_ligin_end"
         android:layout_marginTop="5dp"
-        android:textSize="@dimen/home_Size_18"
+        android:textSize="@dimen/home_Size_16"
         android:layout_width="130sp"
         android:singleLine="true"
         android:ellipsize="end"

@@ -170,7 +170,7 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
                 } else {
                     Intent intent = new Intent(IdeaActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                    overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 }
 
 
@@ -272,7 +272,7 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
                         } else if (selectedPicture.size() == 1) {
                             mSVProgressHUD.showSuccessWithStatus("感谢您提供宝贵的意见");
                             finish();
-                            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                             mSVProgressHUD.dismiss();
                         }
 
@@ -322,7 +322,7 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
 
                             mSVProgressHUD.showSuccessWithStatus("感谢您提供宝贵的意见");
                             finish();
-                            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                             mSVProgressHUD.dismiss();
                         }
 
@@ -368,7 +368,7 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
 
                         mSVProgressHUD.showSuccessWithStatus("感谢您提供宝贵的意见");
                         finish();
-                        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                         mSVProgressHUD.dismiss();
                     } else {
                         MyAppliction.showToast(appBean.getMsg());

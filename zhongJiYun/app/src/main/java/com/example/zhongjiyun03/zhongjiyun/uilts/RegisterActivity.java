@@ -732,7 +732,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case 30:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
                 break;
 

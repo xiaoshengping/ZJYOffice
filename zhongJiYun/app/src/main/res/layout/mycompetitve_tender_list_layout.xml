@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/image_view"
-
         android:background="@color/color_dedede"
         android:layout_width="match_parent"
         android:layout_height="0.5dp" />
@@ -66,6 +65,7 @@
    <ImageView
        android:id="@+id/address_image"
        android:layout_marginLeft="20dp"
+       android:layout_marginTop="5dp"
        android:layout_marginRight="20dp"
        android:layout_below="@+id/address_text"
        android:background="@color/color_dedede"
@@ -90,7 +90,7 @@
         android:text="缴纳保证金"
         android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="25dp" />
     <ImageView
         android:layout_toLeftOf="@+id/comment_button"
         android:layout_marginTop="8dp"
@@ -111,9 +111,10 @@
         android:text="立即评价"
         android:layout_marginBottom="5dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="25dp" />
 
     <ImageView
+        android:scaleType="fitXY"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/cash_deposit_image"
         android:background="@color/color_dedede"

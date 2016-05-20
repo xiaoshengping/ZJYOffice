@@ -346,15 +346,15 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         }
         if (!TextUtils.isEmpty(seekProjectBean.getWorkAmount())) {
 
-            gonchengContentText.setText(seekProjectBean.getWorkAmount() + "米");
+            gonchengContentText.setText(seekProjectBean.getWorkAmount() );
         }
         if (!TextUtils.isEmpty(seekProjectBean.getDiameter())) {
 
-            diameterContentText.setText(seekProjectBean.getDiameter() + "米");
+            diameterContentText.setText(seekProjectBean.getDiameter() );
         }
         if (!TextUtils.isEmpty(seekProjectBean.getPileDepth())) {
 
-            pileContentText.setText(seekProjectBean.getPileDepth() + "米");
+            pileContentText.setText(seekProjectBean.getPileDepth() );
         }
         if (!TextUtils.isEmpty(seekProjectBean.getProjectRequirementTypeStr())) {
 
@@ -595,7 +595,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 dlg.cancel();
             }
         });
@@ -870,7 +870,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     @Override
     public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
         super.startActivityForResult(intent, requestCode, options);
-        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
 
     @Override

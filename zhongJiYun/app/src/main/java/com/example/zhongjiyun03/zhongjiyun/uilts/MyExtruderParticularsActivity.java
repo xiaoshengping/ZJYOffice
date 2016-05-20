@@ -210,7 +210,7 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
             mSVProgressHUD.dismiss();
             MyAppliction.showToast("加载数据失败,请稍后重试！");
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
         }
 
 
@@ -235,7 +235,7 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
 
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.leave_factory_textview:
                 imageBrower(0,myExtruderBean);
@@ -281,7 +281,7 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;
@@ -353,13 +353,13 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
     @Override
     public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
         super.startActivityForResult(intent, requestCode, options);
-        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
 
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
     }
 
 }

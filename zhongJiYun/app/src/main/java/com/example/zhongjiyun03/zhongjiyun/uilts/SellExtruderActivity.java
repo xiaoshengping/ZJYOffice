@@ -228,7 +228,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
             case R.id.sell_save_button:
                 if (getIntent().getStringExtra("tage").equals("modifiSell")){
@@ -1398,7 +1398,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.anim_open, R.anim.anim_close);
+            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;

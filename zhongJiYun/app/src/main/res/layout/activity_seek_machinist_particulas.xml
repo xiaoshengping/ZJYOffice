@@ -88,17 +88,17 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content" />
           <TextView
+
               android:layout_centerHorizontal="true"
-              android:layout_marginTop="15dp"
+              android:layout_marginTop="25dp"
               android:textColor="@color/ic_white"
-              android:textSize="@dimen/home_Size_18"
-              android:gravity="center"
+              android:gravity="center|left"
               android:drawableLeft="@mipmap/phone_write"
               android:layout_below="@+id/work_experience_image"
-              android:layout_marginLeft="240dp"
-              android:layout_width="200dp"
-              android:layout_height="40dp" />
+              android:layout_width="130dp"
+              android:layout_height="wrap_content" />
           <TextView
+
                android:id="@+id/phone_tell"
               android:background="@drawable/text_view_call_corners"
               android:layout_centerHorizontal="true"
