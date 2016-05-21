@@ -364,7 +364,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="时间合适的活动的活动活动活动和丰厚的好多好多好多的好多好多好多好杀杀杀急啊急啊急啊急啊东海大河大河嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕的德国德国"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -405,7 +405,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="时间合适的活动的活动活动活动和丰厚的好多好多好多的好多好多好多好杀杀杀急啊急啊急啊急啊东海大河大河嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕的德国德国"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -448,7 +448,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:text="时间合适的活动的活动活动活动和丰厚的好多好多好多的好多好多好多好杀杀杀急啊急啊急啊急啊东海大河大河嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕嘀咕的德国德国"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView

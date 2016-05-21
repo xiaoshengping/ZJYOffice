@@ -1,6 +1,8 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.annotation.TargetApi;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +28,9 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)
     private TextView retrunText;     //头部左边
+
+    @ViewInject(R.id.versont_text)
+    private TextView versontText;
 
     @Override
     protected void onResume() {
@@ -75,9 +80,21 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         addExtruderTv.setVisibility(View.GONE);
         titleNemeTv.setText("关于我们");
         retrunText.setOnClickListener(this);
+        try {
+            versontText.setText(getVersionName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
-
+    }
+    private String getVersionName() throws Exception {
+        // 获取packagemanager的实例
+        PackageManager packageManager = getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = packageManager.getPackageInfo(getPackageName(),0);
+        String version = packInfo.versionName;
+        return version;
     }
 
     @Override

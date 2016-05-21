@@ -12,12 +12,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -94,13 +96,23 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
         while (cursor.moveToNext()) {
             uid=cursor.getString(0);
 
-        }//启用支持javascript
+        }
+        WebSettings webSettings=webView.getSettings();
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setAllowFileAccess(true);// 设置允许访问文件数据
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        //启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
         if (!TextUtils.isEmpty(uid)){
-            webView.loadUrl("http://h148a34804.iok.la/buluo/new_oauth.php?asp_user_id="+uid);
+            webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?asp_user_id="+uid);
 
         }else {
-            webView.loadUrl("http://h148a34804.iok.la/buluo/");
+            webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/");
         }
         webView.setWebViewClient(new WebViewClient(){
             @Override

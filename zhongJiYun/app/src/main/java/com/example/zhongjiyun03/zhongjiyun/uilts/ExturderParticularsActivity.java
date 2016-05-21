@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -47,9 +50,11 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import cn.sharesdk.onekeyshare.ShareContentCustomizeCallback;
@@ -183,6 +188,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     private ImageView imageLiginHhree;
     @ViewInject(R.id.image_ligin_frou)
     private ImageView imageLiginFrou;
+    private SecondHandHandler secondHandHandler;
 
 
 
@@ -285,31 +291,47 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getChassisMode()+"")){
                                     chassisTypeText.setText(secondHandBean.getDeviceBaseDto().getChassisMode()+"");
                                 }else {
-                                    chassisTypeText.setText("0");
+                                    chassisTypeText.setText("暂无");
                                 }
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getWorkingWeight())){
                                     workWeightTextl.setText(secondHandBean.getDeviceBaseDto().getWorkingWeight());
+                                }else {
+                                    workWeightTextl.setText("暂无");
                                 }
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxTorque())){
                                     reverseText.setText(secondHandBean.getDeviceBaseDto().getMaxTorque());
+                                }else {
+                                    reverseText.setText("暂无");
                                 }
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getDrillingSpeed())){
                                     drillSpeedText.setText(secondHandBean.getDeviceBaseDto().getDrillingSpeed());
+                                }else {
+                                    drillSpeedText.setText("暂无");
                                 }
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getEngineType())){
                                     engineTypeText.setText(secondHandBean.getDeviceBaseDto().getEngineType());
+                                }else {
+                                    engineTypeText.setText("暂无");
                                 }
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getEnginePowerRating())){
                                     enginePowerText.setText(secondHandBean.getDeviceBaseDto().getEnginePowerRating());
+                                }else {
+                                    enginePowerText.setText("暂无");
                                 }
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMainHoistingForce())){
                                     elevatingPowerText.setText(secondHandBean.getDeviceBaseDto().getMainHoistingForce());
+                                }else {
+                                    elevatingPowerText.setText("暂无");
                                 }
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxHoleDiameter())){
                                     dirllDiameteText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDiameter());
+                                }else {
+                                    dirllDiameteText.setText("暂无");
                                 }
                                 if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getMaxHoleDepth())){
                                     dirllDepthText.setText(secondHandBean.getDeviceBaseDto().getMaxHoleDepth());
+                                }else {
+                                    dirllDepthText.setText("暂无");
                                 }
 
                                 if (secondHandBean.getDeviceBaseDto().getDeviceImages()!=null&&
@@ -482,6 +504,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         shardText.setOnClickListener(this);
         retrunText.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);
+        secondHandHandler=new SecondHandHandler();
         checkBoxCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -692,7 +715,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         oks.setTitle(secondHandBean.getDeviceDto().getManufacture()+secondHandBean.getDeviceDto().getNoOfManufacture()+
         "_"+secondHandBean.getDeviceDto().getDateOfManufacture()+"年_"+secondHandBean.getDeviceDto().getHourOfWork()+"小时_"+secondHandBean.getDeviceDto().getProvince()+secondHandBean.getDeviceDto().getCity());
         // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
-        oks.setTitleUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig-details?id="+getIntent().getStringExtra("secondHandData"));
+        oks.setTitleUrl(AppUtilsUrl.BaseUrl+"App/Index.html#/tab/my/boss-used-rig-details?id="+getIntent().getStringExtra("secondHandData"));
         // text是分享文本，所有平台都需要这个字段
         oks.setText(secondHandBean.getDeviceDto().getManufacture()+secondHandBean.getDeviceDto().getNoOfManufacture()+
                 "_"+secondHandBean.getDeviceDto().getDateOfManufacture()+"年_"+secondHandBean.getDeviceDto().getHourOfWork()+"小时_"+secondHandBean.getDeviceDto().getProvince()+secondHandBean.getDeviceDto().getCity());
@@ -700,22 +723,111 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         //oks.setImagePath("/sdcard/test.jpg");//确保SDcard下面存在此张图片
         oks.setImageUrl(secondHandBean.getDeviceImages().get(0));
         // url仅在微信（包括好友和朋友圈）中使用
-        oks.setUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig-details?id="+getIntent().getStringExtra("secondHandData"));
+        oks.setUrl(AppUtilsUrl.BaseUrl+"App/Index.html#/tab/my/boss-used-rig-details?id="+getIntent().getStringExtra("secondHandData"));
         // comment是我对这条分享的评论，仅在人人网和QQ空间使用
         oks.setComment(secondHandBean.getDeviceDto().getManufacture()+secondHandBean.getDeviceDto().getNoOfManufacture()+
                 "_"+secondHandBean.getDeviceDto().getDateOfManufacture()+"年_"+secondHandBean.getDeviceDto().getHourOfWork()+"小时_"+secondHandBean.getDeviceDto().getProvince()+secondHandBean.getDeviceDto().getCity());
         // site是分享此内容的网站名称，仅在QQ空间使用
         oks.setSite(getString(R.string.app_name));
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
-        oks.setSiteUrl("http://dev.zhongjiyun.cn/App/Index.html#/tab/my/boss-used-rig-details?id="+getIntent().getStringExtra("secondHandData"));
-        // 启动分享GUI
+        oks.setSiteUrl(AppUtilsUrl.BaseUrl+"App/Index.html#/tab/my/boss-used-rig-details?id="+getIntent().getStringExtra("secondHandData"));
+            oks.setCallback(new PlatformActionListener() {
+                @Override
+                public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+                    Log.e("分享成功","分享回调成功");
+                    //MyAppliction.showToast("分享回调成功");
+                    Message msg = new Message();
+                    Bundle b = new Bundle();// 存放数据
+                    b.putString("color", "我的");
+                    msg.setData(b);
+                    ExturderParticularsActivity.this.secondHandHandler.sendMessage(msg); // 向Handler发送消息，更新UI
+
+                }
+
+                @Override
+                public void onError(Platform platform, int i, Throwable throwable) {
+                    Log.e("分享onError","分享回调onError");
+                }
+
+                @Override
+                public void onCancel(Platform platform, int i) {
+
+                }
+            });
+
+
+         // 启动分享GUI
         oks.show(this);
         }else {
             MyAppliction.showToast("网络异常，请稍后重试");
         }
     }
+    /**
+     * 接受消息，处理消息 ，此Handler会与当前主线程一块运行
+     * */
+
+    class SecondHandHandler extends Handler {
+        public SecondHandHandler() {
+        }
+
+        public SecondHandHandler(Looper L) {
+            super(L);
+        }
+
+        // 子类必须重写此方法，接受数据
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            //Log。d("MyHandler"， "handleMessage。。。。。。");
+            super.handleMessage(msg);
+            // 此处可以更新UI
+           /* Bundle b = msg.getData();
+            String color = b.getString("color");*/
+            shareRedPacket();
 
 
+        }
+    }
+    //分享成功获得云币
+    private void shareRedPacket() {
+        //MyAppliction.showToast("分享回调成功");
+        SQLhelper sqLhelper=new SQLhelper(ExturderParticularsActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        Log.e("id",uid);
+        if (!TextUtils.isEmpty(uid)){
+            HttpUtils httpUtils=new HttpUtils();
+            RequestParams requestParams=new RequestParams();
+            requestParams.addBodyParameter("id",uid);
+
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getShareRedPacketData(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    Log.e("分享获取红包",responseInfo.result);
+                    //MyAppliction.showToast("分享成功");
+
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    Log.e("分享获取红包onFailure",s);
+                }
+            });
+        }
+
+
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 // KeyEvent.KEYCODE_BACK代表返回操作.

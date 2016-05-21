@@ -71,7 +71,7 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="13dp"
         android:id="@+id/cursor"
         android:layout_width="65dp"
         android:layout_height="3dp"
