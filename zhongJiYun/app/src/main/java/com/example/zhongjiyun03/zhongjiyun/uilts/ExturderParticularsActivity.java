@@ -800,22 +800,23 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
             uid=cursor.getString(0);
 
         }
-        Log.e("id",uid);
         if (!TextUtils.isEmpty(uid)){
             HttpUtils httpUtils=new HttpUtils();
             RequestParams requestParams=new RequestParams();
             requestParams.addBodyParameter("id",uid);
-
+            if (!TextUtils.isEmpty(getIntent().getStringExtra("secondHandData"))){
+                requestParams.addBodyParameter("deviceId",getIntent().getStringExtra("secondHandData"));
+            }
             //步骤1：创建一个SharedPreferences接口对象
             SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
             //步骤2：获取文件中的值
             String sesstionId = read.getString("code","");
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getShareRedPacketData(),requestParams, new RequestCallBack<String>() {
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getShareRedPacketParticulasrData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     Log.e("分享获取红包",responseInfo.result);
-                    //MyAppliction.showToast("分享成功");
+                    MyAppliction.showToast("分享成功");
 
                 }
 

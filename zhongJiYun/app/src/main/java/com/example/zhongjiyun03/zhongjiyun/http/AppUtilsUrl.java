@@ -261,11 +261,23 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/shopapi/sharpsecondhandlist" ;
 
     }
+    //分享二手机获取红包
+    public static String getShareRedPacketParticulasrData(){
+        //  shopapi/sharpsecondhanddetail
+        return BaseUrl+"shopapi/sharpsecondhanddetail" ;
+
+    }
 
     //向服务器提交错误信息
     public static String getLoggerData(){
         //  appapi/logger/upload
         return BaseUrl+"appapi/logger/upload" ;
+
+    }
+    //分享商城获得云币
+    public static String getMarketPackedData(){
+        //  appapi/logger/upload
+        return BaseUrl+"store/mobile/games/app_adpt.php?aspid=ASP_USER_ID" ;
 
     }
 

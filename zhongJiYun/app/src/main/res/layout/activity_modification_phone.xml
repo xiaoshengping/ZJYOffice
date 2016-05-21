@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
+    android:id="@+id/root_layout"
     android:background="@color/background"
     tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.ModificationPhoneActivity">
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
+
 
     <include android:id="@+id/home_title_bar_rl" android:layout_width="match_parent"
         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
@@ -149,8 +154,8 @@
 
 
 
+     </RelativeLayout>
 
 
 
-
-</RelativeLayout>
+</ScrollView>

@@ -834,7 +834,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
         //获取xoff
                 int xpos = manager.getDefaultDisplay().getWidth() / 30 - popupWindowTime.getWidth() / 30;
         //xoff,yoff基于anchor的左下角进行偏移。
-        popupWindowTime.showAsDropDown(parent, xpos, 10);
+        popupWindowTime.showAsDropDown(parent, xpos, 1);
         //popupWindow.showAtLocation(parent, Gravity.TOP, 200, 250);
 
 
@@ -908,7 +908,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
         //获取xoff
                 int xpos = manager.getDefaultDisplay().getWidth() / 30 - popupWindowTime.getWidth() / 30;
         //xoff,yoff基于anchor的左下角进行偏移。
-        popupWindowTime.showAsDropDown(parent, xpos, 10);
+        popupWindowTime.showAsDropDown(parent, xpos, 4);
         //popupWindow.showAtLocation(parent, Gravity.TOP, 200, 250);
 
 
