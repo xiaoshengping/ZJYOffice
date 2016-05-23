@@ -133,6 +133,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
     @Override
     protected void onResume() {
         super.onResume();
+        pageIndext=1;
         extruderListView.setRefreshing();
         JPushInterface.onResume(this);
 

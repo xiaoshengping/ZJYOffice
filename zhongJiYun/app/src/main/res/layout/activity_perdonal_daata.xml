@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
+
     android:background="@color/background"
     tools:context=".uilts.PersonageInformationActivity">
+    <include android:id="@+id/app_head_layout"  android:layout_width="match_parent"
+        android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/not_data_layout"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/not_data_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/not_data_text"
+            android:textColor="@color/nodata_background"
+            android:layout_marginTop="5dp"
+            android:text="还没有找到机手哦"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-     <include  android:layout_width="match_parent"
-         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/app_head_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/layout"
         android:orientation="vertical"
@@ -311,6 +338,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    </LinearLayout>
 
-
-</LinearLayout>
+</RelativeLayout>

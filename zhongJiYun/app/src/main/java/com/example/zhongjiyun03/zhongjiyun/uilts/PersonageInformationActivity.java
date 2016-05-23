@@ -102,7 +102,12 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
     private LinearLayout layout;
     private String uids;  //用户id
     private PersonageInformationBean personageInformation;
-
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;//没有数据显示
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
 
     @Override
     protected void onPause() {
@@ -244,6 +249,11 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                 public void onFailure(HttpException e, String s) {
                     mSVProgressHUD.dismiss();
                     MyAppliction.showToast("网络异常，请稍后重试！");
+                    if (personageInformation==null){
+                        notDataLayout.setVisibility(View.VISIBLE);
+                        notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                        notDataText.setText("没有网络哦");
+                    }
                 }
             });
 
@@ -276,6 +286,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
         imageUri = Uri.fromFile(file);//The Uri t
         mSVProgressHUD = new SVProgressHUD(this);
         imageView.setOnClickListener(this);
+        notDataLayout.setOnClickListener(this);
 
 
 
@@ -308,6 +319,9 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                 break;
             case R.id.image_view:
                 imageBrowerPersonTouXiang(0,personageInformation);
+                break;
+            case R.id.not_data_layout:
+                initInformationData();
                 break;
 
 

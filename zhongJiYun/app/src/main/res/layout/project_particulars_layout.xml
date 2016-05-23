@@ -239,7 +239,7 @@
                 android:id="@+id/pile_content_text"
                 android:textSize="@dimen/home_Size_16"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="33dp"
                 android:text="30米"
                 android:textColor="@color/tailt_dark"
                 android:layout_width="wrap_content"

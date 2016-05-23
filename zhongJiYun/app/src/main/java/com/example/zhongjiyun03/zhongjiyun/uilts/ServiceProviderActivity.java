@@ -147,11 +147,11 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
         final RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("PageIndex",pageIndex+"");
         requestParams.addBodyParameter("PageSize","10");
-        if (!TextUtils.isEmpty(MyAppliction.getLatitude())){
-            requestParams.addBodyParameter("Longitude",MyAppliction.getLatitude());
-        }
         if (!TextUtils.isEmpty(MyAppliction.getLongitude())){
-            requestParams.addBodyParameter("Latitude",MyAppliction.getLongitude());
+            requestParams.addBodyParameter("Longitude",MyAppliction.getLongitude());
+        }
+        if (!TextUtils.isEmpty(MyAppliction.getLatitude())){
+            requestParams.addBodyParameter("Latitude",MyAppliction.getLatitude());
         }
 
         if (getIntent().getStringExtra("tage").equals("matingFacily")){

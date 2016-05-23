@@ -266,7 +266,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         ILoadingLayout startLabels = secondHandListview
                 .getLoadingLayoutProxy(true, false);
-        startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
+        startLabels.setPullLabel("下拉刷新...");// 刚下拉时， 显示的提示
         startLabels.setRefreshingLabel("正在刷新...");// 刷新时
         startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         secondHandListview.setRefreshing();
