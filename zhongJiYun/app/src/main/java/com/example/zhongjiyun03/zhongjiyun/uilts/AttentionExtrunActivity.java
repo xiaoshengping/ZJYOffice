@@ -26,7 +26,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
-import com.example.zhongjiyun03.zhongjiyun.adapter.HomeSecondHandListAdapter;
+import com.example.zhongjiyun03.zhongjiyun.adapter.AttentionSecondHandListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AttentionSecondHandDataBean;
@@ -68,7 +68,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     private int pageIndex=1;
     private List<SecondHandBean> secondHandBeens; //列表数据
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
-    private HomeSecondHandListAdapter homeSecondHandListAdapter;
+    private AttentionSecondHandListAdapter homeSecondHandListAdapter;
     @ViewInject(R.id.not_data_layout)
     private LinearLayout notDataLayout;
     private SVProgressHUD mSVProgressHUD;//loding
@@ -242,7 +242,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
     }
     private void initListView() {
 
-        homeSecondHandListAdapter = new HomeSecondHandListAdapter(secondHandBeens, this);
+        homeSecondHandListAdapter = new AttentionSecondHandListAdapter(secondHandBeens, this);
         attentionExtrunLsitview.setAdapter(homeSecondHandListAdapter);
         homeSecondHandListAdapter.notifyDataSetChanged();
         ListView listView=attentionExtrunLsitview.getRefreshableView();
@@ -259,7 +259,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                showExitGameAlert("确定要删除？",position-1);
+                showExitGameAlert("确定要取消关注？",position-1);
 
                 return true;
             }

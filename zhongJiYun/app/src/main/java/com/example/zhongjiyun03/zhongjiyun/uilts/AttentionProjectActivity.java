@@ -250,7 +250,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //MyAppliction.showToast("长按了"+position);
-                showExitGameAlert("确定要删除？",position-1);
+                showExitGameAlert("确定要取消关注？",position-1);
                 return true;
             }
         });

@@ -184,9 +184,11 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         super.onResume();
         if (!TextUtils.isEmpty(MyAppliction.getProjectRequestTage())){
             if (MyAppliction.getProjectRequestTage().equals("login")){
+                PageIndex=1;
                 projectListView.setRefreshing();
                 MyAppliction.setProjectRequestTage("project");
             }else if (MyAppliction.getProjectRequestTage().equals("competitive")){
+                PageIndex=1;
                 projectListView.setRefreshing();
                 MyAppliction.setProjectRequestTage("project");
             }
@@ -256,7 +258,6 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                             List<SeekProjectBean> seekProjectBean= seekProjectBeanList.getPagerData();
                             if (isPullDownRefresh){
                                 seekProjectBeens.clear();
-                                //Log.e("sdhdhdh","jjdfj");
                             }
                             seekProjectBeens.addAll(seekProjectBean);
                             homeProjectlsitAdapter.notifyDataSetChanged();
@@ -264,7 +265,6 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                         }
                         notDataLayout.setVisibility(View.GONE);
                     }else  if ((appBean.getResult()).equals("empty")){
-                        //MyAppliction.showToast("没有更多数据");
                         projectListView.onRefreshComplete();
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         notDataLayout.setVisibility(View.VISIBLE);
@@ -333,7 +333,6 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
                 int hour = t.hour; // 0-23
                 int minute = t.minute;
                 int second = t.second;
-                Log.e("data",second+"");
                 Intent intent=new Intent(getActivity(), SeekProjectParticularsActivity.class);
                     intent.putExtra("seekProjectId",seekProjectBeens.get(position-1).getId());
                     startActivity(intent);
@@ -642,7 +641,7 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         //获取xoff
                 int xpos = manager.getDefaultDisplay().getWidth() / 30 - popupWindowTime.getWidth() / 30;
         //xoff,yoff基于anchor的左下角进行偏移。
-        popupWindowTime.showAsDropDown(parent, xpos, 3);
+        popupWindowTime.showAsDropDown(parent, xpos, 2);
         //popupWindow.showAtLocation(parent, Gravity.TOP, 200, 250);
 
 

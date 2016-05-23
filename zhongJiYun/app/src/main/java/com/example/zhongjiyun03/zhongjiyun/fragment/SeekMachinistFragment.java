@@ -877,7 +877,7 @@ public class SeekMachinistFragment extends Fragment implements PullToRefreshBase
         //获取xoff
                 int xpos = manager.getDefaultDisplay().getWidth() / 30 - popupWindowTime.getWidth() / 30;
         //xoff,yoff基于anchor的左下角进行偏移。
-        popupWindowTime.showAsDropDown(parent, xpos, 3);
+        popupWindowTime.showAsDropDown(parent, xpos, 2);
         //popupWindow.showAtLocation(parent, Gravity.TOP, 200, 250);
 
 

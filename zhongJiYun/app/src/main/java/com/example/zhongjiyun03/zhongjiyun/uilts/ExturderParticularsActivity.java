@@ -286,10 +286,13 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                              }else {
                                  brandText.setText("0");
                              }
+
+
+
                             if (secondHandBean.getDeviceBaseDto()!=null){
                                 extruderContentRlayout.setVisibility(View.VISIBLE);
-                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getChassisMode()+"")){
-                                    chassisTypeText.setText(secondHandBean.getDeviceBaseDto().getChassisMode()+"");
+                                if (!TextUtils.isEmpty(secondHandBean.getDeviceBaseDto().getChassisMode())){
+                                    chassisTypeText.setText(secondHandBean.getDeviceBaseDto().getChassisMode());
                                 }else {
                                     chassisTypeText.setText("暂无");
                                 }
@@ -380,8 +383,11 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                                 MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceDto().getBossHeadthumb(),txiangImage,MyAppliction.RoundedOptions);
                             }
                             tailtText.setText("机主"+secondHandBean.getDeviceDto().getBossName()+"自述");
+
+                            for (int i = 0; i <secondHandBean.getDeviceImages().size() ; i++) {
+
+                            }
                             if (secondHandBean.getDeviceImages()!=null){
-                                //Log.e("图片list大小",secondHandBean.getDeviceImages().size()+"");
                                 if (secondHandBean.getDeviceImages().size()==1){
                                     imageView.setVisibility(View.VISIBLE);
                                     MyAppliction.imageLoader.displayImage(secondHandBean.getDeviceImages().get(0),imageView,MyAppliction.RoundedOptionsOne);

@@ -289,17 +289,18 @@
             android:layout_height="wrap_content" />
 
         <RelativeLayout
+            android:layout_marginTop="3dp"
             android:layout_marginLeft="15dp"
             android:layout_below="@id/leixing_text"
             android:layout_toRightOf="@+id/xingji_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
+            <ImageView
                 android:layout_marginLeft="5dp"
                 android:id="@+id/rating_one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
+            <ImageView
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/rating_one"
 
@@ -307,7 +308,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
+            <ImageView
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/rating_two"
 
@@ -315,13 +316,13 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
+            <ImageView
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/rating_three"
                 android:id="@+id/rating_four"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
+            <ImageView
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/rating_four"
                 android:id="@+id/rating_five"

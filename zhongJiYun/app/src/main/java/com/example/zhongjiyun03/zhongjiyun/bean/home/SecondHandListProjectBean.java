@@ -1,6 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.bean.home;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -178,7 +179,13 @@ public class SecondHandListProjectBean implements Serializable {
     }
 
     public List<String> getDeviceImages() {
-        return DeviceImages;
+       List<String> imgs=new ArrayList<>();
+        for (int i = 0; i < DeviceImages.size(); i++) {
+            if(DeviceImages.get(i)!=null){
+                imgs.add(DeviceImages.get(i));
+            }
+        }
+        return imgs;
     }
 
     public void setDeviceImages(List<String> deviceImages) {

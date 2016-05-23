@@ -76,7 +76,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_below="@+id/pety_text"
                 android:layout_toRightOf="@+id/miaoshi_text"
-                android:layout_marginLeft="5dp"
+
                 android:layout_marginTop="5dp"
                 android:textSize="@dimen/home_Size_16"
                 android:text="北京中基云互联网科技有限公司"

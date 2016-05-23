@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -181,6 +182,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
         seekMachinisDataBean= (SekkMachinisDataBean) getIntent().getSerializableExtra("seekData");
         messageLayout.setVisibility(View.GONE);
         if (seekMachinisDataBean!=null){
+            Log.e("sss","jsjdjdjd");
             MyAppliction.imageLoader.displayImage(seekMachinisDataBean.getDriverHeader(),circleImageView,MyAppliction.options);
             nameText.setText(seekMachinisDataBean.getDriverName());
             workExperienceText.setText(seekMachinisDataBean.getWorkingAge()+"年工作经验");
@@ -364,11 +366,12 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                     }
 
                 }
-                messageLayout.setVisibility(View.VISIBLE);
+
             }else {
                 workExperienceRlayout.setVisibility(View.GONE);
                 workExperienceLayoutOne.setVisibility(View.GONE);
                 workExperienceLayoutTwo.setVisibility(View.GONE);
+
             }
 
 
@@ -390,6 +393,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
 
                 }
             });
+            messageLayout.setVisibility(View.VISIBLE);
 
         }
 
@@ -454,6 +458,7 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                 }else {
                     Intent intent=new Intent(SeekMachinistParticulasActivity.this,LoginActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
 

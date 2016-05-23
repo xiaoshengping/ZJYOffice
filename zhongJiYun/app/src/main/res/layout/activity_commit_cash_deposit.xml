@@ -63,16 +63,26 @@
 
             <TextView
                 android:layout_below="@+id/work_time_text"
-                android:id="@+id/pety_text"
+                android:id="@+id/pety_text_tailt"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
                 android:textSize="@dimen/home_Size_16"
-                android:text="用途：项目保证金"
+                android:text="用途："
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_toRightOf="@+id/pety_text_tailt"
+                android:layout_below="@+id/work_time_text"
+                android:id="@+id/pety_text"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/home_Size_16"
+                android:text="项目保证金"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_marginBottom="10dp"
-                android:layout_below="@+id/pety_text"
+                android:layout_below="@+id/pety_text_tailt"
                 android:id="@+id/miaoshi_text"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"

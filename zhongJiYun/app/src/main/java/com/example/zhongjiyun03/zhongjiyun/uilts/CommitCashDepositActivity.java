@@ -37,6 +37,8 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
     @ViewInject(R.id.contract_check)
     private RadioButton cntractCheck;
     private String zfuTage;
+    @ViewInject(R.id.pety_text)
+    private TextView petyText;
     @Override
     protected void onResume() {
         super.onResume();
@@ -88,6 +90,15 @@ public class CommitCashDepositActivity extends AppCompatActivity implements View
         zfuStateLayout.setOnClickListener(this);
         zFuButton.setOnClickListener(this);
        zfuTage= getIntent().getStringExtra("zfuTage");
+        if (zfuTage.equals("rentExturd")){
+            petyText.setText("二手机保证金");
+        }else if (zfuTage.equals("sellExturd")){
+            petyText.setText("二手机保证金");
+        }else if (zfuTage.equals("project")){
+            petyText.setText("项目保证金");
+
+        }
+
     }
 
 

@@ -175,7 +175,19 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     @Override
     protected void onResume() {
         super.onResume();
-        projectListView.setRefreshing();
+        if (!TextUtils.isEmpty(MyAppliction.getProjectRequestTage())){
+            if (MyAppliction.getProjectRequestTage().equals("login")){
+                PageIndex=1;
+                projectListView.setRefreshing();
+                MyAppliction.setProjectRequestTage("project");
+            }else if (MyAppliction.getProjectRequestTage().equals("competitive")){
+                PageIndex=1;
+                projectListView.setRefreshing();
+                MyAppliction.setProjectRequestTage("project");
+            }
+        }else {
+            MyAppliction.setProjectRequestTage("project");
+        }
         JPushInterface.onResume(this);
 
     }

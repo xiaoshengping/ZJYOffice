@@ -453,8 +453,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.competitive_layout:
                 if (!TextUtils.isEmpty(uid)){
                     if (!TextUtils.isEmpty(projectReply)){
-                    /*Log.e("MESSAGE",message);
-                    Log.e("messageRemindId",messageRemindId+"----messageRemindId");*/
                         update(messageRemindId,SystemMessageSQLhelper.PROJECTREPLY,date);
                     }else {
                         if (!TextUtils.isEmpty(date)){
@@ -473,8 +471,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.message_layout:
                 if (!TextUtils.isEmpty(message)){
-                    /*Log.e("MESSAGE",message);
-                    Log.e("messageRemindId",messageRemindId+"----messageRemindId");*/
                     update(messageRemindId,SystemMessageSQLhelper.MESSAGE,date);
                 }else {
                     if (!TextUtils.isEmpty(date)){

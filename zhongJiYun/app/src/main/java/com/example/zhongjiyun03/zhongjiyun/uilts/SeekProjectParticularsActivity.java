@@ -331,15 +331,15 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         TextView extruderContenText = (TextView) projectParticularsView.findViewById(R.id.extruder_conten_text);
         TextView addressContentTextView = (TextView) projectParticularsView.findViewById(R.id.address_content_text_view);
 
-        TextView ratingOne = (TextView) projectParticularsView.findViewById(R.id.rating_one);
+        ImageView ratingOne = (ImageView) projectParticularsView.findViewById(R.id.rating_one);
 
-        TextView ratingTwo = (TextView) projectParticularsView.findViewById(R.id.rating_two);
+        ImageView ratingTwo = (ImageView) projectParticularsView.findViewById(R.id.rating_two);
 
-        TextView ratingThree = (TextView) projectParticularsView.findViewById(R.id.rating_three);
+        ImageView ratingThree = (ImageView) projectParticularsView.findViewById(R.id.rating_three);
 
-        TextView ratingFour = (TextView) projectParticularsView.findViewById(R.id.rating_four);
+        ImageView ratingFour = (ImageView) projectParticularsView.findViewById(R.id.rating_four);
 
-        TextView ratingFive = (TextView) projectParticularsView.findViewById(R.id.rating_five);
+        ImageView ratingFive = (ImageView) projectParticularsView.findViewById(R.id.rating_five);
 
 
         if (!TextUtils.isEmpty(seekProjectBean.getTitle())) {
@@ -423,7 +423,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             ratingOne.setBackgroundResource(R.mipmap.eval_icon);
 
         } else if (StarRate.equals("2")) {
-
             ratingOne.setBackgroundResource(R.mipmap.eval_icon);
             ratingTwo.setBackgroundResource(R.mipmap.eval_icon);
 
@@ -498,6 +497,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                             Intent intent = new Intent(SeekProjectParticularsActivity.this, CompetitiveDescribeActivity.class);
                             intent.putExtra("ProjectId", seekProjectId);
                             startActivity(intent);
+                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
                         } else {
                             MyAppliction.showToast(seekProjectBean.getCanReply());
@@ -510,6 +510,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                             } else {
                                 Intent intent = new Intent(SeekProjectParticularsActivity.this, LoginActivity.class);
                                 startActivity(intent);
+                                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                             }
 
                         } else {
@@ -521,6 +522,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 } else {
                     Intent loginIntent = new Intent(SeekProjectParticularsActivity.this, LoginActivity.class);
                     startActivity(loginIntent);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
             case R.id.checkBox_check:
@@ -544,6 +546,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 } else {
                     Intent intent = new Intent(SeekProjectParticularsActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
                 }
                 break;
@@ -596,6 +599,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         } else {
             Intent intent = new Intent(SeekProjectParticularsActivity.this, LoginActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
         }
 
 
