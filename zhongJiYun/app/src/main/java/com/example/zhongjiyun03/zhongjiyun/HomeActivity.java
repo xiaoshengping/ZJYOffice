@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
     @ViewInject(R.id.home_rg)
     private RadioGroup homeRG;
     private long mExitTime;
-    public Boolean isFirstIn = false;
+    public Boolean isInitTage = true;
     @ViewInject(R.id.progress_bar)
     private ProgressBar progressBar;
     @ViewInject(R.id.loding_layout)
@@ -97,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_home);
         ViewUtils.inject(this);
-        init();
+
 
         SharedPreferences sharedPreferences = this.getSharedPreferences("share", MODE_PRIVATE);
         boolean isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
@@ -116,13 +116,14 @@ public class HomeActivity extends AppCompatActivity {
             //Log.d("debug", "不是第一次运行");
             Intent intent=new Intent(HomeActivity.this,WelcomeActivity.class);
             startActivity(intent);
-            getVersontData();//版本更新
+
             if (isCommitData) {
                 initRegistration();//提交用户信息
             }
 
-
         }
+        getVersontData();//版本更新
+
         //HomeFragment.setStart(0);
         //startPage();
 
@@ -227,6 +228,7 @@ public class HomeActivity extends AppCompatActivity {
                                    } catch (Exception e) {
                                        e.printStackTrace();
                                    }
+                                   init();
                                    //showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
                                }else if (versontDataBean.getUpdateLevel()==2){  //强制更新
                                    try {
@@ -239,6 +241,8 @@ public class HomeActivity extends AppCompatActivity {
                                        e.printStackTrace();
                                    }
                                    //showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
+                               }else {
+                                   init();
                                }
                            }
                        }
@@ -250,6 +254,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("获取本版信息",s);
+                init();
             }
         });
 
@@ -473,21 +478,6 @@ public class HomeActivity extends AppCompatActivity {
                 .withValue("data2", "2")
                 .withValue("data1", "18515333333")
                 .build();
-
-
-       /* Bitmap sourceBitmap = BitmapFactory.decodeResource(getResources(),
-                R.mipmap.logo_icon);
-        final ByteArrayOutputStream os = new ByteArrayOutputStream();
-        // 将Bitmap压缩成PNG编码，质量为100%存储
-        sourceBitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
-        byte[] avatar = os.toByteArray();
-        uri = Uri.parse("content://com.android.contacts/data");
-        ContentProviderOperation operation7 = ContentProviderOperation.newInsert(uri)
-                .withValueBackReference("raw_contact_id", 0)
-                .withValue("mimetype", "vnd.android.cursor.item/phone_v2")
-                .withValue("data2", "2")
-                .withValue("data1",avatar)
-                .build();*/
         operations.add(operation);
         operations.add(operation2);
         operations.add(operation3);
