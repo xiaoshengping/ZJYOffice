@@ -40,6 +40,7 @@ import com.example.zhongjiyun03.zhongjiyun.fragment.SeekMachinistFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekProjectFragment;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.service.UpdateService;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -70,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final int MSG_PROGRESS_UPDATE = 0x110;
     private TextView tailteTv;
     private boolean isCommitData=true;//是否提交用户信息
-
+    public static final String appName = "中基云机主端";
 
 
 
@@ -123,7 +124,7 @@ public class HomeActivity extends AppCompatActivity {
 
         }
         getVersontData();//版本更新
-
+        init();
         //HomeFragment.setStart(0);
         //startPage();
 
@@ -179,13 +180,13 @@ public class HomeActivity extends AppCompatActivity {
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegistrationData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("极光提交用户信息",responseInfo.result);
+                //Log.e("极光提交用户信息",responseInfo.result);
                 isCommitData=false;
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("极光提交用户信息onFailure",s);
+                //Log.e("极光提交用户信息onFailure",s);
                 isCommitData=true;
             }
         });
@@ -222,16 +223,18 @@ public class HomeActivity extends AppCompatActivity {
                                if (versontDataBean.getUpdateLevel()==1){ //不强制更新
                                    try {
                                       if (!versontDataBean.getNo().equals(getVersionName())){
-                                          noShowExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
+                                          noShowExitGameAlert("版本更新",versontDataBean.getContent(),versontDataBean.getDownloadUrl());
                                       }
 
                                    } catch (Exception e) {
                                        e.printStackTrace();
                                    }
-                                   init();
+                                   //noShowExitGameAlert("版本更新",versontDataBean.getContent(),versontDataBean.getDownloadUrl());
+
+
                                    //showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
                                }else if (versontDataBean.getUpdateLevel()==2){  //强制更新
-                                   try {
+                                   /*try {
                                        if (!versontDataBean.getNo().equals(getVersionName())){
                                            showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
 
@@ -239,10 +242,13 @@ public class HomeActivity extends AppCompatActivity {
 
                                    } catch (Exception e) {
                                        e.printStackTrace();
-                                   }
+                                   }*/
+
                                    //showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
-                               }else {
-                                   init();
+                                   Intent intent = new Intent(HomeActivity.this,UpdateService.class);
+                                   intent.putExtra("Key_App_Name",appName);
+                                   intent.putExtra("Key_Down_Url",versontDataBean.getDownloadUrl());
+                                   startService(intent);
                                }
                            }
                        }
@@ -345,41 +351,41 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     //不强制下载对话框
-    private void noShowExitGameAlert(String versionNo, String text, final String url) {
-        final AlertDialog dlg = new AlertDialog.Builder(HomeActivity.this).create();
-        dlg.show();
-        Window window = dlg.getWindow();
-        // *** 主要就是在这里实现这种效果的.
-        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
-        window.setContentView(R.layout.shrew_exit_dialog);
-        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
-        TextView tailteTv = (TextView) window.findViewById(R.id.tv);
-        tailteTv.setText(versionNo);
-        tailte.setText(text);
-        // 为确认按钮添加事件,执行退出应用操作
-        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
-        ok.setText("确定");
-        ok.setOnClickListener(new View.OnClickListener() {
+
+    private void noShowExitGameAlert(String text, String textTv, final String url) {
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(HomeActivity.this).create();
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        window.setContentView(R.layout.no_show_verstion_layout);
+        TextView tv_message = (TextView) window.findViewById(R.id.tv_dialog_message);
+        tv_message.setText(textTv);
+        TextView cancelVerstionButton = (TextView) window.findViewById(R.id.cancel_verstion_button);
+        TextView confirmVerstionButton = (TextView) window.findViewById(R.id.confirm_verstion_button);
+        cancelVerstionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
+                alertDialog.cancel();
+            }
+        });
+        confirmVerstionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,UpdateService.class);
+                intent.putExtra("Key_App_Name",appName);
+                intent.putExtra("Key_Down_Url",url);
+                startService(intent);
 
-                LodingApkData(url);
-
-                dlg.cancel();
+                //LodingApkData(url);
+                alertDialog.cancel();
             }
         });
 
-        // 关闭alert对话框架
-        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
-        cancel.setText("取消");
-        cancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                dlg.cancel();
-            }
-        });
+
     }
       //强制下载对话框
     private void showExitGameAlert(String text, String textTv, final String url) {
-        final AlertDialog dlg = new AlertDialog.Builder(HomeActivity.this).create();
+        /*final AlertDialog dlg = new AlertDialog.Builder(HomeActivity.this).create();
         dlg.show();
         Window window = dlg.getWindow();
         // *** 主要就是在这里实现这种效果的.
@@ -399,7 +405,7 @@ public class HomeActivity extends AppCompatActivity {
                 LodingApkData(url);
                 dlg.cancel();
             }
-        });
+        });*/
 
         /*// 关闭alert对话框架
         TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
@@ -409,6 +415,17 @@ public class HomeActivity extends AppCompatActivity {
                 dlg.cancel();
             }
         });*/
+
+
+       /* AlertDialog alertDialog = new AlertDialog.Builder(HomeActivity.this).create();
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        window.setContentView(R.layout.no_show_verstion_layout);
+        *//*TextView tv_title = (TextView) window.findViewById(R.id.tv_dialog_title);
+        tv_title.setText("详细信息");*//*
+        TextView tv_message = (TextView) window.findViewById(R.id.tv_dialog_message);
+        tv_message.setText("sdhdhdhdhh");*/
+
     }
 
 

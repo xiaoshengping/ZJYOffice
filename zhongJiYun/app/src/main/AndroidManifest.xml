@@ -119,6 +119,9 @@
     <!--百度地图end-->
 
 
+
+
+
     <application
         android:name=".http.MyAppliction"
         android:allowBackup="true"
@@ -474,6 +477,8 @@
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
         <meta-data android:name="JPUSH_APPKEY" android:value="05b488e09e33009fdf371ff1" /> <!-- </>值来自开发者平台取得的AppKey-->
         <!--极光推送end-->
+
+        <service android:name=".service.UpdateService"></service>
     </application>
 
 </manifest>

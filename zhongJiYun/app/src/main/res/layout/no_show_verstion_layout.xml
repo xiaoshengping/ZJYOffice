@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffff"
+    android:orientation="vertical" >
+
+
+      <ImageView
+          android:layout_marginTop="30dp"
+          android:layout_gravity="center"
+          android:src="@mipmap/update_verstion_icon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:textSize="@dimen/home_Size_20"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/tv_dialog_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="3dp" />
+
+    <LinearLayout
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/cancel_verstion_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="稍后更新"
+            android:padding="10dp"
+            android:background="@drawable/cencel_deposit_button_selector"
+            android:gravity="center"
+            android:textColor="@color/tailt_dark"
+            android:textSize="@dimen/home_Size_18"
+           />
+        <TextView
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/confirm_verstion_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="马上更新"
+            android:padding="10dp"
+            android:background="@drawable/cash_deposit_button_corners"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/home_Size_18"
+             />
+
+    </LinearLayout>
+
+
+</LinearLayout>

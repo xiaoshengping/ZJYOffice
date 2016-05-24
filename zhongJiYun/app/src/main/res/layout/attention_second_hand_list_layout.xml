@@ -118,7 +118,7 @@
         <TextView
             android:layout_toLeftOf="@+id/update_time_text_view"
             android:visibility="gone"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="15dp"
             android:id="@+id/tenancy_term_text_view"
             android:layout_marginTop="3dp"
             android:textSize="@dimen/home_Size_16"

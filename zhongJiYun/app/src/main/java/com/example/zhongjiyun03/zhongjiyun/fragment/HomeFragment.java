@@ -443,6 +443,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
     }
 
+
+
+
     @Override
     public void onResume() {
         super.onResume();
