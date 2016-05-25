@@ -130,7 +130,7 @@ public class HomeActivity extends AppCompatActivity {
 
         /*PushAgent mPushAgent = PushAgent.getInstance(this);
         mPushAgent.enable();
-        String device_token = UmengRegistrar.getRegistrationId(this);
+        String device_token = Umeng·Registrar.getRegistrationId(this);
         //Log.e("shdhdhdh",device_token);
         //开启推送并设置注册的回调处理
         mPushAgent.enable(new IUmengRegisterCallback() {
@@ -141,7 +141,6 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d("device_token", registrationId);
             }
         });
-
         PushAgent.getInstance(this).onAppStart();*/
         JPushInterface.init(this);
         JPushInterface.setDebugMode(true);

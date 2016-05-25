@@ -128,13 +128,13 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                       if (data.get(position).getSecondHandType()==0){
                           viewHold.sellTextView.setText("撤回出租");
                           viewHold.sellImage.setBackgroundResource(R.mipmap.retract_icon);
-                          viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_verstion_icon);
+                          viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_icon);
                           viewHold.rentOutTextView.setText("更新出租信息");
                           viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.color_2361ac));
                       }else if (data.get(position).getSecondHandType()==1){
                           viewHold.sellTextView.setText("撤回出售");
                           viewHold.sellImage.setBackgroundResource(R.mipmap.retract_icon);
-                          viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_verstion_icon);
+                          viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_icon);
                           viewHold.rentOutTextView.setText("更新出售信息");
                           viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.color_2361ac));
                       }
@@ -151,7 +151,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                               viewHold.rentOutTextView.setText("缴纳保证金");
                               viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.yellow));
                           }else {
-                              viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_verstion_icon);
+                              viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_icon);
                               viewHold.rentOutTextView.setText("更新出售信息");
                               viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.color_2361ac));
                           }
@@ -165,7 +165,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                           viewHold.rentOutTextView.setText("缴纳保证金");
                           viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.yellow));
                       }else {
-                          viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_verstion_icon);
+                          viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_icon);
                           viewHold.rentOutTextView.setText("更新出售信息");
                           viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.color_2361ac));
                       }

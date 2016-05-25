@@ -87,7 +87,7 @@ public class HomeSecondHandListAdapter extends AppBaseAdapter<SecondHandBean> {
             viewHold.updateTimeTextViewl.setText(data.get(position).getUpdateDateStr()+"更新");
             if (data.get(position).getSecondHandType()==0){
                 viewHold.secondTageImage.setBackgroundResource(R.mipmap.lease_icon);
-                viewHold.tenancyTermTextView.setText("租期: "+data.get(position).getTenancy()+"个月");
+                viewHold.tenancyTermTextView.setText("租期:"+data.get(position).getTenancy()+"个月");
                 viewHold.tenancyTermTextView.setVisibility(View.VISIBLE);
             }else if (data.get(position).getSecondHandType()==1){
                 viewHold.secondTageImage.setBackgroundResource(R.mipmap.sell_icon);

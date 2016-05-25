@@ -59,7 +59,7 @@ public class AttentionSecondHandListAdapter extends AppBaseAdapter<SecondHandBea
                 if (!TextUtils.isEmpty(data.get(position).getDateOfManufacture())){
                     viewHold.dataTextView.setText(data.get(position).getDateOfManufacture()+"年");
                 }
-                if (!TextUtils.isEmpty(data.get(position).getHourOfWork()+"")){
+                if (!TextUtils.isEmpty(data.get(position).getHourOfWork())){
                     viewHold.timeTextView.setText(data.get(position).getHourOfWork()+"小时");
                 }
 
@@ -87,7 +87,7 @@ public class AttentionSecondHandListAdapter extends AppBaseAdapter<SecondHandBea
             viewHold.updateTimeTextViewl.setText(data.get(position).getUpdateDateStr()+"更新");
             if (data.get(position).getSecondHandType()==0){
                 viewHold.secondTageImage.setBackgroundResource(R.mipmap.lease_icon);
-                viewHold.tenancyTermTextView.setText("租期: "+data.get(position).getTenancy()+"个月");
+                viewHold.tenancyTermTextView.setText("租期:"+data.get(position).getTenancy()+"个月");
                 viewHold.tenancyTermTextView.setVisibility(View.VISIBLE);
             }else if (data.get(position).getSecondHandType()==1){
                 viewHold.secondTageImage.setBackgroundResource(R.mipmap.sell_icon);
