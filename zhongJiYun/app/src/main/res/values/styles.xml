@@ -6,8 +6,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@mipmap/home_log_icon</item>
+
+
+
         <!--<item name="android:windowAnimationStyle">@android:style/Animation</item>-->
         <!--<item name="android:windowAnimationStyle">@style/Animation_Dialog_RightInRightOut</item>-->
         <!-- 设置activity切换动画 -->

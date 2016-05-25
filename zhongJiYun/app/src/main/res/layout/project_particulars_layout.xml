@@ -144,7 +144,7 @@
     <LinearLayout
         android:id="@+id/content_rlayout"
         android:layout_below="@+id/project_text"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -169,7 +169,7 @@
                 android:id="@+id/work_date_content_text"
                 android:textSize="@dimen/home_Size_16"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="25dp"
                 android:text="3个月"
                 android:textColor="@color/tailt_dark"
                 android:layout_width="wrap_content"
@@ -190,7 +190,7 @@
                 android:id="@+id/diameter_content_text"
                 android:textSize="@dimen/home_Size_16"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="25dp"
                 android:text="8555米"
                 android:textColor="@color/tailt_dark"
                 android:layout_width="wrap_content"
@@ -199,6 +199,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_marginLeft="20dp"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -217,7 +218,7 @@
                 android:textSize="@dimen/home_Size_16"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="32222米"
                 android:textColor="@color/tailt_dark"
                 android:layout_width="wrap_content"
@@ -239,7 +240,7 @@
                 android:id="@+id/pile_content_text"
                 android:textSize="@dimen/home_Size_16"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="33dp"
+                android:layout_marginLeft="25dp"
                 android:text="30米"
                 android:textColor="@color/tailt_dark"
                 android:layout_width="wrap_content"

@@ -127,9 +127,10 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        //webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         webSettings.setDomStorageEnabled(true);
         webSettings.setDatabaseEnabled(true);
+        webSettings.setAppCacheEnabled(false);
         //启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
         if (!TextUtils.isEmpty(uid)){

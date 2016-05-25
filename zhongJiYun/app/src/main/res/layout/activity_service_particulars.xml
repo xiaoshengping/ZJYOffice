@@ -100,9 +100,9 @@
 
         android:layout_below="@+id/tailt_layout"
         android:layout_marginTop="10dp"
-        android:src="#9d9d9d"
+        android:src="@color/color_dedede"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0.5dp" />
     <LinearLayout
 
 
@@ -126,9 +126,9 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:src="#9d9d9d"
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0.5dp" />
         <TextView
             android:id="@+id/immobilization_text_view"
             android:textColor="@color/tailt_dark"
@@ -144,9 +144,9 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:src="#9d9d9d"
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0.5dp" />
         <TextView
             android:id="@+id/address_text_view"
             android:textColor="@color/tailt_dark"
@@ -162,9 +162,9 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:src="#9d9d9d"
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0.5dp" />
         <TextView
             android:id="@+id/chance_zhu_text"
             android:textColor="@color/tailt_dark"
@@ -182,17 +182,17 @@
     <ImageView
         android:id="@+id/comtent_image"
         android:layout_below="@+id/comtent_layout"
-        android:src="#9d9d9d"
+        android:src="@color/color_dedede"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0.5dp" />
 
         <ImageView
             android:layout_marginTop="3dp"
             android:id="@+id/comtent_image_one"
             android:layout_below="@+id/comtent_layout"
-            android:src="#9d9d9d"
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0.5dp" />
     <LinearLayout
 
         android:layout_below="@+id/comtent_image_one"
@@ -225,9 +225,9 @@
         <ImageView
             android:layout_marginBottom="70dp"
             android:layout_below="@+id/text_layout"
-            android:src="#9d9d9d"
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0.5dp" />
 
     </LinearLayout>
 
