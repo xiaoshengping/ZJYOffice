@@ -200,11 +200,10 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
                 }else {
                     if (!TextUtils.isEmpty(myExtruderBean.getDeviceCertificatePhoto())){
                         contractLayout.setVisibility(View.VISIBLE);
-                        textViewTailtOne.setText("合格照");
+                        textViewTailtOne.setText("合格证");
                         MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceCertificatePhoto(),contractImage,MyAppliction.options);
                     }else {
                         contractLayout.setVisibility(View.GONE);
-
                     }
 
                 }
@@ -215,7 +214,7 @@ public class MyExtruderParticularsActivity extends AppCompatActivity implements 
                     textViewTailt.setText("合同照");
                     if (!TextUtils.isEmpty(myExtruderBean.getDeviceCertificatePhoto())){
                         contractLayout.setVisibility(View.VISIBLE);
-                        textViewTailtOne.setText("合格照");
+                        textViewTailtOne.setText("合格证");
                         MyAppliction.imageLoader.displayImage(myExtruderBean.getDeviceCertificatePhoto(),contractImage,MyAppliction.options);
                     }else {
                         contractLayout.setVisibility(View.GONE);

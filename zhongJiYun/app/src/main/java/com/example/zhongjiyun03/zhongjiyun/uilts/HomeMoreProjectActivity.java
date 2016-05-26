@@ -252,6 +252,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
             String sesstionId = read.getString("code","");
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         }
+        Log.e("PageIndex",PageIndex+"");
         requestParams.addBodyParameter("PageIndex",PageIndex+"");
         requestParams.addBodyParameter("PageSize","10");
         if (!TextUtils.isEmpty(cityName)){
@@ -308,6 +309,9 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                         //notDataLayout.setVisibility(View.GONE);
                     }else  if ((appBean.getResult()).equals("empty")){
                         //MyAppliction.showToast("没有更多数据");
+                        if (isPullDownRefresh) {
+                            seekProjectBeans.clear();
+                        }
                         notDataLayout.setVisibility(View.VISIBLE);
                         notDataImage.setBackgroundResource(R.mipmap.no_project_icon);
                         notDataText.setText("还没有找到项目哦");
@@ -578,9 +582,14 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
         mainTab1TV.setCompoundDrawables(null, null, img, null);
         seekProjectBeans.clear();
-        PageIndex=1;
+
+        projectListView.onRefreshComplete();
+        projectListView.setRefreshing(true);
+        int PageIndex=1;
         initListData(PageIndex,cityName,State,Order);
-        projectListView.setRefreshing();
+
+
+
     }
 
 
@@ -644,9 +653,10 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                     Order=arg2+"";
                 }
                 seekProjectBeans.clear();
+                projectListView.setRefreshing();
                 PageIndex=1;
                 initListData(PageIndex,cityName,State,Order);
-                projectListView.setRefreshing();
+
 
             }
 
@@ -717,9 +727,10 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                     State=arg2+"";
                 }
                 seekProjectBeans.clear();
+                projectListView.setRefreshing();
                 PageIndex=1;
                 initListData(PageIndex,cityName,State,Order);
-                projectListView.setRefreshing();
+
 
             }
 

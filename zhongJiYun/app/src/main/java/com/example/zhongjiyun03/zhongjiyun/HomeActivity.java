@@ -115,8 +115,8 @@ public class HomeActivity extends AppCompatActivity {
 
         } else{
             //Log.d("debug", "不是第一次运行");
-            Intent intent=new Intent(HomeActivity.this,WelcomeActivity.class);
-            startActivity(intent);
+            /*Intent intent=new Intent(HomeActivity.this,WelcomeActivity.class);
+            startActivity(intent);*/
 
             if (isCommitData) {
                 initRegistration();//提交用户信息

@@ -11,6 +11,8 @@ package com.example.zhongjiyun03.zhongjiyun.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,7 +22,10 @@ import android.widget.LinearLayout;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AdvertisementBean;
+import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.AdvertisementParticulsrsActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.LoginActivity;
 import com.example.zhongjiyun03.zhongjiyun.widget.RecyclingPagerAdapter;
 import com.lidroid.xutils.BitmapUtils;
 
@@ -78,11 +83,38 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter implements ViewPage
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (!TextUtils.isEmpty(iamgeUrls.get(getPosition(position)).getUrl())){
-                    Intent intent=new Intent(context, AdvertisementParticulsrsActivity.class);
-                    intent.putExtra("url",iamgeUrls.get(getPosition(position)).getUrl());
-                    intent.putExtra("name",iamgeUrls.get(getPosition(position)).getName());
-                    context.startActivity(intent);
+
+                    SQLhelper sqLhelper=new SQLhelper(context);
+                    SQLiteDatabase db= sqLhelper.getWritableDatabase();
+                    Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+                    String uid=null;  //用户id
+                    while (cursor.moveToNext()) {
+                        uid=cursor.getString(0);
+
+                    }
+                    //Log.e("iamgeUrls.get(position).getLinkType()",iamgeUrls.get(position).getLinkType()+"");
+                        if (iamgeUrls.get(getPosition(position)).getLinkType()==2){
+
+                            if (!TextUtils.isEmpty(uid)){
+                                Intent intent=new Intent(context, AdvertisementParticulsrsActivity.class);
+                                String imageString =AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id="+uid+"&redir=";
+                                intent.putExtra("url",imageString+iamgeUrls.get(getPosition(position)).getUrl());
+                                intent.putExtra("name",iamgeUrls.get(getPosition(position)).getName());
+                                context.startActivity(intent);
+                            }else {
+                                Intent loginIntent=new Intent(context, LoginActivity.class);
+                                context.startActivity(loginIntent);
+                            }
+
+                        }else if (iamgeUrls.get(getPosition(position)).getLinkType()==1){
+                            Intent intent1=new Intent(context, AdvertisementParticulsrsActivity.class);
+                            intent1.putExtra("url",iamgeUrls.get(getPosition(position)).getUrl());
+                            intent1.putExtra("name",iamgeUrls.get(getPosition(position)).getName());
+                            context.startActivity(intent1);
+                        }
+
                 }
 
 

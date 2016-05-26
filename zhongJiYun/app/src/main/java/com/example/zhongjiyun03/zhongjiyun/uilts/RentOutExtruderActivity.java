@@ -149,7 +149,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
     private String invoiceImageID;//全景照3ID
     private String contractImageID;//全景照4ID
     private String qualifiedImageID;//全景照5ID
-    private  int tage;
+    private String modifiRentTage;
 
 
 
@@ -249,7 +249,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         contractLayout.setOnClickListener(this);
         qualifiedLayout.setOnClickListener(this);
         leaveFactoryLayout.setOnClickListener(this);
-        String modifiRentTage=getIntent().getStringExtra("tage");
+        modifiRentTage=getIntent().getStringExtra("tage");
         if (modifiRentTage.equals("modifiRent")){
             modifiRentData();
             rentOutButton.setText("修改钻机出租信息");
@@ -609,19 +609,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 if (!TextUtils.isEmpty(rentPriceEdit.getText().toString())){
                     if (!TextUtils.isEmpty(rentTenancyTerm.getText().toString())){
                         if (!TextUtils.isEmpty(rentDescribe.getText().toString())){
-
-                            if (!TextUtils.isEmpty(leavePath)){
-                                phoneListPath.add(leavePath);
-                                if (!TextUtils.isEmpty(panoramaPath)){
-                                    phoneListPath.add(panoramaPath);
-                                    if (!TextUtils.isEmpty(invoicePath)){
-                                        phoneListPath.add(invoicePath);
-                                        if (!TextUtils.isEmpty(contractPath)) {
-                                            phoneListPath.add(contractPath);
-                                        }
-                                            if (!TextUtils.isEmpty(qualifiedPath)){
-                                                phoneListPath.add(qualifiedPath);
-                                            }
+                        if (phoneListPath.size()>=3){
                         SQLhelper sqLhelper=new SQLhelper(RentOutExtruderActivity.this);
                         SQLiteDatabase db= sqLhelper.getWritableDatabase();
                         Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
@@ -709,21 +697,12 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                         });
 
 
-                                    }else {
 
-                                        MyAppliction.showToast("请选择全景图片3");
-                                    }
-
-
-                                }else {
-
-                                    MyAppliction.showToast("请选择全景图片2");
-                                }
 
 
                             }else {
 
-                                MyAppliction.showToast("请选择全景图片1");
+                                MyAppliction.showToast("请至少选择3张全景图片");
                             }
 
                         }else {
@@ -960,6 +939,13 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 File frontFile = getFile(bis, Environment.getExternalStorageDirectory()+"/zhongJiYun", frontName);
                 if (!TextUtils.isEmpty(frontFile.getPath())) {
                     leavePath = frontFile.getPath();
+                    if (!TextUtils.isEmpty(leavePath)){
+                        if (!modifiRentTage.equals("modifiRent")){
+                            phoneListPath.add(leavePath);
+                        }
+
+                    }
+
                 }
 
                 break;
@@ -986,11 +972,17 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 Bitmap bitmaps = BitmapFactory.decodeByteArray(biss, 0, biss.length);
                 if (bitmaps != null) {
                     panoramaImage.setImageBitmap(bitmaps);
+
                 }
                 String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                 File file2 = getFile(biss, Environment.getExternalStorageDirectory()+"/zhongJiYun", name);
                 if (!TextUtils.isEmpty(file2.getPath())) {
                     panoramaPath = file2.getPath();
+                    if (!TextUtils.isEmpty(panoramaPath)){
+                        if (!modifiRentTage.equals("modifiRent")) {
+                            phoneListPath.add(panoramaPath);
+                        }
+                    }
                 }
                 break;
             case ConstantSet.TAKEPICTURE1:
@@ -1021,6 +1013,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 File filePersonge = getFile(bisPersonge, Environment.getExternalStorageDirectory()+"/zhongJiYun", namePersonge);
                 if (!TextUtils.isEmpty(filePersonge.getPath())) {
                     invoicePath = filePersonge.getPath();
+                    if (!TextUtils.isEmpty(invoicePath)){
+                        if (!modifiRentTage.equals("modifiRent")) {
+                            phoneListPath.add(invoicePath);
+                        }
+                    }
                 }
                 break;
             case ConstantSet.TAKEPICTURE2:
@@ -1051,6 +1048,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 File fileFront = getFile(forntBis, Environment.getExternalStorageDirectory()+"/zhongJiYun", nameFront);
                 if (!TextUtils.isEmpty(fileFront.getPath())) {
                     contractPath = fileFront.getPath();
+                    if (!TextUtils.isEmpty(contractPath)){
+                        if (!modifiRentTage.equals("modifiRent")) {
+                            phoneListPath.add(contractPath);
+                        }
+                    }
                 }
                 break;
             case ConstantSet.TAKEPICTURE3:
@@ -1081,6 +1083,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 File fileVeson = getFile(vesonBis, Environment.getExternalStorageDirectory()+"/zhongJiYun", nameVeson);
                 if (!TextUtils.isEmpty(fileVeson.getPath())) {
                     qualifiedPath = fileVeson.getPath();
+                    if (!TextUtils.isEmpty(qualifiedPath)){
+                        if (!modifiRentTage.equals("modifiRent")) {
+                            phoneListPath.add(qualifiedPath);
+                        }
+                    }
                 }
                 break;
 

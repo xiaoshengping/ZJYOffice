@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -121,24 +122,28 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
             uid=cursor.getString(0);
 
         }
-        WebSettings webSettings=webView.getSettings();
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setAllowFileAccess(true);// 设置允许访问文件数据
-        webSettings.setSupportZoom(true);
-        webSettings.setBuiltInZoomControls(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        //webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true);
-        webSettings.setAppCacheEnabled(false);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setDatabaseEnabled(true);
+        webView.getSettings().setAppCacheEnabled(false);
+        WebSettings Websettings   = webView.getSettings();
+        Websettings.setBuiltInZoomControls(true);
+        Websettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        Websettings.setUseWideViewPort(true);
+        Websettings.setLoadWithOverviewMode(true);
+        Websettings.setSavePassword(true);
+        Websettings.setSaveFormData(true);
+        Websettings.setJavaScriptEnabled(true);
+        Websettings.setGeolocationEnabled(true);
+
+        Websettings.setDomStorageEnabled(true);
+        webView.requestFocus();
+
+
+
+
         //启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
-        if (!TextUtils.isEmpty(uid)){
-            webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id="+uid+"&redir=home");
-
-        }else {
-            webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/");
-        }
+        webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -165,6 +170,12 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
                 mSVProgressHUD.dismiss();
             }
         });
+        if (!TextUtils.isEmpty(uid)){
+            webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id="+uid+"&redir=home");
+
+        }else {
+            webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/");
+        }
     }
     @Override
     public void onClick(View v) {

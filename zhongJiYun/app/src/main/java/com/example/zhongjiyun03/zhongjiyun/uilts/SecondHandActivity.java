@@ -164,6 +164,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private TextView notDataText;
     private List<FacillyDataBean> facillyDataBeens ;//设备厂商数据
     private SecondHandHandler secondHandHandler;
+    private AppBean<SecondHandDataBean> appListDataBean;
     @Override
     protected void onResume() {
         super.onResume();
@@ -309,7 +310,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         }
     }
 
-    private void initListData(int pageIndex, String type, String city, String year, String order) {
+    private void initListData(final int pageIndex, String type, String city, String year, String order) {
         HttpUtils httpUtils = new HttpUtils();
         final RequestParams requestParams = new RequestParams();
         SQLhelper sqLhelper = new SQLhelper(SecondHandActivity.this);
@@ -376,6 +377,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             requestParams.addBodyParameter("longitude", MyAppliction.getLongitude());
         }
         requestParams.addBodyParameter("pageIndex", pageIndex + "");
+        Log.e("pageIndex",pageIndex+"");
         requestParams.addBodyParameter("pageSize", "10");
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderData(), requestParams, new RequestCallBack<String>() {
@@ -383,7 +385,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 Log.e("二手钻机", responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)) {
-                    AppBean<SecondHandDataBean> appListDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SecondHandDataBean>>() {
+                     appListDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SecondHandDataBean>>() {
                     });
                     if ((appListDataBean.getResult()).equals("success")) {
                         SecondHandDataBean secondHandDataBean = appListDataBean.getData();
@@ -403,6 +405,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                         secondHandListview.onRefreshComplete();
                         notDataLayout.setVisibility(View.GONE);
                     } else if ((appListDataBean.getResult()).equals("nomore")) {
+
                         MyAppliction.showToast("已到最底了");
                         homeSecondHandListAdapter.notifyDataSetChanged();
                         secondHandListview.onRefreshComplete();
@@ -451,7 +454,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-        pageIndex++;
+         pageIndex++;
         isPullDownRefresh = false;
         initListData(pageIndex, type, city, year, order);
 
@@ -628,9 +631,10 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         facillyText.setCompoundDrawables(null, null, img, null);
         facillyTaye=firstId;
         type=selectedName;
-        //secondHandBeens.clear();
+        secondHandBeens.clear();
         isPullDownRefresh=true;
-        secondHandListview.setRefreshing();
+        secondHandListview.setRefreshing(true);
+        pageIndex=1;
         initListData(pageIndex,selectedName,city,year,order);
         //secondHandListview.setRefreshing();
     }
@@ -767,8 +771,10 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             mainTab1TV.setCompoundDrawables(null, null, img, null);
         province=firstId;
         city=selectedName;
+        secondHandBeens.clear();
         isPullDownRefresh=true;
         secondHandListview.setRefreshing();
+        pageIndex=1;
         initListData(pageIndex,type,selectedName,year,order);
 
     }
@@ -780,8 +786,8 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         ListView listView;
         list=new ArrayList<>();
         list.add("默认排序");
-        list.add("按价格由低到高");
-        list.add("按价格由高到低");
+        list.add("按价格从低到高");
+        list.add("按价格从高到低");
         list.add("按距离由近到远");
         list.add("按距离由远到近");
 
@@ -834,8 +840,11 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                  }else {
                      order=list.get(arg2);
                  }
+                secondHandListview.onRefreshComplete();
+                secondHandBeens.clear();
                 isPullDownRefresh=true;
                 secondHandListview.setRefreshing();
+                pageIndex=1;
                 initListData(pageIndex,type,city,year,order);
 
             }
@@ -918,10 +927,13 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                       year=list.get(arg2);
 
                   }
-                isPullDownRefresh=true;
-
+                secondHandListview.onRefreshComplete();
+                secondHandBeens.clear();
                 secondHandListview.setRefreshing();
+                pageIndex=1;
                 initListData(pageIndex,type,city,year,order);
+
+
 
             }
 

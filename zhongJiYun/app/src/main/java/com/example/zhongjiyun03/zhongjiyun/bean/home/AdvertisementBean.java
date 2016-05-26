@@ -10,6 +10,15 @@ public class AdvertisementBean implements Serializable {
     private String Url;
     private String Img;
     private String Name;
+    private int LinkType;
+
+    public int getLinkType() {
+        return LinkType;
+    }
+
+    public void setLinkType(int linkType) {
+        LinkType = linkType;
+    }
 
     public String getName() {
         return Name;
@@ -41,6 +50,7 @@ public class AdvertisementBean implements Serializable {
                 "Url='" + Url + '\'' +
                 ", Img='" + Img + '\'' +
                 ", Name='" + Name + '\'' +
+                ", LinkType=" + LinkType +
                 '}';
     }
 }

@@ -142,6 +142,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private String invoiceImageID;//全景照3ID
     private String contractImageID;//全景照4ID
     private String qualifiedImageID;//全景照5ID
+    private  String modifiSell;
 
 
     @Override
@@ -198,7 +199,8 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         mSVProgressHUD = new SVProgressHUD(this);
         myExtruderBean = (MyExtruderBean) getIntent().getSerializableExtra("data");
         //获取修改数据
-        if (getIntent().getStringExtra("tage").equals("modifiSell")) {
+         modifiSell= getIntent().getStringExtra("tage");
+        if (modifiSell.equals("modifiSell")) {
             intiData();
             sellSaveButton.setText("修改出售信息");
         }
@@ -583,19 +585,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
             if (!TextUtils.isEmpty(particluarsAddressEdit.getText().toString())) {
                 if (!TextUtils.isEmpty(priceEdit.getText().toString())) {
                     if (!TextUtils.isEmpty(jzhuMiaosEdit.getText().toString())) {
-                        if (!TextUtils.isEmpty(leavePath)) {
-                            phoneListPath.add(leavePath);
-                            if (!TextUtils.isEmpty(panoramaPath)) {
-                                phoneListPath.add(panoramaPath);
-                                if (!TextUtils.isEmpty(invoicePath)) {
-                                    phoneListPath.add(invoicePath);
-                                    if (!TextUtils.isEmpty(contractPath)) {
-                                        phoneListPath.add(contractPath);
-                                    }
-                                    if (!TextUtils.isEmpty(qualifiedPath)) {
-                                        phoneListPath.add(qualifiedPath);
-                                    }
-
+                        if (phoneListPath.size()>=3) {
                                     SQLhelper sqLhelper = new SQLhelper(SellExtruderActivity.this);
                                     SQLiteDatabase db = sqLhelper.getWritableDatabase();
                                     Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
@@ -653,7 +643,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                                                             if (phoneListPath != null) {
                                                                 int imageType = 11;
                                                                 for (int i = 0; i < phoneListPath.size(); i++) {
-                                                                    Log.e("imageType", imageType + "");
+                                                                    //Log.e("imageType", imageType + "");
                                                                     intiPhontData7(finalUid, imageType, phoneListPath.get(i), rentOutExtruderDeviceDataBean.getId(), i);
                                                                     imageType++;
 
@@ -683,21 +673,12 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                                         }
                                     });
 
-                                } else {
 
-                                    MyAppliction.showToast("请选择全景图片3");
-                                }
-
-
-                            } else {
-
-                                MyAppliction.showToast("请选择全景图片2");
-                            }
 
 
                         } else {
 
-                            MyAppliction.showToast("请选择全景图片1");
+                            MyAppliction.showToast("请至少选择3张全景图片");
                         }
                     } else {
                         MyAppliction.showToast("请输入描述");
@@ -1181,6 +1162,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                 File frontFile = getFile(bis, Environment.getExternalStorageDirectory()+"/zhongJiYun", frontName);
                 if (!TextUtils.isEmpty(frontFile.getPath())) {
                     leavePath = frontFile.getPath();
+                    if (!TextUtils.isEmpty(leavePath)){
+                        if (!modifiSell.equals("modifiSell")) {
+                            phoneListPath.add(leavePath);
+                        }
+                    }
                 }
 
                 break;
@@ -1212,6 +1198,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                 File file2 = getFile(biss, Environment.getExternalStorageDirectory()+"/zhongJiYun", name);
                 if (!TextUtils.isEmpty(file2.getPath())) {
                     panoramaPath = file2.getPath();
+                    if (!TextUtils.isEmpty(panoramaPath)){
+                        if (!modifiSell.equals("modifiSell")) {
+                            phoneListPath.add(panoramaPath);
+                        }
+                    }
                 }
                 break;
             case ConstantSet.TAKEPICTURE1:
@@ -1242,6 +1233,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                 File filePersonge = getFile(bisPersonge, Environment.getExternalStorageDirectory()+"/zhongJiYun", namePersonge);
                 if (!TextUtils.isEmpty(filePersonge.getPath())) {
                     invoicePath = filePersonge.getPath();
+                    if (!TextUtils.isEmpty(invoicePath)){
+                        if (!modifiSell.equals("modifiSell")) {
+                            phoneListPath.add(invoicePath);
+                        }
+                    }
                 }
                 break;
             case ConstantSet.TAKEPICTURE2:
@@ -1272,6 +1268,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                 File fileFront = getFile(forntBis, Environment.getExternalStorageDirectory()+"/zhongJiYun", nameFront);
                 if (!TextUtils.isEmpty(fileFront.getPath())) {
                     contractPath = fileFront.getPath();
+                    if (!TextUtils.isEmpty(contractPath)){
+                        if (!modifiSell.equals("modifiSell")) {
+                            phoneListPath.add(contractPath);
+                        }
+                    }
                 }
                 break;
             case ConstantSet.TAKEPICTURE3:
@@ -1302,6 +1303,11 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                 File fileVeson = getFile(vesonBis, Environment.getExternalStorageDirectory()+"/zhongJiYun", nameVeson);
                 if (!TextUtils.isEmpty(fileVeson.getPath())) {
                     qualifiedPath = fileVeson.getPath();
+                    if (!TextUtils.isEmpty(qualifiedPath)){
+                        if (!modifiSell.equals("modifiSell")) {
+                            phoneListPath.add(qualifiedPath);
+                        }
+                    }
                 }
                 break;
 
