@@ -125,7 +125,7 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
 
     private void intiView() {
         addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("设置");
+        titleNemeTv.setText("意见反馈");
         retrunText.setOnClickListener(this);
         saveButton.setOnClickListener(this);
         mSVProgressHUD = new SVProgressHUD(this);

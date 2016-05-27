@@ -133,7 +133,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
     private void intiView() {
         controlKeyboardLayout(rootLayout,modifyPhoneButton);
         addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("修改机手号码");
+        titleNemeTv.setText("修改手号码");
         retrunText.setOnClickListener(this);
         modifyPhoneButton.setOnClickListener(this);
         codeButton.setOnClickListener(this);
@@ -233,7 +233,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
 
         @Override
         public void onFinish() {//计时完毕时触发
-            codeButton.setText("重新验证");
+            codeButton.setText("重新发送");
             codeButton.setClickable(true);
         }
 
@@ -255,7 +255,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
             uid=cursor.getString(0);
 
         }
-        if (phone.equals(editFormmerPhone.getText().toString())){
+        if (!phone.equals(editFormmerPhone.getText().toString())){
 
 
         if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())){
@@ -324,7 +324,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
 
         }
         }else {
-            MyAppliction.showToast("你输入的手机号与原手机号不相同");
+            MyAppliction.showToast("您输入的新手机号和当前手机号不能一样");
         }
 
     }

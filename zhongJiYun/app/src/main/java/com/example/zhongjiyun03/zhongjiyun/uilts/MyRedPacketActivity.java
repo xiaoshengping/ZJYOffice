@@ -349,6 +349,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 redPatckListview.setRefreshing();
+                myredAdapter.notifyDataSetChanged();
                 dlg.cancel();
             }
         });

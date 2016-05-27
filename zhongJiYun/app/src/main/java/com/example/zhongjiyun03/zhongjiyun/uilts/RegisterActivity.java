@@ -1588,7 +1588,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public void onFinish() {//计时完毕时触发
-            codeButton.setText("重新验证");
+            codeButton.setText("重新发送");
             codeButton.setClickable(true);
         }
 
@@ -1607,7 +1607,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         @Override
         public void onFinish() {//计时完毕时触发
-            companyCodeButton.setText("重新验证");
+            companyCodeButton.setText("重新发送");
             companyCodeButton.setClickable(true);
         }
 

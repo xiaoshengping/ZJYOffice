@@ -356,7 +356,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onFinish() {//计时完毕时触发
-            codeButton.setText("重新验证");
+            codeButton.setText("重新发送");
             codeButton.setClickable(true);
         }
 

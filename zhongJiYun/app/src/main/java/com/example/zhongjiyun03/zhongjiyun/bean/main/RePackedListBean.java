@@ -19,6 +19,24 @@ public class RePackedListBean implements Serializable {
    private int GiftBagType ; //int 礼包类型：云币：1，优惠券：！=1
    private int  isGet; //是否领取
    private int IsRead;//是否已读
+   private String ExpirationTime;//	String	过期时间
+   private String GetTime;//	String	领取时间
+
+    public String getExpirationTime() {
+        return ExpirationTime;
+    }
+
+    public void setExpirationTime(String expirationTime) {
+        ExpirationTime = expirationTime;
+    }
+
+    public String getGetTime() {
+        return GetTime;
+    }
+
+    public void setGetTime(String getTime) {
+        GetTime = getTime;
+    }
 
     public int getIsRead() {
         return IsRead;

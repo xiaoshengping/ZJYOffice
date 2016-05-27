@@ -48,14 +48,15 @@ public class MyRedPatckListAdapter extends AppBaseAdapter<RePackedListBean> {
             if (data.get(position).getIsGet()==1){
                 viewHold.imageView.setVisibility(View.VISIBLE);
                 viewHold.redPackImage.setBackgroundResource(R.mipmap.my_reward);
+                viewHold.dataText.setText("领取日期："+data.get(position).getGetTime());
 
             }else {
                 viewHold.numberText.setTextColor(context.getResources().getColor(R.color.red));
                 viewHold.imageView.setVisibility(View.GONE);
                 viewHold.redPackImage.setBackgroundResource(R.mipmap.my_reward_cur);
-
+                viewHold.dataText.setText("有效期至："+data.get(position).getExpirationTime());
             }
-            viewHold.dataText.setText(data.get(position).getEndTime());
+
 
 
         }

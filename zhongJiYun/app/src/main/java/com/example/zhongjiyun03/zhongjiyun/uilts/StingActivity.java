@@ -138,7 +138,8 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
         if (isFirstRun)
         {
             switchButton.setChecked(true);
-
+            editor.putBoolean("isFirstRun", false);
+            editor.commit();
         } else{
 
         }
