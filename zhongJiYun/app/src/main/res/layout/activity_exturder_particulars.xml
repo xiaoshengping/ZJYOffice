@@ -120,6 +120,7 @@
                   android:layout_height="match_parent" />
 
               <LinearLayout
+                  android:layout_marginBottom="10dp"
                   android:id="@+id/home_dot_ll"
                   android:layout_above="@+id/home_banner_viewpager"
                   android:orientation="horizontal"
@@ -148,6 +149,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content">
                    <TextView
+                       android:textColor="@color/tailt_dark"
                        android:layout_marginTop="4dp"
                        android:id="@+id/tailt_text_view"
                        android:textSize="@dimen/home_Size_16"
@@ -163,6 +165,7 @@
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content" />
                    <TextView
+
                        android:layout_marginLeft="5dp"
                        android:layout_toRightOf="@+id/date_text_view"
                        android:id="@+id/time_text_view"
@@ -231,6 +234,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:textColor="@color/tailt_dark"
                     android:id="@+id/box_name_text"
                     android:gravity="center_horizontal"
                     android:layout_weight="1"
@@ -245,6 +249,7 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:textColor="@color/tailt_dark"
                     android:id="@+id/work_time_text"
                     android:gravity="center_horizontal"
                     android:layout_weight="1"
@@ -259,6 +264,7 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
+                    android:textColor="@color/tailt_dark"
                     android:id="@+id/brand_text"
                     android:gravity="center_horizontal"
                     android:layout_weight="1"
@@ -327,14 +333,14 @@
                             android:textColor="@color/tailt_dark"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="卡特336D"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="5dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="底盘型号"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -343,14 +349,14 @@
                             android:textColor="@color/tailt_dark"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="280(kN.m)"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="5dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="最大扭转"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -360,7 +366,7 @@
                             android:textColor="@color/tailt_dark"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="5.3-22.8(rpm)"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -368,7 +374,7 @@
                         <TextView
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="5dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="钻孔速度"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -378,7 +384,7 @@
                             android:textColor="@color/tailt_dark"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="卡特皮特CATC9HHP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -386,7 +392,7 @@
                         <TextView
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="发动机型号"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -395,7 +401,7 @@
                             android:textColor="@color/tailt_dark"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="261/2100"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -404,7 +410,7 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="发动机额定功率"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -421,7 +427,7 @@
                             android:textColor="@color/tailt_dark"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="7400(kg)"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -429,7 +435,7 @@
                             android:layout_marginBottom="5dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="5dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="整机工作重量"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -438,14 +444,14 @@
                             android:textColor="@color/tailt_dark"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="300"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                         <TextView
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="5dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="主卷扬提升力"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -455,7 +461,7 @@
                             android:textColor="@color/tailt_dark"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="2500(mm)"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -463,7 +469,7 @@
                         <TextView
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="5dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="最大成孔直径"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -473,7 +479,7 @@
                             android:textColor="@color/tailt_dark"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="84(m)"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -481,7 +487,7 @@
                         <TextView
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="10dp"
-                            android:textSize="@dimen/home_Size_18"
+                            android:textSize="@dimen/home_Size_16"
                             android:text="最大成孔深度"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
@@ -542,6 +548,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:textColor="@color/tailt_dark"
                     android:visibility="gone"
                     android:id="@+id/shui_ming_text"
                     android:layout_marginBottom="10dp"
@@ -550,7 +557,6 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="20dp"
                     android:textSize="@dimen/home_Size_16"
-                    android:text="广东省广州市天河区天河北路是的好得很好得很好得很电话电话还是好的好的等会等会等会打道回府好好发挥发货"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -619,6 +625,30 @@
               android:layout_marginRight="10dp"
               android:layout_marginLeft="10dp"
               android:layout_below="@+id/image_view_Three"
+              android:layout_width="match_parent"
+              android:layout_height="200dp" />
+          <ImageView
+              android:visibility="gone"
+              android:id="@+id/image_view_five"
+              android:layout_marginBottom="20dp"
+              android:layout_marginTop="10dp"
+              android:scaleType="centerCrop"
+              android:src="@mipmap/home_used_rig_img"
+              android:layout_marginRight="10dp"
+              android:layout_marginLeft="10dp"
+              android:layout_below="@+id/image_view_foru"
+              android:layout_width="match_parent"
+              android:layout_height="200dp" />
+          <ImageView
+              android:visibility="gone"
+              android:id="@+id/image_view_six"
+              android:layout_marginBottom="20dp"
+              android:layout_marginTop="10dp"
+              android:scaleType="centerCrop"
+              android:src="@mipmap/home_used_rig_img"
+              android:layout_marginRight="10dp"
+              android:layout_marginLeft="10dp"
+              android:layout_below="@+id/image_view_five"
               android:layout_width="match_parent"
               android:layout_height="200dp" />
 

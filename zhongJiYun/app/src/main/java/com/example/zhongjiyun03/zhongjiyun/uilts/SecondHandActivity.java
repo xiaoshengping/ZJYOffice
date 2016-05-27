@@ -377,7 +377,6 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             requestParams.addBodyParameter("longitude", MyAppliction.getLongitude());
         }
         requestParams.addBodyParameter("pageIndex", pageIndex + "");
-        Log.e("pageIndex",pageIndex+"");
         requestParams.addBodyParameter("pageSize", "10");
 
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderData(), requestParams, new RequestCallBack<String>() {
@@ -1079,7 +1078,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
 
-                Log.e("分享成功","分享回调成功");
+                //Log.e("分享成功","分享回调成功");
                 //MyAppliction.showToast("分享回调成功");
                 Message msg = new Message();
                 Bundle b = new Bundle();// 存放数据
@@ -1114,7 +1113,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             uid=cursor.getString(0);
 
         }
-        Log.e("id",uid);
+
         if (!TextUtils.isEmpty(uid)){
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
@@ -1128,14 +1127,14 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getShareRedPacketData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("分享获取红包",responseInfo.result);
-                //MyAppliction.showToast("分享成功");
+                Log.e("二手机列表分享获取红包",responseInfo.result);
+                MyAppliction.showToast("分享成功");
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("分享获取红包onFailure",s);
+                Log.e("二手机列表分享获取红包onFailure",s);
             }
         });
         }

@@ -321,10 +321,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
             if (!TextUtils.isEmpty(evaluate)){
             requestParams.addBodyParameter("evaluate",evaluate);
-
+                Log.e("evaluate",evaluate);
             }
             if (!TextUtils.isEmpty(message)){
                 requestParams.addBodyParameter("message",message);
+                Log.e("message",message);
             }
             if (!TextUtils.isEmpty(giftBag)){
                 requestParams.addBodyParameter("giftBag",giftBag);
@@ -332,13 +333,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             }
             if (!TextUtils.isEmpty(projectReply)){
                 requestParams.addBodyParameter("projectReply",projectReply);
+                Log.e("projectReply",projectReply);
             }
         //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
         //步骤2：获取文件中的值
         String sesstionId = read.getString("code","");
         requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-            final String finalMessageRemindId = messageRemindId;
+
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSystemMessageRemindData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -474,7 +476,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     update(messageRemindId,SystemMessageSQLhelper.MESSAGE,date);
                 }else {
                     if (!TextUtils.isEmpty(date)){
-                        Log.e("添加数据了",date);
                         insertData(systemMessageSQLhelper,SystemMessageSQLhelper.MESSAGE,date);
                     }
 

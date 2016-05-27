@@ -220,7 +220,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:textSize="@dimen/home_Size_16"
-
+            android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -266,7 +266,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
                 android:textSize="@dimen/home_Size_16"
-
+                android:layout_marginRight="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -311,6 +311,7 @@
                 android:id="@+id/miaoshi_text_two"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
                 android:textSize="@dimen/home_Size_16"
 
                 android:layout_width="wrap_content"

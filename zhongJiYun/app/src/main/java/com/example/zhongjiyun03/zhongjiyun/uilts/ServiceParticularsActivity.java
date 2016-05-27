@@ -271,12 +271,14 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
                         intent.setData(Uri.parse("tel:" + serviceProviderBean.getPhoneNumber()));
                         //开启系统拨号器
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                         }else {
                             MyAppliction.showToast("该服务商没有联系方式");
                         }
                     }else {
                         Intent intent=new Intent(ServiceParticularsActivity.this,LoginActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                     }
 
                 break;

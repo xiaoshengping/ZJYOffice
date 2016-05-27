@@ -111,7 +111,7 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
     private void initView() {
         mSVProgressHUD = new SVProgressHUD(this);
         addExtruderTv.setOnClickListener(this);
-        titleNemeTv.setText("");
+        titleNemeTv.setText("商城");
         retrunText.setOnClickListener(this);
         secondHandHandler=new SecondHandHandler();
         SQLhelper sqLhelper=new SQLhelper(HomeMarketActivity.this);
@@ -122,21 +122,14 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
             uid=cursor.getString(0);
 
         }
-        webView.getSettings().setDomStorageEnabled(true);
-        webView.getSettings().setDatabaseEnabled(true);
-        webView.getSettings().setAppCacheEnabled(false);
-        WebSettings Websettings   = webView.getSettings();
-        Websettings.setBuiltInZoomControls(true);
-        Websettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
-        Websettings.setUseWideViewPort(true);
-        Websettings.setLoadWithOverviewMode(true);
-        Websettings.setSavePassword(true);
-        Websettings.setSaveFormData(true);
-        Websettings.setJavaScriptEnabled(true);
-        Websettings.setGeolocationEnabled(true);
-
-        Websettings.setDomStorageEnabled(true);
-        webView.requestFocus();
+        WebSettings webSettings=webView.getSettings();
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setAllowFileAccess(true);// 设置允许访问文件数据
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webSettings.setDomStorageEnabled(false);
+        webSettings.setDatabaseEnabled(false);
 
 
 
@@ -170,11 +163,13 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
                 mSVProgressHUD.dismiss();
             }
         });
+
         if (!TextUtils.isEmpty(uid)){
+
             webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id="+uid+"&redir=home");
 
         }else {
-            webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/");
+            webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/sess_out.php");
         }
     }
     @Override

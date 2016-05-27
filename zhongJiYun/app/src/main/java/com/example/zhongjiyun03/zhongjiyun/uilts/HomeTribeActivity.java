@@ -8,10 +8,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -102,18 +104,19 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
         webSettings.setAllowFileAccess(true);// 设置允许访问文件数据
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webSettings.setDomStorageEnabled(false);
+        webSettings.setDatabaseEnabled(false);
         //启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
         if (!TextUtils.isEmpty(uid)){
+            Log.e("部落",AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?asp_user_id="+uid);
             webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?asp_user_id="+uid);
 
         }else {
-            webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/");
+            webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?asp_user_id=");
         }
+        webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

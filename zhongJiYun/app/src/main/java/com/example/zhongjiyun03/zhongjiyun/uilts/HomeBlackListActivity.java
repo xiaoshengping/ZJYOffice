@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -98,19 +99,19 @@ public class HomeBlackListActivity extends AppCompatActivity implements View.OnC
         webSettings.setAllowFileAccess(true);// 设置允许访问文件数据
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        webSettings.setDomStorageEnabled(false);
+        webSettings.setDatabaseEnabled(false);
         //启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
         if (!TextUtils.isEmpty(uid)){
-            webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/oauth.php?b=4");
+            //Log.e("黑名单",AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?b=4&asp_user_id="+uid);
+            webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?b=4&asp_user_id="+uid);
 
         }else {
-            webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/?cid=4");
+            webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?b=4&asp_user_id=");
         }
-
+        webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

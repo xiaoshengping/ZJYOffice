@@ -12,7 +12,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
@@ -31,7 +30,7 @@ public class AdvertisementParticulsrsActivity extends AppCompatActivity implemen
     @ViewInject(R.id.webview)
     private WebView webView;
     @ViewInject(R.id.register_tv)
-    private ImageView addExtruderTv;   //头部右边
+    private TextView addExtruderTv;   //头部右边
     @ViewInject(R.id.title_name_tv)
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)

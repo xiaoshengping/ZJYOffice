@@ -278,6 +278,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                     intent.putExtra("data", seekProjectBean.getProvince());
                     intent.putExtra("tage", "matingFacily");
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
 
             }
@@ -292,6 +293,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                     intent.putExtra("data", seekProjectBean.getProvince());
                     intent.putExtra("tage", "matingFacily");
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
 
             }
@@ -306,6 +308,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                     intent.putExtra("data", seekProjectBean.getProvince());
                     intent.putExtra("tage", "matingFacily");
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
 
             }
@@ -385,10 +388,14 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         if (!TextUtils.isEmpty(seekProjectBean.getProfile())) {
 
             projectIntroduceContent.setText(seekProjectBean.getProfile());
+        }else {
+            projectIntroduceContent.setText("暂无");
         }
         if (!TextUtils.isEmpty(seekProjectBean.getDeviceRequirement())) {
 
             extruderContenText.setText(seekProjectBean.getDeviceRequirement());
+        }else {
+            extruderContenText.setText("暂无");
         }
         if (!TextUtils.isEmpty(seekProjectBean.getGeologicReport())) {
 
