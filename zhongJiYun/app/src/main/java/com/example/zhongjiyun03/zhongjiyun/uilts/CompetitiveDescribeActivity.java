@@ -173,7 +173,7 @@ public class  CompetitiveDescribeActivity extends AppCompatActivity implements V
                     if (appDataBean.getResult().equals("success")){
                         MyAppliction.setProjectRequestTage("competitive");//全局变量
                         showExitGameAlert("\u3000\u3000"+"尊敬的用户,您已成功竞标,请您耐心等待业主选标,为提高您中标的概率,现建议您先缴纳1000元的保证金,谢谢!");
-
+                        MyAppliction.setIsProjectMessage(true);
                     }else {
                         MyAppliction.showToast(appDataBean.getMsg());
                     }

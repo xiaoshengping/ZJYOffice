@@ -23,7 +23,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.MessageDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.SystemMessageDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.PersonageInformationBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
@@ -49,6 +51,7 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -189,7 +192,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         initSystenMessage(uid); //获得系统消息提醒
 
 
-
     }
 
     private void initPersonageInformationData() {
@@ -225,45 +227,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                                 if (!TextUtils.isEmpty(personageInformation.getStarRate())) {
                                     String StarRate = personageInformation.getStarRate();
                                     ratingBar.setRating(Integer.valueOf(StarRate));
-                                    /*if (StarRate.equals("1")) {
-                                        ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                                        ratingThree.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                                        ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                                        ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                                    } else if (StarRate.equals("2")) {
 
-                                        ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingThree.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                                        ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                                        ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
-
-                                    } else if (StarRate.equals("3")) {
-
-                                        ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingFour.setBackgroundResource(R.mipmap.ratingbar_check_no);
-                                        ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
-
-                                    } else if (StarRate.equals("4")) {
-
-                                        ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingFour.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingFive.setBackgroundResource(R.mipmap.ratingbar_check_no);
-
-                                    } else if (StarRate.equals("5")) {
-
-                                        ratingOne.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingTwo.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingThree.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingFour.setBackgroundResource(R.mipmap.ratingbar_check);
-                                        ratingFive.setBackgroundResource(R.mipmap.ratingbar_check);
-
-                                    }*/
                                 }
 
                             } else {
@@ -300,6 +264,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
         if (!TextUtils.isEmpty(uid)){
+            if (MyAppliction.isProjectMessage()==true){
+                projectReplyeminDImage.setVisibility(View.VISIBLE);
+            }else {
+                projectReplyeminDImage.setVisibility(View.GONE);
+            }
+            intiMessageData();
             requestParams.addBodyParameter("id",uid);
             SystemMessageSQLhelper sqLhelper=new SystemMessageSQLhelper(getActivity());
             SQLiteDatabase db= sqLhelper.getWritableDatabase();
@@ -361,16 +331,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                             }else {
                                 giftBagRemindImage.setVisibility(View.GONE);
                             }
-                            if (systemMessageDataBean.getMessage()>0){
-                                messageemindImage.setVisibility(View.VISIBLE);
-                            }else {
-                                messageemindImage.setVisibility(View.GONE);
-                            }
-                            if (systemMessageDataBean.getProjectReply()>0){
-                                projectReplyeminDImage.setVisibility(View.VISIBLE);
-                            }else {
-                                projectReplyeminDImage.setVisibility(View.GONE);
-                            }
+
+
 
 
 
@@ -443,8 +405,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.extruder_layout:
                 if (!TextUtils.isEmpty(uid)){
-                Intent attentionExtruderIntent=new Intent(getActivity(), AttentionExtrunActivity.class);
-                startActivity(attentionExtruderIntent);
+                    Intent attentionExtruderIntent=new Intent(getActivity(), AttentionExtrunActivity.class);
+                    startActivity(attentionExtruderIntent);
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }else {
                     Intent intent2=new Intent(getActivity(), LoginActivity.class);
@@ -454,17 +416,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.competitive_layout:
                 if (!TextUtils.isEmpty(uid)){
-                    if (!TextUtils.isEmpty(projectReply)){
-                        update(messageRemindId,SystemMessageSQLhelper.PROJECTREPLY,date);
-                    }else {
-                        if (!TextUtils.isEmpty(date)){
-                            insertData(systemMessageSQLhelper,SystemMessageSQLhelper.PROJECTREPLY,date);
-                        }
 
-                    }
-                Intent competitveTenderIntent=new Intent(getActivity(), MyCompetitveTenderActivity.class);
-                startActivity(competitveTenderIntent);
+                    Intent competitveTenderIntent=new Intent(getActivity(), MyCompetitveTenderActivity.class);
+                    startActivity(competitveTenderIntent);
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                    MyAppliction.setIsProjectMessage(false);
                 }else {
                     Intent intent3=new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent3);
@@ -472,14 +428,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.message_layout:
-                if (!TextUtils.isEmpty(message)){
-                    update(messageRemindId,SystemMessageSQLhelper.MESSAGE,date);
-                }else {
-                    if (!TextUtils.isEmpty(date)){
-                        insertData(systemMessageSQLhelper,SystemMessageSQLhelper.MESSAGE,date);
-                    }
-
-                }
                 if (!TextUtils.isEmpty(uid)){
                     Intent messageIntent=new Intent(getActivity(), MessageActivity.class);
                     startActivity(messageIntent);
@@ -497,7 +445,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                         update(messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
                     }else {
                         if (!TextUtils.isEmpty(date)){
-                            Log.e("添加数据了",date);
                             insertData(systemMessageSQLhelper,SystemMessageSQLhelper.GIFTBAG,date);
                         }
 
@@ -575,5 +522,53 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 "messageRemindId=?", new String[]{id});
         Log.e("更新了数据","更新了数据");
     }
+
+    private void intiMessageData() {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMessageListData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    AppListDataBean<MessageDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<MessageDataBean>>(){});
+                    if (appListDataBean.getResult().equals("success")){
+                        List<MessageDataBean> messageDataBeen=  appListDataBean.getData();
+                        if (messageDataBeen!=null){
+                           if (MyAppliction.getMessageSize()!=0){
+                               if (messageDataBeen.size()>MyAppliction.getMessageSize()){
+                                  MyAppliction.setMessageSize(messageDataBeen.size());
+                                   messageemindImage.setVisibility(View.VISIBLE);
+
+                               }else {
+                                   messageemindImage.setVisibility(View.GONE);
+                               }
+                           }else {
+                               MyAppliction.setMessageSize(messageDataBeen.size());
+                           }
+
+                        }else {
+
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+
+
+            }
+        });
+
+
+    }
+
 
 }

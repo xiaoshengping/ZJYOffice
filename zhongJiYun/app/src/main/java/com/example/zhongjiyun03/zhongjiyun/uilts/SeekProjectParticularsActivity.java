@@ -681,6 +681,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                         });
                         if (appDataBean.getResult().equals("success")) {
                             mSVProgressHUD.showSuccessWithStatus("您已取消关注！");
+
                         } else {
                             mSVProgressHUD.showErrorWithStatus("噢噢,取消关注失败");
                         }
@@ -715,6 +716,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                         });
                         if (appDataBean.getResult().equals("success")) {
                             mSVProgressHUD.showSuccessWithStatus("关注成功！");
+
                         } else {
                             mSVProgressHUD.showErrorWithStatus("噢噢,关注失败");
                         }

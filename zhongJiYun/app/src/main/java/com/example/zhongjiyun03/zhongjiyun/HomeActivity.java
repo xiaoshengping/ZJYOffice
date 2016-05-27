@@ -1,6 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -8,11 +9,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +40,6 @@ import com.example.zhongjiyun03.zhongjiyun.fragment.MineFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekMachinistFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekProjectFragment;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
-import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.service.UpdateService;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -51,7 +51,6 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import cn.jpush.android.api.JPushInterface;
@@ -118,12 +117,19 @@ public class HomeActivity extends AppCompatActivity {
             /*Intent intent=new Intent(HomeActivity.this,WelcomeActivity.class);
             startActivity(intent);*/
 
+
+
+        }
+        if (isNetworkAvailable(HomeActivity.this)) {
+            getVersontData();//版本更新
             if (isCommitData) {
                 initRegistration();//提交用户信息
             }
-
         }
-        getVersontData();//版本更新
+        else {
+            //Toast.makeText(getApplicationContext(), "当前没有可用网络！", Toast.LENGTH_LONG).show();
+        }
+
         init();
         //HomeFragment.setStart(0);
         //startPage();
@@ -146,6 +152,8 @@ public class HomeActivity extends AppCompatActivity {
         JPushInterface.setDebugMode(true);
     }
 
+
+
     @TargetApi(19)
     private void setTranslucentStatus(boolean on) {
         Window win = getWindow();
@@ -158,7 +166,44 @@ public class HomeActivity extends AppCompatActivity {
         }
         win.setAttributes(winParams);
     }
+    /**
+     * 检查当前网络是否可用
+     *
+     * //@param context
+     * @return
+     */
 
+    public boolean isNetworkAvailable(Activity activity)
+    {
+        Context context = activity.getApplicationContext();
+        // 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager == null)
+        {
+            return false;
+        }
+        else
+        {
+            // 获取NetworkInfo对象
+            NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
+
+            if (networkInfo != null && networkInfo.length > 0)
+            {
+                for (int i = 0; i < networkInfo.length; i++)
+                {
+                    System.out.println(i + "===状态===" + networkInfo[i].getState());
+                    System.out.println(i + "===类型===" + networkInfo[i].getTypeName());
+                    // 判断当前网络状态是否为连接状态
+                    if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
     //提交用户信息
     private void initRegistration() {
         HttpUtils httpUtils=new HttpUtils();
@@ -228,20 +273,8 @@ public class HomeActivity extends AppCompatActivity {
                                    } catch (Exception e) {
                                        e.printStackTrace();
                                    }
-                                   //noShowExitGameAlert("版本更新",versontDataBean.getContent(),versontDataBean.getDownloadUrl());
-
-
-                                   //showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
                                }else if (versontDataBean.getUpdateLevel()==2){  //强制更新
-                                   /*try {
-                                       if (!versontDataBean.getNo().equals(getVersionName())){
-                                           showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
 
-                                       }
-
-                                   } catch (Exception e) {
-                                       e.printStackTrace();
-                                   }*/
 
                                    //showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
                                    Intent intent = new Intent(HomeActivity.this,UpdateService.class);
@@ -267,7 +300,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void LodingApkData(String url) {
+    /*private void LodingApkData(String url) {
         HttpUtils httpUtils=new HttpUtils();
         httpUtils.configSoTimeout(1200000);
         String filePath= Environment.getExternalStorageDirectory()+"/zhongJiYun/";
@@ -347,7 +380,7 @@ public class HomeActivity extends AppCompatActivity {
         intent.setDataAndType(Uri.fromFile(file),"application/vnd.android.package-archive");
         startActivity(intent);
 
-    }
+    }*/
 
     //不强制下载对话框
 

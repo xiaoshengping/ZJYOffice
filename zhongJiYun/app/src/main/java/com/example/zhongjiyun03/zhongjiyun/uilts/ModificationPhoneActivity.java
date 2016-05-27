@@ -163,11 +163,9 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
     }
     private void intiVcodeData() {
 
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("PhoneNumber",phoneNewEdit.getText().toString());
-        requestParams.addBodyParameter("SmsType","2");
 
+        if (!TextUtils.isEmpty(editFormmerPhone.getText().toString())){
+            if (phone.equals(editFormmerPhone.getText().toString())){
         if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())) {
             if (phoneNewEdit.getText().toString().length()==11){
               if (isMobileNO(phoneNewEdit.getText().toString())){
@@ -175,8 +173,10 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
 
               if (!(phoneNewEdit.getText().toString()).equals(phone)){
 
-
-
+                  HttpUtils httpUtils=new HttpUtils();
+                  RequestParams requestParams=new RequestParams();
+                  requestParams.addBodyParameter("PhoneNumber",phoneNewEdit.getText().toString());
+                  requestParams.addBodyParameter("SmsType","2");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCodeData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -208,16 +208,26 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                   MyAppliction.showToast("请输入新的手机号码");
               }
               }else {
-                  MyAppliction.showToast("请输入正确的手机号码");
+                  MyAppliction.showToast("请输入正确的新手机号码");
               }
             }else {
                 MyAppliction.showToast("请输入长度为11位的手机号码");
             }
         }else {
-            MyAppliction.showToast("请输入您的手机号码");
+            MyAppliction.showToast("请输入您的新手机号码");
 
 
         }
+            }else {
+                MyAppliction.showToast("您输入您的旧手机号码不正确");
+
+
+            }
+         }else {
+             MyAppliction.showToast("请输入您的旧手机号码");
+
+
+         }
 
     }
     public static boolean isMobileNO(String mobiles) {

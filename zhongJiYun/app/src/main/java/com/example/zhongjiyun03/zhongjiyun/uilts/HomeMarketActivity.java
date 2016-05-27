@@ -133,7 +133,6 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
 
 
 
-
         //启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient());

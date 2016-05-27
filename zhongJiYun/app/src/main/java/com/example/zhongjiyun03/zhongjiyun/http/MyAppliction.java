@@ -36,6 +36,8 @@ public class MyAppliction extends Application {
     public Vibrator mVibrator;
     private static String latitude;//纬度
     private static String longitude; //经度
+    private static boolean isProjectMessage;//我的竞标消息提醒
+    private static int   messageSize; //消息长度大小
 
     public static MyAppliction getInstance() {
         if (instance == null) {
@@ -50,7 +52,7 @@ public class MyAppliction extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-        //CrashHandler.getInstance().init(getApplicationContext());
+        //CrashHandler.getInstance().init(getApplicationContext()); //异常处理
         app=this;
         initImageLoader(getApplicationContext());
         options = new DisplayImageOptions.Builder()
@@ -116,6 +118,22 @@ public class MyAppliction extends Application {
      */
     public static void showToast(String msg){
         Toast.makeText(app, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static int getMessageSize() {
+        return messageSize;
+    }
+
+    public static void setMessageSize(int messageSize) {
+        MyAppliction.messageSize = messageSize;
+    }
+
+    public static boolean isProjectMessage() {
+        return isProjectMessage;
+    }
+
+    public static void setIsProjectMessage(boolean isProjectMessage) {
+        MyAppliction.isProjectMessage = isProjectMessage;
     }
 
     public static String getLatitude() {
