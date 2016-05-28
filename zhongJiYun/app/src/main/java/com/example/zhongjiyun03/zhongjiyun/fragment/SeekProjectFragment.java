@@ -540,8 +540,8 @@ public class SeekProjectFragment extends Fragment implements PullToRefreshBase.O
         ListView listView;
         list=new ArrayList<>();
         list.add("默认排序");
-        list.add("按距离由近到远");
-        list.add("按距离由远到近");
+        list.add("按时间由近到远");
+        list.add("按时间由远到近");
 
 
         //加载布局

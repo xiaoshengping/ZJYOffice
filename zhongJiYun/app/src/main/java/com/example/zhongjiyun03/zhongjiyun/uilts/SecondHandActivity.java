@@ -169,6 +169,33 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
+        OnekeyShare oks = new OnekeyShare();
+        oks.setCallback(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+                //Log.e("分享成功","分享回调成功");
+                //MyAppliction.showToast("分享回调成功");
+                Message msg = new Message();
+                Bundle b = new Bundle();// 存放数据
+                b.putString("color", "我的");
+                msg.setData(b);
+                SecondHandActivity.this.secondHandHandler.sendMessage(msg); // 向Handler发送消息，更新UI
+
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Log.e("分享onError","分享回调onError");
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        });
+
+
     }
     @Override
     protected void onPause() {
@@ -1074,30 +1101,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         // siteUrl是分享此内容的网站地址，仅在QQ空间使用
         oks.setSiteUrl(AppUtilsUrl.BaseUrl+"App/Index.html#/tab/my/boss-used-rig");
 
-        oks.setCallback(new PlatformActionListener() {
-            @Override
-            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
 
-                //Log.e("分享成功","分享回调成功");
-                //MyAppliction.showToast("分享回调成功");
-                Message msg = new Message();
-                Bundle b = new Bundle();// 存放数据
-                b.putString("color", "我的");
-                msg.setData(b);
-                SecondHandActivity.this.secondHandHandler.sendMessage(msg); // 向Handler发送消息，更新UI
-
-            }
-
-            @Override
-            public void onError(Platform platform, int i, Throwable throwable) {
-                Log.e("分享onError","分享回调onError");
-            }
-
-            @Override
-            public void onCancel(Platform platform, int i) {
-
-            }
-        });
         // 启动分享GUI
         oks.show(this);
 

@@ -1,9 +1,11 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,8 +18,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -60,15 +62,21 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
     private SVProgressHUD mSVProgressHUD;//loding
     private SecondHandHandler secondHandHandler;
 
+    private ValueCallback<Uri> mUploadMessage;
+    private final static int FILECHOOSER_RESULTCODE=1;
+
+
     @Override
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
+        webView.onResume();
     }
     @Override
     protected void onPause() {
         super.onPause();
         JPushInterface.onPause(this);
+        webView.onPause();
     }
 
     @Override
@@ -122,21 +130,21 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
             uid=cursor.getString(0);
 
         }
-        WebSettings webSettings=webView.getSettings();
+       /* WebSettings webSettings=webView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setAllowFileAccess(true);// 设置允许访问文件数据
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setDomStorageEnabled(false);
-        webSettings.setDatabaseEnabled(false);
-
-
-
+        webSettings.setDatabaseEnabled(false);*/
         //启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new WebViewClient(){
+
+        webView.setWebViewClient(new MyWebViewClient());
+        LoadUrl();
+        //webView.setWebChromeClient(new WebChromeClient());
+        /*webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // TODO Auto-generated method stub
@@ -154,6 +162,7 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mSVProgressHUD.dismiss();
+                //Log.e("wz",webView.getUrl());
             }
 
             @Override
@@ -161,16 +170,146 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
                 super.onReceivedError(view, errorCode, description, failingUrl);
                 mSVProgressHUD.dismiss();
             }
+        });*/
+
+
+
+
+        //setContentView(webView);
+
+
+    }
+
+
+
+
+
+    // 加载web
+
+    private void LoadUrl() {
+        // TODO Auto-generated method stubs
+        // 设置WebView属性，能够执行Javascript脚本
+       // webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setUseWideViewPort(true);
+
+        webView.setWebViewClient(new myWebClient());
+
+        webView.setWebChromeClient(new WebChromeClient()
+        {
+            //The undocumented magic method override
+            //Eclipse will swear at you if you try to put @Override here
+            // For Android 3.0+
+            @SuppressWarnings("unused")
+            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
+
+                mUploadMessage = uploadMsg;
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("image/*");
+
+                HomeMarketActivity.this.startActivityForResult(Intent.createChooser(i,"File Chooserq"), 1);
+
+            }
+
+            // For Android 3.0+
+            @SuppressWarnings("unused")
+            public void openFileChooser( ValueCallback uploadMsg, String acceptType ) {
+                mUploadMessage = uploadMsg;
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("*/*");
+                HomeMarketActivity.this.startActivityForResult(Intent.createChooser(i, "File Browser"),	           1);
+            }
+
+            //For Android 4.1
+            @SuppressWarnings("unused")
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture){
+                mUploadMessage = uploadMsg;
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("image/*");
+                HomeMarketActivity.this.startActivityForResult( Intent.createChooser( i, "File Chooser" ), 1 );
+
+            }
+
         });
 
-        if (!TextUtils.isEmpty(uid)){
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        webView.getSettings().setLoadWithOverviewMode(true);
+
+       /* if (!TextUtils.isEmpty(uid)){
 
             webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id="+uid+"&redir=home");
 
         }else {
             webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/sess_out.php");
+        }*/
+        webView.loadUrl("http://h148a34804.iok.la/buluo/new_oauth.php?asp_user_id=72d2f160-0844-4a1e-9cf4-d1a25a413355");
+    }
+    public class myWebClient extends WebViewClient
+    {
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            // TODO Auto-generated method stub
+            super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            // TODO Auto-generated method stub
+
+            view.loadUrl(url);
+            return true;
+
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            // TODO Auto-generated method stub
+            super.onPageFinished(view, url);
+
+            //progressBar.setVisibility(View.GONE);
         }
     }
+
+
+
+
+
+    // 关联webview 类
+    class MyWebViewClient extends WebViewClient {
+
+        // 加载结束的时候
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            // TODO Auto-generated method stub
+            super.onPageFinished(view, url);
+        }
+
+    }
+
+
+
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent intent) {
+        if(requestCode==FILECHOOSER_RESULTCODE)
+        {
+            if (null == mUploadMessage) return;
+            Uri result = intent == null || resultCode != RESULT_OK ? null
+                    : intent.getData();
+            mUploadMessage.onReceiveValue(result);
+            mUploadMessage = null;
+        }
+    }
+
+
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){

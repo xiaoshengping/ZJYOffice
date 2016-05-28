@@ -64,7 +64,9 @@
             android:background="@mipmap/share_icon"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
+
    <WebView
+
        android:layout_below="@+id/head_layout"
        android:id="@+id/webview"
        android:layout_width="match_parent"

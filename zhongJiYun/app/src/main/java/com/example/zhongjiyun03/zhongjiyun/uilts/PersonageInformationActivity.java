@@ -367,8 +367,8 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                         AppBean<ModifatyHeadImage> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ModifatyHeadImage>>(){});
                         if (appBean.getResult().equals("success")){
                             ModifatyHeadImage modifatyHeadImage=appBean.getData();
-                            if (!TextUtils.isEmpty(modifatyHeadImage.getId())&&!TextUtils.isEmpty(modifatyHeadImage.getURL())){
-                                update(modifatyHeadImage.getId(),modifatyHeadImage.getURL());
+                            if (!TextUtils.isEmpty(modifatyHeadImage.getURL())){
+                                update(id,modifatyHeadImage.getURL());
                             }
                             mSVProgressHUD.dismiss();
                             mSVProgressHUD.showSuccessWithStatus("修改头像成功");
@@ -402,6 +402,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
      * 更新头像
      */
     public void update(String uid,String userIcon){
+        Log.e("更新数据库","更新数据库");
         SQLhelper sqLhelper= new SQLhelper(PersonageInformationActivity.this);
         SQLiteDatabase db = sqLhelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

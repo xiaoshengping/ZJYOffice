@@ -116,15 +116,14 @@ public class HomeActivity extends AppCompatActivity {
             //Log.d("debug", "不是第一次运行");
             /*Intent intent=new Intent(HomeActivity.this,WelcomeActivity.class);
             startActivity(intent);*/
-
-
-
         }
+
         if (isNetworkAvailable(HomeActivity.this)) {
             getVersontData();//版本更新
             if (isCommitData) {
                 initRegistration();//提交用户信息
             }
+
         }
         else {
             //Toast.makeText(getApplicationContext(), "当前没有可用网络！", Toast.LENGTH_LONG).show();
@@ -182,9 +181,7 @@ public class HomeActivity extends AppCompatActivity {
         if (connectivityManager == null)
         {
             return false;
-        }
-        else
-        {
+        } else {
             // 获取NetworkInfo对象
             NetworkInfo[] networkInfo = connectivityManager.getAllNetworkInfo();
 
@@ -192,8 +189,8 @@ public class HomeActivity extends AppCompatActivity {
             {
                 for (int i = 0; i < networkInfo.length; i++)
                 {
-                    System.out.println(i + "===状态===" + networkInfo[i].getState());
-                    System.out.println(i + "===类型===" + networkInfo[i].getTypeName());
+                    /*System.out.println(i + "===状态===" + networkInfo[i].getState());
+                    System.out.println(i + "===类型===" + networkInfo[i].getTypeName());*/
                     // 判断当前网络状态是否为连接状态
                     if (networkInfo[i].getState() == NetworkInfo.State.CONNECTED)
                     {
@@ -300,87 +297,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    /*private void LodingApkData(String url) {
-        HttpUtils httpUtils=new HttpUtils();
-        httpUtils.configSoTimeout(1200000);
-        String filePath= Environment.getExternalStorageDirectory()+"/zhongJiYun/";
-        String fileName="ZhongJiYun.apk";
-        File file = null;
-        try {
-            File dir = new File(filePath);
-            if(!dir.exists()&&dir.isDirectory()){//判断文件目录是否存在
-                dir.mkdirs();
-            }
-            file = new File(filePath+fileName);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        httpUtils.download(url, file.getPath(), new RequestCallBack<File>() {
-            @Override
-            public void onStart() {
-                super.onStart();
-                loodingLayout.setVisibility(View.VISIBLE);
-                mHandler.sendEmptyMessage(MSG_PROGRESS_UPDATE);
-            }
-
-            @Override
-            public void onLoading(long total, long current, boolean isUploading) {
-                super.onLoading(total, current, isUploading);
-                //progressBar.setMax((int)total);
-                //progressBar.setProgress((int)current);
-                //progressBarText.setText((int)current+"/"+(int)total);
-
-
-            }
-
-            @Override
-            public void onSuccess(ResponseInfo<File> responseInfo) {
-                Log.e("下载",responseInfo.result.toString());
-                loodingLayout.setVisibility(View.GONE);
-
-                openFile(responseInfo.result);
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("下载",s);
-                loodingLayout.setVisibility(View.GONE);
-            }
-        });
-
-
-    }
-
-    private Handler mHandler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            int progress = progressBar.getProgress();
-            progressBar.setProgress(++progress);
-            if (progress >= 100) {
-                mHandler.removeMessages(MSG_PROGRESS_UPDATE);
-            }
-            if (progress<=100){
-                progressBarText.setText(progress+"/100");
-            }
-            if (progress==100){
-                MyAppliction.showToast("下载成功,正在准备安装");
-
-            }
-            mHandler.sendEmptyMessageDelayed(MSG_PROGRESS_UPDATE, 100);
-        }
-    };
-
-
-    private void openFile(File file) {
-        // TODO Auto-generated method stub
-        Log.e("OpenFile", file.getName());
-        Intent intent = new Intent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setAction(android.content.Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(file),"application/vnd.android.package-archive");
-        startActivity(intent);
-
-    }*/
 
     //不强制下载对话框
 
@@ -394,6 +311,7 @@ public class HomeActivity extends AppCompatActivity {
         tv_message.setText(textTv);
         TextView cancelVerstionButton = (TextView) window.findViewById(R.id.cancel_verstion_button);
         TextView confirmVerstionButton = (TextView) window.findViewById(R.id.confirm_verstion_button);
+
         cancelVerstionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -403,10 +321,15 @@ public class HomeActivity extends AppCompatActivity {
         confirmVerstionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this,UpdateService.class);
-                intent.putExtra("Key_App_Name",appName);
-                intent.putExtra("Key_Down_Url",url);
-                startService(intent);
+                if (isWifi(HomeActivity.this)){
+                    Intent intent = new Intent(HomeActivity.this,UpdateService.class);
+                    intent.putExtra("Key_App_Name",appName);
+                    intent.putExtra("Key_Down_Url",url);
+                    startService(intent);
+                }else {
+                    showExitGameAlert("你现在使用的是运营商网络，要继续下载？",url);
+                }
+
 
                 //LodingApkData(url);
                 alertDialog.cancel();
@@ -415,49 +338,55 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
-      //强制下载对话框
-    private void showExitGameAlert(String text, String textTv, final String url) {
-        /*final AlertDialog dlg = new AlertDialog.Builder(HomeActivity.this).create();
+
+    /**
+     * make true current connect service is wifi
+     * @param mContext
+     * @return
+     */
+    private static boolean isWifi(Context mContext) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetInfo != null && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+            return true;
+        }
+        return false;
+    }
+
+
+    //对话框
+    private void showExitGameAlert(String text, final String url) {
+        final AlertDialog dlg = new AlertDialog.Builder(HomeActivity.this).create();
         dlg.show();
         Window window = dlg.getWindow();
         // *** 主要就是在这里实现这种效果的.
         // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
-        window.setContentView(R.layout.cell_alert_layout);
+        window.setContentView(R.layout.shrew_exit_dialog);
         TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
-        tailteTv = (TextView) window.findViewById(R.id.tv);
-        tailteTv.setText(text);
-        tailteTv.setTextColor(getResources().getColor(R.color.tailt_dark));
-        tailte.setText(textTv);
+        tailte.setText(text);
         // 为确认按钮添加事件,执行退出应用操作
         TextView ok = (TextView) window.findViewById(R.id.btn_ok);
-        ok.setText("确定");
+        ok.setText("继续下载");
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this,UpdateService.class);
+                intent.putExtra("Key_App_Name",appName);
+                intent.putExtra("Key_Down_Url",url);
+                startService(intent);
 
-                LodingApkData(url);
+
                 dlg.cancel();
             }
-        });*/
+        });
 
-        /*// 关闭alert对话框架
+        // 关闭alert对话框架
         TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
-        cancel.setText("取消");
+        cancel.setText("取消下载");
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dlg.cancel();
             }
-        });*/
-
-
-       /* AlertDialog alertDialog = new AlertDialog.Builder(HomeActivity.this).create();
-        alertDialog.show();
-        Window window = alertDialog.getWindow();
-        window.setContentView(R.layout.no_show_verstion_layout);
-        *//*TextView tv_title = (TextView) window.findViewById(R.id.tv_dialog_title);
-        tv_title.setText("详细信息");*//*
-        TextView tv_message = (TextView) window.findViewById(R.id.tv_dialog_message);
-        tv_message.setText("sdhdhdhdhh");*/
-
+        });
     }
 
 

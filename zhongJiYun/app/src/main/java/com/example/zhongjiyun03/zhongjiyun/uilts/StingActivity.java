@@ -17,6 +17,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -24,6 +26,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -62,6 +65,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
        private LinearLayout aboutLayout;
        @ViewInject(R.id.switch_button)
        private Switch switchButton;
+
 
 
 
@@ -123,11 +127,14 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                     /*PushAgent mPushAgent = PushAgent.getInstance(StingActivity.this);
                     mPushAgent.enable();*/
                     JPushInterface.resumePush(getApplicationContext());
+                    MyAppliction.setIsCheck(true);
                     // 打开推送
+
                 }else {
                     /*PushAgent mPushAgent = PushAgent.getInstance(StingActivity.this);
                     mPushAgent.disable();*/
                     JPushInterface.stopPush(getApplicationContext());
+                    MyAppliction.setIsCheck(false);
                     //关闭推送
                 }
             }
@@ -138,10 +145,16 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
         if (isFirstRun)
         {
             switchButton.setChecked(true);
+            MyAppliction.setIsCheck(true);
             editor.putBoolean("isFirstRun", false);
             editor.commit();
         } else{
+           if (MyAppliction.isCheck()==true){
+               switchButton.setChecked(true);
+           }else if (MyAppliction.isCheck()==false){
+               switchButton.setChecked(false);
 
+           }
         }
 
     }
@@ -277,6 +290,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                             db.delete(SQLhelper.tableName, null, null);
                         }
                     }
+                    removeCookie(StingActivity.this);
                    /* SharedPreferences.Editor editor = getSharedPreferences("lock", MODE_WORLD_WRITEABLE).edit();
                     editor.remove("code");
                     editor.commit();*/
@@ -284,6 +298,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
                     editor.clear().commit();*/
                     finish();
                     overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+
                 }else if (tage.equals("1")){
                    // cleanInternalCache(StingActivity.this);
                     textNumber.setText("0M");
@@ -317,5 +332,13 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
             }
         }
     }
+
+    private void removeCookie(Context context) {
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookie();
+        CookieSyncManager.getInstance().sync();
+    }
+
 
 }

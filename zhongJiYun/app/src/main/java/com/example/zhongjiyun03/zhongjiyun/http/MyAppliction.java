@@ -38,6 +38,7 @@ public class MyAppliction extends Application {
     private static String longitude; //经度
     private static boolean isProjectMessage;//我的竞标消息提醒
     private static int   messageSize; //消息长度大小
+    private static boolean isCheck; //是否接受推送消息
 
     public static MyAppliction getInstance() {
         if (instance == null) {
@@ -52,30 +53,30 @@ public class MyAppliction extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-        //CrashHandler.getInstance().init(getApplicationContext()); //异常处理
+        CrashHandler.getInstance().init(getApplicationContext()); //异常处理
         app=this;
         initImageLoader(getApplicationContext());
         options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(R.mipmap.default_img)//加载等待时显示的图片
                 .showImageForEmptyUri(R.mipmap.default_img)//加载数据为空时显示的图片
                 .showImageOnFail(R.mipmap.default_img)//加载失败时显示的图片
-                .cacheInMemory()
-                .cacheOnDisc()
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
                 .build();
         RoundedOptions = new DisplayImageOptions.Builder()
                 .showStubImage(R.mipmap.default_img)//加载等待 时显示的图片
                 .showImageForEmptyUri(R.mipmap.default_img)//加载数据为空时显示的图片
                 .showImageOnFail(R.mipmap.default_img)//加载失败时显示的图片
-                .cacheInMemory()
-                .cacheOnDisc()
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
                 .displayer(new RoundedBitmapDisplayer(200))
                 .build();
         RoundedOptionsOne = new DisplayImageOptions.Builder()
                 .showStubImage(R.mipmap.default_img)//加载等待 时显示的图片
                 .showImageForEmptyUri(R.mipmap.default_img)//加载数据为空时显示的图片
                 .showImageOnFail(R.mipmap.default_img)//加载失败时显示的图片
-                .cacheInMemory()
-                .cacheOnDisc()
+                .cacheInMemory(true)
+                .cacheOnDisc(true)
                 .displayer(new RoundedBitmapDisplayer(20))
                 .build();
         /***
@@ -118,6 +119,15 @@ public class MyAppliction extends Application {
      */
     public static void showToast(String msg){
         Toast.makeText(app, msg, Toast.LENGTH_SHORT).show();
+    }
+
+
+    public static boolean isCheck() {
+        return isCheck;
+    }
+
+    public static void setIsCheck(boolean isCheck) {
+        MyAppliction.isCheck = isCheck;
     }
 
     public static int getMessageSize() {
