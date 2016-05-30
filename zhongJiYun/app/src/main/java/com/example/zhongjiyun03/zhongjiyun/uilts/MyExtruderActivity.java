@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,9 +25,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.HomeExtruderListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
@@ -76,6 +79,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
     private ImageView notDataImage; //没有网络和没有数据显示
     @ViewInject(R.id.not_data_text)
     private TextView notDataText;
+    private SVProgressHUD mSVProgressHUD;//loding
 
     @Override
     protected void onPause() {
@@ -115,6 +119,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void inti() {
+        mSVProgressHUD = new SVProgressHUD(this);
         myExtruderBeens=new ArrayList<>();
         addExtruderTv.setOnClickListener(this);
         Drawable img = getResources().getDrawable(R.mipmap.add_icon);
@@ -235,6 +240,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
 
         homeExtruderAdapter=new HomeExtruderListAdapter(myExtruderBeens,this,extruderListView);
         extruderListView.setAdapter(homeExtruderAdapter);
+        ListView listView=extruderListView.getRefreshableView();
         extruderListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -244,7 +250,15 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
+                showExitGameAlert("确定要删除钻机？",position-1);
+
+                return true;
+            }
+        });
 
 
     }
@@ -336,6 +350,86 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
             overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
         }
         return true;
+    }
+    //对话框
+    private void showExitGameAlert(String text, final int position) {
+        final AlertDialog dlg = new AlertDialog.Builder(MyExtruderActivity.this).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("确定");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                isDeleteRequest(position);
+                dlg.cancel();
+            }
+        });
+
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });
+    }
+    private void isDeleteRequest(int position) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        SQLhelper sqLhelper=new SQLhelper(MyExtruderActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid = null;
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
+        if (!TextUtils.isEmpty(uid)){
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+            requestParams.addBodyParameter("Id",uid);
+            requestParams.addBodyParameter("deviceId",myExtruderBeens.get(position).getId());
+
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getDeleteExtruderDevice(),requestParams, new RequestCallBack<String>() {
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    if (!TextUtils.isEmpty(responseInfo.result)){
+                        //Log.e("hshshsh",responseInfo.result);
+                        AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
+                        if (appDataBean.getResult().equals("success")){
+                            mSVProgressHUD.showSuccessWithStatus("删除钻机成功");
+                            extruderListView.setRefreshing();
+                            homeExtruderAdapter.notifyDataSetChanged();
+                        }else {
+                            mSVProgressHUD.showErrorWithStatus(appDataBean.getMsg());
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    Log.e("取消关注钻机",s);
+                }
+            });
+        }
+
+
+
+
+
+
+
     }
 
 

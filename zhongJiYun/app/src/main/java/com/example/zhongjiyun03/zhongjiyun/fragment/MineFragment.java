@@ -30,6 +30,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.main.PersonageInformationBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
+import com.example.zhongjiyun03.zhongjiyun.http.SystemEvaluateSQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.http.SystemMessageSQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.AttentionExtrunActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.AttentionProjectActivity;
@@ -275,36 +276,35 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             SQLiteDatabase db= sqLhelper.getWritableDatabase();
             Cursor cursor=db.query(SystemMessageSQLhelper.tableName, null, null, null, null, null, null);
             String messageRemindId=null;  //id
-            String evaluate=null;  //我的评价数
-            String message=null;  //消息数
             String giftBag=null;     //我的红包数
-            String projectReply=null; //我的竞标数
-
             while (cursor.moveToNext()) {
                 messageRemindId=cursor.getString(0);
-                evaluate=cursor.getString(1);
-                message= cursor.getString(2);
-                giftBag = cursor.getString(3);
-                projectReply=cursor.getString(4);
+                giftBag=cursor.getString(1);
+
 
             }
+            SystemEvaluateSQLhelper sqLhelpers=new SystemEvaluateSQLhelper(getActivity());
+            SQLiteDatabase dbs= sqLhelpers.getWritableDatabase();
+            Cursor cursors=dbs.query(SystemEvaluateSQLhelper.tableName, null, null, null, null, null, null);
+            String messageEvaluateId=null;  //id
+            String evaluate=null;  //我的评价数
 
+            while (cursors.moveToNext()) {
+                messageEvaluateId=cursors.getString(0);
+                evaluate=cursors.getString(1);
+
+
+            }
             if (!TextUtils.isEmpty(evaluate)){
             requestParams.addBodyParameter("evaluate",evaluate);
                 Log.e("evaluate",evaluate);
             }
-            if (!TextUtils.isEmpty(message)){
-                requestParams.addBodyParameter("message",message);
-                Log.e("message",message);
-            }
+
             if (!TextUtils.isEmpty(giftBag)){
                 requestParams.addBodyParameter("giftBag",giftBag);
                 Log.e("giftBag11",giftBag);
             }
-            if (!TextUtils.isEmpty(projectReply)){
-                requestParams.addBodyParameter("projectReply",projectReply);
-                Log.e("projectReply",projectReply);
-            }
+
         //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
         //步骤2：获取文件中的值
@@ -368,22 +368,27 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             uid=cursor.getString(0);
 
         }
-        //获取系统提醒数据
+        //获取红包系统提醒数据
         SystemMessageSQLhelper systemMessageSQLhelper=new SystemMessageSQLhelper(getActivity());
         SQLiteDatabase sqLiteDatabase= systemMessageSQLhelper.getWritableDatabase();
         Cursor cursors=sqLiteDatabase.query(SystemMessageSQLhelper.tableName, null, null, null, null, null, null);
-
         String messageRemindId = null;  //id
-        String evaluate=null;  //我的评价数
-        String message=null;  //消息数
         String giftBag=null;     //我的红包数
-        String projectReply=null; //我的竞标数
         while (cursors.moveToNext()) {
             messageRemindId=cursors.getString(0);
-            evaluate=cursors.getString(1);
-            message= cursors.getString(2);
-            giftBag = cursors.getString(3);
-            projectReply=cursors.getString(4);
+            giftBag = cursors.getString(1);
+
+        }
+        //获取评论系统提醒数据
+        SystemEvaluateSQLhelper systemEvaluateSQLhelper=new SystemEvaluateSQLhelper(getActivity());
+        SQLiteDatabase sqLiteDatabases= systemEvaluateSQLhelper.getWritableDatabase();
+        Cursor cursorss=sqLiteDatabases.query(SystemEvaluateSQLhelper.tableName, null, null, null, null, null, null);
+        String messageEvaluateId = null;  //id
+        String evaluate=null;     //我的红包数
+        while (cursorss.moveToNext()) {
+            messageEvaluateId=cursorss.getString(0);
+            evaluate = cursorss.getString(1);
+
         }
         switch (v.getId()){
             case R.id.loing_layout:
@@ -442,10 +447,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.redpacket_layout:
                 if (!TextUtils.isEmpty(uid)){
                     if (!TextUtils.isEmpty(giftBag)){
-                        update(messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
+                        update(systemMessageSQLhelper,SystemMessageSQLhelper.tableName,SystemMessageSQLhelper.MESSAGEREMINDID,messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
                     }else {
                         if (!TextUtils.isEmpty(date)){
-                            insertData(systemMessageSQLhelper,SystemMessageSQLhelper.GIFTBAG,date);
+                            insertData(systemMessageSQLhelper,SystemMessageSQLhelper.tableName,SystemMessageSQLhelper.MESSAGEREMINDID,SystemMessageSQLhelper.GIFTBAG,date);
                         }
 
                     }
@@ -471,13 +476,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.comment_layout:
                 if (!TextUtils.isEmpty(uid)){
+
                     if (!TextUtils.isEmpty(evaluate)){
-                    /*Log.e("MESSAGE",message);
-                    Log.e("messageRemindId",messageRemindId+"----messageRemindId");*/
-                        update(messageRemindId,SystemMessageSQLhelper.EVALUATE,date);
+                        updateEvaluate(systemEvaluateSQLhelper,SystemEvaluateSQLhelper.tableName,SystemEvaluateSQLhelper.MESSAGEEVALUATEID,messageEvaluateId,SystemEvaluateSQLhelper.EVALUATE,date);
                     }else {
                         if (!TextUtils.isEmpty(date)){
-                            insertData(systemMessageSQLhelper,SystemMessageSQLhelper.EVALUATE,date);
+                            insertEvaluateData(systemEvaluateSQLhelper,SystemEvaluateSQLhelper.tableName,SystemEvaluateSQLhelper.MESSAGEEVALUATEID,SystemEvaluateSQLhelper.EVALUATE,date);
                         }
                     }
                     Intent commentIntent=new Intent(getActivity(), CommentActivity.class);
@@ -502,25 +506,47 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     /**
      * 插入数据
      */
-    public void insertData(SystemMessageSQLhelper sqLhelper,String key,String value){
+    public void insertData(SystemMessageSQLhelper sqLhelper,String tableName,String idName,String key,String value){
         SQLiteDatabase db=sqLhelper.getWritableDatabase();
         // db.execSQL("insert into user(uid,userName,userIcon,state) values('战士',3,5,7)");
         ContentValues values=new ContentValues();
         values.put(key,value);
-        db.insert(SystemMessageSQLhelper.tableName, SystemMessageSQLhelper.MESSAGEREMINDID, values);
+        db.insert(tableName, idName, values);
         db.close();
     }
     /**
      * 更新数据
      */
-    public void update(String id,String key,String value){
-        SystemMessageSQLhelper sqLhelper= new SystemMessageSQLhelper(getActivity());
+    public void update(SystemMessageSQLhelper sqLhelper,String tableName,String idName,String id,String key,String value){
         SQLiteDatabase db = sqLhelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(key, value);
-        db.update(SystemMessageSQLhelper.tableName, contentValues,
-                "messageRemindId=?", new String[]{id});
-        Log.e("更新了数据","更新了数据");
+        db.update(tableName, contentValues,
+                idName+"=?", new String[]{id});
+        //Log.e("更新了数据","更新了数据");
+    }
+
+    /**
+     * 插入数据
+     */
+    public void insertEvaluateData(SystemEvaluateSQLhelper sqLhelper,String tableName,String idName,String key,String value){
+        SQLiteDatabase db=sqLhelper.getWritableDatabase();
+        // db.execSQL("insert into user(uid,userName,userIcon,state) values('战士',3,5,7)");
+        ContentValues values=new ContentValues();
+        values.put(key,value);
+        db.insert(tableName, idName, values);
+        db.close();
+    }
+    /**
+     * 更新数据
+     */
+    public void updateEvaluate(SystemEvaluateSQLhelper sqLhelper,String tableName,String idName,String id,String key,String value){
+        SQLiteDatabase db = sqLhelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(key, value);
+        db.update(tableName, contentValues,
+                idName+"=?", new String[]{id});
+        //Log.e("更新了数据","更新了数据");
     }
 
     private void intiMessageData() {

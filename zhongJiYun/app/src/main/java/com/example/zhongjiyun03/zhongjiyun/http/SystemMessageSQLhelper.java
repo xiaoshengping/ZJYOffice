@@ -8,11 +8,7 @@ public class SystemMessageSQLhelper extends SQLiteOpenHelper{
 	private static final String DBNAME="systemmessage.db";
 	public static final String tableName="MessageRemind";
 	public static final String MESSAGEREMINDID="messageRemindId";
-	public static final String EVALUATE="Evaluate";
-	public static final String MESSAGE="Message";
 	public static final String GIFTBAG="GiftBag";
-	public static final String PROJECTREPLY="ProjectReply";
-	public static final String TOTALCOUNT="TotalCount";
 
 
 
@@ -28,7 +24,7 @@ public class SystemMessageSQLhelper extends SQLiteOpenHelper{
 	public void onCreate(SQLiteDatabase db){
 //		db.execSQL("create table if not exists "+tableName+"("+ID+" integer primary key,"+NAME+" varchar,"
 //				+ATT+" integer,"+AGI+" integer,"+INT+" integer)");		
-		db.execSQL("create table if not exists MessageRemind(messageRemindId integer primary key autoincrement ,Evaluate varchar, Message varchar,GiftBag varchar,ProjectReply varchar,TotalCount varchar)");
+		db.execSQL("create table if not exists MessageRemind(messageRemindId integer primary key autoincrement ,GiftBag varchar)");
 	}
 
 	@Override

@@ -67,7 +67,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
 
 
     @ViewInject(R.id.shard_tv)
-    private TextView shardText;   //头部右边
+    private ImageView shardText;   //头部右边
     @ViewInject(R.id.title_name_tv)
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)

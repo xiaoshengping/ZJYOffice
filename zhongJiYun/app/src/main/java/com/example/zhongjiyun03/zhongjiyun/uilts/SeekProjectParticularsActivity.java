@@ -507,7 +507,14 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                             overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
                         } else {
-                            MyAppliction.showToast(seekProjectBean.getCanReply());
+                            if (seekProjectBean.getCanReply().equals("添加钻机后可投标")){
+                                Intent intent=new Intent(SeekProjectParticularsActivity.this,AddExtruderActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                            }else {
+                                MyAppliction.showToast(seekProjectBean.getCanReply());
+                            }
+
                         }
                     } else {
                         if (!TextUtils.isEmpty(seekProjectId)) {

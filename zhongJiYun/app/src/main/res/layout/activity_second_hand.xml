@@ -46,16 +46,20 @@
             android:textColor="@color/ic_white"
             android:textSize="@dimen/home_Size_20"
             android:layout_centerInParent="true"/>
-        <TextView
+        <ImageView
             android:background="@mipmap/share_icon"
-            android:id="@+id/shard_tv"
+
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_centerInParent="true"/>
-
+        <ImageView
+            android:id="@+id/shard_tv"
+            android:layout_alignParentRight="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/tailt_layout"

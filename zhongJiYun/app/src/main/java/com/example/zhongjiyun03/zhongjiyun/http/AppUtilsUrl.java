@@ -280,5 +280,11 @@ public class AppUtilsUrl {
         return BaseUrl+"store/mobile/games/app_adpt.php?aspid=ASP_USER_ID" ;
 
     }
+    //删除钻机
+    public static String getDeleteExtruderDevice(){
+        //   appapi/boss/deletedevice
+        return BaseUrl+"appapi/boss/deletedevice" ;
+
+    }
 
 }

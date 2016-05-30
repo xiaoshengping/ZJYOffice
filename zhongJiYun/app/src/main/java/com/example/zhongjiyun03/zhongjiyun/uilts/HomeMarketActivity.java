@@ -20,8 +20,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
@@ -54,7 +58,7 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
      @ViewInject(R.id.webview)
      private WebView webView;
     @ViewInject(R.id.register_tv)
-    private TextView addExtruderTv;   //头部右边
+    private ImageView addExtruderTv;   //头部右边
     @ViewInject(R.id.title_name_tv)
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)
@@ -80,6 +84,20 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent intent) {
+        if(requestCode==FILECHOOSER_RESULTCODE)
+        {
+            if (null == mUploadMessage) return;
+            Uri result = intent == null || resultCode != RESULT_OK ? null
+                    : intent.getData();
+            mUploadMessage.onReceiveValue(result);
+            mUploadMessage = null;
+        }
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //改变状态栏
@@ -89,6 +107,7 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.red_light);//通知栏所需颜色
         }
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home_market);
         ViewUtils.inject(this);
         init();
@@ -130,19 +149,17 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
             uid=cursor.getString(0);
 
         }
-       /* WebSettings webSettings=webView.getSettings();
+        WebSettings webSettings=webView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setAllowFileAccess(true);// 设置允许访问文件数据
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setDomStorageEnabled(false);
-        webSettings.setDatabaseEnabled(false);*/
+        webSettings.setDatabaseEnabled(false);
         //启用支持javascript
-        webView.getSettings().setJavaScriptEnabled(true);
+        //webView.getSettings().setJavaScriptEnabled(true);
 
-        webView.setWebViewClient(new MyWebViewClient());
-        LoadUrl();
         //webView.setWebChromeClient(new WebChromeClient());
         /*webView.setWebViewClient(new WebViewClient(){
             @Override
@@ -172,30 +189,22 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
             }
         });*/
 
-
-
-
-        //setContentView(webView);
-
+        LoadUrl(uid);
 
     }
-
-
-
-
-
     // 加载web
-
-    private void LoadUrl() {
+    private void LoadUrl(String uid) {
         // TODO Auto-generated method stubs
         // 设置WebView属性，能够执行Javascript脚本
-       // webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setJavaScriptEnabled(true);
 
         webView.setWebViewClient(new myWebClient());
 
+        //webView.setWebChromeClient(new DefaultWebChromeClient()); // 播放视频
         webView.setWebChromeClient(new WebChromeClient()
         {
+
+
             //The undocumented magic method override
             //Eclipse will swear at you if you try to put @Override here
             // For Android 3.0+
@@ -206,7 +215,6 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
                 Intent i = new Intent(Intent.ACTION_GET_CONTENT);
                 i.addCategory(Intent.CATEGORY_OPENABLE);
                 i.setType("image/*");
-
                 HomeMarketActivity.this.startActivityForResult(Intent.createChooser(i,"File Chooserq"), 1);
 
             }
@@ -229,83 +237,50 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
                 i.addCategory(Intent.CATEGORY_OPENABLE);
                 i.setType("image/*");
                 HomeMarketActivity.this.startActivityForResult( Intent.createChooser( i, "File Chooser" ), 1 );
-
             }
-
         });
-
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        webView.getSettings().setLoadWithOverviewMode(true);
-
-       /* if (!TextUtils.isEmpty(uid)){
-
+         if (!TextUtils.isEmpty(uid)){
             webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id="+uid+"&redir=home");
-
         }else {
             webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/sess_out.php");
-        }*/
-        webView.loadUrl("http://h148a34804.iok.la/buluo/new_oauth.php?asp_user_id=72d2f160-0844-4a1e-9cf4-d1a25a413355");
+        }
+        //webView.loadUrl("http://h148a34804.iok.la/buluo/new_oauth.php?asp_user_id=72d2f160-0844-4a1e-9cf4-d1a25a413355");
+        //webView.loadUrl("http://h148a34804.iok.la/store/mobile/selfreg.php?asp_user_id=72d2f160-0844-4a1e-9cf4-d1a25a413355&redir=home");
     }
+
     public class myWebClient extends WebViewClient
     {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             // TODO Auto-generated method stub
             super.onPageStarted(view, url, favicon);
+            mSVProgressHUD.showWithStatus("正在加载中...");
         }
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             // TODO Auto-generated method stub
-
             view.loadUrl(url);
             return true;
-
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             // TODO Auto-generated method stub
             super.onPageFinished(view, url);
-
-            //progressBar.setVisibility(View.GONE);
+            mSVProgressHUD.dismiss();
         }
-    }
 
-
-
-
-
-    // 关联webview 类
-    class MyWebViewClient extends WebViewClient {
-
-        // 加载结束的时候
         @Override
-        public void onPageFinished(WebView view, String url) {
-            // TODO Auto-generated method stub
-            super.onPageFinished(view, url);
-        }
-
-    }
-
-
-
-
-
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent intent) {
-        if(requestCode==FILECHOOSER_RESULTCODE)
-        {
-            if (null == mUploadMessage) return;
-            Uri result = intent == null || resultCode != RESULT_OK ? null
-                    : intent.getData();
-            mUploadMessage.onReceiveValue(result);
-            mUploadMessage = null;
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            super.onReceivedError(view, request, error);
+            mSVProgressHUD.dismiss();
         }
     }
+
+
+
+
 
 
 
@@ -330,6 +305,9 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
 
 
     }
+
+
+
     private void showShare() {
         ShareSDK.initSDK(this);
         OnekeyShare oks = new OnekeyShare();

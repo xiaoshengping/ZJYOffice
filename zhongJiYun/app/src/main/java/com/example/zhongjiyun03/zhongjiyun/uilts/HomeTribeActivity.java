@@ -33,8 +33,8 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
 
     @ViewInject(R.id.web_view)
     private WebView webView;
-    @ViewInject(R.id.register_tv)
-    private TextView addExtruderTv;   //头部右边
+   /* @ViewInject(R.id.register_tv)
+    private ImageView addExtruderTv;   //头部右边*/
     @ViewInject(R.id.title_name_tv)
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)
@@ -88,8 +88,8 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
 
     private void initView() {
         mSVProgressHUD = new SVProgressHUD(this);
-        addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("部落");
+        //addExtruderTv.setVisibility(View.GONE);
+
         retrunText.setOnClickListener(this);
         SQLhelper sqLhelper=new SQLhelper(HomeTribeActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
@@ -135,6 +135,7 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mSVProgressHUD.dismiss();
+                titleNemeTv.setText(webView.getTitle());
             }
 
             @Override

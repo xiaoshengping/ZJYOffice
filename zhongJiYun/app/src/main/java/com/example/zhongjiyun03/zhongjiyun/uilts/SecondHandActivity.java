@@ -89,7 +89,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     @ViewInject(R.id.second_hand_listview)
     private PullToRefreshListView secondHandListview; //列表
     @ViewInject(R.id.shard_tv)
-    private TextView shareTextView; //分享
+    private ImageView shareTextView; //分享
     @ViewInject(R.id.title_name_tv)
     private TextView titleName;
     @ViewInject(R.id.retrun_text_view)

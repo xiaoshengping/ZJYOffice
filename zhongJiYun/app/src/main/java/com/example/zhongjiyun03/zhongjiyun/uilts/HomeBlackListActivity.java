@@ -31,8 +31,8 @@ import cn.jpush.android.api.JPushInterface;
 public class HomeBlackListActivity extends AppCompatActivity implements View.OnClickListener {
     @ViewInject(R.id.web_view)
     private WebView webView;
-    @ViewInject(R.id.register_tv)
-    private TextView addExtruderTv;   //头部右边
+    /*@ViewInject(R.id.register_tv)
+    private ImageView addExtruderTv;   //头部右边*/
     @ViewInject(R.id.title_name_tv)
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)
@@ -83,8 +83,8 @@ public class HomeBlackListActivity extends AppCompatActivity implements View.OnC
 
     private void initView() {
         mSVProgressHUD = new SVProgressHUD(this);
-        addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("黑名单");
+        //addExtruderTv.setVisibility(View.GONE);
+
         retrunText.setOnClickListener(this);
         SQLhelper sqLhelper=new SQLhelper(HomeBlackListActivity.this);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
@@ -130,6 +130,7 @@ public class HomeBlackListActivity extends AppCompatActivity implements View.OnC
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mSVProgressHUD.dismiss();
+                titleNemeTv.setText(webView.getTitle());
             }
 
             @Override
