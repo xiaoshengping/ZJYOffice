@@ -68,7 +68,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+                    android:layout_height="0.5dp" />
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp" />
             <ImageView
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="10dp"
                 android:src="@color/color_dedede"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp" />
@@ -155,7 +155,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+                    android:layout_height="0.5dp" />
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -192,7 +192,7 @@
                     android:layout_marginLeft="20dp"
                     android:src="@color/background"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+                    android:layout_height="0.5dp" />
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -239,7 +239,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp" />
             <ImageView
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="10dp"
                 android:src="@color/color_dedede"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp" />

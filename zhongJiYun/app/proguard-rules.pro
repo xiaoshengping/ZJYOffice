@@ -15,8 +15,8 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--dontoptimize
--dontpreverify
+
+
 
 -dontwarn cn.jpush.**
 -keep class cn.jpush.** { *; }
@@ -29,11 +29,11 @@
 -dontwarn com.google.**
 -keep class com.google.protobuf.** {*;}
 
--dontwarn android.support.**
+
 -dontwarn com.alibaba.fastjson.**
 
--dontskipnonpubliclibraryclassmembers
--dontskipnonpubliclibraryclasses
+
+
 
 -keep class com.baidu.** { *; }
 -keep class com.alibaba.fastjson.** { *; }
@@ -45,16 +45,46 @@ public <methods>;
 -keepattributes Signature
 
 -optimizationpasses 5
+#包明不混合大小写
 -dontusemixedcaseclassnames
--dontpreverify
+
+#不去忽略非公共的库类
+-dontskipnonpubliclibraryclasses
+
+#优化  不优化输入的类文件
+-dontoptimize
+
 -ignorewarnings
--verbose
+# 混淆时所采用的算法
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
 
--dontwarn
+#预校验
+-dontpreverify
+
+#混淆时是否记录日志
+-verbose
+
+
+# shareSDK分享
+-keep class cn.sharesdk.**{*;}
+
+-keep class com.sina.**{*;}
+
+-keep class **.R$* {*;}
+
+-keep class **.R{*;}
+
+-keep class com.mob.**{*;}
+
+-dontwarn com.mob.**
+
+-dontwarn cn.sharesdk.**
+
+-dontwarn **.R$*
 
 
 
+# 保持哪些类不被混淆
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service

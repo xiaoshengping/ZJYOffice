@@ -680,30 +680,27 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             requestParams.addBodyParameter("Id", uid);
             requestParams.addBodyParameter("collectId", seekProjectId);
             requestParams.addBodyParameter("collectType", "1");
-            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionNoData(), requestParams, new RequestCallBack<String>() {
+            httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionNoData(), requestParams,
+                    new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     if (!TextUtils.isEmpty(responseInfo.result)) {
-                        AppDataBean appDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppDataBean>() {
+                        AppDataBean appDataBean = JSONObject.parseObject(responseInfo.result,
+                                new TypeReference<AppDataBean>() {
                         });
                         if (appDataBean.getResult().equals("success")) {
                             mSVProgressHUD.showSuccessWithStatus("您已取消关注！");
-
                         } else {
                             mSVProgressHUD.showErrorWithStatus("噢噢,取消关注失败");
                         }
                     }
-
                 }
-
                 @Override
                 public void onFailure(HttpException e, String s) {
                     Log.e("取消关注项目", s);
                 }
             });
         }
-
-
     }
 
     private void isCheckedRequest(String uid, String sesstionId) {

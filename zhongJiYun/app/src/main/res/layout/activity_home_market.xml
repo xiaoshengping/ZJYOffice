@@ -46,6 +46,8 @@
             android:textSize="@dimen/home_Size_18"
             android:layout_centerInParent="true"/>
         <TextView
+            android:singleLine="true"
+            android:ellipsize="end"
             android:id="@+id/title_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

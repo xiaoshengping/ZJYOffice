@@ -214,13 +214,6 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            /*if (selectedPicture.size() == 3) {
-                mSVProgressHUD.showWithStatus("上传照片中(3)...");
-            } else if (selectedPicture.size() == 2) {
-                mSVProgressHUD.showWithStatus("上传照片中(2)...");
-            } else if (selectedPicture.size() == 1) {
-                mSVProgressHUD.showWithStatus("上传照片中(1)...");
-            }*/
             mSVProgressHUD.showWithStatus("正在提交中...");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getIdeaFeedBackData(), requestParams, new RequestCallBack<String>() {
                 @Override
@@ -234,17 +227,13 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
                             if (feedBackDataBean != null) {
                                 intiPhontData0(uid, "17", selectedPicture.get(0), feedBackDataBean.getId());
                             }
-
                         } else {
                             MyAppliction.showToast("提交失败");
                             mSVProgressHUD.dismiss();
                         }
-
-
                     }
                 }
-
-                @Override
+               @Override
                 public void onFailure(HttpException e, String s) {
                     Log.e("意见反馈", s);
                     mSVProgressHUD.dismiss();
@@ -253,7 +242,6 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             MyAppliction.showToast("请输入要反馈的内容");
         }
-
 
     }
 

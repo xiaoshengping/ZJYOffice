@@ -187,7 +187,7 @@
         android:layout_height="0.5dp" />
 
         <ImageView
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/comtent_image_one"
             android:layout_below="@+id/comtent_layout"
             android:src="@color/color_dedede"

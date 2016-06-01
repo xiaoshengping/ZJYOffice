@@ -56,10 +56,19 @@ public class ImagePagerActivity extends ActionBarActivity {
             urls.add(resumeValueBean.getPhoto());
         }else if (getIntent().getStringExtra("tage").equals("MyExtruderBean")){
             MyExtruderBean MyExtruderBean= (MyExtruderBean) getIntent().getSerializableExtra(EXTRA_IMAGE_URLS);
-            urls.add(MyExtruderBean.getDeviceNoPhoto());
-            urls.add(MyExtruderBean.getDevicePhoto());
-            urls.add(MyExtruderBean.getDeviceInvoicePhoto());
-            urls.add(MyExtruderBean.getDeviceContractPhoto());
+            if (!TextUtils.isEmpty(MyExtruderBean.getDeviceNoPhoto())){
+                urls.add(MyExtruderBean.getDeviceNoPhoto());
+            }
+            if (!TextUtils.isEmpty(MyExtruderBean.getDevicePhoto())){
+                urls.add(MyExtruderBean.getDevicePhoto());
+            }
+            if (!TextUtils.isEmpty(MyExtruderBean.getDeviceInvoicePhoto())){
+                urls.add(MyExtruderBean.getDeviceInvoicePhoto());
+            }
+           if (!TextUtils.isEmpty(MyExtruderBean.getDeviceContractPhoto())){
+               urls.add(MyExtruderBean.getDeviceContractPhoto());
+           }
+
             if (!TextUtils.isEmpty(MyExtruderBean.getDeviceCertificatePhoto())){
                 urls.add(MyExtruderBean.getDeviceCertificatePhoto());
             }

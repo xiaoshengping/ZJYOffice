@@ -199,7 +199,9 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
                             if (!TextUtils.isEmpty(serviceProviderBean.getTel())){
                                 immobImage.setVisibility(View.VISIBLE);
                                 immobilizationTextView.setVisibility(View.VISIBLE);
-                                immobilizationTextView.setText(serviceProviderBean.getTel());
+                                StringBuffer stringBuffers=new StringBuffer(serviceProviderBean.getTel());
+                                stringBuffers.replace(4,8,"****");
+                                immobilizationTextView.setText(stringBuffers.toString());
                             }else {
                                 immobilizationTextView.setVisibility(View.GONE);
                                 immobImage.setVisibility(View.GONE);
