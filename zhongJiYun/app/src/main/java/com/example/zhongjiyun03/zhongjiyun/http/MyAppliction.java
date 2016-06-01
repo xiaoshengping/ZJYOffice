@@ -39,6 +39,7 @@ public class MyAppliction extends Application {
     private static boolean isProjectMessage;//我的竞标消息提醒
     private static int   messageSize; //消息长度大小
     private static boolean isCheck; //是否接受推送消息
+    private static String cacheData;
 
     public static MyAppliction getInstance() {
         if (instance == null) {
@@ -121,6 +122,13 @@ public class MyAppliction extends Application {
         Toast.makeText(app, msg, Toast.LENGTH_SHORT).show();
     }
 
+    public static String getCacheData() {
+        return cacheData;
+    }
+
+    public static void setCacheData(String cacheData) {
+        MyAppliction.cacheData = cacheData;
+    }
 
     public static boolean isCheck() {
         return isCheck;

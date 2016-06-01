@@ -280,8 +280,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             while (cursor.moveToNext()) {
                 messageRemindId=cursor.getString(0);
                 giftBag=cursor.getString(1);
-
-
             }
             SystemEvaluateSQLhelper sqLhelpers=new SystemEvaluateSQLhelper(getActivity());
             SQLiteDatabase dbs= sqLhelpers.getWritableDatabase();
@@ -295,15 +293,17 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
 
             }
+
             if (!TextUtils.isEmpty(evaluate)){
             requestParams.addBodyParameter("evaluate",evaluate);
-                Log.e("evaluate",evaluate);
+                //Log.e("evaluate",evaluate);
             }
 
             if (!TextUtils.isEmpty(giftBag)){
                 requestParams.addBodyParameter("giftBag",giftBag);
-                Log.e("giftBag11",giftBag);
+                //Log.e("giftBag11",giftBag);
             }
+
 
         //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
@@ -390,6 +390,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             evaluate = cursorss.getString(1);
 
         }
+
         switch (v.getId()){
             case R.id.loing_layout:
                 Intent intent=new Intent(getActivity(), LoginActivity.class);
@@ -434,6 +435,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.message_layout:
                 if (!TextUtils.isEmpty(uid)){
+
                     Intent messageIntent=new Intent(getActivity(), MessageActivity.class);
                     startActivity(messageIntent);
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -527,7 +529,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     /**
-     * 插入数据
+     * 评论插入数据
      */
     public void insertEvaluateData(SystemEvaluateSQLhelper sqLhelper,String tableName,String idName,String key,String value){
         SQLiteDatabase db=sqLhelper.getWritableDatabase();
@@ -538,7 +540,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         db.close();
     }
     /**
-     * 更新数据
+     * 评论更新数据
      */
     public void updateEvaluate(SystemEvaluateSQLhelper sqLhelper,String tableName,String idName,String id,String key,String value){
         SQLiteDatabase db = sqLhelper.getWritableDatabase();
@@ -548,6 +550,30 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 idName+"=?", new String[]{id});
         //Log.e("更新了数据","更新了数据");
     }
+
+   /* *//**
+     * 消息插入数据
+     *//*
+    public void insertMessageData(MianMessageSQLhelper sqLhelper,String tableName,String idName,String key,String value){
+        SQLiteDatabase db=sqLhelper.getWritableDatabase();
+        // db.execSQL("insert into user(uid,userName,userIcon,state) values('战士',3,5,7)");
+        ContentValues values=new ContentValues();
+        values.put(key,value);
+        db.insert(tableName, idName, values);
+        db.close();
+    }
+    *//**
+     * 消息更新数据
+     *//*
+    public void updateMessage(MianMessageSQLhelper sqLhelper,String tableName,String idName,String id,String key,String value){
+        SQLiteDatabase db = sqLhelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(key, value);
+        db.update(tableName, contentValues,
+                idName+"=?", new String[]{id});
+        //Log.e("更新了数据","更新了数据");
+    }*/
+
 
     private void intiMessageData() {
         HttpUtils httpUtils=new HttpUtils();

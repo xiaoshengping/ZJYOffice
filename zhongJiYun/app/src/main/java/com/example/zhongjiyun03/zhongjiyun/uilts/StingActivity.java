@@ -65,6 +65,7 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
        private LinearLayout aboutLayout;
        @ViewInject(R.id.switch_button)
        private Switch switchButton;
+       private File file;
 
 
 
@@ -112,10 +113,16 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
         aboutLayout.setOnClickListener(this);
         titleNemeTv.setText("设置");
         retrunText.setOnClickListener(this);
-        File file=new File(String.valueOf((StingActivity.this).getExternalCacheDir()));
+        file=new File(String.valueOf((StingActivity.this).getExternalCacheDir()));
         try {
             Log.e("文件大小",bytes2kb(getFolderSize(file))+"");
-            textNumber.setText(bytes2kb(getFolderSize(file))+"M");
+            if (!MyAppliction.getCacheData().equals(bytes2kb(getFolderSize(file)))){
+                textNumber.setText(bytes2kb(getFolderSize(file))+"M");
+            }else {
+                textNumber.setText("0M");
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -301,6 +308,11 @@ public class StingActivity extends AppCompatActivity implements View.OnClickList
 
                 }else if (tage.equals("1")){
                    // cleanInternalCache(StingActivity.this);
+                    try {
+                        MyAppliction.setCacheData(bytes2kb(getFolderSize(file)));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     textNumber.setText("0M");
                     //cleanCustomCache("/sdcard/zhongJiYunImage/");
                 }
