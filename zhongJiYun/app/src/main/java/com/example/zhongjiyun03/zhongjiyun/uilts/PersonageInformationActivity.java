@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -234,9 +235,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                         }else if (appBean.getResult().equals("unlogin")){
 
                             mSVProgressHUD.dismiss();
-                            Intent intent=new Intent(PersonageInformationActivity.this,LoginActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                            showExitGameAlertUnLonding("本次登录已过期");
                         } else {
                             MyAppliction.showToast(appBean.getMsg());
                             mSVProgressHUD.dismiss();
@@ -570,7 +569,37 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
         return file;
 
     }
+    //对话框
+    private void showExitGameAlertUnLonding(String text) {
+        final AlertDialog dlg = new AlertDialog.Builder(PersonageInformationActivity.this).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("去登录");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent=new Intent(PersonageInformationActivity.this,LoginActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                dlg.cancel();
+            }
+        });
 
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("暂不去");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 // KeyEvent.KEYCODE_BACK代表返回操作.

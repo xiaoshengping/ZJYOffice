@@ -81,7 +81,7 @@ public class AboutActivity extends AppCompatActivity implements View.OnClickList
         titleNemeTv.setText("关于我们");
         retrunText.setOnClickListener(this);
         try {
-            versontText.setText(getVersionName());
+            versontText.setText("V "+getVersionName());
         } catch (Exception e) {
             e.printStackTrace();
         }

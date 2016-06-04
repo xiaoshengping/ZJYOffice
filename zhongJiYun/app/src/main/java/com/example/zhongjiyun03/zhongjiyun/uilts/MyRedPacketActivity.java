@@ -191,9 +191,8 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                         MyAppliction.showToast("已到最底了");
                         //notDataLayout.setVisibility(View.GONE);
                     }else if (appBean.getResult().equals("unlogin")){
-                        Intent intent=new Intent(MyRedPacketActivity.this,LoginActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                        showExitGameAlertUnLonding("本次登录已过期");
+                        getPackedButton.setVisibility(View.GONE);
                     }
                     myredAdapter.notifyDataSetChanged();
                     redPatckListview.onRefreshComplete();
@@ -368,7 +367,37 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
         });*/
     }
 
+    //对话框
+    private void showExitGameAlertUnLonding(String text) {
+        final AlertDialog dlg = new AlertDialog.Builder(MyRedPacketActivity.this).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("去登录");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent=new Intent(MyRedPacketActivity.this,LoginActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                dlg.cancel();
+            }
+        });
 
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("暂不去");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

@@ -5,7 +5,7 @@ package com.example.zhongjiyun03.zhongjiyun.http;
  */
 public class AppUtilsUrl {
 
-    public static final String BaseUrl="http://www.zhongjiyun.cn/";
+    public static final String BaseUrl="http://h148a34804.iok.la/";
     //public  static final String ImageBaseUrl="http://www.iclubapps.com/upload/""http://h148a34804.iok.la/""http://dev.zhongjiyun.cn/";
 
     //首页广告

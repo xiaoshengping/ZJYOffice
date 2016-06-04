@@ -21,17 +21,17 @@
      <TextView
          android:id="@+id/about_text"
          android:textColor="@color/tailt_dark"
-         android:textSize="@dimen/home_Size_23"
+         android:textSize="@dimen/home_Size_20"
          android:layout_marginTop="10dp"
          android:layout_centerHorizontal="true"
          android:layout_below="@+id/about_image"
-         android:text="中基云"
+         android:text="中基云机主端"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/versont_text"
         android:textColor="@color/content_color"
-        android:textSize="@dimen/home_Size_20"
+        android:textSize="@dimen/home_Size_18"
         android:layout_marginTop="5dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/about_text"

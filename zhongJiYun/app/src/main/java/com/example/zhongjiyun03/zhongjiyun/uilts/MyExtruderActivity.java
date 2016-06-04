@@ -205,9 +205,8 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             notDataText.setText("您还没有添加钻机哦");
                         }else if (appBean.getResult().equals("unlogin")){
                             //MyAppliction.showToast("登录已失效，请重新登陆");
-                            Intent intent=new Intent(MyExtruderActivity.this,LoginActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                            showExitGameAlert("本次登录已过期");
+
                         }
 
 
@@ -427,13 +426,37 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
             });
         }
 
-
-
-
-
-
-
     }
 
+    //对话框
+    private void showExitGameAlert(String text) {
+        final AlertDialog dlg = new AlertDialog.Builder(MyExtruderActivity.this).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("去登录");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent=new Intent(MyExtruderActivity.this,LoginActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                dlg.cancel();
+            }
+        });
 
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("暂不去");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+            }
+        });
+    }
 }
