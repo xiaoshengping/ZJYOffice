@@ -434,17 +434,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.message_layout:
-                if (!TextUtils.isEmpty(uid)){
-
                     Intent messageIntent=new Intent(getActivity(), MessageActivity.class);
                     startActivity(messageIntent);
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                }else {
-                    Intent intent3=new Intent(getActivity(), LoginActivity.class);
-                    startActivity(intent3);
-                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                }
-
                 break;
             case R.id.redpacket_layout:
                 if (!TextUtils.isEmpty(uid)){

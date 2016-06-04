@@ -75,11 +75,11 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
       private LinearLayout notDataLayout;
       @ViewInject(R.id.network_remind_layout)
       private LinearLayout networkRemindLayout;
-    @ViewInject(R.id.not_data_image)
-    private ImageView notDataImage; //没有网络和没有数据显示
-    @ViewInject(R.id.not_data_text)
-    private TextView notDataText;
-    private SVProgressHUD mSVProgressHUD;//loding
+      @ViewInject(R.id.not_data_image)
+      private ImageView notDataImage; //没有网络和没有数据显示
+      @ViewInject(R.id.not_data_text)
+      private TextView notDataText;
+      private SVProgressHUD mSVProgressHUD;//loding
 
     @Override
     protected void onPause() {
@@ -204,7 +204,10 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             notDataImage.setBackgroundResource(R.mipmap.no_rig_icon);
                             notDataText.setText("您还没有添加钻机哦");
                         }else if (appBean.getResult().equals("unlogin")){
-                            MyAppliction.showToast(appBean.getMsg());
+                            //MyAppliction.showToast("登录已失效，请重新登陆");
+                            Intent intent=new Intent(MyExtruderActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                         }
 
 

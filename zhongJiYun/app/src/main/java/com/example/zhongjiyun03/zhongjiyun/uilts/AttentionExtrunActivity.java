@@ -195,6 +195,10 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                             homeSecondHandListAdapter.notifyDataSetChanged();
                             notDataImage.setBackgroundResource(R.mipmap.no_rig_icon);
                             notDataText.setText("您还没有关注的二手钻机哦");
+                        }else if (appListDataBean.getResult().equals("unlogin")){
+                            Intent intent=new Intent(AttentionExtrunActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                         }
 
 

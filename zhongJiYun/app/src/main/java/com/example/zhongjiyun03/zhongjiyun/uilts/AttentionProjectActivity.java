@@ -203,6 +203,10 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                             attentionProjectListview.onRefreshComplete();
                             MyAppliction.showToast("已到最底了");
                             homeProjectlsitAdapter.notifyDataSetChanged();
+                        }else if (appBean.getResult().equals("unlogin")){
+                            Intent intent=new Intent(AttentionProjectActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                         }
 
 

@@ -175,16 +175,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                    // mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");
                    // mSVProgressHUD.showErrorWithStatus("不约，叔叔我们不约～", SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
                     mSVProgressHUD.showWithStatus("登录中...");
-                   httpUtils.configCookieStore(MyCookieStore.cookieStore);
-                   /*SQLhelper sqLhelper=new SQLhelper(LoginActivity.this);
-                   SQLiteDatabase db= sqLhelper.getWritableDatabase();
-                   Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-                   String sesstionId=null;  //用户id
-
-                    while (cursor.moveToNext()) {
-                        sesstionId=cursor.getString(6);
-
-                    }*/
+                   //httpUtils.configCookieStore(MyCookieStore.cookieStore);
                     //步骤1：创建一个SharedPreferences接口对象
                     SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
                     //步骤2：获取文件中的值

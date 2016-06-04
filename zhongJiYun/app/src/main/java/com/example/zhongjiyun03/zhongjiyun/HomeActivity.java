@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -40,6 +42,8 @@ import com.example.zhongjiyun03.zhongjiyun.fragment.MineFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekMachinistFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekProjectFragment;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.Base64;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.service.UpdateService;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -51,7 +55,13 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
+
+import javax.crypto.Cipher;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -112,7 +122,7 @@ public class HomeActivity extends AppCompatActivity {
             editor.commit();
 
 
-        } else{
+        }else{
             //Log.d("debug", "不是第一次运行");
             /*Intent intent=new Intent(HomeActivity.this,WelcomeActivity.class);
             startActivity(intent);*/
@@ -123,32 +133,106 @@ public class HomeActivity extends AppCompatActivity {
             if (isCommitData) {
                 initRegistration();//提交用户信息
             }
+            try {
+                userLoginData();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        }
-        else {
+
+        }else {
             //Toast.makeText(getApplicationContext(), "当前没有可用网络！", Toast.LENGTH_LONG).show();
         }
 
         init();
-        //HomeFragment.setStart(0);
-        //startPage();
-
-        /*PushAgent mPushAgent = PushAgent.getInstance(this);
-        mPushAgent.enable();
-        String device_token = Umeng·Registrar.getRegistrationId(this);
-        //Log.e("shdhdhdh",device_token);
-        //开启推送并设置注册的回调处理
-        mPushAgent.enable(new IUmengRegisterCallback() {
-
-            @Override
-            public void onRegistered(String registrationId) {
-                //onRegistered方法的参数registrationId即是device_token
-                Log.d("device_token", registrationId);
-            }
-        });
-        PushAgent.getInstance(this).onAppStart();*/
         JPushInterface.init(this);
         JPushInterface.setDebugMode(true);
+    }
+        //防止sesstion丢失登录
+    private void userLoginData() throws Exception {
+        SQLhelper sqLhelper=new SQLhelper(HomeActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String PhoneNumber=null;  //用户id
+        while (cursor.moveToNext()) {
+            PhoneNumber=cursor.getString(1);
+
+        }
+        if (!TextUtils.isEmpty(PhoneNumber)){
+        String Password = "zjy888888";
+        // 从文件中得到公钥
+        String key="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDqi/nzVA6vTRoCgzH1zN9KsFz8ph3T4RHzfEPHnpsa2VF1FyhOg34HYiwors5bM87uFvyNAoFOHFt6JdtE8mICBI/PAxBFPy+wP6uUEjZz58MjJwGhTK3t4IP+gbq6sU0I10USFga6UswKWgMCDhfe91FWyXmhTccZcREMKiedIwIDAQAB";
+        String phoneNumber = encryptByPublic(PhoneNumber,key);
+        String password = encryptByPublic(Password,key);
+           // Log.e("phoneNumber",phoneNumber);
+           // Log.e("password",password);
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        requestParams.addBodyParameter("PhoneNumber",phoneNumber);
+        requestParams.addBodyParameter("Password",password);
+        requestParams.addBodyParameter("UserType","boss");
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String value = read.getString("code","");
+        if (!TextUtils.isEmpty(value)){
+           requestParams.setHeader("Cookie","ASP.NET_SessionId=" +  value );
+        }
+        requestParams.addBodyParameter("JiGuangId",JPushInterface.getRegistrationID(HomeActivity.this));
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getUserLoginData(), requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                    Log.e("防止sesstion丢失登录",responseInfo.result);
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("防止sesstion丢失登录onFailure",s);
+            }
+        });
+        }
+
+
+
+    }
+
+
+
+    /**
+     * 使用公钥加密
+     *
+     * @param content 密文
+     * //@param key 公钥
+     * @return
+     */
+    public static String encryptByPublic(String content, String pub_key) {
+        try {
+            PublicKey pubkey = getPublicKeyFromX509(pub_key);
+
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, pubkey);
+            byte plaintext[] = content.getBytes("UTF-8");
+            byte[] output = cipher.doFinal(plaintext);
+            String s = new String(Base64.encode(output));
+            return s;
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * 得到公钥
+     *
+     * //@param algorithm
+     * @param bysKey
+     * @return
+     */
+    private static PublicKey getPublicKeyFromX509(String bysKey) throws NoSuchAlgorithmException, Exception {
+        byte[] decodedKey = Base64.decode(bysKey);
+        X509EncodedKeySpec x509 = new X509EncodedKeySpec(decodedKey);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        return keyFactory.generatePublic(x509);
     }
 
 
@@ -235,10 +319,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
     private void getVersontData() {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();

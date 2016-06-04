@@ -286,5 +286,11 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/boss/deletedevice" ;
 
     }
+    //防止sesstion丢失登录
+    public static String getUserLoginData(){
+        //   appapi/user/userlogin
+        return BaseUrl+"appapi/user/userlogin" ;
+
+    }
 
 }

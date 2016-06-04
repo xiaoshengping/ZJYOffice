@@ -226,11 +226,18 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                                 }
                                 mSVProgressHUD.dismiss();
 
-                            }else {
+                            }
+                            else {
                                 mSVProgressHUD.dismiss();
                             }
 
-                        }else {
+                        }else if (appBean.getResult().equals("unlogin")){
+
+                            mSVProgressHUD.dismiss();
+                            Intent intent=new Intent(PersonageInformationActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                        } else {
                             MyAppliction.showToast(appBean.getMsg());
                             mSVProgressHUD.dismiss();
 

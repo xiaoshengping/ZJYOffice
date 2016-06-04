@@ -174,6 +174,10 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
                             //MyAppliction.showToast("没有更多数据");
                             notDataImage.setBackgroundResource(R.mipmap.no_project_icon);
                             notDataText.setText("您还没有竞标项目哦");
+                        }else if (appBean.getResult().equals("unlogin")){
+                            Intent intent=new Intent(MyCompetitveTenderActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                         }
 
                         myCompetitveAdapter.notifyDataSetChanged();
