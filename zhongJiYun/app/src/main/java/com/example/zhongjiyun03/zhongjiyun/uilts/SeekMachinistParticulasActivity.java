@@ -193,10 +193,16 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
             if (seekMachinisDataBean.getWorkInfoItemDtos()!=null&&seekMachinisDataBean.getWorkInfoItemDtos().size()!=0){
                 if (seekMachinisDataBean.getWorkInfoItemDtos().size()==1){
                     workExperienceRlayout.setVisibility(View.VISIBLE);
-                    workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
+                    if(!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth())
+                            &&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth())){
+                        workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
+                    }else {
+                        workTimeText.setText("工作时间:暂无。");
+                    }
+
                     if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture())&&
                             !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture())){
                         petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
@@ -212,11 +218,18 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                         miaoShiText.setText("工作描述:暂无。");
                     }
                 }else if (seekMachinisDataBean.getWorkInfoItemDtos().size()==2){
+
                     workExperienceRlayout.setVisibility(View.VISIBLE);
-                    workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
+                    if(!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth())
+                            &&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth())){
+                        workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
+                    }else {
+                        workTimeText.setText("工作时间:暂无。");
+                    }
+
                     if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture())&&
                             !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture())){
                         petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
@@ -232,15 +245,24 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                     }
                     workExperienceLayoutOne.setVisibility(View.VISIBLE);
                     imageLini.setVisibility(View.VISIBLE);
-                    workTimeTextOne.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth()+"月-"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth()+"月");
+                    if(!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth())
+                            &&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth())){
+                        workTimeTextOne.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth()+"月-"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth()+"月");
+
+                    }else {
+                        workTimeTextOne.setText("工作时间:暂无。");
+
+                    }
+
                     if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture())&&
                             !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture())){
                         petyTextOne.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture()+
                                 seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture());
                     }else {
+                        Log.e("钻机机型","钻机机型"+seekMachinisDataBean.getWorkInfoItemDtos().get(0)+seekMachinisDataBean.getWorkInfoItemDtos().get(1));
                         petyTextOne.setText("钻机机型:暂无。");
                     }
                     if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getDescribing())) {
@@ -251,10 +273,16 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                     }
                     }else if (seekMachinisDataBean.getWorkInfoItemDtos().size()==3){
                     workExperienceRlayout.setVisibility(View.VISIBLE);
-                    workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
+                    if(!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth())
+                            &&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth())){
+                        workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
+                    }else {
+                        workTimeText.setText("工作时间:暂无。");
+                    }
+
                     if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture())&&
                             !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture())){
                         petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
@@ -270,10 +298,16 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                     }
                     workExperienceLayoutOne.setVisibility(View.VISIBLE);
                     imageLini.setVisibility(View.VISIBLE);
-                    workTimeTextOne.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth()+"月-"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth()+"月");
+                    if(!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth())
+                            &&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth())){
+                        workTimeTextOne.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth()+"月-"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth()+"月");
+                    }else {
+                        workTimeTextOne.setText("工作时间:暂无。");
+                    }
+
                     if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture())&&
                             !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture())){
                         petyTextOne.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture()+
@@ -289,10 +323,16 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                     }
                     workExperienceLayoutTwo.setVisibility(View.VISIBLE);
                     imageLiniOne.setVisibility(View.VISIBLE);
-                    workTimeTextTwo.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginMonth()+"月-"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndMonth()+"月");
+                    if(!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginMonth())
+                            &&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndMonth())){
+                        workTimeTextTwo.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginMonth()+"月-"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndMonth()+"月");
+                    }else {
+                        workTimeTextTwo.setText("工作时间:暂无。");
+                    }
+
                     if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getManufacture())&&
                             !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getNoOfManufacture())){
                         petyTextTwo.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getManufacture()+
@@ -309,10 +349,16 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
 
                 }else {
                     workExperienceRlayout.setVisibility(View.VISIBLE);
-                    workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
+                    if(!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth())
+                            &&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth())){
+                        workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getBeginMonth()+"月-"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(0).getEndMonth()+"月");
+                    }else {
+                        workTimeText.setText("工作时间:暂无。");
+                    }
+
                     if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture())&&
                             !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(0).getNoOfManufacture())){
                         petyText.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(0).getManufacture()+
@@ -328,10 +374,16 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                     }
                     workExperienceLayoutOne.setVisibility(View.VISIBLE);
                     imageLini.setVisibility(View.VISIBLE);
-                    workTimeTextOne.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth()+"月-"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth()+"月");
+                    if(!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth())
+                            &&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth())){
+                        workTimeTextOne.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getBeginMonth()+"月-"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(1).getEndMonth()+"月");
+                    }else {
+                        workTimeTextOne.setText("工作时间:暂无。");
+                    }
+
                     if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture())&&
                             !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(1).getNoOfManufacture())){
                         petyTextOne.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(1).getManufacture()+
@@ -347,10 +399,16 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                     }
                     workExperienceLayoutTwo.setVisibility(View.VISIBLE);
                     imageLiniOne.setVisibility(View.VISIBLE);
-                    workTimeTextTwo.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginMonth()+"月-"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndYear()+"年"+
-                            seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndMonth()+"月");
+                    if(!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginMonth())
+                            &&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndMonth())){
+                        workTimeTextTwo.setText("工作时间:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(2).getBeginMonth()+"月-"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndYear()+"年"+
+                                seekMachinisDataBean.getWorkInfoItemDtos().get(2).getEndMonth()+"月");
+                    }else {
+                        workTimeTextTwo.setText("工作时间:暂无。");
+                    }
+
                     if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getManufacture())&&
                             !TextUtils.isEmpty(seekMachinisDataBean.getWorkInfoItemDtos().get(2).getNoOfManufacture())){
                         petyTextTwo.setText("钻机机型:"+seekMachinisDataBean.getWorkInfoItemDtos().get(2).getManufacture()+
