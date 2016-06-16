@@ -396,6 +396,7 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
             webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id="+uid+"&redir=home");
         }else {
             webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/sess_out.php");
+            //webView.loadUrl("http://dev.zhongjiyun.cn/app/#/userlogin?username=XKFA0AXRo%2bXmXtC4x4lWxLy5J9fhY6WOfuxZkNEgXPwOXyHFfVNdYpRbgTh5c5GIihUHxT44BPr0GUjqxzNkYIsl69jW3K4wrfKRXfs%2bgYrlcIG%2bdD%2bKP24zKwK0WbIfdBuizgjlMtiQIsM0Db1PsnrpVtlnqpVhPGmhlGRvCNA%3d&pwd=GaY%2bYlQbhyixFWU6%2fuKoQHgwStqMxAM78z1%2fbsFjXeq59yZUBouwHiX5fyCtmCOkutJQ7HGJUmFp%2fq7riHGR62cLyNEkITK63%2bkE1V0iAPuAALZs2dEhz7%2bsHkGSQqYkwhd9oB3zG5uvRIwAQfdz2WmVv43R0J59JW1eQRtg2vE%3d");
         }
         //webView.loadUrl("http://h148a34804.iok.la/buluo/new_oauth.php?asp_user_id=72d2f160-0844-4a1e-9cf4-d1a25a413355");
         //webView.loadUrl("http://h148a34804.iok.la/store/mobile/selfreg.php?asp_user_id=72d2f160-0844-4a1e-9cf4-d1a25a413355&redir=home");
