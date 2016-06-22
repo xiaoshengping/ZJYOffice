@@ -134,8 +134,6 @@
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />-->
-
-
     <application
         android:name=".http.MyAppliction"
         android:allowBackup="true"

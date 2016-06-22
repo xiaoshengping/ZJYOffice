@@ -390,7 +390,17 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
                 super.onRequestFocus(view);
             }
 
+            /**
+             * 地图定位
+             * @param origin
+             * @param callback
+             */
 
+            /*public void onGeolocationPermissionsShowPrompt(String origin,
+                                                           GeolocationPermissions.Callback callback) {
+                callback.invoke(origin, true, false);
+                super.onGeolocationPermissionsShowPrompt(origin, callback);
+            }*/
         });
          if (!TextUtils.isEmpty(uid)){
             webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id="+uid+"&redir=home");
@@ -398,6 +408,9 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
             webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/sess_out.php");
             //webView.loadUrl("http://dev.zhongjiyun.cn/app/#/userlogin?username=XKFA0AXRo%2bXmXtC4x4lWxLy5J9fhY6WOfuxZkNEgXPwOXyHFfVNdYpRbgTh5c5GIihUHxT44BPr0GUjqxzNkYIsl69jW3K4wrfKRXfs%2bgYrlcIG%2bdD%2bKP24zKwK0WbIfdBuizgjlMtiQIsM0Db1PsnrpVtlnqpVhPGmhlGRvCNA%3d&pwd=GaY%2bYlQbhyixFWU6%2fuKoQHgwStqMxAM78z1%2fbsFjXeq59yZUBouwHiX5fyCtmCOkutJQ7HGJUmFp%2fq7riHGR62cLyNEkITK63%2bkE1V0iAPuAALZs2dEhz7%2bsHkGSQqYkwhd9oB3zG5uvRIwAQfdz2WmVv43R0J59JW1eQRtg2vE%3d");
         }
+        //定位
+        //webView.getSettings().setGeolocationEnabled(true);
+        //webView.getSettings().setDomStorageEnabled(true);
         //webView.loadUrl("http://h148a34804.iok.la/buluo/new_oauth.php?asp_user_id=72d2f160-0844-4a1e-9cf4-d1a25a413355");
         //webView.loadUrl("http://h148a34804.iok.la/store/mobile/selfreg.php?asp_user_id=72d2f160-0844-4a1e-9cf4-d1a25a413355&redir=home");
     }
@@ -414,6 +427,14 @@ public class HomeMarketActivity extends AppCompatActivity implements View.OnClic
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             // TODO Auto-generated method stub
+            //拨打电话
+           /* if (url.startsWith("tel:")){
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(url));
+                startActivity(intent);
+            } else if(url.startsWith("http:") || url.startsWith("https:")) {
+                view.loadUrl(url);
+            }*/
             view.loadUrl(url);
             return true;
         }
