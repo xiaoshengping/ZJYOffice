@@ -224,8 +224,13 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
                         });
                         if (appBean.getResult().equals("success")) {
                             FeedBackDataBean feedBackDataBean = appBean.getData();
-                            if (feedBackDataBean != null) {
+                            if (selectedPicture != null&&selectedPicture.size()!=0) {
+
                                 intiPhontData0(uid, "17", selectedPicture.get(0), feedBackDataBean.getId());
+                            }else {
+                                MyAppliction.showToast("提交成功,谢谢你宝贵的意见");
+                                mSVProgressHUD.dismiss();
+                                finish();
                             }
                         } else {
                             MyAppliction.showToast("提交失败");
@@ -264,11 +269,10 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
         requwstParams.addBodyParameter("SourceType", "6");
         requwstParams.addBodyParameter("File", new File(imagePath));
         requwstParams.addBodyParameter("OwnId", OwnId);
-
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("照片请求", responseInfo.result);
+                Log.e("照片请求", responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)) {
                     AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
                     });
