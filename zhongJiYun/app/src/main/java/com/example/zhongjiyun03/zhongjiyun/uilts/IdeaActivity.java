@@ -209,6 +209,8 @@ public class IdeaActivity extends AppCompatActivity implements View.OnClickListe
         if (!TextUtils.isEmpty(textEdit.getText().toString())) {
             requestParams.addBodyParameter("Id", uid);
             requestParams.addBodyParameter("Content", textEdit.getText().toString());
+            requestParams.addBodyParameter("appType", "0");
+            requestParams.addBodyParameter("userType", "0");
             try {
                 requestParams.addBodyParameter("appVersion",getVersionName());
             } catch (Exception e) {
