@@ -19,6 +19,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
+import cn.jpush.android.api.JPushInterface;
+
 /**
  * Created by xiaoshengping on 2015/9/8.
  */
@@ -40,6 +42,7 @@ public class MyAppliction extends Application {
     private static int   messageSize; //消息长度大小
     private static boolean isCheck; //是否接受推送消息
     private static String cacheData;
+    private static boolean jiGuangIsCheck;
 
     public static MyAppliction getInstance() {
         if (instance == null) {
@@ -54,7 +57,9 @@ public class MyAppliction extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-        //CrashHandler.getInstance().init(getApplicationContext()); //异常处理
+        CrashHandler.getInstance().init(getApplicationContext()); //异常处理
+        JPushInterface.init(getApplicationContext());
+        JPushInterface.setDebugMode(true);
         app=this;
         initImageLoader(getApplicationContext());
         options = new DisplayImageOptions.Builder()
@@ -120,6 +125,14 @@ public class MyAppliction extends Application {
      */
     public static void showToast(String msg){
         Toast.makeText(app, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    public static boolean isJiGuangIsCheck() {
+        return jiGuangIsCheck;
+    }
+
+    public static void setJiGuangIsCheck(boolean jiGuangIsCheck) {
+        MyAppliction.jiGuangIsCheck = jiGuangIsCheck;
     }
 
     public static String getCacheData() {

@@ -108,7 +108,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ViewUtils.inject(this);
 
-
         SharedPreferences sharedPreferences = this.getSharedPreferences("share", MODE_PRIVATE);
         boolean isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -131,7 +130,12 @@ public class HomeActivity extends AppCompatActivity {
         if (isNetworkAvailable(HomeActivity.this)) {
             getVersontData();//版本更新
             if (isCommitData) {
-                initRegistration();//提交用户信息
+                if (!TextUtils.isEmpty(JPushInterface.getRegistrationID(HomeActivity.this))){
+                    Log.e("极光id",JPushInterface.getRegistrationID(HomeActivity.this));
+                    initRegistration();//提交用户信息
+                }
+
+
             }
             try {
                 userLoginData();
@@ -145,8 +149,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         init();
-        JPushInterface.init(this);
-        JPushInterface.setDebugMode(true);
+
     }
         //防止sesstion丢失登录
     private void userLoginData() throws Exception {
@@ -287,6 +290,7 @@ public class HomeActivity extends AppCompatActivity {
     }
     //提交用户信息
     private void initRegistration() {
+        Log.e("提交用户信息","提交用户信息");
         HttpUtils httpUtils=new HttpUtils();
         TelephonyManager telephonyManager =( TelephonyManager )getSystemService( Context.TELEPHONY_SERVICE );
         RequestParams requestParams=new RequestParams();
@@ -296,6 +300,7 @@ public class HomeActivity extends AppCompatActivity {
         requestParams.addBodyParameter("versionType","0");
         requestParams.addBodyParameter("softUserType","0");
         requestParams.addBodyParameter("jiGuangID",JPushInterface.getRegistrationID(HomeActivity.this));
+        Log.e("极光id", JPushInterface.getRegistrationID(HomeActivity.this));
         try {
             requestParams.addBodyParameter("softVersion",getVersionName());
         } catch (Exception e) {
@@ -305,13 +310,13 @@ public class HomeActivity extends AppCompatActivity {
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegistrationData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("极光提交用户信息",responseInfo.result);
+                Log.e("极光提交用户信息",responseInfo.result);
                 isCommitData=false;
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-                //Log.e("极光提交用户信息onFailure",s);
+                Log.e("极光提交用户信息onFailure",s);
                 isCommitData=true;
             }
         });

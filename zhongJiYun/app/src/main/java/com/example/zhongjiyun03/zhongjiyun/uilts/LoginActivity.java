@@ -127,6 +127,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         registerTv.setOnClickListener(this);
         loginButton.setOnClickListener(this);
         codeButton.setOnClickListener(this);
+        //Log.e("极光id",JPushInterface.getRegistrationID(LoginActivity.this));
 
     }
 

@@ -118,7 +118,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
@@ -129,9 +128,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
         init();
         loadData();
-
         return view ;
     }
+
+
+
 
     /**
      * Gson
@@ -188,6 +189,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
 
     }
+
+
+
     public void intiPullToRefresh(){
         homePullToScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
         ILoadingLayout startLabels  = homePullToScrollView
