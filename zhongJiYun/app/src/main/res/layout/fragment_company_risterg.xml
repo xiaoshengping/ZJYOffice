@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/company_root_layout"
     tools:context="com.example.zhongjiyun03.zhongjiyun.fragment.PersonageRistergFragment">
 
     <ScrollView
-        android:id="@+id/company_root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -47,6 +47,7 @@
                 android:hint="未填写"
                 android:inputType="number"
                 android:paddingLeft="10dp"
+                android:maxLength="11"
 
                 />
 
@@ -229,7 +230,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
-
+                android:maxLength="11"
                 android:id="@+id/company_recomment_edit"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -240,7 +241,7 @@
                 android:drawablePadding="10dp"
                 android:textSize="@dimen/home_Size_14"
                 android:hint="未填写"
-                android:phoneNumber="true"
+                android:inputType="number"
                 android:paddingLeft="10dp"
 
                 />
@@ -286,6 +287,7 @@
                 android:drawablePadding="10dp"
                 android:textSize="@dimen/home_Size_14"
                 android:hint="未填写"
+                android:inputType="text"
                 />
 
         </LinearLayout>

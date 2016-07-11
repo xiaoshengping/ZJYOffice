@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">中基云</string>
+    <string name="app_name">中基云机主端</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="hello_world">Hello world!</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -100,7 +100,7 @@
     <string name="stoplocation">停止定位</string>
     <!--更新下载-->
     <string name="menu_settings">Settings</string>
-    <string name="insert_card">插入卡</string>
+    <string name="insert_card">请插入SD卡</string>
     <string name="down_fail">下载失败</string>
     <string name="is_downing">正在下载</string>
     <string name="down_sucess">下载成功</string>

@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -21,6 +22,7 @@ import android.text.format.DateFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -28,11 +30,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -233,7 +236,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     //企业注册初始化
     private void intiCompanyView() {
-        ScrollView rootTlayout= (ScrollView) companyRisterView.findViewById(R.id.company_root_layout);
+        RelativeLayout rootTlayout= (RelativeLayout) companyRisterView.findViewById(R.id.company_root_layout);
         companyCodeButton= (Button) companyRisterView.findViewById(R.id.company_code_button);
         companyRegisterButton= (Button) companyRisterView.findViewById(R.id.cpmpany_register_button);
         companyPhoneEdit= (EditText) companyRisterView.findViewById(R.id.company_edit_phone);
@@ -329,7 +332,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     //个人注册数据初始化
     private void intiPersonageView() {
 
-        ScrollView rootTlayout= (ScrollView) personageRisterView.findViewById(R.id.root_layout);
+        RelativeLayout rootTlayout= (RelativeLayout) personageRisterView.findViewById(R.id.root_layout);
         codeButton= (Button) personageRisterView.findViewById(R.id.code_button);
         submitButton= (Button) personageRisterView.findViewById(R.id.submit_button);
         phoneEdit= (EditText) personageRisterView.findViewById(R.id.edit_phone);
@@ -1648,7 +1651,48 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
+    /*
+      * 软键盘隐藏和显示
+      * */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev)) {
 
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+            return super.dispatchTouchEvent(ev);
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        if (getWindow().superDispatchTouchEvent(ev)) {
+            return true;
+        }
+        return onTouchEvent(ev);
+    }
+
+    public  boolean isShouldHideInput(View v, MotionEvent event) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = { 0, 0 };
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            int left = leftTop[0];
+            int top = leftTop[1];
+            int bottom = top + v.getHeight();
+            int right = left + v.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private void initViewPager() {
         personageRisterView=getLayoutInflater().inflate(R.layout.fragment_personage_risterg, null);

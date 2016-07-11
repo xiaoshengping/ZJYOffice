@@ -107,7 +107,8 @@ public class HomeActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_home);
         ViewUtils.inject(this);
-
+        JPushInterface.init(HomeActivity.this);
+        JPushInterface.setDebugMode(true);
         SharedPreferences sharedPreferences = this.getSharedPreferences("share", MODE_PRIVATE);
         boolean isFirstRun = sharedPreferences.getBoolean("isFirstRun", true);
         SharedPreferences.Editor editor = sharedPreferences.edit();
