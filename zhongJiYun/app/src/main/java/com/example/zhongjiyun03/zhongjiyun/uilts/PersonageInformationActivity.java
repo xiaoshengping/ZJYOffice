@@ -395,6 +395,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
 
             @Override
             public void onFailure(HttpException e, String s) {
+                Log.e("修改头像onFailure",s);
                 mSVProgressHUD.dismiss();
             }
         });

@@ -132,7 +132,7 @@ public class HomeActivity extends AppCompatActivity {
             getVersontData();//版本更新
             if (isCommitData) {
                 if (!TextUtils.isEmpty(JPushInterface.getRegistrationID(HomeActivity.this))){
-                    Log.e("极光id",JPushInterface.getRegistrationID(HomeActivity.this));
+                    //Log.e("极光id",JPushInterface.getRegistrationID(HomeActivity.this));
                     initRegistration();//提交用户信息
                 }
 
@@ -291,7 +291,7 @@ public class HomeActivity extends AppCompatActivity {
     }
     //提交用户信息
     private void initRegistration() {
-        Log.e("提交用户信息","提交用户信息");
+        //Log.e("提交用户信息","提交用户信息");
         HttpUtils httpUtils=new HttpUtils();
         TelephonyManager telephonyManager =( TelephonyManager )getSystemService( Context.TELEPHONY_SERVICE );
         RequestParams requestParams=new RequestParams();
@@ -301,7 +301,7 @@ public class HomeActivity extends AppCompatActivity {
         requestParams.addBodyParameter("versionType","0");
         requestParams.addBodyParameter("softUserType","0");
         requestParams.addBodyParameter("jiGuangID",JPushInterface.getRegistrationID(HomeActivity.this));
-        Log.e("极光id", JPushInterface.getRegistrationID(HomeActivity.this));
+        //Log.e("极光id", JPushInterface.getRegistrationID(HomeActivity.this));
         try {
             requestParams.addBodyParameter("softVersion",getVersionName());
         } catch (Exception e) {

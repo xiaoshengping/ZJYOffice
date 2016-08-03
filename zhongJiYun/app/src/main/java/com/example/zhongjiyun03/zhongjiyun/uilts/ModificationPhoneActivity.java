@@ -265,7 +265,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
             uid=cursor.getString(0);
 
         }
-        if (!phone.equals(editFormmerPhone.getText().toString())){
+        if (!phone.equals(phoneNewEdit.getText().toString())){
 
 
         if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())){
