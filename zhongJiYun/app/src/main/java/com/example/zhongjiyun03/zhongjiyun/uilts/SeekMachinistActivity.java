@@ -76,7 +76,7 @@ import cn.jpush.android.api.JPushInterface;
 
 public class SeekMachinistActivity extends AppCompatActivity implements PullToRefreshBase.OnRefreshListener2<ListView>, View.OnClickListener {
     @ViewInject(R.id.register_tv)
-    private TextView addExtruderTv;   //头部右边
+    private TextView comtintJobText;   //头部右边
     @ViewInject(R.id.title_name_tv)
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)
@@ -211,8 +211,9 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     private void init() {
         facillyDataBeens=new ArrayList<>();
         networkRemindLayout.setOnClickListener(this);
-        addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("寻找机手");
+        comtintJobText.setOnClickListener(this);
+        comtintJobText.setText("发布招聘");
+        titleNemeTv.setText("找机手");
         retrunText.setOnClickListener(this);
         sekkMachinisDataBeens = new ArrayList<>();
         sortButton.setOnClickListener(new View.OnClickListener() {
@@ -1010,6 +1011,13 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                 //跳转到设置界面
                 Intent intent = new Intent(Settings.ACTION_SETTINGS);
                 startActivity(intent);
+                break;
+            case R.id.register_tv:
+                Intent releaseintent = new Intent(SeekMachinistActivity.this,ReleaseJobActivity.class);
+                startActivity(releaseintent);
+                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                break;
+            default:
                 break;
         }
 

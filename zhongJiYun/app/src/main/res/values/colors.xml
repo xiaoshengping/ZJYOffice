@@ -27,6 +27,17 @@
     <color name="nodata_background">#c0c0c0</color>
     <color name="color_dedede">#dedede</color>
 
+    <!--标题-->
+    <color name="color_222222">#222222</color>
+    <!--主要文字-->
+    <color name="color_333333">#333333</color>
+    <!--辅助文字-->
+    <color name="color_555555">#555555</color>
+    <!--次要文字-->
+    <color name="color_888888">#888888</color>
+    <!--分割线-->
+    <color name="color_dadada">#dadada</color>
+
 <!--  popwin-->
     <color name="popup_left_bg">#eee</color>
     <color name="popup_right_bg">#ddd</color>

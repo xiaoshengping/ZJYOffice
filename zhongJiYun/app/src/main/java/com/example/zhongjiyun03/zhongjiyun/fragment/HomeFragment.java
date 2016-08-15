@@ -40,15 +40,15 @@ import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
-import com.example.zhongjiyun03.zhongjiyun.uilts.CooperationActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.ExturderParticularsActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeBlackListActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.HomeDiscuntCouponActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.HomeGameActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeMarketActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeMoreProjectActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.HomeRewardActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeTribeActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.LoginActivity;
-import com.example.zhongjiyun03.zhongjiyun.uilts.MyExtruderActivity;
-import com.example.zhongjiyun03.zhongjiyun.uilts.NewsCenterActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.SecondHandActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.SeekMachinistActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.SeekProjectParticularsActivity;
@@ -392,18 +392,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 4:
-                                Intent serviceIntent=new Intent(getActivity(), ServiceProviderActivity.class)  ;
-                                serviceIntent.putExtra("tage","service");
-                                startActivity(serviceIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                                break;
-                            case 5:
                                 Intent marketIntent=new Intent(getActivity(), HomeMarketActivity.class)  ;
                                 startActivity(marketIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
+                            case 5:
+                                Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
+                                startActivity(tribeIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                                break;
                             case 6:
                                 if (!TextUtils.isEmpty(uid)){
+                                    Intent rewardIntent=new Intent(getActivity(), HomeRewardActivity.class)  ;
+                                    startActivity(rewardIntent);
+                                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                                }else {
+                                    Intent intent=new Intent(getActivity(),LoginActivity.class);
+                                    startActivity(intent);
+                                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                                }
+                                /*if (!TextUtils.isEmpty(uid)){
                                     Intent MyExtruderIntent=new Intent(getActivity(), MyExtruderActivity.class)  ;
                                     startActivity(MyExtruderIntent);
                                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -411,29 +419,35 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                     Intent intent=new Intent(getActivity(),LoginActivity.class);
                                     startActivity(intent);
                                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                                }
+                                }*/
                                 break;
                             case 7:
-                                Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
-                                startActivity(tribeIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                            break;
-
-                            case 8:
                                 Intent blackListIntent=new Intent(getActivity(), HomeBlackListActivity.class)  ;
                                 startActivity(blackListIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                            break;
+                            case 8:
+                                Intent gameIntent=new Intent(getActivity(), HomeGameActivity.class)  ;
+                                startActivity(gameIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 9:
-                                Intent newsIntent=new Intent(getActivity(), NewsCenterActivity.class)  ;
-                                startActivity(newsIntent);
+                                Intent dicuntCouponIntent=new Intent(getActivity(), HomeDiscuntCouponActivity.class)  ;
+                                startActivity(dicuntCouponIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                                /*Intent newsIntent=new Intent(getActivity(), NewsCenterActivity.class)  ;
+                                startActivity(newsIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);*/
                             break;
 
                             case 10:
-                                Intent cooperationIntent=new Intent(getActivity(), CooperationActivity.class)  ;
-                                startActivity(cooperationIntent);
+                                Intent serviceIntent=new Intent(getActivity(), ServiceProviderActivity.class)  ;
+                                serviceIntent.putExtra("tage","service");
+                                startActivity(serviceIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                                /*Intent cooperationIntent=new Intent(getActivity(), CooperationActivity.class)  ;
+                                startActivity(cooperationIntent);
+                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);*/
                                 break;
 
 

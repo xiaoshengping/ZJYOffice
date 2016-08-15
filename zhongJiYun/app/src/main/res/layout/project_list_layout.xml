@@ -29,17 +29,17 @@
         android:background="@drawable/text_view_corners"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="8dp"
-        android:textSize="@dimen/home_Size_16"
+        android:layout_marginTop="12dp"
+        android:textSize="@dimen/home_Size_14"
         android:textColor="@color/red_light"
         android:text="招标中"
         android:gravity="center"
-        android:layout_width="60dp"
-        android:layout_height="25dp" />
+        android:layout_width="50dp"
+        android:layout_height="20dp" />
 
    </RelativeLayout>
     　<RelativeLayout
-       android:layout_marginTop="2dp"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <TextView
@@ -47,12 +47,12 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
         android:textSize="@dimen/home_Size_16"
-        android:text="发布公司:"
-        android:textColor="@color/content_color"
+        android:text="发布公司："
+        android:textColor="@color/color_333333"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:textColor="@color/content_color"
+        android:textColor="@color/color_333333"
         android:id="@+id/company_name"
         android:layout_toRightOf="@+id/company_text"
         android:layout_marginLeft="5dp"
@@ -66,20 +66,20 @@
 
 </RelativeLayout>
     <RelativeLayout
-        android:layout_marginTop="2dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:textColor="@color/content_color"
+            android:textColor="@color/color_333333"
             android:id="@+id/address_text"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:textSize="@dimen/home_Size_16"
-            android:text="项目所在地:"
+            android:text="项目所在地："
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
-            android:textColor="@color/content_color"
+            android:textColor="@color/color_333333"
             android:layout_toRightOf="@+id/address_text"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp"
@@ -88,26 +88,75 @@
             android:text="广东顺德"
             android:singleLine="true"
             android:ellipsize="end"
-            android:layout_width="160dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <TextView
+       <!-- <TextView
             android:textColor="@color/content_color"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:textSize="@dimen/home_Size_16"
-            android:id="@+id/time_text"
+
             android:text="2015-12-09"
             android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
 
 
 
     </RelativeLayout>
+
+        <ImageView
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            <TextView
+                android:id="@+id/time_text"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:textColor="@color/color_555555"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/home_Size_12"
+                android:text="2015-12-16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:gravity="center_vertical"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@mipmap/project_eyes_icon"
+                android:textColor="@color/color_555555"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/home_Size_12"
+                android:id="@+id/browse_text_view"
+                android:text="180次"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:gravity="center_vertical"
+                android:drawablePadding="10dp"
+                android:drawableLeft="@mipmap/project_bin_icon"
+                android:textColor="@color/color_555555"
+                android:layout_marginRight="10dp"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:textSize="@dimen/home_Size_12"
+                android:id="@+id/bid_text_view"
+                android:text="180次"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
     <ImageView
 
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:src="@color/background"
         android:layout_width="match_parent"
         android:layout_height="1dp" />

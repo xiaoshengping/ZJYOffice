@@ -17,7 +17,7 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 public class HomeGridAdapter extends BaseAdapter {
 	private Context mContext;
 
-	String[] gridText={"寻找项目","二手钻机","寻找机手","配套服务","商城","我的钻机","部落","黑名单","新闻动态","合作伙伴"};
+	String[] gridText={"找活儿","二手机","找机手","商城","部落","悬赏","黑名单","游戏","优惠券","配套服务"};
 	int[] gridImage={R.mipmap.rig0,R.mipmap.rig1,R.mipmap.rig2,R.mipmap.rig3,R.mipmap.rig4,R.mipmap.rig5,R.mipmap.rig6,R.mipmap.rig7,R.mipmap.rig8,R.mipmap.rig9};
 
 	public HomeGridAdapter(Context mContext) {

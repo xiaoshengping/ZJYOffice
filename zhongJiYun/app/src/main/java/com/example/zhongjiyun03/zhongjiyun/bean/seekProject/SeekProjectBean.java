@@ -39,6 +39,8 @@ public class SeekProjectBean implements Serializable  {
     private int SecondHandCount;// Int 项目附近资源数量信息-二手机数量
     private int DeviceCount;// Int 项目附近资源数量信息-配件
     private String CanReply;// String 能否投标
+    private String BrowerTimes;//	String	浏览次数
+    private String ReplyCount;//	String	投标人数
 
 
 
@@ -299,6 +301,23 @@ public class SeekProjectBean implements Serializable  {
         CanReply = canReply;
     }
 
+
+    public String getBrowerTimes() {
+        return BrowerTimes;
+    }
+
+    public void setBrowerTimes(String browerTimes) {
+        BrowerTimes = browerTimes;
+    }
+
+    public String getReplyCount() {
+        return ReplyCount;
+    }
+
+    public void setReplyCount(String replyCount) {
+        ReplyCount = replyCount;
+    }
+
     @Override
     public String toString() {
         return "SeekProjectBean{" +
@@ -324,8 +343,8 @@ public class SeekProjectBean implements Serializable  {
                 ", ProjectOwnerPhone='" + ProjectOwnerPhone + '\'' +
                 ", Status='" + Status + '\'' +
                 ", StatusStr='" + StatusStr + '\'' +
-                ", ReplyStatus='" + ReplyStatus + '\'' +
-                ", IsCallOwnerFlag='" + IsCallOwnerFlag + '\'' +
+                ", ReplyStatus=" + ReplyStatus +
+                ", IsCallOwnerFlag=" + IsCallOwnerFlag +
                 ", IsAcceptReply=" + IsAcceptReply +
                 ", PayMarginStatus=" + PayMarginStatus +
                 ", IsCollection=" + IsCollection +
@@ -334,6 +353,8 @@ public class SeekProjectBean implements Serializable  {
                 ", SecondHandCount=" + SecondHandCount +
                 ", DeviceCount=" + DeviceCount +
                 ", CanReply='" + CanReply + '\'' +
+                ", BrowerTimes='" + BrowerTimes + '\'' +
+                ", ReplyCount='" + ReplyCount + '\'' +
                 '}';
     }
 }

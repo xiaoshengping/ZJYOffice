@@ -85,6 +85,14 @@ public class HomeProjectListAdapter extends AppBaseAdapter<SeekProjectBean> {
             }
 
 
+            if (!TextUtils.isEmpty(data.get(position).getBrowerTimes())){
+                viewHold.browseTextView.setText(data.get(position).getBrowerTimes()+"次");
+            }
+            if (!TextUtils.isEmpty(data.get(position).getReplyCount())){
+                viewHold.bidTextView.setText(data.get(position).getReplyCount()+"人");
+            }
+
+
 
 
         }
@@ -98,17 +106,21 @@ public class HomeProjectListAdapter extends AppBaseAdapter<SeekProjectBean> {
     private class ViewHold {
 
         @ViewInject(R.id.company_name)
-        private TextView companyName;
+        private TextView companyName;  //公司名字
         @ViewInject(R.id.tailt_text)
-        private TextView tailtText;
+        private TextView tailtText;  //项目标题
         @ViewInject(R.id.address_text_view)
-        private TextView addressText;
+        private TextView addressText;  //项目所在地址
         @ViewInject(R.id.time_text)
-        private TextView timeText;
+        private TextView timeText;   //发布时间
         @ViewInject(R.id.bids_tage_text)
-        private TextView bidsTageText;
+        private TextView bidsTageText;  //招标状态
         @ViewInject(R.id.success_image)
-        private ImageView successImage;
+        private ImageView successImage;  //是否投标状态
+        @ViewInject(R.id.browse_text_view)
+        private TextView browseTextView;  //浏览数
+        @ViewInject(R.id.bid_text_view)
+        private TextView bidTextView;  //投标数
 
         public ViewHold(View view) {
             ViewUtils.inject(this, view);

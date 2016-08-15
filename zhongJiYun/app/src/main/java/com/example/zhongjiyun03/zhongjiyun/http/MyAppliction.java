@@ -57,7 +57,7 @@ public class MyAppliction extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-        CrashHandler.getInstance().init(getApplicationContext()); //异常处理
+        //CrashHandler.getInstance().init(getApplicationContext()); //异常处理
         JPushInterface.init(getApplicationContext());
         JPushInterface.setDebugMode(true);
         app=this;
