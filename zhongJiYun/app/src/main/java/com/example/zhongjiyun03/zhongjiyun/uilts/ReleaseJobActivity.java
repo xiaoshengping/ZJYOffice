@@ -1,11 +1,15 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.FacillyChildsBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.FacillyDataBean;
@@ -21,6 +26,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -33,7 +39,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReleaseJobActivity extends AppCompatActivity implements View.OnClickListener {
+public class ReleaseJobActivity extends AppCompatActivity implements View.OnClickListener,CompoundButton.OnCheckedChangeListener {
 
 
 
@@ -63,13 +69,13 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
     private RelativeLayout compensationLayout;  //薪资水平
     @ViewInject(R.id.compensation_edit)
     private TextView compensationText;   //薪资水平显示
-    private String timeprojectString;
+    private String compensationString;
 
     @ViewInject(R.id.work_time_layout)
     private RelativeLayout workTimeLayout;  //工作年限
     @ViewInject(R.id.work_time_edit)
     private TextView workTimeText;  //工作年限显示
-    private String typeTextString;
+    private String workTimeString;
 
     List<FacillyDataBean> facillyDataBeens;//设备厂商数据
     private int facillyOptions01;
@@ -80,6 +86,23 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
     private TextView drillingTypeText;  //钻机型号显示
     private String manufacture; //厂商
     private String model;// 型号
+    private  ArrayList<String> facilly1Items;
+    private  ArrayList<ArrayList<String>> facilly2Items;
+    @ViewInject(R.id.office_edit)
+    private EditText officeEdit;  //任职要求
+    @ViewInject(R.id.efficiency_rabutton)
+    private CheckBox efficiencyCheck; //包吃住
+    @ViewInject(R.id.manner_checkBox)
+    private CheckBox manner_checkBox; //加班费
+    @ViewInject(R.id.service_checkBox)
+    private CheckBox service_checkBox; //节假日休息
+    @ViewInject(R.id.rest_rabutton)
+    private CheckBox restRabutton;  //其他
+    private String efficinecyText;  //包吃住选中text
+    private String mannerText;  //加班费选中text
+    private String serviceText;  //节假日休息选中text
+    private String restText;  //其他选中text
+
 
 
 
@@ -111,75 +134,65 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
         workTimeLayout.setOnClickListener(this);
         drillingTypeLayout.setOnClickListener(this);
         facillyDataBeens=new ArrayList<>();
+        initFacilly();
+        efficiencyCheck.setOnCheckedChangeListener(this);
+        manner_checkBox.setOnCheckedChangeListener(this);
+        service_checkBox.setOnCheckedChangeListener(this);
+        restRabutton.setOnCheckedChangeListener(this);
+
 
 
 
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.register_tv:
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               switch (buttonView.getId()){
+                   case R.id.efficiency_rabutton:
+                       if (isChecked){
+                          efficinecyText="包吃住";
+                       }else {
+                           efficinecyText=null;
+                       }
 
-                break;
-            case R.id.retrun_text_view:
-                finish();
-                break;
-            case R.id.work_address_layout: //工作区域
-                intiPvTime(1);
-                break;
-            case R.id.compensation_layout: //薪资水平
-                intiPvTime(2);
-                break;
-            case R.id.work_time_layout:  //工作年限
-                intiPvTime(3);
-                break;
-            case R.id.drilling_type_layout:  //钻机型号
-                intiPvTime(4);
-                break;
+                       break;
+                   case R.id.manner_checkBox:
+                       if (isChecked){
+                          mannerText="加班费";
+                       }else {
+                           mannerText="";
+                       }
 
 
-        }
+                       break;
+                   case R.id.service_checkBox:
+                       if (isChecked){
+                           serviceText="节假日休息";
+                       }else {
+                           serviceText="";
+                       }
+
+                       break;
+                   case R.id.rest_rabutton:
+                       if (isChecked){
+                           restText="其他";
+                       }else {
+                           restText="";
+                       }
+
+                       break;
 
 
-
+               }
     }
 
-
-
-
-
-    /**
-     * 联动
-     * @param tage 类型
-     */
-    private void intiPvTime(final int tage) {
-        //地址数据
-        final ArrayList<String> options1Items = new ArrayList<String>();
-        final ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
-
-        ProvinceCityDataBean provinceCityDataBean= JSONObject.parseObject(SelectData.selectCityDatas+SelectData.selectCityDataOnes+SelectData.selectCityDataTwos,new TypeReference<ProvinceCityDataBean>(){});
-        if (provinceCityDataBean!=null){
-            ArrayList<ProvinceCityBean>  options1Itemss= (ArrayList<ProvinceCityBean>) provinceCityDataBean.getProvinceCity();
-            for (int i = 0; i <options1Itemss.size() ; i++) {
-                options1Items.add(options1Itemss.get(i).getName());
-            }
-            for (int i = 0; i <options1Items.size() ; i++) {
-                ArrayList<ProvinceCityChildsBean> provinceCity=  options1Itemss.get(i).getProvinceCityChilds();
-                ArrayList<String> arrayList=new ArrayList<>();
-                for (int J = 0; J <provinceCity.size() ; J++) {
-                    arrayList.add(provinceCity.get(J).getName());
-                }
-                options2Items.add(arrayList);
-
-            }
-        }
-        final ArrayList<String> facilly1Items = new ArrayList<String>();
-        final ArrayList<ArrayList<String>> facilly2Items = new ArrayList<ArrayList<String>>();
+    private void initFacilly() {
+        facilly1Items = new ArrayList<String>();
+        facilly2Items = new ArrayList<ArrayList<String>>();
         //设备厂商
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("DeviceJsonType","4");
+        requestParams.addBodyParameter("DeviceJsonType","2");
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -219,10 +232,166 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
 
             }
         });
-        //工期数据
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.register_tv:
+                 initCommitData();
+                break;
+            case R.id.retrun_text_view:
+                finish();
+                break;
+            case R.id.work_address_layout: //工作区域
+                intiPvTime(1);
+                break;
+            case R.id.compensation_layout: //薪资水平
+                intiPvTime(2);
+                break;
+            case R.id.work_time_layout:  //工作年限
+                intiPvTime(3);
+                break;
+            case R.id.drilling_type_layout:  //钻机型号
+                intiPvTime(4);
+                break;
+
+
+        }
+
+
+
+    }
+
+    /**
+     * 初始化提交数据
+     */
+    private void initCommitData() {
+        if (!TextUtils.isEmpty(province)&&!TextUtils.isEmpty(city)){
+            if (!TextUtils.isEmpty(manufacture)&&!TextUtils.isEmpty(model)){
+              if (!TextUtils.isEmpty(compensationString)){
+                  if (!TextUtils.isEmpty(workTimeString)){
+                      if (!TextUtils.isEmpty(officeEdit.getText().toString())){
+                          commitData();
+
+                      }else {
+                         MyAppliction.showToast("请填写任职要求");
+                      }
+                  }else {
+                      MyAppliction.showToast("请选择工作年限");
+                  }
+
+              }else {
+                  MyAppliction.showToast("请选择薪资");
+              }
+
+            }else {
+                MyAppliction.showToast("请选择钻机型号");
+            }
+
+
+        }else {
+            MyAppliction.showToast("请选择工作区域");
+        }
+
+
+
+
+    }
+
+    /**
+     *
+     */
+
+    private void commitData() {
+        HttpUtils httpUtils=new HttpUtils();
+        final RequestParams requestParams=new RequestParams();
+        requestParams.addBodyParameter("province",province);
+        requestParams.addBodyParameter("city",city);
+        requestParams.addBodyParameter("manufacture",manufacture);
+        requestParams.addBodyParameter("noOfManufacture",model);
+        requestParams.addBodyParameter("payLevel",compensationString);
+        requestParams.addBodyParameter("workingAge",workTimeString);
+        requestParams.addBodyParameter("requirements",officeEdit.getText().toString());
+        if (!TextUtils.isEmpty(efficinecyText)&&!TextUtils.isEmpty(mannerText)&&!TextUtils.isEmpty(serviceText)&&!TextUtils.isEmpty(restText)){
+            requestParams.addBodyParameter("benefits",efficinecyText+","+mannerText+","+serviceText+","+restText);
+        }else if (!TextUtils.isEmpty(efficinecyText)&&!TextUtils.isEmpty(mannerText)&&!TextUtils.isEmpty(serviceText)){
+            requestParams.addBodyParameter("benefits",efficinecyText+","+mannerText+","+serviceText);
+        }else if (!TextUtils.isEmpty(efficinecyText)&&!TextUtils.isEmpty(mannerText)){
+            requestParams.addBodyParameter("benefits",efficinecyText+","+mannerText);
+        }else if (!TextUtils.isEmpty(efficinecyText)){
+            requestParams.addBodyParameter("benefits",efficinecyText);
+        }else if (!TextUtils.isEmpty(mannerText)){
+            requestParams.addBodyParameter("benefits",mannerText);
+        }else if (!TextUtils.isEmpty(serviceText)){
+            requestParams.addBodyParameter("benefits",serviceText);
+        }else if (!TextUtils.isEmpty(restText)){
+            requestParams.addBodyParameter("benefits",restText);
+        }
+         //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getReleaseJobData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                   if (!TextUtils.isEmpty(responseInfo.result)){
+                      AppDataBean appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
+                       if (appBean.getResult().equals("success")){
+                           finish();
+                           MyAppliction.showToast("发布成功");
+                       }else {
+                           MyAppliction.showToast(appBean.getMsg());
+                       }
+
+
+                   }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("发布招聘onFailure",s);
+                MyAppliction.showToast("网络异常，请稍后重试");
+            }
+        });
+
+
+
+    }
+
+
+    /**
+     * 联动
+     * @param tage 类型
+     */
+    private void intiPvTime(final int tage) {
+        //地址数据
+        final ArrayList<String> options1Items = new ArrayList<String>();
+        final ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
+
+        ProvinceCityDataBean provinceCityDataBean= JSONObject.parseObject(SelectData.selectCityDatas+SelectData.selectCityDataOnes+SelectData.selectCityDataTwos,new TypeReference<ProvinceCityDataBean>(){});
+        if (provinceCityDataBean!=null){
+            ArrayList<ProvinceCityBean>  options1Itemss= (ArrayList<ProvinceCityBean>) provinceCityDataBean.getProvinceCity();
+            for (int i = 0; i <options1Itemss.size() ; i++) {
+                options1Items.add(options1Itemss.get(i).getName());
+            }
+            for (int i = 0; i <options1Items.size() ; i++) {
+                ArrayList<ProvinceCityChildsBean> provinceCity=  options1Itemss.get(i).getProvinceCityChilds();
+                ArrayList<String> arrayList=new ArrayList<>();
+                for (int J = 0; J <provinceCity.size() ; J++) {
+                    arrayList.add(provinceCity.get(J).getName());
+                }
+                options2Items.add(arrayList);
+
+            }
+        }
+
+
+        //薪资数据
         String[] compensationData={"4001-6000","6001-8000","8001-10000","10001-12000","12001-15000","15000以上"};
         final ArrayList<String> compensationList=new ArrayList();
-        //机主类型数据
+        //工作年限数据
         String[] workTimeData={"不限","1年以下","1-3年","3-5年","5-10年","10年以上"};
         final ArrayList<String> workTimeList=new ArrayList();
         vMasker= findViewById(R.id.vMasker);
@@ -281,14 +450,14 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
                 }else if (tage==2){
                     if (!TextUtils.isEmpty(compensationList.get(options1))){
                         compensationText.setText(compensationList.get(options1)+" 元");
-                        timeprojectString=compensationList.get(options1);
+                        compensationString=compensationList.get(options1);
                         timeOptions=options1;
                     }
 
                 }else if (tage==3){
                     if (!TextUtils.isEmpty(workTimeList.get(options1))){
                         workTimeText.setText(workTimeList.get(options1));
-                        typeTextString=workTimeList.get(options1);
+                        workTimeString=workTimeList.get(options1);
                         typeOptions=options1;
                     }
                 }else {
@@ -313,4 +482,6 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
         pvOptions.show();
 
     }
+
+
 }

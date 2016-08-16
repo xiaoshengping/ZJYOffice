@@ -1,18 +1,10 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
-import android.annotation.TargetApi;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -21,86 +13,41 @@ import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
-import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import cn.jpush.android.api.JPushInterface;
-
-public class HomeDiscuntCouponActivity extends AppCompatActivity implements View.OnClickListener {
-
+public class QuestionnaireParticularsActivity extends AppCompatActivity implements View.OnClickListener {
 
     @ViewInject(R.id.web_view)
     private WebView webView;
-    /* @ViewInject(R.id.register_tv)
-     private ImageView addExtruderTv;   //头部右边*/
     @ViewInject(R.id.title_name_tv)
     private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)
     private TextView retrunText;     //头部左边
     private SVProgressHUD mSVProgressHUD;//loding
+    @ViewInject(R.id.register_tv)
+    private TextView registerTv;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        JPushInterface.onResume(this);
-    }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JPushInterface.onPause(this);
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //改变状态栏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.red_light);//通知栏所需颜色
-        }
-        setContentView(R.layout.activity_home_discunt_coupon);
+        setContentView(R.layout.activity_questionnaire_particulars);
         ViewUtils.inject(this);
-
         init();
-
     }
 
-
-    @TargetApi(19)
-    private void setTranslucentStatus(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }
     private void init() {
         initView();
 
     }
 
     private void initView() {
-        mSVProgressHUD = new SVProgressHUD(this);
-        //addExtruderTv.setVisibility(View.GONE);
+        mSVProgressHUD = new SVProgressHUD(QuestionnaireParticularsActivity.this);
+        registerTv.setVisibility(View.GONE);
 
         retrunText.setOnClickListener(this);
-        SQLhelper sqLhelper=new SQLhelper(HomeDiscuntCouponActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-
-        }
         WebSettings webSettings=webView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setAllowFileAccess(true);// 设置允许访问文件数据
@@ -111,12 +58,7 @@ public class HomeDiscuntCouponActivity extends AppCompatActivity implements View
         webSettings.setDatabaseEnabled(false);
         //启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
-        if (!TextUtils.isEmpty(uid)){
-            webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id="+uid+"&redir=coupon");
-
-        }else {
-            webView.loadUrl(AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id=''&redir=coupon");
-        }
+        webView.loadUrl(getIntent().getStringExtra("url"));
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient(){
             @Override
@@ -159,7 +101,6 @@ public class HomeDiscuntCouponActivity extends AppCompatActivity implements View
 
             case R.id.retrun_text_view:
                 finish();
-                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
 
 
@@ -189,4 +130,5 @@ public class HomeDiscuntCouponActivity extends AppCompatActivity implements View
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

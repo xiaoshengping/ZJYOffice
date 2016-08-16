@@ -1,31 +1,28 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
-import com.example.zhongjiyun03.zhongjiyun.adapter.MessageListAdapter;
-import com.example.zhongjiyun03.zhongjiyun.bean.MessageDataBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
+import com.example.zhongjiyun03.zhongjiyun.adapter.QuestionnaireListAdapter;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.QuestionnaireListBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.QuestionnaireListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -35,16 +32,13 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
-public class MessageActivity extends AppCompatActivity implements View.OnClickListener {
-
-
+public class QuestionnaireListActivity extends AppCompatActivity implements View.OnClickListener {
 
     @ViewInject(R.id.register_tv)
     private TextView addExtruderTv;   //头部右边
@@ -53,19 +47,20 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     @ViewInject(R.id.retrun_text_view)
     private TextView retrunText;     //头部左边
 
-    @ViewInject(R.id.message_lsitview)
-    private ListView messageListView;
-    /*@ViewInject(R.id.web_view)
-    private WebView webView;*/
-    private List<MessageDataBean> list=new ArrayList<>();
-    @ViewInject(R.id.not_data_layout)
-    private LinearLayout notDataLayout;//没有数据提示
+    @ViewInject(R.id.questionnaire_lsitview)
+    private ListView questionnaireLsitview;
+
+
+    private List<QuestionnaireListBean> list=new ArrayList<>();
+    /*@ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;//没有数据提示*/
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //网络提示
-    @ViewInject(R.id.not_data_image)
+    /*@ViewInject(R.id.not_data_image)
     private ImageView notDataImage; //没有网络和没有数据显示
     @ViewInject(R.id.not_data_text)
-    private TextView notDataText;
+    private TextView notDataText;*/
+    private SVProgressHUD mSVProgressHUD;//loding
 
 
     @Override
@@ -79,22 +74,22 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         JPushInterface.onPause(this);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //改变状态栏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.red_light);//通知栏所需颜色
-        }
-        setContentView(R.layout.activity_message);
+        }*/
+        setContentView(R.layout.activity_questionnaire_list);
         ViewUtils.inject(this);
         init();
-
     }
-    @TargetApi(19)
+
+   /* @TargetApi(19)
     private void setTranslucentStatus(boolean on) {
         Window win = getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
@@ -105,7 +100,8 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
-    }
+    }*/
+
     private void init() {
 
         initView();
@@ -125,60 +121,63 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         //步骤2：获取文件中的值
         String sesstionId = read.getString("code","");
         requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMessageListData(),requestParams, new RequestCallBack<String>() {
+        mSVProgressHUD.showWithStatus("正在加载中...");
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getQuestionnaireListData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 //Log.e("系统消息列表",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<MessageDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<MessageDataBean>>(){});
+                    AppBean<QuestionnaireListDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<QuestionnaireListDataBean>>(){});
                     if (appListDataBean.getResult().equals("success")){
-                      List<MessageDataBean> messageDataBeen=  appListDataBean.getData();
-                        if (messageDataBeen!=null){
-                            notDataLayout.setVisibility(View.GONE);
-                           list.addAll(messageDataBeen);
+                        mSVProgressHUD.dismiss();
+                        QuestionnaireListDataBean messageDataBeen=  appListDataBean.getData();
+                      List<QuestionnaireListBean> questionnaireListBeen=   messageDataBeen.getPagerData();
+                        if (questionnaireListBeen!=null){
+                            //notDataLayout.setVisibility(View.GONE);
+                            list.addAll(questionnaireListBeen);
                             //Log.e("title",list.get(0).getTitle());
-                            InitListView(messageDataBeen);
+                            InitListView(questionnaireListBeen);
                         }else if (appListDataBean.getResult().equals("unlogin")){
                             showExitGameAlertUnLonding("本次登录已过期");
                         }else {
-                            notDataLayout.setVisibility(View.VISIBLE);
-                            notDataImage.setBackgroundResource(R.mipmap.no_info_icon);
-                            notDataText.setText("您还没有收到消息哦");
+                            //notDataLayout.setVisibility(View.VISIBLE);
+                            //notDataImage.setBackgroundResource(R.mipmap.no_info_icon);
+                            //notDataText.setText("暂时没有调查问卷");
+                            mSVProgressHUD.dismiss();
                         }
 
                     }
                 }
-
-
                 networkRemindLayout.setVisibility(View.GONE);
 
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
-                Log.e("系统消息列表",s);
+                //Log.e("系统消息列表",s);
                 networkRemindLayout.setVisibility(View.VISIBLE);
+                mSVProgressHUD.dismiss();
                 //MyAppliction.showToast("网络异常,请稍后重试");
-                if (list.size()==0){
-                    notDataLayout.setVisibility(View.VISIBLE);
+                /*if (list.size()==0){
+                    //notDataLayout.setVisibility(View.VISIBLE);
                     notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
                     notDataText.setText("没有网络哦");
-                }
+                }*/
             }
         });
 
 
     }
 
-    private void InitListView(final List<MessageDataBean> messageDataBean) {
-        MessageListAdapter messageListAdapter = new MessageListAdapter(messageDataBean, this);
-        messageListView.setAdapter(messageListAdapter);
+    private void InitListView(final List<QuestionnaireListBean> messageDataBean) {
+        QuestionnaireListAdapter messageListAdapter = new QuestionnaireListAdapter(messageDataBean, this);
+        questionnaireLsitview.setAdapter(messageListAdapter);
         messageListAdapter.notifyDataSetChanged();
-        messageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        questionnaireLsitview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(MessageActivity.this,MessageParticularsActivity.class);
-                intent.putExtra("id",messageDataBean.get(position).getId());
+                Intent intent=new Intent(QuestionnaireListActivity.this,QuestionnaireParticularsActivity.class);
+                intent.putExtra("url",messageDataBean.get(position).getUrl());
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
@@ -188,12 +187,10 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     }
     private void initView() {
         addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("消息");
+        titleNemeTv.setText("问卷调查列表");
         retrunText.setOnClickListener(this);
         networkRemindLayout.setOnClickListener(this);
-        //webView.getSettings().setJavaScriptEnabled(true);
-        //webView.loadUrl(AppUtilsUrl.BaseUrl+"/app/index.html#/tab/system-message?id=50b7d6cb-809f-434c-aa06-79fb40681068");
-
+        mSVProgressHUD = new SVProgressHUD(QuestionnaireListActivity.this);
 
     }
 
@@ -223,7 +220,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
     }
     //对话框
     private void showExitGameAlertUnLonding(String text) {
-        final AlertDialog dlg = new AlertDialog.Builder(MessageActivity.this).create();
+        final AlertDialog dlg = new AlertDialog.Builder(QuestionnaireListActivity.this).create();
         dlg.show();
         Window window = dlg.getWindow();
         // *** 主要就是在这里实现这种效果的.
@@ -236,7 +233,7 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         ok.setText("去登录");
         ok.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent=new Intent(MessageActivity.this,LoginActivity.class);
+                Intent intent=new Intent(QuestionnaireListActivity.this,LoginActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 dlg.cancel();
@@ -263,6 +260,4 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
         }
         return true;
     }
-
-
 }

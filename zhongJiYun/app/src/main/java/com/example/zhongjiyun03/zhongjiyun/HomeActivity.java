@@ -571,8 +571,8 @@ public class HomeActivity extends AppCompatActivity {
     private void addFragment() {
         fragments.add(new HomeFragment());
         fragments.add(new SeekProjectFragment());
-        fragments.add(new SeekMachinistFragment());
         fragments.add(new MineFragment());
+        fragments.add(new SeekMachinistFragment());
     }
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.example.zhongjiyun03.zhongjiyun.adapter.ImagePagerAdapter;
 import com.example.zhongjiyun03.zhongjiyun.adapter.RecommendMachinistAdapter;
 import com.example.zhongjiyun03.zhongjiyun.baidumap.LocationService;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.QuestionnaireBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.SecondHandDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AdvertisementBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
@@ -49,6 +51,7 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.HomeMoreProjectActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeRewardActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeTribeActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.LoginActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.QuestionnaireListActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.SecondHandActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.SeekMachinistActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.SeekProjectParticularsActivity;
@@ -113,6 +116,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
     //百度地图定位
     private LocationService locationService;
 
+    @ViewInject(R.id.questionnaire_image)
+    private ImageView questionnaireImage;  //问卷调查image
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -128,10 +134,45 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
         init();
         loadData();
+        initQuestionnaire();
         return view ;
     }
 
+    /**
+     * 调查问卷
+     */
+    private void initQuestionnaire() {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getQuestionnaireData(), requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                   AppBean<QuestionnaireBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<QuestionnaireBean>>(){});
+                    if (appBean.getResult().equals("success")){
+                       QuestionnaireBean questionnaireBean= appBean.getData();
+                        if (!questionnaireBean.equals("0")){
+                            questionnaireImage.setVisibility(View.VISIBLE);
+                        }else {
+                            questionnaireImage.setVisibility(View.GONE);
+                        }
+                    }
 
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+
+            }
+        });
+
+
+
+
+    }
 
 
     /**
@@ -183,8 +224,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         initGridView();
         moreTextView.setOnClickListener(this);
         projectMoreText.setOnClickListener(this);
+        questionnaireImage.setOnClickListener(this);
         intiPullToRefresh();
         initListRecommentMachinist();
+
 
 
 
@@ -522,6 +565,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                 //跳转到设置界面
                 Intent networkIntent = new Intent(Settings.ACTION_SETTINGS);
                 startActivity(networkIntent);
+                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                break;
+            case R.id.questionnaire_image:
+                Intent questionnaireIntent=new Intent(getActivity(), QuestionnaireListActivity.class);
+                startActivity(questionnaireIntent);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
 

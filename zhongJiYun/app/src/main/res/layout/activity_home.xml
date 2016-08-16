@@ -13,7 +13,7 @@
          android:orientation="vertical"
          android:layout_width="match_parent"
          android:layout_height="match_parent">
-    <RelativeLayout
+<!--    <RelativeLayout
         android:id="@+id/home_title_bar_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -30,7 +30,7 @@
             android:textSize="19dp"
             android:layout_centerInParent="true"/>
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <LinearLayout
         android:id="@+id/home_layout"
@@ -86,7 +86,7 @@
                 android:background="#00000000"
                 android:drawableTop="@drawable/home_recruitment_selector"
                 android:gravity="center"
-                android:text="寻找项目"
+                android:text="资讯"
                 android:textColor="@color/home_color_seletor"
                 android:textSize="@dimen/home_Size_15"
 
@@ -96,22 +96,22 @@
                 style="@style/paren_radiogrud"
                 android:layout_weight="1"
                 android:background="#00000000"
-                android:drawableTop="@drawable/home_talents_selector"
-                android:gravity="center"
-                android:text="寻找机手"
-                android:textColor="@color/home_color_seletor"
-                android:textSize="@dimen/home_Size_15"
-
-                />
-
-            <RadioButton
-                style="@style/paren_radiogrud"
-                android:layout_weight="1"
-                android:background="#00000000"
-
                 android:drawableTop="@drawable/home_mine_selector"
                 android:gravity="center"
-                android:text="个人中心"
+                android:text="我的"
+                android:textColor="@color/home_color_seletor"
+                android:textSize="@dimen/home_Size_15"
+
+                />
+
+            <RadioButton
+                style="@style/paren_radiogrud"
+                android:layout_weight="1"
+                android:background="#00000000"
+
+                android:drawableTop="@drawable/home_talents_selector"
+                android:gravity="center"
+                android:text="更多"
                 android:textColor="@color/home_color_seletor"
                 android:textSize="@dimen/home_Size_15"
 

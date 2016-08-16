@@ -571,7 +571,9 @@
         <activity android:name=".uilts.HomeRewardActivity" />
         <activity android:name=".uilts.HomeGameActivity" />
         <activity android:name=".uilts.HomeDiscuntCouponActivity" />
-        <activity android:name=".uilts.ReleaseJobActivity"></activity>
+        <activity android:name=".uilts.ReleaseJobActivity" />
+        <activity android:name=".uilts.QuestionnaireListActivity" />
+        <activity android:name=".uilts.QuestionnaireParticularsActivity"></activity>
     </application>
 
 </manifest>

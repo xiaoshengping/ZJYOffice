@@ -273,11 +273,12 @@
             android:layout_height="wrap_content" />
 
         <EditText
+            android:paddingRight="2dp"
             android:inputType="textMultiLine"
             android:background="@color/ic_white"
             android:layout_centerInParent="true"
             android:layout_below="@+id/project_introduce_text"
-            android:id="@+id/project_introduce_edit"
+            android:id="@+id/office_edit"
             android:textSize="@dimen/home_Size_14"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"

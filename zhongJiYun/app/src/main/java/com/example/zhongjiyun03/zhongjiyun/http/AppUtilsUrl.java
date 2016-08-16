@@ -293,4 +293,27 @@ public class AppUtilsUrl {
 
     }
 
+    //发布招聘
+    public static String getReleaseJobData(){
+        //  appapi/recruit/add
+        return BaseUrl+"appapi/recruit/add" ;
+
+    }
+    //调查问卷数量
+    public static String getQuestionnaireData(){
+        //  appapi/questionpage/count
+        return BaseUrl+"appapi/questionpage/count" ;
+
+    }
+    //调查问卷列表
+    public static String getQuestionnaireListData(){
+        //  /appapi/questionpage/list
+        return BaseUrl+"appapi/questionpage/list" ;
+
+    }
+
+
+
+
+
 }

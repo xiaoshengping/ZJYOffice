@@ -3,12 +3,9 @@ package com.example.zhongjiyun03.zhongjiyun.fragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.example.zhongjiyun03.zhongjiyun.R;
 
 import java.util.List;
 
@@ -37,8 +34,8 @@ public class FragmentTabAdapter implements RadioGroup.OnCheckedChangeListener {
         this.rgs = rgs;
         this.fragmentActivity = fragmentActivity;
         this.fragmentContentId = fragmentContentId;
-        home_title_neme_tv = (TextView) fragmentActivity.findViewById(R.id.home_title_neme_tv);
-        home_title_bar_rl = (RelativeLayout)fragmentActivity.findViewById(R.id.home_title_bar_rl);
+        /*home_title_neme_tv = (TextView) fragmentActivity.findViewById(R.id.home_title_neme_tv);
+        home_title_bar_rl = (RelativeLayout)fragmentActivity.findViewById(R.id.home_title_bar_rl);*/
 
         // 默认显示第一页
         FragmentTransaction ft = fragmentActivity.getSupportFragmentManager().beginTransaction();
@@ -55,11 +52,11 @@ public class FragmentTabAdapter implements RadioGroup.OnCheckedChangeListener {
     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
         for (int i = 0; i < rgs.getChildCount(); i++)
             if (rgs.getChildAt(i).getId() == checkedId) {
-                if(i==0){//首页
-                    home_title_bar_rl.setVisibility(View.VISIBLE);
+               /* if(i==0){//首页
+                    home_title_bar_rl.setVisibility(View.GONE);
                     home_title_neme_tv.setText("首页");
                 }else if(i==1){//找项目
-                    home_title_bar_rl.setVisibility(View.VISIBLE);
+                    home_title_bar_rl.setVisibility(View.GONE);
                     home_title_neme_tv.setText("寻找项目");
                 }else if(i==2) {//找机手
                     home_title_bar_rl.setVisibility(View.VISIBLE);
@@ -68,7 +65,7 @@ public class FragmentTabAdapter implements RadioGroup.OnCheckedChangeListener {
                     //home_title_bar_rl.setVisibility(View.GONE);
                     home_title_bar_rl.setVisibility(View.VISIBLE);
                     home_title_neme_tv.setText("个人中心");
-                }
+                }*/
 //                Toast.makeText(this.fragmentActivity, "" + i, Toast.LENGTH_LONG).show();
 
                 Fragment fragment = fragments.get(i);

@@ -1,21 +1,33 @@
-<com.handmark.pulltorefresh.library.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:clipToPadding="true"
-    android:scrollbars="none"
-    android:id="@+id/home_scrollView"
-    android:fitsSystemWindows="true"
+
     android:background="@color/background"
     tools:context="com.example.zhongjiyun03.zhongjiyun.fragment.HomeFragment">
-
+    <TextView
+        android:textSize="@dimen/home_Size_18"
+        android:gravity="center"
+        android:textColor="@color/ic_white"
+        android:text="首页"
+        android:background="@color/red_light"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
     <!-- TODO: Update blank fragment layout -->
-
+<com.handmark.pulltorefresh.library.PullToRefreshScrollView
+    android:id="@+id/home_scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:scrollbars="none"
+    >
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:visibility="gone"
             android:id="@+id/network_remind_layout"
@@ -184,6 +196,22 @@
             android:layout_height="0.5dp" />
         <ImageView
             android:layout_marginTop="10dp"
+            android:background="@color/color_dadada"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        <ImageView
+            android:id="@+id/questionnaire_image"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/home_survey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:background="@color/color_dadada"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        
+        <ImageView
+            android:layout_marginTop="10dp"
             android:background="#dedede"
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />
@@ -256,5 +284,5 @@
 
 
     </LinearLayout>
-
 </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+</LinearLayout>
