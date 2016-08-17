@@ -355,7 +355,7 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="5dp"
                             android:textSize="@dimen/home_Size_16"
-                            android:text="最大扭转"
+                            android:text="最大扭矩"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 

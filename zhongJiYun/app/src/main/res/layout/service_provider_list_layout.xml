@@ -17,17 +17,19 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp" />
+        android:layout_width="70dp"
+        android:layout_height="70dp" />
     <TextView
-        android:id="@+id/tailt_text_view"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:id="@+id/company_text_view"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/image_view"
         android:textColor="@color/tailt_dark"
-        android:textSize="@dimen/home_Size_18"
-        android:text="李东林"
-        android:layout_width="wrap_content"
+        android:textSize="@dimen/home_Size_16"
+        android:text="广州中基配件服务有限公司"
+        android:layout_width="180dp"
         android:layout_height="wrap_content" />
     <TextView
 
@@ -39,7 +41,7 @@
         android:drawablePadding="5dp"
         android:layout_alignParentRight="true"
         android:textColor="@color/red_light"
-        android:textSize="@dimen/home_Size_16"
+        android:textSize="@dimen/home_Size_12"
         android:text="1.2km"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -47,35 +49,40 @@
         android:singleLine="true"
         android:ellipsize="end"
         android:layout_toRightOf="@+id/image_view"
-        android:layout_below="@+id/tailt_text_view"
-        android:id="@+id/company_text_view"
+        android:layout_below="@+id/company_text_view"
+        android:id="@+id/address_text"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        android:textSize="@dimen/home_Size_16"
-        android:text="广州中基配件服务有限公司"
+        android:textSize="@dimen/home_Size_14"
+        android:text="所在地：广东省广州市"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_toRightOf="@+id/image_view"
+        android:layout_below="@+id/address_text"
+        android:id="@+id/describe_text_view"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="@dimen/home_Size_14"
+        android:text="多年专业经营钻孔拽，计算机等级登记圣诞节的经济"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
-        android:layout_toRightOf="@+id/image_view"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/company_text_view"
         android:id="@+id/type_text_view"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="@dimen/home_Size_16"
-        android:text="类型:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_toRightOf="@+id/type_text_view"
-        android:layout_below="@+id/company_text_view"
-        android:id="@+id/neirong_text_view"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="10dp"
-        android:textSize="@dimen/home_Size_16"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="20dp"
+        android:textSize="@dimen/home_Size_14"
         android:text="板车运输"
-        android:textColor="@color/red_light"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:gravity="center"
+        android:background="@drawable/service_text_view_corners"
+        android:textColor="@color/blue_light"
+        android:layout_width="62dp"
+        android:layout_height="22dp" />
     <ImageView
 
         android:layout_below="@+id/image_view"

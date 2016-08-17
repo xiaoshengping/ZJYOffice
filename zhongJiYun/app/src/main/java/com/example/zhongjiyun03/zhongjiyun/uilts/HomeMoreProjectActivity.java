@@ -281,7 +281,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctListData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("找项目",responseInfo.result);
+                //Log.e("找项目",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<SeekProjectDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SeekProjectDataBean>>(){});
                     if ((appBean.getResult()).equals("success")){

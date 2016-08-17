@@ -10,64 +10,49 @@
     android:background="@color/background"
     tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.ServiceProviderActivity">
      <include android:id="@+id/head_layout" android:layout_width="match_parent"  android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
-
      <LinearLayout
          android:layout_below="@+id/head_layout"
-         android:visibility="gone"
-         android:id="@+id/network_remind_layout"
-         android:gravity="center_vertical"
-         android:background="@color/network_remind_color"
-         android:layout_width="match_parent"
-         android:layout_height="50dp">
-
-          <ImageView
-              android:layout_marginLeft="10dp"
-              android:background="@mipmap/tip_icon"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" />
-          <TextView
-              android:textSize="@dimen/home_Size_15"
-              android:textColor="@color/tailt_dark"
-              android:layout_marginLeft="10dp"
-
-              android:text="世界上最遥远的距离就是没网。检查设置"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" />
-          <TextView
-              android:paddingRight="20dp"
-              android:drawableRight="@mipmap/gray_arrow_icon"
-              android:layout_alignParentRight="@+id/loing_user"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content" />
-     </LinearLayout>
-     <com.handmark.pulltorefresh.library.PullToRefreshListView
-         android:layout_below="@+id/network_remind_layout"
-         android:divider="@color/background"
-         android:dividerHeight="7dp"
-         android:id="@+id/service_provider_listview"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"/>
-     <!--<LinearLayout
-         android:visibility="gone"
-         android:id="@+id/not_data_layout"
-         android:gravity="center"
          android:orientation="vertical"
-         android:layout_marginTop="200dp"
          android:layout_width="match_parent"
-         android:layout_height="200dp">
-          <ImageView
-              android:src="@mipmap/no_services_icon"
-              android:layout_width="100dp"
-              android:layout_height="100dp" />
-          <TextView
-              android:textColor="@color/nodata_background"
-              android:layout_marginTop="5dp"
-              android:text="还没有找到配套服务哦"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" />
+         android:layout_height="match_parent">
+          <include  android:layout_below="@+id/head_layout" android:id="@+id/select_layout" android:layout_height="wrap_content" android:layout_width="match_parent" layout="@layout/project_select_layout"/>
+          <LinearLayout
+              android:layout_below="@+id/head_layout"
+              android:visibility="gone"
+              android:id="@+id/network_remind_layout"
+              android:gravity="center_vertical"
+              android:background="@color/network_remind_color"
+              android:layout_width="match_parent"
+              android:layout_height="50dp">
 
+               <ImageView
+                   android:layout_marginLeft="10dp"
+                   android:background="@mipmap/tip_icon"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+               <TextView
+                   android:textSize="@dimen/home_Size_15"
+                   android:textColor="@color/tailt_dark"
+                   android:layout_marginLeft="10dp"
 
-     </LinearLayout>-->
+                   android:text="世界上最遥远的距离就是没网。检查设置"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+               <TextView
+                   android:paddingRight="20dp"
+                   android:drawableRight="@mipmap/gray_arrow_icon"
+                   android:layout_alignParentRight="@+id/loing_user"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content" />
+          </LinearLayout>
+          <com.handmark.pulltorefresh.library.PullToRefreshListView
+              android:divider="@color/background"
+              android:dividerHeight="7dp"
+              android:id="@+id/service_provider_listview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"/>
+     </LinearLayout>
+
      <LinearLayout
          android:visibility="gone"
          android:id="@+id/not_data_layout"

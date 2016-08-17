@@ -81,20 +81,53 @@
             android:layout_height="100dp" />
 
         <TextView
-            android:id="@+id/name_text_view"
-            android:textColor="@color/tailt_dark"
-            android:textSize="@dimen/home_Size_18"
-            android:text="李东林"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
             android:id="@+id/company_text_view"
             android:layout_marginTop="5dp"
-
             android:textSize="@dimen/home_Size_16"
             android:text="广州中基配件服务有限公司"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:isIndicator="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/rating_bar"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:id="@+id/rating_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/rating_one"
+                android:id="@+id/rating_two"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/rating_two"
+
+                android:id="@+id/rating_three"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/rating_three"
+                android:id="@+id/rating_four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/rating_four"
+                android:id="@+id/rating_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
    </LinearLayout>
     <ImageView
 
@@ -110,6 +143,25 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/name_text_view"
+            android:textColor="@color/tailt_dark"
+            android:layout_marginLeft="20dp"
+            android:textSize="@dimen/home_Size_16"
+            android:gravity="center_vertical"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@mipmap/services_name_icon"
+            android:text="18819220222"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+        <ImageView
+
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:src="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
         <TextView
             android:id="@+id/phone_text_view"
             android:textColor="@color/tailt_dark"
@@ -174,6 +226,7 @@
             android:drawablePadding="10dp"
             android:drawableLeft="@mipmap/service_type_icon"
             android:text="18819220222"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="45dp" />
 
@@ -236,19 +289,39 @@
         android:id="@+id/button_layout"
         android:gravity="center_vertical"
         android:background="@color/white"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="60dp">
-
-        <Button
-            android:id="@+id/cell_service_button"
+        <ImageView
+            android:layout_below="@+id/text_layout"
+            android:src="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColor="@color/ic_white"
-            android:background="@drawable/loing_button_corners"
-            android:textSize="@dimen/home_Size_18"
-            android:text="联系服务商" />
+            android:layout_height="0.5dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <Button
+                android:id="@+id/service_commit_button"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/orange_light"
+                android:textColor="@color/ic_white"
+                android:textSize="@dimen/home_Size_18"
+                android:text="我要点评" />
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/cell_service_button"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="@color/red"
+                android:textColor="@color/ic_white"
+                android:textSize="@dimen/home_Size_18"
+                android:text="联系服务商" />
+        </LinearLayout>
+
+
     </LinearLayout>
 </RelativeLayout>

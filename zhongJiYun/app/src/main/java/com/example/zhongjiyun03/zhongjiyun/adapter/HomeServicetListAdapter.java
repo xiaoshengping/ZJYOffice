@@ -1,6 +1,7 @@
 package com.example.zhongjiyun03.zhongjiyun.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class HomeServicetListAdapter extends AppBaseAdapter<ServiceProviderBean>
     private void inti(int position) {
         if (data.size()!=0){
             MyAppliction.imageLoader.displayImage(data.get(position).getThumbnail(),viewHold.imageView,MyAppliction.RoundedOptionsOne);
-            viewHold.tailtTextView.setText(data.get(position).getName());
+            viewHold.describeTextView.setText(data.get(position).getSummary());
             viewHold.companyTextView.setText(data.get(position).getProviderName());
             if (!data.get(position).getDistance().equals("0")){
                 viewHold.addressTextView.setVisibility(View.VISIBLE);
@@ -56,8 +57,17 @@ public class HomeServicetListAdapter extends AppBaseAdapter<ServiceProviderBean>
             }else {
                 viewHold.addressTextView.setVisibility(View.GONE);
             }
+            viewHold.typeTextView.setText(data.get(position).getProviderTypeStr());
+            if (!TextUtils.isEmpty(data.get(position).getProvince())&&!TextUtils.isEmpty(data.get(position).getCity())){
+                viewHold.addressText.setText("所在地："+data.get(position).getProvince()+data.get(position).getCity());
+            }else {
+                if (!TextUtils.isEmpty(data.get(position).getProvince())){
+                    viewHold.addressText.setText("所在地："+data.get(position).getProvince());
+                }else {
+                    viewHold.addressText.setText("所在地：");
+                }
+            }
 
-            viewHold.neirongTextView.setText(data.get(position).getProviderTypeStr());
 
         }
 
@@ -70,15 +80,19 @@ public class HomeServicetListAdapter extends AppBaseAdapter<ServiceProviderBean>
     private class ViewHold {
 
         @ViewInject(R.id.image_view)
-        private ImageView imageView;
-        @ViewInject(R.id.tailt_text_view)
-        private TextView tailtTextView;
+        private ImageView imageView;  //头像
+        /*@ViewInject(R.id.tailt_text_view)
+        private TextView tailtTextView;  */
         @ViewInject(R.id.address_text_view)
-        private TextView addressTextView;
+        private TextView addressTextView;  //距离
         @ViewInject(R.id.company_text_view)
-        private TextView companyTextView;
-        @ViewInject(R.id.neirong_text_view)
-        private TextView neirongTextView;
+        private TextView companyTextView;  //公司名称
+        @ViewInject(R.id.type_text_view)
+        private TextView typeTextView;   //类型
+        @ViewInject(R.id.describe_text_view)
+        private TextView describeTextView;  //备注
+        @ViewInject(R.id.address_text)
+        private TextView addressText;  // 所在地
 
         public ViewHold(View view) {
             ViewUtils.inject(this, view);

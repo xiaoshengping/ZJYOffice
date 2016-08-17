@@ -5,7 +5,7 @@ package com.example.zhongjiyun03.zhongjiyun.http;
  */
 public class AppUtilsUrl {
 
-    public static final String BaseUrl="http://h148a34804.iok.la/";
+    public static final String BaseUrl="http://www.zhongjiyun.cn/";
     //public  static final String ImageBaseUrl="http://www.zhongjiyun.cn/""http://h148a34804.iok.la/""http://dev.zhongjiyun.cn/";
 
     //首页广告
@@ -309,6 +309,12 @@ public class AppUtilsUrl {
     public static String getQuestionnaireListData(){
         //  /appapi/questionpage/list
         return BaseUrl+"appapi/questionpage/list" ;
+
+    }
+    //评价服务商
+    public static String getCommentServiceData(){
+        //  appapi/evaluete/evaluateserviceprovider
+        return BaseUrl+"appapi/evaluete/evaluateserviceprovider" ;
 
     }
 

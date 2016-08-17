@@ -478,9 +478,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                 Intent dicuntCouponIntent=new Intent(getActivity(), HomeDiscuntCouponActivity.class)  ;
                                 startActivity(dicuntCouponIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                                /*Intent newsIntent=new Intent(getActivity(), NewsCenterActivity.class)  ;
-                                startActivity(newsIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);*/
                             break;
 
                             case 10:
@@ -488,9 +485,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                 serviceIntent.putExtra("tage","service");
                                 startActivity(serviceIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                                /*Intent cooperationIntent=new Intent(getActivity(), CooperationActivity.class)  ;
-                                startActivity(cooperationIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);*/
                                 break;
 
 
@@ -547,6 +541,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
     @Override
     public void onClick(View v) {
+        SQLhelper sqLhelper=new SQLhelper(getActivity());
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+        }
         switch (v.getId()){
 
             case R.id.more_text_view:
@@ -568,9 +569,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
             case R.id.questionnaire_image:
-                Intent questionnaireIntent=new Intent(getActivity(), QuestionnaireListActivity.class);
-                startActivity(questionnaireIntent);
-                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                if (!TextUtils.isEmpty(uid)){
+                    Intent questionnaireIntent=new Intent(getActivity(), QuestionnaireListActivity.class);
+                    startActivity(questionnaireIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }else {
+                    Intent loginIntent=new Intent(getActivity(), LoginActivity.class);
+                    startActivity(loginIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }
+
                 break;
 
 

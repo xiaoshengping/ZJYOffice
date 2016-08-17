@@ -316,7 +316,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
             String sesstionId = read.getString("code","");
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
             requestParams.addBodyParameter("Id",uid);
-            Log.e("collectId",position+"");
+            //Log.e("collectId",position+"");
             requestParams.addBodyParameter("collectId",secondHandBeens.get(position).getId());
             requestParams.addBodyParameter("collectType","5");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionNoData(),requestParams, new RequestCallBack<String>() {

@@ -252,6 +252,11 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
           if (!TextUtils.isEmpty(uid)){
           requestParams.addBodyParameter("userId",uid);
           }
+             //步骤1：创建一个SharedPreferences接口对象
+             SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+             //步骤2：获取文件中的值
+             String sesstionId = read.getString("code","");
+             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requestParams.addBodyParameter("deviceId",secondHandBeanId);
         messageScrollView.setVisibility(View.GONE);
         mSVProgressHUD.showWithStatus("正在加载中...");
@@ -261,7 +266,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
             public void onSuccess(ResponseInfo<String> responseInfo) {
 
                 if (!TextUtils.isEmpty(responseInfo.result)){
-                    Log.e("二手钻机详情",responseInfo.result);
+                    //Log.e("二手钻机详情",responseInfo.result);
                     AppBean<SecondHandListProjectBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandListProjectBean>>(){});
                      if (appListDataBean.getResult().equals("success")){
                          secondHandBean=    appListDataBean.getData();

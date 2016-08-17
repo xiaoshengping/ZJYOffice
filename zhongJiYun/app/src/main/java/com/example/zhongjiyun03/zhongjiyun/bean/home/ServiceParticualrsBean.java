@@ -19,6 +19,8 @@ public class ServiceParticualrsBean implements Serializable {
     private String City ; //string 城市
     private String Address; // string 详细地址
     private String Summary ;//string 说明
+    private String StarRate; //星级
+    private String IsCanEvaluate	;//是否评价 String	1.是 0.否
 
     public String getId() {
         return Id;
@@ -116,6 +118,22 @@ public class ServiceParticualrsBean implements Serializable {
         Summary = summary;
     }
 
+    public String getStarRate() {
+        return StarRate;
+    }
+
+    public void setStarRate(String starRate) {
+        StarRate = starRate;
+    }
+
+    public String getIsCanEvaluate() {
+        return IsCanEvaluate;
+    }
+
+    public void setIsCanEvaluate(String isCanEvaluate) {
+        IsCanEvaluate = isCanEvaluate;
+    }
+
     @Override
     public String toString() {
         return "ServiceParticualrsBean{" +
@@ -131,6 +149,8 @@ public class ServiceParticualrsBean implements Serializable {
                 ", City='" + City + '\'' +
                 ", Address='" + Address + '\'' +
                 ", Summary='" + Summary + '\'' +
+                ", StarRate='" + StarRate + '\'' +
+                ", IsCanEvaluate='" + IsCanEvaluate + '\'' +
                 '}';
     }
 }

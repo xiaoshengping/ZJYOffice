@@ -9,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -112,6 +111,21 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
     @ViewInject(R.id.button_layout)
     private LinearLayout buttonLayout;
 
+
+    @ViewInject(R.id.rating_one)
+    private ImageView ratingOne; //xingxing
+    @ViewInject(R.id.rating_two)
+    private ImageView ratingTwo; //xingxing
+    @ViewInject(R.id.rating_three)
+    private ImageView ratingThree; //xingxing
+    @ViewInject(R.id.rating_four)
+    private ImageView ratingFour; //xingxing
+    @ViewInject(R.id.rating_five)
+    private ImageView ratingFive; //xingxing
+
+    @ViewInject(R.id.service_commit_button)
+    private Button serviceCommitButton;  //评价服务商按钮
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -184,7 +198,7 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
             public void onSuccess(ResponseInfo<String> responseInfo) {
 
                 if (!TextUtils.isEmpty(responseInfo.result)){
-                    Log.e("服务商详情",responseInfo.result);
+                   // Log.e("服务商详情",responseInfo.result);
                     AppBean<ServiceParticualrsBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ServiceParticualrsBean>>(){});
                     if ((appBean.getResult()).equals("success")){
                         layout.setVisibility(View.VISIBLE);
@@ -210,6 +224,50 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
                             chanceZhuText.setText(serviceProviderBean.getProviderTypeStr());
                             summaryText.setText(serviceProviderBean.getSummary());
                             mSVProgressHUD.dismiss();
+
+                            if (!TextUtils.isEmpty(serviceProviderBean.getStarRate())){
+                                String StarRate=serviceProviderBean.getStarRate();
+                                if (StarRate.equals("1")) {
+                                    ratingOne.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingTwo.setBackgroundResource(R.mipmap.boss_star_cur_p);
+                                    ratingThree.setBackgroundResource(R.mipmap.boss_star_cur_p);
+                                    ratingFour.setBackgroundResource(R.mipmap.boss_star_cur_p);
+                                    ratingFive.setBackgroundResource(R.mipmap.boss_star_cur_p);
+
+                                } else if (StarRate.equals("2")) {
+                                    ratingOne.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingTwo.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingThree.setBackgroundResource(R.mipmap.boss_star_cur_p);
+                                    ratingFour.setBackgroundResource(R.mipmap.boss_star_cur_p);
+                                    ratingFive.setBackgroundResource(R.mipmap.boss_star_cur_p);
+
+                                } else if (StarRate.equals("3")) {
+
+                                    ratingOne.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingTwo.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingThree.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingFour.setBackgroundResource(R.mipmap.boss_star_cur_p);
+                                    ratingFive.setBackgroundResource(R.mipmap.boss_star_cur_p);
+
+
+                                } else if (StarRate.equals("4")) {
+
+                                    ratingOne.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingTwo.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingThree.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingFour.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingFive.setBackgroundResource(R.mipmap.boss_star_cur_p);
+
+                                } else if (StarRate.equals("5")) {
+                                    ratingOne.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingTwo.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingThree.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingFour.setBackgroundResource(R.mipmap.boss_star_p);
+                                    ratingFive.setBackgroundResource(R.mipmap.boss_star_p);
+
+                                }
+
+                            }
 
                         }
 
@@ -248,6 +306,7 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
         mSVProgressHUD = new SVProgressHUD(this);
         cellServiceButton.setOnClickListener(this);
         noDataRlayout.setOnClickListener(this);
+        serviceCommitButton.setOnClickListener(this);
 
 
     }
@@ -273,20 +332,37 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
                         intent.setData(Uri.parse("tel:" + serviceProviderBean.getPhoneNumber()));
                         //开启系统拨号器
                         startActivity(intent);
-                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                         }else {
                             MyAppliction.showToast("该服务商没有联系方式");
                         }
                     }else {
                         Intent intent=new Intent(ServiceParticularsActivity.this,LoginActivity.class);
                         startActivity(intent);
-                        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                     }
 
                 break;
             case R.id.no_data_rlayout:
                 initParticularsData();
 
+                break;
+            case R.id.service_commit_button:
+                if (!TextUtils.isEmpty(uid)) {
+                    if (serviceProviderBean.getIsCanEvaluate().equals("1")){
+                        Intent intent=new Intent(ServiceParticularsActivity.this,CommentServiceActivity.class);
+                        intent.putExtra("serviceId",serviceProviderBean.getId());
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                    }else {
+                        MyAppliction.showToast("最近7天内您已经评价过该服务商了");
+                    }
+
+                }else {
+                    Intent intent=new Intent(ServiceParticularsActivity.this,LoginActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }
                 break;
 
 

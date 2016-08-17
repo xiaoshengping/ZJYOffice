@@ -37,6 +37,8 @@
     <color name="color_888888">#888888</color>
     <!--分割线-->
     <color name="color_dadada">#dadada</color>
+    <!--主背景色调-->
+    <color name="color_e6e6e6">#e6e6e6</color>
 
 <!--  popwin-->
     <color name="popup_left_bg">#eee</color>

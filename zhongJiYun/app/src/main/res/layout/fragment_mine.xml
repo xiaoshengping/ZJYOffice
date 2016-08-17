@@ -1,15 +1,31 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:scrollbars="none"
+
     tools:context="com.example.zhongjiyun03.zhongjiyun.fragment.MineFragment">
+    <TextView
+        android:id="@+id/text_view"
+        android:textSize="@dimen/home_Size_18"
+        android:gravity="center"
+        android:textColor="@color/ic_white"
+        android:text="我的"
+        android:background="@color/red_light"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+    <ScrollView
+        android:layout_below="@+id/text_view"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
         <LinearLayout
             android:id="@+id/message_houbao_rl"
             android:orientation="vertical"
@@ -115,7 +131,7 @@
                 android:layout_height="wrap_content" />
             <RatingBar
                 android:stepSize="1"
-                android:isIndicator="false"
+                android:isIndicator="true"
                 android:id="@+id/rating_bar"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
@@ -514,5 +530,5 @@
 
 
     </RelativeLayout>
-
-</ScrollView>
+    </ScrollView>
+</RelativeLayout>

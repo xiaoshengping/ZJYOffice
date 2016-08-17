@@ -14,6 +14,9 @@ public class ServiceProviderBean implements Serializable {
     private int ProviderType;    //服务商类型
     private String ProviderTypeStr;  //  服务商类型
     private String  Distance; //  距离：KM
+    private String Summary;  //备注说明
+    private String Province;//省份
+    private String City;  //城市
 
     public String getId() {
         return id;
@@ -71,6 +74,30 @@ public class ServiceProviderBean implements Serializable {
         Distance = distance;
     }
 
+    public String getSummary() {
+        return Summary;
+    }
+
+    public void setSummary(String summary) {
+        Summary = summary;
+    }
+
+    public String getProvince() {
+        return Province;
+    }
+
+    public void setProvince(String province) {
+        Province = province;
+    }
+
+    public String getCity() {
+        return City;
+    }
+
+    public void setCity(String city) {
+        City = city;
+    }
+
     @Override
     public String toString() {
         return "ServiceProviderBean{" +
@@ -80,7 +107,10 @@ public class ServiceProviderBean implements Serializable {
                 ", ProviderName='" + ProviderName + '\'' +
                 ", ProviderType=" + ProviderType +
                 ", ProviderTypeStr='" + ProviderTypeStr + '\'' +
-                ", Distance=" + Distance +
+                ", Distance='" + Distance + '\'' +
+                ", Summary='" + Summary + '\'' +
+                ", Province='" + Province + '\'' +
+                ", City='" + City + '\'' +
                 '}';
     }
 }

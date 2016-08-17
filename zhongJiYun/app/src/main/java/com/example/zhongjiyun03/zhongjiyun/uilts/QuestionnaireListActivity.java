@@ -7,6 +7,7 @@ import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -125,7 +126,7 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getQuestionnaireListData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("系统消息列表",responseInfo.result);
+                Log.e("系统消息列表",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<QuestionnaireListDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<QuestionnaireListDataBean>>(){});
                     if (appListDataBean.getResult().equals("success")){
@@ -154,7 +155,7 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
 
             @Override
             public void onFailure(HttpException e, String s) {
-                //Log.e("系统消息列表",s);
+                Log.e("系统消息列表",s);
                 networkRemindLayout.setVisibility(View.VISIBLE);
                 mSVProgressHUD.dismiss();
                 //MyAppliction.showToast("网络异常,请稍后重试");
