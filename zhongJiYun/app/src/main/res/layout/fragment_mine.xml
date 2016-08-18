@@ -184,7 +184,7 @@
                 android:layout_width="12dp"
                 android:layout_height="15dp" />-->
 
-            <ImageView
+           <!-- <ImageView
                 android:src="@mipmap/star_rule_icon"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="7dp"
@@ -192,14 +192,14 @@
                 android:layout_below="@+id/phone_text"
 
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
+                android:layout_height="wrap_content" />-->
+           <!-- <TextView
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/rating_bar"
                 android:layout_below="@+id/phone_text"
                 android:id="@+id/rating_help"
                 android:layout_width="30dp"
-                android:layout_height="30dp" />
+                android:layout_height="30dp" />-->
             <ImageView
                 android:layout_marginRight="20dp"
                 android:layout_centerVertical="true"
@@ -215,6 +215,92 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/red_drilling_image"
+                android:background="#dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_below="@+id/red_drilling_image"
+                android:background="@color/ic_white"
+                android:id="@+id/red_drilling_layout"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/redpacket_layout"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <ImageView
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/my_reward_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textSize="@dimen/home_Size_16"
+                        android:layout_marginLeft="10dp"
+                        android:text="我的红包"
+                        android:layout_alignParentRight="@+id/loing_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <ImageView
+                    android:background="#dedede"
+                    android:layout_width="0.5dp"
+                    android:layout_height="30dp" />
+                <LinearLayout
+                    android:id="@+id/drilling_layout"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <ImageView
+                        android:layout_marginLeft="5dp"
+                        android:src="@mipmap/my_device"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textSize="@dimen/home_Size_16"
+                        android:layout_marginLeft="10dp"
+                        android:text="我的钻机"
+                        android:layout_alignParentRight="@+id/loing_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+                <ImageView
+                    android:background="#dedede"
+                    android:layout_width="0.5dp"
+                    android:layout_height="30dp" />
+                <LinearLayout
+                    android:id="@+id/comment_layout"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <ImageView
+                        android:src="@mipmap/my_eval_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:textSize="@dimen/home_Size_16"
+                        android:layout_marginLeft="10dp"
+                        android:text="我的评价"
+                        android:layout_alignParentRight="@+id/loing_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_below="@+id/red_drilling_layout"
                 android:id="@+id/image_one"
                 android:background="#dedede"
                 android:layout_width="match_parent"
@@ -229,7 +315,8 @@
 
             <LinearLayout
                 android:layout_below="@+id/image_two"
-                android:id="@+id/redpacket_layout"
+
+                android:id="@+id/message_layout"
                 android:background="@color/ic_white"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -237,13 +324,13 @@
                 android:layout_height="50dp">
                 <ImageView
                     android:layout_marginLeft="20dp"
-                    android:src="@mipmap/my_reward_icon"
+                    android:src="@mipmap/my_inof_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
                     android:textSize="@dimen/home_Size_16"
                      android:layout_marginLeft="10dp"
-                    android:text="我的红包"
+                    android:text="消息"
                     android:layout_alignParentRight="@+id/loing_user"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -263,71 +350,13 @@
 
             </LinearLayout>
             <ImageView
-                android:layout_below="@+id/redpacket_layout"
+                android:layout_below="@+id/message_layout"
                 android:id="@+id/message_imageview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
+
             <LinearLayout
-                android:id="@+id/message_layout"
-                 android:layout_below="@+id/message_imageview"
-                android:background="@color/ic_white"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <ImageView
-                    android:id="@+id/message_iv"
-                    android:layout_marginLeft="20dp"
-                    android:src="@mipmap/my_inof_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:layout_marginLeft="10dp"
-                    android:text="消息"
-                    android:layout_alignParentRight="@+id/loing_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:visibility="gone"
-                    android:id="@+id/message_remind_image"
-                    android:layout_marginLeft="5dp"
-                    android:src="@mipmap/circle_tip_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:paddingRight="20dp"
-                    android:drawableRight="@mipmap/gray_arrow_icon"
-                    android:layout_alignParentRight="@+id/loing_user"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-
-        </RelativeLayout>
-
-        </LinearLayout>
-        <RelativeLayout
-            android:id="@+id/jibiao_xiangmu_rl"
-
-            android:layout_below="@+id/message_houbao_rl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/image_three"
-                android:background="#dedede"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp" />
-            <ImageView
-                android:id="@+id/image_frou"
-                android:layout_below="@+id/image_three"
-                android:layout_marginTop="10dp"
-                android:background="#dedede"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp" />
-            <LinearLayout
-                android:layout_below="@+id/image_frou"
+                android:layout_below="@+id/message_imageview"
                 android:id="@+id/competitive_layout"
                 android:background="@color/ic_white"
                 android:gravity="center"
@@ -362,14 +391,160 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+
             <ImageView
                 android:layout_below="@+id/competitive_layout"
-                android:id="@+id/competitive_imageview"
+                android:id="@+id/competitive_image"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <LinearLayout
+
+                 android:layout_below="@+id/competitive_image"
+                android:background="@color/ic_white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:id="@+id/message_iv"
+                    android:layout_marginLeft="20dp"
+                    android:src="@mipmap/personal_center_recruit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginLeft="10dp"
+                    android:text="我的招聘"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/message_remind_image"
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/circle_tip_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="20dp"
+                    android:drawableRight="@mipmap/gray_arrow_icon"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/xshang_layout"
+            android:layout_below="@+id/message_houbao_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/xshang_image_three"
+                android:background="#dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+            <ImageView
+                android:id="@+id/xshang_image_frou"
+                android:layout_below="@+id/xshang_image_three"
+                android:layout_marginTop="10dp"
+                android:background="#dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+
+            <LinearLayout
+                android:id="@+id/qiumai_layout"
+                android:layout_below="@+id/xshang_image_frou"
+                android:background="@color/ic_white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:layout_marginLeft="20dp"
+                    android:src="@mipmap/personal_center_buy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginLeft="10dp"
+                    android:text="悬赏求买"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="20dp"
+                    android:drawableRight="@mipmap/gray_arrow_icon"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <ImageView
+                android:layout_below="@+id/qiumai_layout"
+                android:id="@+id/qiumai_imageview"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
             <LinearLayout
+                android:layout_below="@+id/qiumai_imageview"
+                android:id="@+id/xshang_qiumai_layout"
+                android:background="@color/ic_white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+
+                    android:layout_marginLeft="20dp"
+                    android:src="@mipmap/personal_center_sell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginLeft="10dp"
+                    android:text="悬赏求卖"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:paddingRight="20dp"
+                    android:drawableRight="@mipmap/gray_arrow_icon"
+                    android:layout_alignParentRight="@+id/loing_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/jibiao_xiangmu_rl"
+            android:layout_below="@+id/xshang_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/image_three"
+                android:background="#dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+            <ImageView
+                android:id="@+id/image_frou"
+                android:layout_below="@+id/image_three"
+                android:layout_marginTop="10dp"
+                android:background="#dedede"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+
+            <LinearLayout
                 android:id="@+id/attention_layout"
-                android:layout_below="@+id/competitive_imageview"
+                android:layout_below="@+id/image_frou"
                 android:background="@color/ic_white"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -431,47 +606,7 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
-            <ImageView
-                android:layout_below="@+id/extruder_layout"
-                android:id="@+id/extruder_imageview"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-            <LinearLayout
-                android:layout_below="@+id/extruder_imageview"
-                android:id="@+id/comment_layout"
-                android:background="@color/ic_white"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-                <ImageView
 
-                    android:layout_marginLeft="20dp"
-                    android:src="@mipmap/my_eval_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:layout_marginLeft="10dp"
-                    android:text="我的评价"
-                    android:layout_alignParentRight="@+id/loing_user"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:visibility="gone"
-                    android:id="@+id/evaluate_remind_image"
-                    android:layout_marginLeft="5dp"
-                    android:src="@mipmap/circle_tip_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:paddingRight="20dp"
-                    android:drawableRight="@mipmap/gray_arrow_icon"
-                    android:layout_alignParentRight="@+id/loing_user"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
 
         </RelativeLayout>
         <ImageView
@@ -519,9 +654,54 @@
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_below="@+id/sting_layout"
+            android:id="@+id/extruder_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+        <LinearLayout
+            android:layout_below="@+id/extruder_imageview"
+            android:id="@+id/help_layout"
+            android:background="@color/ic_white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+
+                android:layout_marginLeft="20dp"
+                android:src="@mipmap/star_rule_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginLeft="10dp"
+                android:text="帮助中心"
+                android:layout_alignParentRight="@+id/loing_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/evaluate_remind_image"
+                android:layout_marginLeft="5dp"
+                android:src="@mipmap/circle_tip_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:paddingRight="20dp"
+                android:drawableRight="@mipmap/gray_arrow_icon"
+                android:layout_alignParentRight="@+id/loing_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+
         <ImageView
             android:layout_marginBottom="20dp"
-            android:layout_below="@+id/sting_layout"
+            android:layout_below="@+id/help_layout"
             android:background="#dedede"
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />

@@ -38,6 +38,7 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.CommentActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.LoginActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MessageActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MyCompetitveTenderActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.MyExtruderActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MyRedPacketActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.PersonageInformationActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.RatingHelpActivity;
@@ -87,16 +88,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @ViewInject(R.id.comment_layout)
     private LinearLayout commentLayout;
-    /*@ViewInject(R.id.rating_one)
-    private TextView ratingOne;
-    @ViewInject(R.id.rating_two)
-    private TextView ratingTwo;
-    @ViewInject(R.id.rating_three)
-    private TextView ratingThree;
-    @ViewInject(R.id.rating_four)
-    private TextView ratingFour;
-    @ViewInject(R.id.rating_five)
-    private TextView ratingFive;*/
     @ViewInject(R.id.evaluate_remind_image)
     private ImageView evaluateRemindImage; //评论红点
     @ViewInject(R.id.projectReply_remind_image)
@@ -107,10 +98,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private ImageView giftBagRemindImage; //红包红点
     private String date;
     private PersonageInformationBean personageInformation;
-    @ViewInject(R.id.rating_help)
-    private TextView ratingHelpText;
     @ViewInject(R.id.rating_bar)
     private RatingBar ratingBar;
+
+    @ViewInject(R.id.drilling_layout)
+    private LinearLayout drillingLayout;  //我的钻机
+    @ViewInject(R.id.help_layout)
+    private LinearLayout helpLayout;  //帮助中心
 
 
     public MineFragment() {
@@ -147,7 +141,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         //获取系统时间
         SimpleDateFormat sDateFormat    =   new    SimpleDateFormat("yyyy-MM-dd    HH:mm:ss");
         date=sDateFormat.format(new java.util.Date());
-        ratingHelpText.setOnClickListener(this);
+        helpLayout.setOnClickListener(this);
+        drillingLayout.setOnClickListener(this);
     }
 
     @Override
@@ -494,11 +489,22 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 }
 
                 break;
-            case R.id.rating_help:
+            case R.id.help_layout:
                 Intent ratingHelpIntent=new Intent(getActivity(), RatingHelpActivity.class);
                 getActivity().startActivity(ratingHelpIntent);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
+                break;
+            case R.id.drilling_layout:
+                 if (!TextUtils.isEmpty(uid)){
+                        Intent MyExtruderIntent=new Intent(getActivity(), MyExtruderActivity.class)  ;
+                        startActivity(MyExtruderIntent);
+                        getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                  }else {
+                      Intent loginIntent=new Intent(getActivity(),LoginActivity.class);
+                      startActivity(loginIntent);
+                      getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                                }
                 break;
 
         }

@@ -454,15 +454,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                     startActivity(intent);
                                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 }
-                                /*if (!TextUtils.isEmpty(uid)){
-                                    Intent MyExtruderIntent=new Intent(getActivity(), MyExtruderActivity.class)  ;
-                                    startActivity(MyExtruderIntent);
-                                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                                }else {
-                                    Intent intent=new Intent(getActivity(),LoginActivity.class);
-                                    startActivity(intent);
-                                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                                }*/
+
                                 break;
                             case 7:  //黑名单
                                 Intent blackListIntent=new Intent(getActivity(), HomeBlackListActivity.class)  ;

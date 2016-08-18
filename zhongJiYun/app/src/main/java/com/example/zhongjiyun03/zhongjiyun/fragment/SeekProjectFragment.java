@@ -65,7 +65,7 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
     private void initView() {
         mSVProgressHUD = new SVProgressHUD(getActivity());
         registerTv.setVisibility(View.GONE);
-        titleNemeTv.setText("中基云平台");
+        titleNemeTv.setText("资讯");
         retrunText.setOnClickListener(this);
         WebSettings webSettings=webView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
