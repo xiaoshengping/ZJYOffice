@@ -415,36 +415,36 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                         }
 
                         switch (index){
-                            case 1:
+                            case 1:  //找活儿
                                 Intent projectIntent=new Intent(getActivity(),HomeMoreProjectActivity.class);
                                 startActivity(projectIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
 
-                            case 2:
+                            case 2: //二手机
                                 Intent SecondHandIntent=new Intent(getActivity(), SecondHandActivity.class)  ;
                                 SecondHandIntent.putExtra("tage","secondHand");
                                 startActivity(SecondHandIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
-                            case 3:
+                            case 3:  //找机手
 
                                 Intent seekMachinistIntent=new Intent(getActivity(), SeekMachinistActivity.class)  ;
                                 seekMachinistIntent.putExtra("tage","seekMachinis");
                                 startActivity(seekMachinistIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
-                            case 4:
+                            case 4: //商城
                                 Intent marketIntent=new Intent(getActivity(), HomeMarketActivity.class)  ;
                                 startActivity(marketIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
-                            case 5:
+                            case 5:  //部落
                                 Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
                                 startActivity(tribeIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
-                            case 6:
+                            case 6:  //悬赏
                                 if (!TextUtils.isEmpty(uid)){
                                     Intent rewardIntent=new Intent(getActivity(), HomeRewardActivity.class)  ;
                                     startActivity(rewardIntent);
@@ -464,23 +464,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 }*/
                                 break;
-                            case 7:
+                            case 7:  //黑名单
                                 Intent blackListIntent=new Intent(getActivity(), HomeBlackListActivity.class)  ;
                                 startActivity(blackListIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                             break;
-                            case 8:
+                            case 8:  //游戏
                                 Intent gameIntent=new Intent(getActivity(), HomeGameActivity.class)  ;
                                 startActivity(gameIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
-                            case 9:
+                            case 9:  //优惠券
                                 Intent dicuntCouponIntent=new Intent(getActivity(), HomeDiscuntCouponActivity.class)  ;
                                 startActivity(dicuntCouponIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                             break;
 
-                            case 10:
+                            case 10: //服务商
                                 Intent serviceIntent=new Intent(getActivity(), ServiceProviderActivity.class)  ;
                                 serviceIntent.putExtra("tage","service");
                                 startActivity(serviceIntent);

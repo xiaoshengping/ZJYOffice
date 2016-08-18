@@ -574,7 +574,11 @@
         <activity android:name=".uilts.ReleaseJobActivity" />
         <activity android:name=".uilts.QuestionnaireListActivity" />
         <activity android:name=".uilts.QuestionnaireParticularsActivity" />
-        <activity android:name=".uilts.CommentServiceActivity"></activity>
+        <activity android:name=".uilts.CommentServiceActivity" />
+        <activity android:name=".uilts.MoreHotActivity" />
+        <activity android:name=".uilts.MoreEasyBuyActivity" />
+        <activity android:name=".uilts.MoreDuoBaoActivity" />
+        <activity android:name=".uilts.MoreConersionActivity"></activity>
     </application>
 
 </manifest>

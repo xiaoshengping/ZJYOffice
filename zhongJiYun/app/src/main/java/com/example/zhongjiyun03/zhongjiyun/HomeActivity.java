@@ -39,7 +39,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.VersontDataBean;
 import com.example.zhongjiyun03.zhongjiyun.fragment.FragmentTabAdapter;
 import com.example.zhongjiyun03.zhongjiyun.fragment.HomeFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.MineFragment;
-import com.example.zhongjiyun03.zhongjiyun.fragment.SeekMachinistFragment;
+import com.example.zhongjiyun03.zhongjiyun.fragment.MoreFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekProjectFragment;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.Base64;
@@ -572,7 +572,7 @@ public class HomeActivity extends AppCompatActivity {
         fragments.add(new HomeFragment());
         fragments.add(new SeekProjectFragment());
         fragments.add(new MineFragment());
-        fragments.add(new SeekMachinistFragment());
+        fragments.add(new MoreFragment());
     }
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
