@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bundy_sell_layout"
+
+    android:background="@color/background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/head_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/red_light">
+        <TextView
+            android:background="@mipmap/return_icon"
+            android:id="@+id/retrun_tv"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="13dp"
+            android:layout_height="22dp"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <TextView
+
+            android:id="@+id/retrun_boundy_sell"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/title_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="悬赏求买详情"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_20"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/head_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:src="@mipmap/boundy_buy_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/boundy_sell_iamge"
+        android:src="@mipmap/boundy_buy_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:src="@mipmap/boundy_buy_con"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>
+</RelativeLayout>

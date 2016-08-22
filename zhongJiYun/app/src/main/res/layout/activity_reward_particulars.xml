@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.RewardParticularsActivity">
+
+    <RelativeLayout
+        android:id="@+id/head_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/red_light">
+        <TextView
+            android:background="@mipmap/return_icon"
+            android:id="@+id/retrun_tv"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="13dp"
+            android:layout_height="22dp"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <TextView
+
+            android:id="@+id/retrun_boundy_Text"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentLeft="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/title_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_20"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/head_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <ImageView
+                android:id="@+id/boundy_header_image"
+                android:scaleType="fitXY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/boundy_butoon_iamge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/boundy_con_image"
+                android:scaleType="fitXY"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

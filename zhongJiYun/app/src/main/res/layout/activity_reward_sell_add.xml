@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.RewardSellAddActivity">
+
+    <include android:id="@+id/head_layout" android:layout_width="match_parent" android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
+
+    <ScrollView
+        android:layout_below="@+id/head_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/select_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/facility_layout"
+
+                android:background="@color/ic_white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:src="@color/color_dadada"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp" />
+                <TextView
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/color_333333"
+                    android:id="@+id/work_address_text"
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="设备型号"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:background="@color/ic_white"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/work_address_text"
+                    android:id="@+id/facilly_text"
+                    android:textSize="@dimen/home_Size_14"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:hint="请选择"
+                    android:gravity="center_vertical|right"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/color_333333"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/work_address_layout"
+                android:layout_below="@+id/facility_layout"
+                android:background="@color/ic_white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:src="@color/color_dadada"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp" />
+                <TextView
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/color_333333"
+                    android:id="@+id/drilling_type_text"
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="所在地"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:background="@color/ic_white"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/drilling_type_text"
+                    android:id="@+id/work_address"
+                    android:textSize="@dimen/home_Size_14"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:hint="请选择"
+                    android:gravity="center_vertical|right"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/color_333333"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/work_time_layout"
+                android:layout_below="@+id/work_address_layout"
+                android:background="@color/ic_white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:src="@color/color_dadada"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp" />
+                <TextView
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/color_333333"
+                    android:id="@+id/compensation_text"
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="出厂时间"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:background="@color/ic_white"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/compensation_text"
+                    android:id="@+id/work_time_text"
+                    android:textSize="@dimen/home_Size_14"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:hint="请选择"
+                    android:gravity="center_vertical|right"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/color_333333"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+            </RelativeLayout>
+
+           </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/select_layout"
+            android:id="@+id/message_layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+
+                android:background="@color/ic_white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:src="@color/color_dadada"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp" />
+                <TextView
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/color_333333"
+                    android:id="@+id/facillty_number_text"
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="出厂牌编号"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:inputType="text"
+                    android:background="@color/ic_white"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/facillty_number_text"
+                    android:id="@+id/facillty_number_edit"
+                    android:textSize="@dimen/home_Size_14"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:hint="请输入出厂牌编号(只能输入字母和数字)"
+                    android:gravity="center_vertical|right"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/color_333333"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+
+                android:background="@color/ic_white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:src="@color/color_dadada"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp" />
+                <TextView
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/color_333333"
+                    android:id="@+id/work_time"
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="钻机工作时长"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:maxLength="6"
+                    android:inputType="phone"
+                    android:background="@color/ic_white"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/work_time"
+                    android:id="@+id/work_time_edit"
+                    android:textSize="@dimen/home_Size_14"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:hint="请输入钻机工作时长"
+                    android:gravity="center_vertical|right"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/color_333333"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+
+
+
+
+            </RelativeLayout>
+            <RelativeLayout
+
+                android:background="@color/ic_white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <ImageView
+                    android:src="@color/color_dadada"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp" />
+                <TextView
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/color_333333"
+                    android:id="@+id/price_text"
+                    android:textSize="@dimen/home_Size_16"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="价格（万）"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:maxLength="4"
+                    android:inputType="phone"
+                    android:background="@color/ic_white"
+                    android:layout_centerInParent="true"
+                    android:layout_toRightOf="@+id/price_text"
+                    android:id="@+id/price_edit"
+                    android:textSize="@dimen/home_Size_14"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:hint="请输入价格"
+                    android:gravity="center_vertical|right"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/color_333333"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" />
+
+
+
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/message_layout"
+            android:id="@+id/drilling_layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+
+            android:background="@color/ic_white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:src="@color/color_dadada"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:textColor="@color/color_333333"
+                android:id="@+id/name_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="机主姓名"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:inputType="text"
+                android:background="@color/ic_white"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/name_text"
+                android:id="@+id/name_edit"
+                android:textSize="@dimen/home_Size_14"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:hint="请输入机主姓名"
+                android:gravity="center_vertical|right"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/color_333333"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+
+            android:background="@color/ic_white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:src="@color/color_dadada"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
+                android:textColor="@color/color_333333"
+                android:id="@+id/phone_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="机主手机"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:maxLength="11"
+                android:inputType="phone"
+                android:background="@color/ic_white"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@+id/phone_text"
+                android:id="@+id/phone_content_text"
+                android:textSize="@dimen/home_Size_14"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:hint="请输入机主手机"
+                android:gravity="center_vertical|right"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/color_333333"
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+
+
+
+
+        </RelativeLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_below="@+id/drilling_layout"
+            android:id="@+id/work_data_image"
+            android:background="@color/color_dadada"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+
+        <RelativeLayout
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/work_data_image"
+            android:background="@color/ic_white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:drawablePadding="5dp"
+                android:textColor="@color/color_222222"
+                android:id="@+id/project_introduce_text"
+                android:textSize="@dimen/home_Size_16"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="备注"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="@dimen/home_Size_12"
+                android:paddingLeft="3dp"
+                android:layout_marginTop="12dp"
+                android:text="(选填)"
+                android:layout_toRightOf="@+id/project_introduce_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:paddingRight="2dp"
+                android:inputType="textMultiLine"
+                android:background="@color/ic_white"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/project_introduce_text"
+                android:id="@+id/office_edit"
+                android:textSize="@dimen/home_Size_14"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:hint="请输入备注信息（可填写随钻机一起出售的配件等）"
+                android:gravity="top"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/color_333333"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+
+
+        </RelativeLayout>
+
+
+</RelativeLayout>
+
+
+    </ScrollView>
+    <View
+        android:id="@+id/vMasker"
+        android:visibility="gone"
+        android:background="#e0000000"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+</RelativeLayout>

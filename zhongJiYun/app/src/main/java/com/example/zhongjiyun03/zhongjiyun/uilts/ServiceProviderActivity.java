@@ -163,6 +163,8 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
     private ImageView notDataImage; //没有网络和没有数据显示
     @ViewInject(R.id.not_data_text)
     private TextView notDataText;
+    @ViewInject(R.id.select_layout)
+    private LinearLayout selectLayout; //筛选布局
 
 
 
@@ -226,7 +228,16 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
         orlder=new ArrayList<>();
         provinceCityBeens=new ArrayList<>();
         intiListView();
+
+        if (getIntent().getStringExtra("tage").equals("matingFacily")){
+            selectLayout.setVisibility(View.GONE);
+        }else {
+            selectLayout.setVisibility(View.VISIBLE);
+        }
+
         initSelectData();
+
+
     }
 
     /**

@@ -276,12 +276,13 @@
         android:layout_height="1dp" />
 
     <ImageView
+        android:visibility="gone"
         android:background="@color/color_dedede"
         android:layout_marginTop="7dp"
         android:layout_width="match_parent"
         android:layout_height="0.5dp" />
     <LinearLayout
-
+        android:visibility="gone"
         android:background="@color/ic_white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -327,6 +328,7 @@
 
     </LinearLayout>
         <ImageView
+            android:visibility="gone"
             android:src="@color/color_dedede"
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />

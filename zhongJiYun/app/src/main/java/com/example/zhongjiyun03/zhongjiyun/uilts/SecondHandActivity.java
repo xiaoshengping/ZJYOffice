@@ -164,7 +164,10 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private TextView notDataText;
     private List<FacillyDataBean> facillyDataBeens ;//设备厂商数据
     private SecondHandHandler secondHandHandler;
-    private AppBean<SecondHandDataBean> appListDataBean;
+    private AppBean<SecondHandDataBean> appListDataBean;  //列表数据
+    @ViewInject(R.id.tailt_layout)
+    private LinearLayout tailtLayout; //筛选布局
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -277,6 +280,13 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
             }
         });
+        if (getIntent().getStringExtra("tage").equals("matingFacily")){
+            tailtLayout.setVisibility(View.GONE);
+        }else {
+            tailtLayout.setVisibility(View.VISIBLE);
+        }
+
+
 
 
 

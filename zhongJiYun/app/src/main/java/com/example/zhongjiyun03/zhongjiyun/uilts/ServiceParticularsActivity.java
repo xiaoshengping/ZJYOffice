@@ -2,6 +2,7 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -188,6 +190,11 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
          }else {
              requestParms.addBodyParameter("id","");
          }
+            //步骤1：创建一个SharedPreferences接口对象
+            SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+            String sesstionId = read.getString("code","");
+            requestParms.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
 
         requestParms.addBodyParameter("ServiceProviderId",getIntent().getStringExtra("ServiceProviderId"));
             layout.setVisibility(View.GONE);
@@ -198,7 +205,7 @@ public class ServiceParticularsActivity extends AppCompatActivity implements Vie
             public void onSuccess(ResponseInfo<String> responseInfo) {
 
                 if (!TextUtils.isEmpty(responseInfo.result)){
-                   // Log.e("服务商详情",responseInfo.result);
+                    Log.e("服务商详情",responseInfo.result);
                     AppBean<ServiceParticualrsBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ServiceParticualrsBean>>(){});
                     if ((appBean.getResult()).equals("success")){
                         layout.setVisibility(View.VISIBLE);

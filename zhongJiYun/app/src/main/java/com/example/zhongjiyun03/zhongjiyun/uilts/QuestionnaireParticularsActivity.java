@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -66,6 +67,9 @@ public class QuestionnaireParticularsActivity extends AppCompatActivity implemen
                 // TODO Auto-generated method stub
                 //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
                 view.loadUrl(url);
+                if (url.equals(AppUtilsUrl.BaseUrl+"app/index.html#/tab/my/survey-list")){
+                    finish();
+                }
                 return true;
             }
             @Override
@@ -79,6 +83,7 @@ public class QuestionnaireParticularsActivity extends AppCompatActivity implemen
                 super.onPageFinished(view, url);
                 mSVProgressHUD.dismiss();
                 titleNemeTv.setText(webView.getTitle());
+
             }
 
             @Override

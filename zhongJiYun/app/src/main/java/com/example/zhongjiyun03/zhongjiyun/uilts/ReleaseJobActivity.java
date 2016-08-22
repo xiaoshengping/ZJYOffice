@@ -1,5 +1,6 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -196,7 +197,7 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("设备厂商",responseInfo.result);
+                //Log.e("设备厂商",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppListDataBean<FacillyDataBean> appListDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<FacillyDataBean>>(){});
                     if (appListDataBean.getResult().equals("success")){
@@ -341,6 +342,8 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
                        if (appBean.getResult().equals("success")){
                            finish();
                            MyAppliction.showToast("发布成功");
+                           Intent intent =new Intent(ReleaseJobActivity.this,ReleaseJobListActivity.class);
+                           startActivity(intent);
                        }else {
                            MyAppliction.showToast(appBean.getMsg());
                        }

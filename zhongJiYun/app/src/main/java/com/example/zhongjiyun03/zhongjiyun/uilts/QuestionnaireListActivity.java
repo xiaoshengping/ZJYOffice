@@ -68,6 +68,7 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
+        intiData();
     }
     @Override
     protected void onPause() {
@@ -79,34 +80,14 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.red_light);//通知栏所需颜色
-        }*/
+
         setContentView(R.layout.activity_questionnaire_list);
         ViewUtils.inject(this);
         init();
     }
-
-   /* @TargetApi(19)
-    private void setTranslucentStatus(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }*/
-
     private void init() {
 
         initView();
-        intiData();
 
     }
 
@@ -132,21 +113,22 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
                     if (appListDataBean.getResult().equals("success")){
                         mSVProgressHUD.dismiss();
                         QuestionnaireListDataBean messageDataBeen=  appListDataBean.getData();
-                      List<QuestionnaireListBean> questionnaireListBeen=   messageDataBeen.getPagerData();
+                        List<QuestionnaireListBean> questionnaireListBeen=   messageDataBeen.getPagerData();
                         if (questionnaireListBeen!=null){
                             //notDataLayout.setVisibility(View.GONE);
                             list.addAll(questionnaireListBeen);
                             //Log.e("title",list.get(0).getTitle());
                             InitListView(questionnaireListBeen);
-                        }else if (appListDataBean.getResult().equals("unlogin")){
-                            showExitGameAlertUnLonding("本次登录已过期");
-                        }else {
-                            //notDataLayout.setVisibility(View.VISIBLE);
-                            //notDataImage.setBackgroundResource(R.mipmap.no_info_icon);
-                            //notDataText.setText("暂时没有调查问卷");
-                            mSVProgressHUD.dismiss();
                         }
 
+                    }else if (appListDataBean.getResult().equals("unlogin")){
+                        showExitGameAlertUnLonding("本次登录已过期");
+                        mSVProgressHUD.dismiss();
+                    }else {
+                        //notDataLayout.setVisibility(View.VISIBLE);
+                        //notDataImage.setBackgroundResource(R.mipmap.no_info_icon);
+                        //notDataText.setText("暂时没有调查问卷");
+                        mSVProgressHUD.dismiss();
                     }
                 }
                 networkRemindLayout.setVisibility(View.GONE);
@@ -158,12 +140,7 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
                 Log.e("系统消息列表",s);
                 networkRemindLayout.setVisibility(View.VISIBLE);
                 mSVProgressHUD.dismiss();
-                //MyAppliction.showToast("网络异常,请稍后重试");
-                /*if (list.size()==0){
-                    //notDataLayout.setVisibility(View.VISIBLE);
-                    notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
-                    notDataText.setText("没有网络哦");
-                }*/
+
             }
         });
 

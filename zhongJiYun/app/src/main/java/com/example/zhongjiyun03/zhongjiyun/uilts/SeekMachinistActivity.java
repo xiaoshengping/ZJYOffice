@@ -167,6 +167,8 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     @ViewInject(R.id.not_data_text)
     private TextView notDataText;
     private List<FacillyDataBean> facillyDataBeens;//设备厂商数据
+    @ViewInject(R.id.facilly_layout)
+    private LinearLayout facillySelectLayout;// 筛选布局
 
 
     @Override
@@ -254,6 +256,11 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
 
             }
         });
+        if (getIntent().getStringExtra("tage").equals("matingFacily")){
+            facillySelectLayout.setVisibility(View.GONE);
+        }else {
+            facillySelectLayout.setVisibility(View.VISIBLE);
+        }
 
 
 

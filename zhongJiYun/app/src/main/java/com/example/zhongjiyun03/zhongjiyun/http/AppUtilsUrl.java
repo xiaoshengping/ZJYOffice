@@ -318,6 +318,19 @@ public class AppUtilsUrl {
 
     }
 
+    //要买钻机提交数据
+    public static String getBoundyBuyData(){
+        //  appapi/sale/buydevice
+        return BaseUrl+"appapi/sale/buydevice" ;
+
+    }
+
+    //要卖钻机提交数据
+    public static String getBoundySellData(){
+        //  appapi/sale/selldevice
+        return BaseUrl+"appapi/sale/selldevice" ;
+
+    }
 
 
 

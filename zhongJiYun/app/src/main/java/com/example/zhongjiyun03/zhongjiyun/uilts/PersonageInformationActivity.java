@@ -86,12 +86,12 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
     private TextView areaText;     //承接区域
     @ViewInject(R.id.type_text)
     private TextView typeText;     //类型
-    @ViewInject(R.id.idcard_front_iamge)
+    /*@ViewInject(R.id.idcard_front_iamge)
     private ImageView idcardFrontIamge;  //身份证正面
     @ViewInject(R.id.idcard_verso_iamge)
     private ImageView idcardVersoIamge;  //身份证反面
     @ViewInject(R.id.personage_image)
-    private ImageView personageImage;      //个人照片
+    private ImageView personageImage;      //个人照片*/
     @ViewInject(R.id.image_rlayout)
     private RelativeLayout imageRlayout;   //头像布局
     private static final String IMAGE_FILE_LOCATION = ConstantSet.LOCALFILE;//temp file
@@ -216,7 +216,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                                     typeText.setText("企业");
 
                                 }
-                                if (!TextUtils.isEmpty(personageInformation.getIdCardImage1())){
+                                /*if (!TextUtils.isEmpty(personageInformation.getIdCardImage1())){
                                     MyAppliction.imageLoader.displayImage(personageInformation.getIdCardImage1(),idcardFrontIamge,MyAppliction.options);
                                 }
                                 if (!TextUtils.isEmpty(personageInformation.getIdCardImage2())){
@@ -224,7 +224,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                                 }
                                 if (!TextUtils.isEmpty(personageInformation.getPhoto())){
                                     MyAppliction.imageLoader.displayImage(personageInformation.getPhoto(),personageImage,MyAppliction.options);
-                                }
+                                }*/
                                 mSVProgressHUD.dismiss();
 
                             }
@@ -285,9 +285,9 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
 
             SDCardUtils.makeRootDirectory(IMAGE_FILE_LOCATION);
         }
-        idcardFrontIamge.setOnClickListener(this);
+        /*idcardFrontIamge.setOnClickListener(this);
         idcardVersoIamge.setOnClickListener(this);
-        personageImage.setOnClickListener(this);
+        personageImage.setOnClickListener(this);*/
         file=new File(IMAGE_FILE_LOCATION+ConstantSet.USERTEMPPIC);
         imageUri = Uri.fromFile(file);//The Uri t
         mSVProgressHUD = new SVProgressHUD(this);
@@ -313,15 +313,6 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
             case R.id.image_rlayout:
                 showDialog(ConstantSet.TAKEPICTURE,ConstantSet.SELECTPICTURE,imageUri);
 
-                break;
-            case R.id.idcard_front_iamge:
-                imageBrower(0,personageInformation);
-                break;
-            case R.id.idcard_verso_iamge:
-                imageBrower(1,personageInformation);
-                break;
-            case R.id.personage_image:
-                imageBrower(2,personageInformation);
                 break;
             case R.id.image_view:
                 imageBrowerPersonTouXiang(0,personageInformation);

@@ -3,10 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/ic_white"
     tools:context="com.example.zhongjiyun03.zhongjiyun.uilts.HomeRewardActivity">
 
+    <include android:id="@+id/head_layout" android:layout_width="match_parent" android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
 
-
+    <ImageView
+        android:id="@+id/boundy_buy_iamge"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/boundy_list_buy"
+        android:layout_below="@+id/head_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/boundy_sell_iamge"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/boundy_list_sell"
+        android:layout_below="@+id/boundy_buy_iamge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
