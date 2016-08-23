@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@color/ic_white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_tailt"
+        android:src="@color/color_dadada"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+    <TextView
+        android:layout_below="@+id/image_tailt"
+        android:id="@+id/tailt_text"
+        android:textColor="@color/color_222222"
+        android:textSize="@dimen/home_Size_16"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:text="三一重工SR280"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+
+        android:layout_below="@+id/image_tailt"
+        android:id="@+id/tage_text"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:textSize="@dimen/home_Size_14"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:text="审核通过"
+        android:layout_width="60dp"
+        android:layout_height="25dp" />
+    <TextView
+        android:id="@+id/salary_text"
+        android:layout_below="@+id/tailt_text"
+        android:textColor="@color/color_555555"
+        android:textSize="@dimen/home_Size_14"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text="8000-10000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/salary_image"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="7dp"
+        android:layout_below="@+id/tailt_text"
+        android:layout_toRightOf="@+id/salary_text"
+        android:src="@color/color_333333"
+        android:layout_width="1dp"
+        android:layout_height="15dp" />
+    <TextView
+        android:id="@+id/limit_age_text"
+        android:layout_toRightOf="@+id/salary_image"
+        android:layout_below="@+id/tailt_text"
+        android:textColor="@color/color_555555"
+        android:textSize="@dimen/home_Size_14"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="三年"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/limit_age_image"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="7dp"
+        android:layout_below="@+id/tailt_text"
+        android:layout_toRightOf="@+id/limit_age_text"
+        android:src="@color/color_333333"
+        android:layout_width="1dp"
+        android:layout_height="15dp" />
+    <TextView
+        android:id="@+id/deliver_number_text"
+        android:layout_toRightOf="@+id/limit_age_image"
+        android:layout_below="@+id/tailt_text"
+        android:textColor="@color/red_light"
+        android:textSize="@dimen/home_Size_18"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="2dp"
+        android:text="22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/deliver_text"
+        android:layout_toRightOf="@+id/deliver_number_text"
+        android:layout_below="@+id/tailt_text"
+        android:textColor="@color/color_555555"
+        android:textSize="@dimen/home_Size_14"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="5dp"
+        android:text="投递"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/address_text"
+        android:drawablePadding="5dp"
+        android:drawableLeft="@mipmap/loc_icon_gray"
+        android:layout_below="@+id/salary_text"
+        android:textColor="@color/color_555555"
+        android:textSize="@dimen/home_Size_14"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text="广东省广州市"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/date_text"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/salary_text"
+        android:textColor="@color/color_555555"
+        android:textSize="@dimen/home_Size_14"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:text="2015-06-08"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/address_text"
+        android:src="@color/color_dadada"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+</RelativeLayout>

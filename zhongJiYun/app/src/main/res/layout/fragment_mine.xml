@@ -399,8 +399,8 @@
                 android:layout_height="1dp" />
 
             <LinearLayout
-
-                 android:layout_below="@+id/competitive_image"
+                android:id="@+id/release_job_layout"
+                android:layout_below="@+id/competitive_image"
                 android:background="@color/ic_white"
                 android:gravity="center"
                 android:orientation="horizontal"

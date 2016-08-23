@@ -399,8 +399,8 @@ public class RewardSellAddActivity extends AppCompatActivity implements View.OnC
                     if (!TextUtils.isEmpty(addressSelectString)){
                         facillyText.setText(addressSelectString);
                         facillyTextString=addressSelectString;
-                        manufacture=options1Items.get(options1);
-                        model=options2Items.get(options1).get(option2);
+                        manufacture=facilly1Items.get(options1);
+                        model=facilly2Items.get(options1).get(option2);
                         facillyOptions01=options1;
                         facillyOptions02=option2;
                     }

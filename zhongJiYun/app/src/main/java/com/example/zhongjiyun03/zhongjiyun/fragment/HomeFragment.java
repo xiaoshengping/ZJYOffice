@@ -183,7 +183,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAdvertisementData(), new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("图片联播",responseInfo.result);
+                //Log.e("图片联播",responseInfo.result);
                 if(!TextUtils.isEmpty(responseInfo.result)){
                     AppListDataBean<AdvertisementBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<AdvertisementBean>>(){});
                     if (appListDataBean.getResult().equals("success")){

@@ -25,7 +25,7 @@ public class SekkMachinisDataBean implements Serializable {
     private String WorkInfoStatusStr;//	string	找工作状态（1=正在找工作，2=已找到工作，3=失效）
     private String WorkingAge;//	string	工龄
     private String DriverPhoneNumber;
-
+    private String DeviceNames; //钻机型号字符串
 
     public String getCity() {
         return City;
@@ -163,6 +163,14 @@ public class SekkMachinisDataBean implements Serializable {
         DriverPhoneNumber = driverPhoneNumber;
     }
 
+    public String getDeviceNames() {
+        return DeviceNames;
+    }
+
+    public void setDeviceNames(String deviceNames) {
+        DeviceNames = deviceNames;
+    }
+
     @Override
     public String toString() {
         return "SekkMachinisDataBean{" +
@@ -183,6 +191,7 @@ public class SekkMachinisDataBean implements Serializable {
                 ", WorkInfoStatusStr='" + WorkInfoStatusStr + '\'' +
                 ", WorkingAge='" + WorkingAge + '\'' +
                 ", DriverPhoneNumber='" + DriverPhoneNumber + '\'' +
+                ", DeviceNames='" + DeviceNames + '\'' +
                 '}';
     }
 }

@@ -42,6 +42,9 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.MyExtruderActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.MyRedPacketActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.PersonageInformationActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.RatingHelpActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.RawardBuyListActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.RawardSellListActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.ReleaseJobListActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.StingActivity;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -105,6 +108,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private LinearLayout drillingLayout;  //我的钻机
     @ViewInject(R.id.help_layout)
     private LinearLayout helpLayout;  //帮助中心
+    @ViewInject(R.id.release_job_layout)
+    private LinearLayout releaseJobLayout;  //我的招聘
+    @ViewInject(R.id.xshang_qiumai_layout)
+    private LinearLayout xshangQiumaiLayout;  //悬赏求卖
+    @ViewInject(R.id.qiumai_layout)
+    private LinearLayout qiumaiLayout;  //悬赏求买
 
 
     public MineFragment() {
@@ -138,6 +147,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         loingXshiLayout.setOnClickListener(this);
         stingLayout.setOnClickListener(this);
         commentLayout.setOnClickListener(this);
+        releaseJobLayout.setOnClickListener(this);
+        qiumaiLayout.setOnClickListener(this);
+        xshangQiumaiLayout.setOnClickListener(this);
         //获取系统时间
         SimpleDateFormat sDateFormat    =   new    SimpleDateFormat("yyyy-MM-dd    HH:mm:ss");
         date=sDateFormat.format(new java.util.Date());
@@ -506,6 +518,42 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                       getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 }
                 break;
+            case R.id.release_job_layout:
+                if (!TextUtils.isEmpty(uid)){
+                    Intent releaseJobListIntent=new Intent(getActivity(), ReleaseJobListActivity.class)  ;
+                    startActivity(releaseJobListIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }else {
+                    Intent loginIntent=new Intent(getActivity(),LoginActivity.class);
+                    startActivity(loginIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }
+                break;
+            case R.id.qiumai_layout:
+
+                if (!TextUtils.isEmpty(uid)){
+                    Intent releaseJobListIntent=new Intent(getActivity(), RawardBuyListActivity.class)  ;
+                    startActivity(releaseJobListIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }else {
+                    Intent loginIntent=new Intent(getActivity(),LoginActivity.class);
+                    startActivity(loginIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }
+
+                break;
+            case R.id.xshang_qiumai_layout:
+                if (!TextUtils.isEmpty(uid)){
+                    Intent releaseJobListIntent=new Intent(getActivity(), RawardSellListActivity.class)  ;
+                    startActivity(releaseJobListIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }else {
+                    Intent loginIntent=new Intent(getActivity(),LoginActivity.class);
+                    startActivity(loginIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }
+                break;
+
 
         }
     }

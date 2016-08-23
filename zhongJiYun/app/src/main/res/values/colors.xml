@@ -40,6 +40,8 @@
     <!--主背景色调-->
     <color name="color_e6e6e6">#e6e6e6</color>
 
+    <color name="color_14b8e1">#14b8e1</color>
+
 <!--  popwin-->
     <color name="popup_left_bg">#eee</color>
     <color name="popup_right_bg">#ddd</color>

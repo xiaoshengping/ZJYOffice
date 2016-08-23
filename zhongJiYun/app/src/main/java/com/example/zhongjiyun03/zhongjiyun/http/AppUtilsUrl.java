@@ -332,7 +332,30 @@ public class AppUtilsUrl {
 
     }
 
+    //我的招聘列表
+    public static String getReleaseJobListData(){
+        //  appapi/recruit/list
+        return BaseUrl+"appapi/recruit/list" ;
 
+    }
+    //删除我的招聘
+    public static String getDeleteReleaseJobData(){
+        // appapi/recruit/delete
+        return BaseUrl+"appapi/recruit/delete" ;
+
+    }
+    //悬赏求买列表
+    public static String getRawardBuyListData(){
+        // appapi/sale/buydevicelist
+        return BaseUrl+"appapi/sale/buydevicelist" ;
+
+    }
+    //悬赏求买列表
+    public static String getRawardSellListData(){
+        // appapi/sale/selldevicelist
+        return BaseUrl+"appapi/sale/selldevicelist" ;
+
+    }
 
 
 }
