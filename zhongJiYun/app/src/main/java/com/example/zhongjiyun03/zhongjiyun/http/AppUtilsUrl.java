@@ -350,10 +350,28 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/sale/buydevicelist" ;
 
     }
-    //悬赏求买列表
+    //悬赏求卖列表
     public static String getRawardSellListData(){
         // appapi/sale/selldevicelist
         return BaseUrl+"appapi/sale/selldevicelist" ;
+
+    }
+    //简历列表
+    public static String getResumeListData(){
+        // appapi/recruit/resumelist
+        return BaseUrl+"appapi/recruit/resumelist" ;
+
+    }
+    //求买详情
+    public static String getRawardBuyListParticualsData(){
+        // appapi/sale/buydevicedetail
+        return BaseUrl+"appapi/sale/buydevicedetail" ;
+
+    }
+    //求卖详情
+    public static String getRawardSellListParticualsData(){
+        // appapi/sale/selldevicedetail
+        return BaseUrl+"appapi/sale/selldevicedetail" ;
 
     }
 

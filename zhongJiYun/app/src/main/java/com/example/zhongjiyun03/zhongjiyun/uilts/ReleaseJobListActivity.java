@@ -102,10 +102,15 @@ public class ReleaseJobListActivity extends AppCompatActivity implements View.On
         releaseJobListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent seekMachinistIntent=new Intent(ReleaseJobListActivity.this, SeekMachinistActivity.class)  ;
-                seekMachinistIntent.putExtra("tage","releaseJobList");
-                startActivity(seekMachinistIntent);
-                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                if (Integer.valueOf(releaseJobListBeens.get(position-1).getCount())>0){
+                    Intent resumeIntent=new Intent(ReleaseJobListActivity.this, ResumeListActivity.class)  ;
+                    resumeIntent.putExtra("recruitId",releaseJobListBeens.get(position-1).getId());
+                    startActivity(resumeIntent);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }else {
+                    MyAppliction.showToast("暂时没有机手投递简历");
+                }
+
             }
         });
 

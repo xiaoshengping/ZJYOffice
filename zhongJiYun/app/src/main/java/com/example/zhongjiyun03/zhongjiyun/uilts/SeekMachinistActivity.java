@@ -214,8 +214,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
         facillyDataBeens=new ArrayList<>();
         networkRemindLayout.setOnClickListener(this);
         comtintJobText.setOnClickListener(this);
-        comtintJobText.setText("发布招聘");
-        titleNemeTv.setText("找机手");
+
         retrunText.setOnClickListener(this);
         sekkMachinisDataBeens = new ArrayList<>();
         sortButton.setOnClickListener(new View.OnClickListener() {
@@ -258,8 +257,13 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
         });
         if (getIntent().getStringExtra("tage").equals("matingFacily")){
             facillySelectLayout.setVisibility(View.GONE);
+            comtintJobText.setVisibility(View.GONE);
+            titleNemeTv.setText("附近机手");
         }else {
             facillySelectLayout.setVisibility(View.VISIBLE);
+            comtintJobText.setText("发布招聘");
+            comtintJobText.setVisibility(View.VISIBLE);
+            titleNemeTv.setText("找机手");
         }
 
 
@@ -343,7 +347,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
 
-                Log.e("找机手", responseInfo.result);
+                //Log.e("找机手", responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)) {
 
                     AppBean<SeekMachinisBean> appListDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SeekMachinisBean>>() {
@@ -1007,6 +1011,14 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
 
     @Override
     public void onClick(View v) {
+        SQLhelper sqLhelper=new SQLhelper(SeekMachinistActivity.this);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String uid=null;  //用户id
+        while (cursor.moveToNext()) {
+            uid=cursor.getString(0);
+
+        }
         switch (v.getId()) {
 
 
@@ -1020,9 +1032,16 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                 startActivity(intent);
                 break;
             case R.id.register_tv:
-                Intent releaseintent = new Intent(SeekMachinistActivity.this,ReleaseJobActivity.class);
-                startActivity(releaseintent);
-                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                if (!TextUtils.isEmpty(uid)){
+                    Intent releaseintent = new Intent(SeekMachinistActivity.this,ReleaseJobActivity.class);
+                    startActivity(releaseintent);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }else {
+                    Intent releaseintent = new Intent(SeekMachinistActivity.this,LoginActivity.class);
+                    startActivity(releaseintent);
+                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                }
+
                 break;
             default:
                 break;

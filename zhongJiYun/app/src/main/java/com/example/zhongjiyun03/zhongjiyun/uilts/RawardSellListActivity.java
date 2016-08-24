@@ -1,11 +1,13 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -78,6 +80,15 @@ public class RawardSellListActivity extends AppCompatActivity implements View.On
 
         releaseJobListAdapter = new RawardBuyListAdapter(releaseJobListBeens, RawardSellListActivity.this,2);
         releaseJobListView.setAdapter(releaseJobListAdapter);
+        releaseJobListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(RawardSellListActivity.this,RawardBuyListParticularsActivity.class);
+                intent.putExtra("sellId",releaseJobListBeens.get(position-1).getId());
+                intent.putExtra("tage","sell");
+                startActivity(intent);
+            }
+        });
 
 
 

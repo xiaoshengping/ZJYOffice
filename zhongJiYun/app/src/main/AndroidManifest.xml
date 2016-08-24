@@ -584,7 +584,9 @@
         <activity android:name=".uilts.RewardSellAddActivity" />
         <activity android:name=".uilts.RawardSellListActivity" />
         <activity android:name=".uilts.RawardBuyListActivity" />
-        <activity android:name=".uilts.ReleaseJobListActivity"></activity>
+        <activity android:name=".uilts.ReleaseJobListActivity" />
+        <activity android:name=".uilts.ResumeListActivity" />
+        <activity android:name=".uilts.RawardBuyListParticularsActivity"></activity>
     </application>
 
 </manifest>
