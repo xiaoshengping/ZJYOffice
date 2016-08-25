@@ -83,7 +83,7 @@ public class ResumeListActivity extends AppCompatActivity implements View.OnClic
     private void initView() {
         networkRemindLayout.setOnClickListener(this);
         comtintJobText.setVisibility(View.GONE);
-        comtintJobText.setText("简历列表");
+        titleNemeTv.setText("简历列表");
         retrunText.setOnClickListener(this);
         resumeListDataBeans = new ArrayList<>();
         initListView();
@@ -178,7 +178,7 @@ public class ResumeListActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ResumeListActivity.this, SeekMachinistParticulasActivity.class);
-                intent.putExtra("seekData", resumeListDataBeans.get(position - 1));
+                intent.putExtra("seekData", resumeListDataBeans.get(position - 1).getId());
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 startActivity(intent);
             }

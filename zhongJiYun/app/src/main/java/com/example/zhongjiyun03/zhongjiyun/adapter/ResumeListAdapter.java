@@ -53,7 +53,7 @@ public class ResumeListAdapter extends AppBaseAdapter<ResumeListDataBean> {
                 viewHold.timeText.setText(data.get(position).getCreateDateStr()+"投递");
             }
             if (!TextUtils.isEmpty(data.get(position).getWorkingAge())){
-                viewHold.dataText.setText(data.get(position).getWorkingAge());
+                viewHold.dataText.setText(data.get(position).getWorkingAge()+"年");
             }
             if (!TextUtils.isEmpty(data.get(position).getDriverHeader())){
                 MyAppliction.imageLoader.displayImage(data.get(position).getDriverHeader(),viewHold.imageView,MyAppliction.RoundedOptionsOne);
@@ -63,7 +63,7 @@ public class ResumeListAdapter extends AppBaseAdapter<ResumeListDataBean> {
 
             }
             if (!TextUtils.isEmpty(data.get(position).getWage())){
-                viewHold.drillingTypeText.setText("￥"+data.get(position).getWage());
+                viewHold.payTextView.setText("￥"+data.get(position).getWage());
 
             }
 

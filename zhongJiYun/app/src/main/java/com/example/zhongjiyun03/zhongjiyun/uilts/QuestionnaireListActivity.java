@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,15 +54,17 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
 
 
     private List<QuestionnaireListBean> list=new ArrayList<>();
-    /*@ViewInject(R.id.not_data_layout)
-    private LinearLayout notDataLayout;//没有数据提示*/
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout;//没有数据提示
     @ViewInject(R.id.network_remind_layout)
     private LinearLayout networkRemindLayout; //网络提示
-    /*@ViewInject(R.id.not_data_image)
+    @ViewInject(R.id.not_data_image)
     private ImageView notDataImage; //没有网络和没有数据显示
     @ViewInject(R.id.not_data_text)
-    private TextView notDataText;*/
+    private TextView notDataText;
     private SVProgressHUD mSVProgressHUD;//loding
+    private QuestionnaireListAdapter messageListAdapter;
+    private List<QuestionnaireListBean> questionnaireListBeen;
 
 
     @Override
@@ -69,6 +72,7 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
         super.onResume();
         JPushInterface.onResume(this);
         intiData();
+
     }
     @Override
     protected void onPause() {
@@ -95,7 +99,7 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
 
 
 
-
+        Log.e("jjsjfj","执行");
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
         //步骤1：创建一个SharedPreferences接口对象
@@ -107,27 +111,36 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getQuestionnaireListData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("系统消息列表",responseInfo.result);
+                //Log.e("系统消息列表",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<QuestionnaireListDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<QuestionnaireListDataBean>>(){});
                     if (appListDataBean.getResult().equals("success")){
                         mSVProgressHUD.dismiss();
                         QuestionnaireListDataBean messageDataBeen=  appListDataBean.getData();
-                        List<QuestionnaireListBean> questionnaireListBeen=   messageDataBeen.getPagerData();
+                        questionnaireListBeen=   messageDataBeen.getPagerData();
                         if (questionnaireListBeen!=null){
-                            //notDataLayout.setVisibility(View.GONE);
+                            notDataLayout.setVisibility(View.GONE);
+
                             list.addAll(questionnaireListBeen);
                             //Log.e("title",list.get(0).getTitle());
                             InitListView(questionnaireListBeen);
                         }
 
                     }else if (appListDataBean.getResult().equals("unlogin")){
+
                         showExitGameAlertUnLonding("本次登录已过期");
                         mSVProgressHUD.dismiss();
+                    }else if (appListDataBean.getResult().equals("empty")){
+                         if (questionnaireListBeen!=null||questionnaireListBeen.size()!=0){
+                             questionnaireListBeen.clear();
+                             InitListView(questionnaireListBeen);
+                         }
+
+                        notDataLayout.setVisibility(View.VISIBLE);
+                        notDataImage.setBackgroundResource(R.mipmap.no_other);
+                        notDataText.setText("暂时没有调查问卷");
+                        mSVProgressHUD.dismiss();
                     }else {
-                        //notDataLayout.setVisibility(View.VISIBLE);
-                        //notDataImage.setBackgroundResource(R.mipmap.no_info_icon);
-                        //notDataText.setText("暂时没有调查问卷");
                         mSVProgressHUD.dismiss();
                     }
                 }
@@ -148,7 +161,7 @@ public class QuestionnaireListActivity extends AppCompatActivity implements View
     }
 
     private void InitListView(final List<QuestionnaireListBean> messageDataBean) {
-        QuestionnaireListAdapter messageListAdapter = new QuestionnaireListAdapter(messageDataBean, this);
+        messageListAdapter = new QuestionnaireListAdapter(messageDataBean, this);
         questionnaireLsitview.setAdapter(messageListAdapter);
         messageListAdapter.notifyDataSetChanged();
         questionnaireLsitview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

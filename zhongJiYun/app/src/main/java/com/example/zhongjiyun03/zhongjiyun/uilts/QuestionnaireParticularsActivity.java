@@ -47,7 +47,7 @@ public class QuestionnaireParticularsActivity extends AppCompatActivity implemen
     private void initView() {
         mSVProgressHUD = new SVProgressHUD(QuestionnaireParticularsActivity.this);
         registerTv.setVisibility(View.GONE);
-
+        titleNemeTv.setText("问卷调查");
         retrunText.setOnClickListener(this);
         WebSettings webSettings=webView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);

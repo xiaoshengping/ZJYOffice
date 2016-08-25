@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -41,6 +40,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.ExturderParticularsActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeBlackListActivity;
@@ -116,8 +116,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
     //百度地图定位
     private LocationService locationService;
 
-    @ViewInject(R.id.questionnaire_image)
-    private ImageView questionnaireImage;  //问卷调查image
+    @ViewInject(R.id.questionnaire_layout)
+    private LinearLayout questionnaireLayout;  //问卷调查image
 
 
     public HomeFragment() {
@@ -134,7 +134,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
         init();
         loadData();
-        initQuestionnaire();
         return view ;
     }
 
@@ -144,17 +143,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
     private void initQuestionnaire() {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
+        //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
+        //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getQuestionnaireData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.e("jhhshhd;",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                    AppBean<QuestionnaireBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<QuestionnaireBean>>(){});
                     if (appBean.getResult().equals("success")){
                        QuestionnaireBean questionnaireBean= appBean.getData();
-                        if (!questionnaireBean.equals("0")){
-                            questionnaireImage.setVisibility(View.VISIBLE);
+                        if (!questionnaireBean.getCount().equals("0")){
+                            questionnaireLayout.setVisibility(View.VISIBLE);
                         }else {
-                            questionnaireImage.setVisibility(View.GONE);
+                            questionnaireLayout.setVisibility(View.GONE);
                         }
                     }
 
@@ -224,7 +229,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         initGridView();
         moreTextView.setOnClickListener(this);
         projectMoreText.setOnClickListener(this);
-        questionnaireImage.setOnClickListener(this);
+        questionnaireLayout.setOnClickListener(this);
         intiPullToRefresh();
         initListRecommentMachinist();
 
@@ -498,6 +503,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         super.onResume();
         autoPager.startAutoScroll();
         initListData();
+        if (!TextUtils.isEmpty(SQLHelperUtils.queryId(getActivity()))){
+            initQuestionnaire();
+        }
+
         //百度地图定位
         locationService = ((MyAppliction) getActivity().getApplication()).locationService;
 
@@ -560,7 +569,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                 startActivity(networkIntent);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
-            case R.id.questionnaire_image:
+            case R.id.questionnaire_layout:
                 if (!TextUtils.isEmpty(uid)){
                     Intent questionnaireIntent=new Intent(getActivity(), QuestionnaireListActivity.class);
                     startActivity(questionnaireIntent);

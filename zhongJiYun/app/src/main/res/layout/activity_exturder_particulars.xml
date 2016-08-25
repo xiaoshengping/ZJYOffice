@@ -18,8 +18,8 @@
             android:id="@+id/retrun_tv"
             android:layout_marginLeft="15dp"
             android:layout_alignParentLeft="true"
-            android:layout_width="13dp"
-            android:layout_height="22dp"
+            android:layout_width="9dp"
+            android:layout_height="18dp"
             android:background="@mipmap/return_icon"
             android:gravity="center"
             android:textColor="@color/ic_white"
@@ -572,11 +572,11 @@
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
-              android:layout_marginRight="10dp"
-              android:layout_marginLeft="10dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginLeft="20dp"
               android:layout_below="@+id/image_ligin_seven"
               android:layout_width="match_parent"
-              android:layout_height="200dp" />
+              android:layout_height="250dp" />
 
           <ImageView
               android:visibility="gone"
@@ -585,22 +585,22 @@
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
-              android:layout_marginRight="10dp"
-              android:layout_marginLeft="10dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginLeft="20dp"
               android:layout_below="@+id/image_view"
               android:layout_width="match_parent"
-              android:layout_height="200dp" />
+              android:layout_height="250dp" />
           <ImageView
               android:visibility="gone"
               android:id="@+id/image_view_two"
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
-              android:layout_marginRight="10dp"
-              android:layout_marginLeft="10dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginLeft="20dp"
               android:layout_below="@+id/image_view_one"
               android:layout_width="match_parent"
-              android:layout_height="200dp" />
+              android:layout_height="250dp" />
 
           <ImageView
               android:visibility="gone"
@@ -608,11 +608,11 @@
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
-              android:layout_marginRight="10dp"
-              android:layout_marginLeft="10dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginLeft="20dp"
               android:layout_below="@+id/image_view_two"
               android:layout_width="match_parent"
-              android:layout_height="200dp" />
+              android:layout_height="250dp" />
           <ImageView
               android:visibility="gone"
               android:id="@+id/image_view_foru"
@@ -620,11 +620,11 @@
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
-              android:layout_marginRight="10dp"
-              android:layout_marginLeft="10dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginLeft="20dp"
               android:layout_below="@+id/image_view_Three"
               android:layout_width="match_parent"
-              android:layout_height="200dp" />
+              android:layout_height="250dp" />
           <ImageView
               android:visibility="gone"
               android:id="@+id/image_view_five"
@@ -632,11 +632,11 @@
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
-              android:layout_marginRight="10dp"
-              android:layout_marginLeft="10dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginLeft="20dp"
               android:layout_below="@+id/image_view_foru"
               android:layout_width="match_parent"
-              android:layout_height="200dp" />
+              android:layout_height="250dp" />
           <ImageView
               android:visibility="gone"
               android:id="@+id/image_view_six"
@@ -644,11 +644,11 @@
               android:layout_marginTop="10dp"
               android:scaleType="centerCrop"
               android:src="@mipmap/home_used_rig_img"
-              android:layout_marginRight="10dp"
-              android:layout_marginLeft="10dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginLeft="20dp"
               android:layout_below="@+id/image_view_five"
               android:layout_width="match_parent"
-              android:layout_height="200dp" />
+              android:layout_height="250dp" />
 
           <TextView
               android:layout_below="@+id/image_view_foru"

@@ -243,7 +243,7 @@ public class RewardSellAddActivity extends AppCompatActivity implements View.OnC
         requestParams.addBodyParameter("noOfManufacture",model);
         requestParams.addBodyParameter("province",province);
         requestParams.addBodyParameter("city",city);
-        requestParams.addBodyParameter("hourOfWork",workTimeTextString);
+        requestParams.addBodyParameter("hourOfWork",workTimeEdit.getText().toString());
         requestParams.addBodyParameter("dateOfManufacture",dateOfManufacture);
         requestParams.addBodyParameter("dateMonthOfManufacture",dateMonthOfManufacture);
         requestParams.addBodyParameter("deviceNo",facilltyNumberEdit.getText().toString());

@@ -194,8 +194,15 @@
             android:background="#dedede"
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/questionnaire_layout"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
         <ImageView
-            android:layout_marginTop="10dp"
             android:background="@color/color_dadada"
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />
@@ -209,7 +216,7 @@
             android:background="@color/color_dadada"
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />
-        
+        </LinearLayout>
         <ImageView
             android:layout_marginTop="10dp"
             android:background="#dedede"

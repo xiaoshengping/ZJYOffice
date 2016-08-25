@@ -321,7 +321,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSystemMessageRemindData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("消息提醒",responseInfo.result);
+                //Log.e("消息提醒",responseInfo.result);
 
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<SystemMessageDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SystemMessageDataBean>>(){});

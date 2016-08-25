@@ -409,7 +409,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(SeekMachinistActivity.this, SeekMachinistParticulasActivity.class);
-                intent.putExtra("seekData", sekkMachinisDataBeens.get(position - 1));
+                intent.putExtra("seekData", sekkMachinisDataBeens.get(position - 1).getDriverId());
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 startActivity(intent);
             }
@@ -463,43 +463,6 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     }
 
     private void initData() {
-       /* firstList = new ArrayList<FirstClassItem>();
-        //1
-        ArrayList<SecondClassItem> secondList1 = new ArrayList<SecondClassItem>();
-        secondList1.add(new SecondClassItem(101, "自助餐"));
-        secondList1.add(new SecondClassItem(102, "西餐"));
-        secondList1.add(new SecondClassItem(103, "川菜"));
-        firstList.add(new FirstClassItem(1, "美食", secondList1));
-        //2
-        ArrayList<SecondClassItem> secondList2 = new ArrayList<SecondClassItem>();
-        secondList2.add(new SecondClassItem(201, "天津"));
-        secondList2.add(new SecondClassItem(202, "北京"));
-        secondList2.add(new SecondClassItem(203, "秦皇岛"));
-        secondList2.add(new SecondClassItem(204, "沈阳"));
-        secondList2.add(new SecondClassItem(205, "大连"));
-        secondList2.add(new SecondClassItem(206, "哈尔滨"));
-        secondList2.add(new SecondClassItem(207, "锦州"));
-        secondList2.add(new SecondClassItem(208, "上海"));
-        secondList2.add(new SecondClassItem(209, "杭州"));
-        secondList2.add(new SecondClassItem(210, "南京"));
-        secondList2.add(new SecondClassItem(211, "嘉兴"));
-        secondList2.add(new SecondClassItem(212, "苏州"));
-        firstList.add(new FirstClassItem(2, "旅游", secondList2));
-        //3
-        ArrayList<SecondClassItem> secondList3 = new ArrayList<SecondClassItem>();
-        secondList3.add(new SecondClassItem(301, "南开区"));
-        secondList3.add(new SecondClassItem(302, "和平区"));
-        secondList3.add(new SecondClassItem(303, "河西区"));
-        secondList3.add(new SecondClassItem(304, "河东区"));
-        secondList3.add(new SecondClassItem(305, "滨海新区"));
-        firstList.add(new FirstClassItem(3, "电影", secondList3));
-        //4
-        firstList.add(new FirstClassItem(4, "手机", new ArrayList<SecondClassItem>()));
-        //5
-        firstList.add(new FirstClassItem(5, "娱乐", null));
-
-        //copy
-        firstList.addAll(firstList);*/
         //城市数据
         ProvinceCityDataBean provinceCityDataBean = JSONObject.parseObject(SelectData.selectCityData + SelectData.selectCityDataOne + SelectData.selectCityDataTwo, new TypeReference<ProvinceCityDataBean>() {
         });

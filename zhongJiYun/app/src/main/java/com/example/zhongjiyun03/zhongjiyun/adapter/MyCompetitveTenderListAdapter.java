@@ -76,36 +76,41 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
                 viewHold.dataText.setText(data.get(position).getCreateDateStr());
             }
             if (data.get(position).getStatus()==1){
-                viewHold.commentImage.setVisibility(View.GONE);
+                //viewHold.commentImage.setVisibility(View.GONE);
                 viewHold.commentButton.setVisibility(View.GONE);
                 viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_one);
             }else if (data.get(position).getStatus()==2){
-                viewHold.commentImage.setVisibility(View.GONE);
+                //viewHold.commentImage.setVisibility(View.GONE);
                 viewHold.commentButton.setVisibility(View.GONE);
                 viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_two);
             }else if (data.get(position).getStatus()==3){
-                viewHold.commentImage.setVisibility(View.VISIBLE);
+                //viewHold.commentImage.setVisibility(View.VISIBLE);
                 viewHold.commentButton.setVisibility(View.VISIBLE);
                 viewHold.zhongBiaoImage.setBackgroundResource(R.mipmap.bid_state_three);
             }
 
             if (data.get(position).getPayMarginStatus()==1){
-                viewHold.cashDepositImage.setBackgroundResource(R.mipmap.project_success);
-                viewHold.cashDepositButton.setTextColor(context.getResources().getColor(R.color.content_color));
+               // viewHold.cashDepositImage.setBackgroundResource(R.mipmap.project_success);
+                viewHold.cashDepositButton.setTextColor(context.getResources().getColor(R.color.color_555555));
                 viewHold.cashDepositButton.setText("已缴纳保证金");
+                viewHold.cashDepositButton.setBackgroundResource(R.drawable.text_view_555555_corners_10);
             }else if (data.get(position).getPayMarginStatus()==0){
-                viewHold.cashDepositImage.setBackgroundResource(R.mipmap.project_bond);
+               // viewHold.cashDepositImage.setBackgroundResource(R.mipmap.project_bond);
                 viewHold.cashDepositButton.setText("缴纳保证金");
-                viewHold.cashDepositButton.setTextColor(context.getResources().getColor(R.color.red));
+                viewHold.cashDepositButton.setTextColor(context.getResources().getColor(R.color.red_light));
+                viewHold.cashDepositButton.setBackgroundResource(R.drawable.text_view_14b8e1_corners_10);
             }
             if (data.get(position).getIsEvaluete()==0){
-                viewHold.commentImage.setBackgroundResource(R.mipmap.eval_icon);
+               // viewHold.commentImage.setBackgroundResource(R.mipmap.eval_icon);
+                viewHold.commentButton.setTextColor(context.getResources().getColor(R.color.red_light));
+                viewHold.commentButton.setBackgroundResource(R.drawable.text_view_14b8e1_corners_10);
                 viewHold.commentButton.setText("立即评价");
 
             }else if (data.get(position).getIsEvaluete()==1){
-                viewHold.commentImage.setBackgroundResource(R.mipmap.eval_success_icon);
+               // viewHold.commentImage.setBackgroundResource(R.mipmap.eval_success_icon);
                 viewHold.commentButton.setText("已评价");
-                viewHold.commentButton.setTextColor(context.getResources().getColor(R.color.content_color));
+                viewHold.commentButton.setTextColor(context.getResources().getColor(R.color.color_555555));
+                viewHold.commentButton.setBackgroundResource(R.drawable.text_view_555555_corners_10);
             }
 
 
@@ -210,10 +215,10 @@ public class MyCompetitveTenderListAdapter extends AppBaseAdapter<ProjectlistDat
         private TextView commentButton;
         @ViewInject(R.id.cash_deposit_button)
         private TextView cashDepositButton;
-        @ViewInject(R.id.cash_deposit_image)
+       /* @ViewInject(R.id.cash_deposit_image)
         private ImageView cashDepositImage;
         @ViewInject(R.id.comment_image)
-        private ImageView commentImage;
+        private ImageView commentImage;*/
 
 
         public ViewHold(View view) {

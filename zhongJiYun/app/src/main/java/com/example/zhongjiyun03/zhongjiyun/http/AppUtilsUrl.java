@@ -136,7 +136,7 @@ public class AppUtilsUrl {
     //找机手
     public static String getMachinisData(){
         //  appapi/Boss/GetFindWorkDriver
-        return BaseUrl+"appapi/Boss/GetFindWorkDriver" ;
+        return BaseUrl+"appapi/driver/list" ;
 
     }
     //找项目
@@ -372,6 +372,12 @@ public class AppUtilsUrl {
     public static String getRawardSellListParticualsData(){
         // appapi/sale/selldevicedetail
         return BaseUrl+"appapi/sale/selldevicedetail" ;
+
+    }
+    //机手详情
+    public static String getSeekMachinisListParticualsData(){
+        // appapi/driver/detail
+        return BaseUrl+"appapi/driver/detail" ;
 
     }
 

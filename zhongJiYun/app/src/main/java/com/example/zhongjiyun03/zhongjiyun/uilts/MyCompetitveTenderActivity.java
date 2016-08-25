@@ -148,7 +148,7 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCompetitvetListData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("我的竞标",responseInfo.result);
+                    //Log.e("我的竞标",responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)){
                         AppBean<ProjectlistBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ProjectlistBean>>(){});
                         if (( appBean.getResult()).equals("success")){

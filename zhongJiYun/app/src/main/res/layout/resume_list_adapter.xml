@@ -82,15 +82,18 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:singleLine="true"
+        android:ellipsize="end"
         android:textColor="@color/color_555555"
         android:layout_toRightOf="@+id/image_view"
         android:layout_below="@+id/type_text_view"
         android:id="@+id/drilling_type_text"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="20dp"
         android:textSize="@dimen/home_Size_14"
         android:text="熟练机型"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <ImageView
         android:layout_marginTop="10dp"

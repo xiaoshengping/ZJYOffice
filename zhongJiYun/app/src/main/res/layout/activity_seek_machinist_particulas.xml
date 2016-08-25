@@ -12,6 +12,7 @@
         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
 
        <ScrollView
+           android:visibility="gone"
            android:id="@+id/message_layout"
            android:layout_below="@+id/tailt_layout"
            android:layout_width="match_parent"
@@ -51,12 +52,33 @@
               android:id="@+id/name_text"
               android:layout_marginTop="10dp"
               android:textColor="@color/ic_white"
+              android:layout_marginRight="5dp"
               android:textSize="@dimen/home_Size_18"
-              android:layout_centerHorizontal="true"
+              android:layout_toLeftOf="@+id/name_image"
               android:layout_below="@+id/usericon_background_iv"
               android:text="李少航"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content" />
+          <ImageView
+              android:id="@+id/name_image"
+              android:layout_marginTop="15dp"
+              android:layout_below="@+id/usericon_background_iv"
+              android:layout_centerHorizontal="true"
+              android:src="@color/ic_white"
+              android:layout_width="2dp"
+              android:layout_height="15dp" />
+          <TextView
+              android:id="@+id/age_text"
+              android:layout_marginTop="10dp"
+              android:textColor="@color/ic_white"
+              android:layout_marginLeft="5dp"
+              android:textSize="@dimen/home_Size_18"
+              android:layout_toRightOf="@+id/name_image"
+              android:layout_below="@+id/usericon_background_iv"
+              android:text="李少航"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+
           <TextView
               android:id="@+id/work_experience_text"
               android:layout_marginTop="10dp"
@@ -329,4 +351,8 @@
      <!-- </LinearLayout>-->
       </RelativeLayout>
        </ScrollView>
+
+    <include android:layout_centerHorizontal="true" android:layout_centerVertical="true" android:layout_width="match_parent"
+        android:layout_height="wrap_content" layout="@layout/not_data_perticular_layout"/>
+
 </RelativeLayout>

@@ -35,7 +35,7 @@
         android:layout_marginLeft="10dp"
         android:layout_toLeftOf="@+id/address_image"
         android:textColor="@color/red_light"
-        android:textSize="@dimen/home_Size_16"
+        android:textSize="@dimen/home_Size_14"
         android:text="1.2km"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -43,17 +43,17 @@
         android:layout_marginTop="14dp"
         android:id="@+id/address_image"
          android:layout_toLeftOf="@+id/time_text_view"
-        android:src="@color/background"
-        android:layout_width="2dp"
+        android:src="@color/color_dadada"
+        android:layout_width="1dp"
         android:layout_height="15dp" />
     <TextView
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="20dp"
         android:id="@+id/time_text_view"
 
         android:layout_marginTop="10dp"
         android:layout_marginLeft="5dp"
         android:layout_alignParentRight="true"
-        android:textSize="@dimen/home_Size_16"
+        android:textSize="@dimen/home_Size_14"
         android:text="02-08更新"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -64,7 +64,7 @@
         android:id="@+id/company_text_view"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        android:textSize="@dimen/home_Size_16"
+        android:textSize="@dimen/home_Size_14"
         android:text="期望工作地:广州"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -74,7 +74,7 @@
         android:id="@+id/type_text_view"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        android:textSize="@dimen/home_Size_16"
+        android:textSize="@dimen/home_Size_14"
         android:text="期望薪资:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -84,7 +84,7 @@
         android:id="@+id/neirong_text_view"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
-        android:textSize="@dimen/home_Size_16"
+        android:textSize="@dimen/home_Size_14"
         android:text="8888"
         android:textColor="@color/red_light"
         android:layout_width="wrap_content"
@@ -94,15 +94,15 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/company_text_view"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:textSize="@dimen/home_Size_16"
+        android:layout_marginRight="20dp"
+        android:textSize="@dimen/home_Size_14"
         android:text="8年"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <ImageView
 
         android:layout_marginLeft="110dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="5dp"
         android:layout_below="@+id/neirong_text_view"
         android:id="@+id/image_ligin_end"
@@ -111,26 +111,16 @@
         android:layout_height="wrap_content" />
 
 
+
     <TextView
         android:visibility="gone"
+        android:text="hhhfh"
         android:layout_marginLeft="110dp"
         android:id="@+id/text_view"
         android:layout_below="@+id/image_ligin_end"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        android:textSize="@dimen/home_Size_16"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:visibility="gone"
-        android:layout_toRightOf="@+id/text_view"
-        android:id="@+id/text_view_1"
-        android:layout_below="@+id/image_ligin_end"
-        android:layout_marginTop="5dp"
-        android:textSize="@dimen/home_Size_16"
-        android:layout_width="130sp"
+        android:textSize="@dimen/home_Size_14"
+        android:layout_width="match_parent"
         android:singleLine="true"
         android:ellipsize="end"
         android:layout_height="wrap_content" />
