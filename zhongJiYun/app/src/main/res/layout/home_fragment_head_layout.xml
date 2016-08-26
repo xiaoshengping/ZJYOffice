@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/ic_white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="@color/background"
+        android:id="@+id/advertisment_rlayout"
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        >
+        <com.example.zhongjiyun03.zhongjiyun.widget.AutoScrollViewPager
+            android:id="@+id/home_banner_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/home_dot_ll"
+            android:layout_above="@+id/home_banner_viewpager"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"></LinearLayout>
+
+    </RelativeLayout>
+
+
+        <com.example.zhongjiyun03.zhongjiyun.view.MyGridView
+            android:layout_below="@+id/advertisment_rlayout"
+            android:id="@+id/home_gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@null"
+            android:numColumns="5"
+            android:background="@color/ic_white"
+            android:layout_marginBottom="15dp"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            >
+
+        </com.example.zhongjiyun03.zhongjiyun.view.MyGridView>
+
+    <ImageView
+        android:layout_marginTop="3dp"
+        android:layout_below="@+id/home_gridView"
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+</RelativeLayout>

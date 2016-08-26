@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/ic_white"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+
+        android:background="@color/color_dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+    <RelativeLayout
+
+        android:background="@color/ic_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/image_view"
+            android:src="@color/red_light"
+            android:layout_width="2dp"
+            android:layout_height="20dp" />
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/used_recommend"
+            android:textSize="@dimen/home_Size_18"
+            android:layout_toRightOf="@+id/image_view"
+            android:text="二手机推荐"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_toLeftOf="@+id/more_imag"
+            android:id="@+id/more_text_view"
+            android:layout_marginTop="8dp"
+            android:gravity="right"
+            android:textColor="@color/red_light"
+            android:layout_marginRight="5dp"
+            android:textSize="@dimen/home_Size_15"
+            android:text="更多"
+            android:layout_width="50dp"
+            android:layout_height="30dp" />
+        <ImageView
+            android:id="@+id/more_imag"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/arrow_red_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_marginBottom="10dp"
+            android:id="@+id/image_ligin"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/image_view"
+            android:src="@color/background"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <HorizontalScrollView
+            android:background="@color/white"
+            android:layout_below="@+id/image_ligin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+            <FrameLayout android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_height="160dp">
+                <LinearLayout
+                    android:layout_width="740dip"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    >
+                    <GridView
+                        android:numColumns="6"
+                        android:background="@color/white"
+                        android:id="@+id/project_gridview"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+            </FrameLayout>
+        </HorizontalScrollView>
+    </RelativeLayout>
+    <ImageView
+        android:background="#dedede"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/questionnaire_layout"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <ImageView
+            android:background="@color/color_dadada"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            tools:ignore="Suspicious0dp" />
+        <ImageView
+            android:id="@+id/questionnaire_image"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/home_survey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:background="@color/color_dadada"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

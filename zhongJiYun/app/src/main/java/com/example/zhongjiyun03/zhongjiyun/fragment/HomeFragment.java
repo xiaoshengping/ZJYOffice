@@ -5,18 +5,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -58,6 +62,7 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.SeekProjectParticularsActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.ServiceProviderActivity;
 import com.example.zhongjiyun03.zhongjiyun.view.CustomHomeScrollListView;
 import com.example.zhongjiyun03.zhongjiyun.view.MyGridView;
+import com.example.zhongjiyun03.zhongjiyun.view.ObservableScrollView;
 import com.example.zhongjiyun03.zhongjiyun.widget.AutoScrollViewPager;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -119,6 +124,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
     @ViewInject(R.id.questionnaire_layout)
     private LinearLayout questionnaireLayout;  //问卷调查image
 
+    @ViewInject(R.id.head_text_layout)
+    private RelativeLayout headTextLayout;  //头部text
+    private int imageHeight;
+    @ViewInject(R.id.observable_scrollView)
+    private ObservableScrollView observableScrollView;
+    @ViewInject(R.id.advertisment_rlayout)
+    private RelativeLayout advertismentRlayout;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -134,8 +147,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
         init();
         loadData();
+
         return view ;
     }
+
 
     /**
      * 调查问卷
@@ -151,7 +166,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getQuestionnaireData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("jhhshhd;",responseInfo.result);
+                //Log.e("jhhshhd;",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                    AppBean<QuestionnaireBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<QuestionnaireBean>>(){});
                     if (appBean.getResult().equals("success")){
@@ -236,6 +251,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
 
 
+
     }
 
 
@@ -249,10 +265,50 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         startLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
         //上拉监听函数
         homePullToScrollView.setOnRefreshListener(this);
+        ScrollView scrollView=homePullToScrollView.getRefreshableView();
+        scrollView.setOnTouchListener(new TouchListenerImpl());
+
 
     }
+    private class TouchListenerImpl implements View.OnTouchListener {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    headTextLayout.setVisibility(View.GONE);
+                    break;
+                case MotionEvent.ACTION_MOVE:
 
+                    int scrollY=view.getScrollY();
+                    imageHeight = advertismentRlayout.getHeight();
+                    Log.e("测试执行1","滑动执行了"+imageHeight);
+                    Log.e("测试执行2","滑动执行了"+scrollY);
+                    if (scrollY <= 50) {
+                        Log.e("测试执行1","滑动执行了");
+                        headTextLayout.setBackgroundColor(Color.argb((int) 50, 227, 29, 26));//AGB由相关工具获得，或者美工提供
+                    } else if (scrollY > 0 && scrollY <= imageHeight) {
+                        float scale = (float) scrollY / imageHeight;
+                        float alpha = (255 * scale);
+                        // 只是layout背景透明(仿知乎滑动效果)
+                        headTextLayout.setBackgroundColor(Color.argb((int) alpha, 227, 29, 26));
+                        Log.e("测试执行2","滑动执行了");
+                    } else {
+                        headTextLayout.setBackgroundColor(Color.argb((int) 255, 227, 29, 26));
+                        Log.e("测试执行3","滑动执行了");
+                    }
 
+                    break;
+                case MotionEvent.ACTION_UP:
+                    headTextLayout.setVisibility(View.VISIBLE);
+                    break;
+
+                default:
+                    break;
+            }
+            return false;
+        }
+
+    };
        //推荐二手机
     private void initListRecommentMachinist() {
         HttpUtils httpUtils=new HttpUtils();
@@ -450,15 +506,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 6:  //悬赏
-                                if (!TextUtils.isEmpty(uid)){
+                                /*if (!TextUtils.isEmpty(uid)){*/
                                     Intent rewardIntent=new Intent(getActivity(), HomeRewardActivity.class)  ;
                                     startActivity(rewardIntent);
                                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                                }else {
+                                /*}else {
                                     Intent intent=new Intent(getActivity(),LoginActivity.class);
                                     startActivity(intent);
                                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                                }
+                                }*/
 
                                 break;
                             case 7:  //黑名单
@@ -595,6 +651,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         }
         initListRecommentMachinist();
         initListData();
+
     }
 
     //地图定位

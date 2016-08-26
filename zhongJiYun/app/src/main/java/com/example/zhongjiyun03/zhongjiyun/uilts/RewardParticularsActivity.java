@@ -3,11 +3,13 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -62,13 +64,19 @@ public class RewardParticularsActivity extends AppCompatActivity implements View
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.boundy_butoon_iamge:
-                if (getIntent().getStringExtra("tage").equals("buy")){
-                    Intent buyIntent=new Intent(RewardParticularsActivity.this,RewardBuyAddActivity.class);
-                    startActivity(buyIntent);
+                if (!TextUtils.isEmpty(SQLHelperUtils.queryId(RewardParticularsActivity.this))){
+                    if (getIntent().getStringExtra("tage").equals("buy")){
+                        Intent buyIntent=new Intent(RewardParticularsActivity.this,RewardBuyAddActivity.class);
+                        startActivity(buyIntent);
+                    }else {
+                        Intent buyIntent=new Intent(RewardParticularsActivity.this,RewardSellAddActivity.class);
+                        startActivity(buyIntent);
+                    }
                 }else {
-                    Intent buyIntent=new Intent(RewardParticularsActivity.this,RewardSellAddActivity.class);
-                    startActivity(buyIntent);
+                    Intent loginIntent=new Intent(RewardParticularsActivity.this,LoginActivity.class);
+                    startActivity(loginIntent);
                 }
+
                 break;
             case R.id.retrun_boundy_Text:
                 finish();
