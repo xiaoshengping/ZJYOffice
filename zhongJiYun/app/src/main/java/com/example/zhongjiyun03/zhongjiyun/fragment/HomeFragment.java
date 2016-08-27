@@ -62,7 +62,6 @@ import com.example.zhongjiyun03.zhongjiyun.uilts.SeekProjectParticularsActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.ServiceProviderActivity;
 import com.example.zhongjiyun03.zhongjiyun.view.CustomHomeScrollListView;
 import com.example.zhongjiyun03.zhongjiyun.view.MyGridView;
-import com.example.zhongjiyun03.zhongjiyun.view.ObservableScrollView;
 import com.example.zhongjiyun03.zhongjiyun.widget.AutoScrollViewPager;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -93,7 +92,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
     private LinearLayout dotLL;
     private ImagePagerAdapter pagerAdapter;
     private ArrayList<AdvertisementBean> imageUrls = new ArrayList<>();
-    //private String url = "http://mobapi.meilishuo.com/2.0/activity/selected?imei=000000000000000&mac=08%3A00%3A27%3A51%3A2e%3Aaa&qudaoid=11601&access_token=d154111f2e870ea8e58198e0f8c59339";
     private boolean isRefresh=true;
 
 
@@ -127,8 +125,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
     @ViewInject(R.id.head_text_layout)
     private RelativeLayout headTextLayout;  //头部text
     private int imageHeight;
-    @ViewInject(R.id.observable_scrollView)
-    private ObservableScrollView observableScrollView;
     @ViewInject(R.id.advertisment_rlayout)
     private RelativeLayout advertismentRlayout;
 
@@ -196,7 +192,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
 
     /**
-     * Gson
+     * 图片轮播数据
      */
     private void loadData() {
         HttpUtils httpUtils=new HttpUtils();
@@ -275,31 +271,30 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         public boolean onTouch(View view, MotionEvent motionEvent) {
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    headTextLayout.setVisibility(View.GONE);
+                    //MyAppliction.showToast("和经济数据");
+                    Log.e("ACTION_DOWN------------","ACTION_DOWN");
+                    //headTextLayout.setVisibility(View.GONE);
                     break;
                 case MotionEvent.ACTION_MOVE:
 
                     int scrollY=view.getScrollY();
                     imageHeight = advertismentRlayout.getHeight();
-                    Log.e("测试执行1","滑动执行了"+imageHeight);
-                    Log.e("测试执行2","滑动执行了"+scrollY);
-                    if (scrollY <= 50) {
-                        Log.e("测试执行1","滑动执行了");
+                    Log.e("ACTION_MOVE-----","ACTION_MOVE"+scrollY);
+                    if (scrollY <= 30) {
                         headTextLayout.setBackgroundColor(Color.argb((int) 50, 227, 29, 26));//AGB由相关工具获得，或者美工提供
                     } else if (scrollY > 0 && scrollY <= imageHeight) {
                         float scale = (float) scrollY / imageHeight;
                         float alpha = (255 * scale);
                         // 只是layout背景透明(仿知乎滑动效果)
                         headTextLayout.setBackgroundColor(Color.argb((int) alpha, 227, 29, 26));
-                        Log.e("测试执行2","滑动执行了");
                     } else {
                         headTextLayout.setBackgroundColor(Color.argb((int) 255, 227, 29, 26));
-                        Log.e("测试执行3","滑动执行了");
                     }
 
                     break;
                 case MotionEvent.ACTION_UP:
-                    headTextLayout.setVisibility(View.VISIBLE);
+                    Log.e("ACTION_UP-------------","ACTION_UP");
+                   // headTextLayout.setVisibility(View.VISIBLE);
                     break;
 
                 default:
@@ -313,13 +308,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
     private void initListRecommentMachinist() {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(getActivity());
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-        }
+        String uid=SQLHelperUtils.queryId(getActivity());
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id",uid);
             //步骤1：创建一个SharedPreferences接口对象
@@ -350,6 +339,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                 }
                 networkRemindLayout.setVisibility(View.GONE);
                 homePullToScrollView.onRefreshComplete();
+                headTextLayout.setVisibility(View.VISIBLE);
+                headTextLayout.setBackgroundColor(Color.argb((int) 50, 227, 29, 26));
             }
 
             @Override
@@ -357,6 +348,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                 Log.e("找项目",s);
                 homePullToScrollView.onRefreshComplete();
                 networkRemindLayout.setVisibility(View.VISIBLE);
+                headTextLayout.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -371,7 +363,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                 Intent intent=new Intent(getActivity(),ExturderParticularsActivity.class);
                 intent.putExtra("secondHandData",secondHandBeen.get(position).getId());
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
             }
         });
@@ -385,15 +376,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
     private void initListData() {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(getActivity());
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-
-        }
+        String uid=SQLHelperUtils.queryId(getActivity());
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id",uid);
             //步骤1：创建一个SharedPreferences接口对象
@@ -444,7 +427,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                  Intent intent=new Intent(getActivity(), SeekProjectParticularsActivity.class);
                  intent.putExtra("seekProjectId",seekProjectBean.get(position).getId());
                  startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+
             }
         });
 
@@ -466,34 +449,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                         int index=arg2+1;//id是从0开始的，所以需要+1
                        // Toast.makeText(getActivity(), "你按下了选项："+index, Toast.LENGTH_LONG).show();
                         //Toast用于向用户显示一些帮助/提示
-                        SQLhelper sqLhelper=new SQLhelper(getActivity());
-                        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-                        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-                        String uid=null;  //用户id
-                        while (cursor.moveToNext()) {
-                            uid=cursor.getString(0);
-
-                        }
 
                         switch (index){
                             case 1:  //找活儿
                                 Intent projectIntent=new Intent(getActivity(),HomeMoreProjectActivity.class);
                                 startActivity(projectIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                                //getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
 
                             case 2: //二手机
                                 Intent SecondHandIntent=new Intent(getActivity(), SecondHandActivity.class)  ;
                                 SecondHandIntent.putExtra("tage","secondHand");
                                 startActivity(SecondHandIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                                //getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 3:  //找机手
 
                                 Intent seekMachinistIntent=new Intent(getActivity(), SeekMachinistActivity.class)  ;
                                 seekMachinistIntent.putExtra("tage","seekMachinis");
                                 startActivity(seekMachinistIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                                //getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 4: //商城
                                 Intent marketIntent=new Intent(getActivity(), HomeMarketActivity.class)  ;
@@ -506,38 +481,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 6:  //悬赏
-                                /*if (!TextUtils.isEmpty(uid)){*/
-                                    Intent rewardIntent=new Intent(getActivity(), HomeRewardActivity.class)  ;
-                                    startActivity(rewardIntent);
-                                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                                /*}else {
-                                    Intent intent=new Intent(getActivity(),LoginActivity.class);
-                                    startActivity(intent);
-                                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                                }*/
 
+                                 Intent rewardIntent=new Intent(getActivity(), HomeRewardActivity.class)  ;
+                                 startActivity(rewardIntent);
                                 break;
                             case 7:  //黑名单
                                 Intent blackListIntent=new Intent(getActivity(), HomeBlackListActivity.class)  ;
                                 startActivity(blackListIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                             break;
                             case 8:  //游戏
                                 Intent gameIntent=new Intent(getActivity(), HomeGameActivity.class)  ;
                                 startActivity(gameIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+
                                 break;
                             case 9:  //优惠券
                                 Intent dicuntCouponIntent=new Intent(getActivity(), HomeDiscuntCouponActivity.class)  ;
                                 startActivity(dicuntCouponIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                             break;
 
                             case 10: //服务商
                                 Intent serviceIntent=new Intent(getActivity(), ServiceProviderActivity.class)  ;
                                 serviceIntent.putExtra("tage","service");
                                 startActivity(serviceIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
 
 
@@ -646,6 +611,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
     @Override
     public void onRefresh(PullToRefreshBase refreshView) {
+        headTextLayout.setVisibility(View.GONE);
         if (!isRefresh){
             loadData();
         }

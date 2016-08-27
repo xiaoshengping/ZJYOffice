@@ -399,13 +399,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         }
 
         switch (v.getId()){
-            case R.id.loing_layout:
+            case R.id.loing_layout:// 登录
                 Intent intent=new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
 
-            case R.id.attention_layout:
+            case R.id.attention_layout:  //关注项目
                 if (!TextUtils.isEmpty(uid)){
                 Intent attentionIntent=new Intent(getActivity(), AttentionProjectActivity.class);
                 startActivity(attentionIntent);
@@ -416,7 +416,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
-            case R.id.extruder_layout:
+            case R.id.extruder_layout:  // 关注钻机
                 if (!TextUtils.isEmpty(uid)){
                     Intent attentionExtruderIntent=new Intent(getActivity(), AttentionExtrunActivity.class);
                     startActivity(attentionExtruderIntent);
@@ -427,7 +427,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
-            case R.id.competitive_layout:
+            case R.id.competitive_layout:  //我的竞标
                 if (!TextUtils.isEmpty(uid)){
 
                     Intent competitveTenderIntent=new Intent(getActivity(), MyCompetitveTenderActivity.class);
@@ -440,7 +440,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
-            case R.id.message_layout:
+            case R.id.message_layout:   //系统消息
                 if (!TextUtils.isEmpty(uid)){
                     Intent messageIntent=new Intent(getActivity(), MessageActivity.class);
                     startActivity(messageIntent);
@@ -453,14 +453,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.redpacket_layout:
                 if (!TextUtils.isEmpty(uid)){
-                    if (!TextUtils.isEmpty(giftBag)){
-                        update(systemMessageSQLhelper,SystemMessageSQLhelper.tableName,SystemMessageSQLhelper.MESSAGEREMINDID,messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
-                    }else {
-                        if (!TextUtils.isEmpty(date)){
-                            insertData(systemMessageSQLhelper,SystemMessageSQLhelper.tableName,SystemMessageSQLhelper.MESSAGEREMINDID,SystemMessageSQLhelper.GIFTBAG,date);
-                        }
+                        if (!TextUtils.isEmpty(giftBag)){
+                            update(systemMessageSQLhelper,SystemMessageSQLhelper.tableName,SystemMessageSQLhelper.MESSAGEREMINDID,messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
+                        }else {
+                            if (!TextUtils.isEmpty(date)){
+                                insertData(systemMessageSQLhelper,SystemMessageSQLhelper.tableName,SystemMessageSQLhelper.MESSAGEREMINDID,SystemMessageSQLhelper.GIFTBAG,date);
+                            }
 
-                    }
+                        }
                     giftBagRemindImage.setVisibility(View.GONE);
                     Intent redPatckIntent=new Intent(getActivity(), MyRedPacketActivity.class);
                     startActivity(redPatckIntent);

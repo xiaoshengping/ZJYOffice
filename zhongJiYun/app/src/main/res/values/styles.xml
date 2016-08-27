@@ -4,18 +4,12 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/red_light</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@mipmap/home_log_icon</item>
         <item name="android:windowIsTranslucent">false</item>
-
-
-
-        <!--<item name="android:windowAnimationStyle">@android:style/Animation</item>-->
-        <!--<item name="android:windowAnimationStyle">@style/Animation_Dialog_RightInRightOut</item>-->
         <!-- 设置activity切换动画 -->
         <item name="android:windowAnimationStyle">@style/activityAnimation</item>
-        <!--<item name="android:windowNoTitle">true</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -39,12 +33,6 @@
         <item name="android:layout_weight">1</item>
         <item name="android:drawablePadding">2dp</item>
     </style>
-
-    <!--<style name="TextField" parent="@android:style/Widget.EditText">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/editText</item>
-        <item name="android:background">@drawable/edit_text_holo_dark</item>
-    </style>-->
 
     <style name="BoaderButton" parent="@android:style/Widget.Button">
         <item name="android:layout_width">wrap_content</item>
@@ -122,16 +110,6 @@
         <item name="android:minHeight">40dip</item>
         <item name="android:maxHeight">40dip</item>
     </style>
-    <!-- 用于Dialog类型的Activity，其如果想设置动画必须用这个（继承Animation.Dialog）
-    <style name="Theme_Animation_Dialog_RightInRightOut" parent="@android:style/Theme.Dialog">
-        <item name="android:windowAnimationStyle">@style/Animation_Dialog_RightInRightOut</item>
-    </style>
-    <style name="Animation_Dialog_RightInRightOut" parent="@android:style/Animation.Dialog">
-        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
-        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
-    </style>-->
 
     <!-- animation 样式 -->
     <style name="activityAnimation" parent="@android:style/Animation">

@@ -41,6 +41,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -123,6 +124,8 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     private SVProgressHUD mSVProgressHUD;//loding
     @ViewInject(R.id.competitive_button)
     private Button competitiveButton; //竞标按钮
+    @ViewInject(R.id.competitive_layout)
+    private RelativeLayout competitiveLayout;  //竞标布局
     private SeekProjectBean seekProjectBean;
     private TimeCount time;      //获取计时线程
     private AlertDialog dlg;
@@ -190,13 +193,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         HttpUtils httpUtils = new HttpUtils();
         RequestParams requestParams = new RequestParams();
         if (!TextUtils.isEmpty(seekProjectId)) {
-            SQLhelper sqLhelper = new SQLhelper(SeekProjectParticularsActivity.this);
-            SQLiteDatabase db = sqLhelper.getWritableDatabase();
-            Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
-            String uid = null;  //用户id
-            while (cursor.moveToNext()) {
-                uid = cursor.getString(0);
-            }
+            String uid= SQLHelperUtils.queryId(SeekProjectParticularsActivity.this);
             if (!TextUtils.isEmpty(uid)) {
                 //步骤1：创建一个SharedPreferences接口对象
                 SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
@@ -208,11 +205,11 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             requestParams.addBodyParameter("projectId", seekProjectId);
             mSVProgressHUD.showWithStatus("加载中...");
             messageDataLayout.setVisibility(View.GONE);
-            competitiveButton.setVisibility(View.GONE);
+            competitiveLayout.setVisibility(View.GONE);
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctParticularsData(), requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("项目详情", responseInfo.result);
+                    //Log.e("项目详情", responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)) {
                         AppBean<SeekProjectBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SeekProjectBean>>() {
                         });
@@ -236,7 +233,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                     }
                     messageDataLayout.setVisibility(View.VISIBLE);
                     noDataRlayout.setVisibility(View.GONE);
-                    competitiveButton.setVisibility(View.VISIBLE);
+                    competitiveLayout.setVisibility(View.VISIBLE);
                 }
 
                 @Override
@@ -244,7 +241,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                     Log.e("项目详情", s);
                     mSVProgressHUD.dismiss();
                     noDataRlayout.setVisibility(View.VISIBLE);
-                    competitiveButton.setVisibility(View.GONE);
+                    competitiveLayout.setVisibility(View.GONE);
                 }
             });
         } else {
@@ -504,7 +501,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                             Intent intent = new Intent(SeekProjectParticularsActivity.this, CompetitiveDescribeActivity.class);
                             intent.putExtra("ProjectId", seekProjectId);
                             startActivity(intent);
-                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
                         } else {
                             if (seekProjectBean.getCanReply().equals("添加钻机后可投标")){
@@ -524,7 +520,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                             } else {
                                 Intent intent = new Intent(SeekProjectParticularsActivity.this, LoginActivity.class);
                                 startActivity(intent);
-                                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                             }
 
                         } else {

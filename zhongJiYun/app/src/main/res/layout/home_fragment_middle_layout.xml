@@ -16,15 +16,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="13dp"
             android:id="@+id/image_view"
             android:src="@color/red_light"
             android:layout_width="2dp"
             android:layout_height="20dp" />
         <TextView
-            android:layout_marginTop="5dp"
+            android:textColor="@color/color_222222"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:id="@+id/used_recommend"
             android:textSize="@dimen/home_Size_18"
@@ -35,17 +36,17 @@
         <TextView
             android:layout_toLeftOf="@+id/more_imag"
             android:id="@+id/more_text_view"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
             android:gravity="right"
             android:textColor="@color/red_light"
             android:layout_marginRight="5dp"
             android:textSize="@dimen/home_Size_15"
             android:text="更多"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="30dp" />
         <ImageView
             android:id="@+id/more_imag"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
             android:layout_alignParentRight="true"
             android:src="@mipmap/arrow_red_icon"
@@ -54,13 +55,13 @@
         <ImageView
             android:layout_marginBottom="10dp"
             android:id="@+id/image_ligin"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="13dp"
             android:layout_below="@+id/image_view"
-            android:src="@color/background"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
 
         <HorizontalScrollView
             android:background="@color/white"

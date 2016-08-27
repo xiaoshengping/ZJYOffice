@@ -22,15 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.zhongjiyun03.zhongjiyun.view.ObservableScrollView
-            android:id="@+id/observable_scrollView"
-            android:clickable="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
                 <LinearLayout
                     android:visibility="gone"
                     android:id="@+id/network_remind_layout"
@@ -64,18 +55,8 @@
                     android:layout_height="wrap_content" layout="@layout/home_fragment_head_layout"/>
                 <include android:layout_marginTop="10dp" android:layout_width="match_parent"
                     android:layout_height="wrap_content" layout="@layout/home_fragment_middle_layout"/>
-                <include  android:layout_marginTop="10dp" android:layout_width="match_parent"
+                <include android:layout_marginBottom="10dp"  android:layout_marginTop="10dp" android:layout_width="match_parent"
                     android:layout_height="wrap_content" layout="@layout/home_fragment_end_layout"/>
-
-
-            </LinearLayout>
-
-
-
-        </com.example.zhongjiyun03.zhongjiyun.view.ObservableScrollView>
-
-
-
     </LinearLayout>
 </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
     <RelativeLayout

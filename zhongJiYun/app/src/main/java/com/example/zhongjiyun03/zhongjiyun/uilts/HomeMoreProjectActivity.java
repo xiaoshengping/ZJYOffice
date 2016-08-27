@@ -357,7 +357,6 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                 Intent intent = new Intent(HomeMoreProjectActivity.this, SeekProjectParticularsActivity.class);
                 intent.putExtra("seekProjectId",seekProjectBeans.get(position-1).getId());
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
         });
 

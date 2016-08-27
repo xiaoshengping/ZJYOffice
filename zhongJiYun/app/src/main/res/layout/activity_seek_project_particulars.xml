@@ -169,15 +169,22 @@
 
 
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/competitive_layout"
         android:gravity="center"
         android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="60dp">
+        <ImageView
+            android:id="@+id/image_view"
+            android:src="@color/color_dadada"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
         <Button
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/image_view"
             android:gravity="center"
-            android:layout_alignParentBottom="true"
             android:id="@+id/competitive_button"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -186,7 +193,11 @@
             android:textColor="@color/ic_white"
             android:textSize="@dimen/home_Size_16"
              />
-    </LinearLayout>
+        <ImageView
+            android:layout_below="@+id/competitive_button"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

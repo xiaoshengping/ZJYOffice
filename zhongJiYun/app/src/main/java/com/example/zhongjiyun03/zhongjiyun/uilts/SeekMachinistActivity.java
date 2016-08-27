@@ -49,6 +49,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FacillyFirstClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FacillySecondClassAdapter;
@@ -273,14 +274,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     private void initListData(int pageIndex, String type, String city, String year, String order) {
         HttpUtils httpUtils = new HttpUtils();
         RequestParams requestParams = new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(SeekMachinistActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-
-        }
+        String uid= SQLHelperUtils.queryId(SeekMachinistActivity.this);
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id", uid);
             //步骤1：创建一个SharedPreferences接口对象
@@ -319,12 +313,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                 }
 
             }
-
-
-
         }
-
-
         if (getIntent().getStringExtra("tage").equals("matingFacily")){
             if (!TextUtils.isEmpty(getIntent().getStringExtra("data"))){
                 requestParams.addBodyParameter("province",getIntent().getStringExtra("data"));
