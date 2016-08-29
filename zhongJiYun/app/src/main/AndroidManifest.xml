@@ -169,7 +169,6 @@
         <!-- 友盟end -->
         <!-- shareSDK分享start -->
         <activity
-
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
@@ -193,7 +192,6 @@
         </activity>
         <!-- 微信分享回调 -->
         <activity
-
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
@@ -588,7 +586,8 @@
         <activity android:name=".uilts.RawardBuyListActivity" />
         <activity android:name=".uilts.ReleaseJobListActivity" />
         <activity android:name=".uilts.ResumeListActivity" />
-        <activity android:name=".uilts.RawardBuyListParticularsActivity"></activity>
+        <activity android:name=".uilts.RawardBuyListParticularsActivity" />
+        <activity android:name=".uilts.JpushWebViewActivity"></activity>
     </application>
 
 </manifest>

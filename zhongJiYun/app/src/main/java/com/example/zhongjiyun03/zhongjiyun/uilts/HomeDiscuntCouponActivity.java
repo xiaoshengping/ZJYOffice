@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -136,6 +135,9 @@ public class HomeDiscuntCouponActivity extends AppCompatActivity implements View
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mSVProgressHUD.dismiss();
+                if (webView.getTitle().length()>10){
+                    titleNemeTv.setPadding(100,0,0,0);
+                }
                 titleNemeTv.setText(webView.getTitle());
             }
 

@@ -25,17 +25,6 @@
             android:textSize="@dimen/home_Size_18"
             android:layout_centerInParent="true"/>
         <TextView
-            android:id="@+id/text"
-            android:layout_toRightOf="@+id/retrun_tv"
-            android:layout_marginLeft="7dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="关闭"
-            android:textColor="@color/ic_white"
-            android:textSize="@dimen/home_Size_18"
-            android:layout_centerInParent="true"/>
-        <TextView
 
             android:id="@+id/retrun_text_view"
             android:layout_marginLeft="15dp"
@@ -57,7 +46,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/ic_white"
-            android:textSize="@dimen/home_Size_20"
+            android:textSize="@dimen/home_Size_18"
             />
        <!-- <ImageView
             android:id="@+id/register_tv"

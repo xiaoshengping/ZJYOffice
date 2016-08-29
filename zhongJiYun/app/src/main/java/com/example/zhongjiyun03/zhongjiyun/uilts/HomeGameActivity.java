@@ -135,6 +135,9 @@ public class HomeGameActivity extends AppCompatActivity implements View.OnClickL
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mSVProgressHUD.dismiss();
+                if (webView.getTitle().length()>10){
+                    titleNemeTv.setPadding(100,0,0,0);
+                }
                 titleNemeTv.setText(webView.getTitle());
             }
 

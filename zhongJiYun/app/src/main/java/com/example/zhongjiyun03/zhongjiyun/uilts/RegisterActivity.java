@@ -36,6 +36,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -143,6 +144,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Uri vesonUri;    //文件uri
     private String province;  //个人注册省份
     private String city;      //个人注册城市
+    private ScrollView personageScrollview;  //个人注册scrollView
 
 
     /*
@@ -180,6 +182,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private List<String> companyListPath=new ArrayList<>();//企业注册照片路径集合
     private  String companyProvince;    //省份
     private String companyCity;         //城市
+    @ViewInject(R.id.company_scrollView)
+    private ScrollView companyScrollView;  //企业注册scrollView
+
 
 
     @Override
@@ -237,6 +242,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     //企业注册初始化
     private void intiCompanyView() {
         RelativeLayout rootTlayout= (RelativeLayout) companyRisterView.findViewById(R.id.company_root_layout);
+        companyScrollView= (ScrollView) companyRisterView.findViewById(R.id.company_scrollView);
         companyCodeButton= (Button) companyRisterView.findViewById(R.id.company_code_button);
         companyRegisterButton= (Button) companyRisterView.findViewById(R.id.cpmpany_register_button);
         companyPhoneEdit= (EditText) companyRisterView.findViewById(R.id.company_edit_phone);
@@ -316,7 +322,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+        companyIntroduceEdit.setOnTouchListener(new View.OnTouchListener() {
 
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
+        companyScrollView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                companyIntroduceEdit.getParent().requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
+        });
 
 
 
@@ -333,6 +357,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void intiPersonageView() {
 
         RelativeLayout rootTlayout= (RelativeLayout) personageRisterView.findViewById(R.id.root_layout);
+        personageScrollview= (ScrollView) personageRisterView.findViewById(R.id.personage_scrollview);
         codeButton= (Button) personageRisterView.findViewById(R.id.code_button);
         submitButton= (Button) personageRisterView.findViewById(R.id.submit_button);
         phoneEdit= (EditText) personageRisterView.findViewById(R.id.edit_phone);
@@ -392,7 +417,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+        abstractEdit.setOnTouchListener(new View.OnTouchListener() {
 
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
+        personageScrollview.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                abstractEdit.getParent().requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
+        });
 
 
 
@@ -957,7 +1000,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
+                //Log.e("照片请求",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<AppDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
                     int tage=tages+1;
@@ -1175,6 +1218,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         fileVeson=new File(IMAGE_FILE_LOCATION+ConstantSet.USERTEMPPIC);
         vesonUri = Uri.fromFile(fileVeson);//The Uri t
         initViewPager();
+
+
+
+
 
 
 

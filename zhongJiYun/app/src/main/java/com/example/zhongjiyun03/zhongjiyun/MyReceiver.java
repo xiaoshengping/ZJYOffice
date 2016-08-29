@@ -14,7 +14,19 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
+import com.example.zhongjiyun03.zhongjiyun.bean.JPush.ExtrasBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
+import com.example.zhongjiyun03.zhongjiyun.uilts.ExturderParticularsActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.HomeMarketActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.HomeTribeActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.JpushWebViewActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.MyExtruderActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.MyRedPacketActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.RawardBuyListActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.RawardSellListActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.ReleaseJobListActivity;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -58,11 +70,106 @@ public class MyReceiver extends BroadcastReceiver {
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "用户点击打开了通知");
+            String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
+            //MyAppliction.showToast(extras);
+            if (!TextUtils.isEmpty(extras)){
+                ExtrasBean extrasBean= JSONObject.parseObject(extras,new TypeReference<ExtrasBean>(){});
+                if (extrasBean!=null){
+                    if ((extrasBean.getType()).equals("App")){
+                        if ((extrasBean.getBLLCode()).equals("App_BossJobsInfo")){ //我的招聘
+                            //打开自定义的Activity
+                            Intent i = new Intent(context, ReleaseJobListActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+                        }else if ((extrasBean.getBLLCode()).equals("App_Home")){  //app首页
 
-            //打开自定义的Activity
-            Intent i = new Intent(context, HomeActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
+                            Intent i = new Intent(context, HomeActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+                        }else if ((extrasBean.getBLLCode()).equals("App_SaleBuy")){  //悬赏求买
+                            Intent i = new Intent(context, RawardBuyListActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+
+
+                        }else if ((extrasBean.getBLLCode()).equals("App_SaleSell")){  //悬赏求卖
+                            Intent i=new Intent(context, RawardSellListActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+                        }else if ((extrasBean.getBLLCode()).equals("App_SecondDeviceDetail")){
+                            Intent i=new Intent(context, ExturderParticularsActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.putExtra("secondHandData",extrasBean.getApiParams());
+                            context.startActivity(i);
+                        }else if ((extrasBean.getBLLCode()).equals("App_DeviceAudit")){
+                            Intent i=new Intent(context, MyExtruderActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+                        }else if ((extrasBean.getBLLCode()).equals("App_SendGift")){
+                            Intent i=new Intent(context, MyRedPacketActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+                        }else  {
+                            Intent i = new Intent(context, HomeActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+                        }
+
+
+                    }else if ((extrasBean.getType()).equals("WebApp")){
+                        if ((extrasBean.getBLLCode()).equals("WebApp_ShoppingHome")){  //商城首页
+                            Intent i = new Intent(context, HomeMarketActivity.class);
+                            i.putExtra("tage","0");
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+                        }else if ((extrasBean.getBLLCode()).equals("WebApp_Product")){ //商城商品
+                            Intent i = new Intent(context, HomeMarketActivity.class);
+                            i.putExtra("tage","1");
+                            i.putExtra("appUrl",extrasBean.getApiUrl());
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+
+                        }else if ((extrasBean.getBLLCode()).equals("WebApp_TribePost")){ //部落帖子
+                            Intent i = new Intent(context, HomeTribeActivity.class);
+                            i.putExtra("tage","3");
+                            i.putExtra("appUrl",extrasBean.getApiUrl());
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+
+                        }else if ((extrasBean.getBLLCode()).equals("WebApp_Tribe")){ //部落首页
+                            Intent i = new Intent(context, HomeTribeActivity.class);
+                            i.putExtra("tage","2");
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+                        }else {
+                            Intent i = new Intent(context, HomeActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(i);
+                        }
+
+                    }else if ((extrasBean.getType()).equals("Web")) {
+                        Intent jpushIntent=new Intent(context, JpushWebViewActivity.class);
+                        jpushIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        if (!TextUtils.isEmpty(extrasBean.getApiUrl())){
+                            jpushIntent.putExtra("url",extrasBean.getApiUrl());
+                        }
+                        context.startActivity(jpushIntent);
+                    }else {
+                        Intent i = new Intent(context, HomeActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(i);
+                    }
+
+
+
+                }
+
+
+            }else {
+                Intent i = new Intent(context, HomeActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+            }
 
         } else {
             Log.d(TAG, "Unhandled intent - " + intent.getAction());

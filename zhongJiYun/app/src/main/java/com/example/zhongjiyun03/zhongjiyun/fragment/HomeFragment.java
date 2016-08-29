@@ -472,11 +472,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                 break;
                             case 4: //商城
                                 Intent marketIntent=new Intent(getActivity(), HomeMarketActivity.class)  ;
+                                marketIntent.putExtra("tage","0");
                                 startActivity(marketIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 5:  //部落
                                 Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
+                                tribeIntent.putExtra("tage","2");
                                 startActivity(tribeIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;

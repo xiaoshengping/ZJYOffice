@@ -41,7 +41,7 @@ public class FragmentTabAdapter implements RadioGroup.OnCheckedChangeListener {
         FragmentTransaction ft = fragmentActivity.getSupportFragmentManager().beginTransaction();
         ft.add(fragmentContentId, fragments.get(0));
         ft.addToBackStack(null);
-        ft.commit();
+        ft.commitAllowingStateLoss();
 
         rgs.setOnCheckedChangeListener(this);
 

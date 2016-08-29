@@ -451,7 +451,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
-            case R.id.redpacket_layout:
+            case R.id.redpacket_layout:   //我的红包
                 if (!TextUtils.isEmpty(uid)){
                         if (!TextUtils.isEmpty(giftBag)){
                             update(systemMessageSQLhelper,SystemMessageSQLhelper.tableName,SystemMessageSQLhelper.MESSAGEREMINDID,messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
@@ -471,17 +471,17 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
-            case R.id.loing_xshi_layout:
+            case R.id.loing_xshi_layout:  //个人资料
                 Intent personagerIntent=new Intent(getActivity(), PersonageInformationActivity.class);
                 startActivity(personagerIntent);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
-            case R.id.sting_layout:
+            case R.id.sting_layout:   //设置
                 Intent stingIntent=new Intent(getActivity(), StingActivity.class);
                 startActivity(stingIntent);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
-            case R.id.comment_layout:
+            case R.id.comment_layout:   //评论
                 if (!TextUtils.isEmpty(uid)){
 
                     if (!TextUtils.isEmpty(evaluate)){
@@ -501,13 +501,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 }
 
                 break;
-            case R.id.help_layout:
+            case R.id.help_layout:  //帮助
                 Intent ratingHelpIntent=new Intent(getActivity(), RatingHelpActivity.class);
                 getActivity().startActivity(ratingHelpIntent);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
                 break;
-            case R.id.drilling_layout:
+            case R.id.drilling_layout:  //我的钻机
                  if (!TextUtils.isEmpty(uid)){
                         Intent MyExtruderIntent=new Intent(getActivity(), MyExtruderActivity.class)  ;
                         startActivity(MyExtruderIntent);
@@ -518,7 +518,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                       getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 }
                 break;
-            case R.id.release_job_layout:
+            case R.id.release_job_layout:   //我的招聘
                 if (!TextUtils.isEmpty(uid)){
                     Intent releaseJobListIntent=new Intent(getActivity(), ReleaseJobListActivity.class)  ;
                     startActivity(releaseJobListIntent);
@@ -529,7 +529,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
-            case R.id.qiumai_layout:
+            case R.id.qiumai_layout:    //悬赏求买
 
                 if (!TextUtils.isEmpty(uid)){
                     Intent releaseJobListIntent=new Intent(getActivity(), RawardBuyListActivity.class)  ;
@@ -542,7 +542,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 }
 
                 break;
-            case R.id.xshang_qiumai_layout:
+            case R.id.xshang_qiumai_layout:// 悬赏求卖
                 if (!TextUtils.isEmpty(uid)){
                     Intent releaseJobListIntent=new Intent(getActivity(), RawardSellListActivity.class)  ;
                     startActivity(releaseJobListIntent);

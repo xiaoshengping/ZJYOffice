@@ -7,6 +7,7 @@
     tools:context="com.example.zhongjiyun03.zhongjiyun.fragment.PersonageRistergFragment">
 
     <ScrollView
+        android:id="@+id/company_scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -53,9 +54,9 @@
 
         </LinearLayout>
         <ImageView
-            android:src="@color/color_dedede"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <RelativeLayout
             android:background="@color/ic_white"
 
@@ -105,9 +106,9 @@
                 android:layout_height="35dp" />
         </RelativeLayout>
         <ImageView
-            android:src="@color/color_dedede"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <LinearLayout
             android:background="@color/ic_white"
             android:orientation="horizontal"
@@ -139,17 +140,17 @@
         </LinearLayout>
 
         <ImageView
-            android:src="@color/color_dedede"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <ImageView
             android:src="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="5dp" />
+            android:layout_height="10dp" />
         <ImageView
-            android:src="@color/color_dedede"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <LinearLayout
             android:background="@color/ic_white"
             android:orientation="horizontal"
@@ -180,9 +181,9 @@
 
         </LinearLayout>
         <ImageView
-            android:src="@color/color_dedede"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
 
         <LinearLayout
             android:background="@color/ic_white"
@@ -214,9 +215,9 @@
 
         </LinearLayout>
         <ImageView
-            android:src="@color/color_dedede"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <LinearLayout
             android:background="@color/ic_white"
             android:orientation="horizontal"
@@ -248,19 +249,19 @@
 
         </LinearLayout>
         <ImageView
-            android:src="@color/color_dedede"
+            android:src="@color/color_dadada"
 
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <ImageView
             android:src="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="5dp" />
+            android:layout_height="10dp" />
         <ImageView
-            android:src="@color/color_dedede"
+            android:src="@color/color_dadada"
 
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
 
         <LinearLayout
 
@@ -276,6 +277,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:fadeScrollbars="true"
                 android:id="@+id/company_introduce_edit"
                 android:gravity="top"
                 android:layout_width="match_parent"
@@ -284,27 +286,28 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:paddingTop="5dp"
+                android:paddingBottom="10dp"
                 android:drawablePadding="10dp"
                 android:textSize="@dimen/home_Size_14"
                 android:hint="未填写"
-                android:inputType="text"
+                android:inputType="textMultiLine"
+                android:scrollbars="vertical"
                 />
 
         </LinearLayout>
         <ImageView
-            android:src="@color/color_dedede"
+            android:src="@color/color_dadada"
 
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <ImageView
             android:src="@color/color_dedede"
             android:layout_width="match_parent"
-            android:layout_height="5dp" />
+            android:layout_height="10dp" />
         <ImageView
-            android:src="@color/color_dedede"
-
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <LinearLayout
 
             android:layout_marginTop="3dp"
@@ -527,26 +530,40 @@
 
     </LinearLayout>
     </ScrollView>
-    <LinearLayout
-     android:id="@+id/button_layout"
-    android:gravity="center"
-    android:background="@color/white"
-    android:layout_alignParentBottom="true"
-    android:layout_width="match_parent"
-    android:layout_height="60dp">
-    <Button
-        android:layout_alignParentBottom="true"
-        android:id="@+id/cpmpany_register_button"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/ic_white"
-        android:background="@drawable/loing_button_corners"
-        android:textSize="@dimen/home_Size_18"
-        android:text="提交" />
-  </LinearLayout>
 
+
+
+    <RelativeLayout
+        android:id="@+id/competitive_layout"
+        android:gravity="center"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <ImageView
+            android:id="@+id/image_view"
+            android:src="@color/color_dadada"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        <Button
+            android:text="提交"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/image_view"
+            android:gravity="center"
+            android:background="@drawable/loing_button_corners"
+            android:id="@+id/cpmpany_register_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_16"
+            />
+        <ImageView
+            android:layout_below="@+id/cpmpany_register_button"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -1,94 +1,55 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
-import android.annotation.TargetApi;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
-import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import cn.jpush.android.api.JPushInterface;
+public class JpushWebViewActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class HomeTribeActivity extends AppCompatActivity implements View.OnClickListener {
-
-    @ViewInject(R.id.web_view)
-    private WebView webView;
-   /* @ViewInject(R.id.register_tv)
-    private ImageView addExtruderTv;   //头部右边*/
-    @ViewInject(R.id.title_name_tv)
-    private TextView titleNemeTv;     //头部中间
     @ViewInject(R.id.retrun_text_view)
-    private TextView retrunText;     //头部左边
+    private TextView retrunTextView; //返回
+    @ViewInject(R.id.title_name_tv)
+    private TextView titleNameTv; //标题
+    @ViewInject(R.id.share_image_icon)
+    private ImageView shareImage;  //分享
+    @ViewInject(R.id.webview)
+    private WebView webView;  //webview
     private SVProgressHUD mSVProgressHUD;//loding
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        JPushInterface.onResume(this);
-    }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JPushInterface.onPause(this);
-    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //改变状态栏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.red_light);//通知栏所需颜色
-        }
-        setContentView(R.layout.activity_home_tribe);
+        setContentView(R.layout.activity_jpush_web_view);
         ViewUtils.inject(this);
-
         init();
+    }
 
-    }
-    @TargetApi(19)
-    private void setTranslucentStatus(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }
     private void init() {
         initView();
 
     }
 
     private void initView() {
+        retrunTextView.setOnClickListener(this);
+        shareImage.setVisibility(View.GONE);
         mSVProgressHUD = new SVProgressHUD(this);
-        //addExtruderTv.setVisibility(View.GONE);
-
-        retrunText.setOnClickListener(this);
         WebSettings webSettings=webView.getSettings();
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setAllowFileAccess(true);// 设置允许访问文件数据
@@ -99,27 +60,20 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
         webSettings.setDatabaseEnabled(false);
         //启用支持javascript
         webView.getSettings().setJavaScriptEnabled(true);
-
-
-        String tage=getIntent().getStringExtra("tage");
-        if (tage.equals("2")){
-            if (!TextUtils.isEmpty(SQLHelperUtils.queryId(HomeTribeActivity.this))){
-                Log.e("部落",AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?asp_user_id="+SQLHelperUtils.queryId(HomeTribeActivity.this));
-                webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?asp_user_id="+SQLHelperUtils.queryId(HomeTribeActivity.this));
-
+        String appShoppingUrl=getIntent().getStringExtra("url");
+        String text="{"+"0"+"}";
+        if (!TextUtils.isEmpty(appShoppingUrl)){
+            //Log.e("部落",AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?asp_user_id="+SQLHelperUtils.queryId(TribeActivity.this));
+            if (!TextUtils.isEmpty(SQLHelperUtils.queryId(JpushWebViewActivity.this))){
+                webView.loadUrl(appShoppingUrl.replace(text,SQLHelperUtils.queryId(JpushWebViewActivity.this)));
             }else {
-                webView.loadUrl(AppUtilsUrl.BaseUrl+"buluo/new_oauth.php?asp_user_id=");
+                webView.loadUrl(appShoppingUrl.replace(text,""));
             }
+            webView.loadUrl(getIntent().getStringExtra("url"));
+
         }else {
-            String appShoppingUrl=getIntent().getStringExtra("appUrl");
-            String text="{"+"0"+"}";
-            if (!TextUtils.isEmpty(appShoppingUrl)){
-                if (!TextUtils.isEmpty(SQLHelperUtils.queryId(HomeTribeActivity.this))){
-                    webView.loadUrl(appShoppingUrl.replace(text,SQLHelperUtils.queryId(HomeTribeActivity.this)));
-                }else {
-                    webView.loadUrl(appShoppingUrl.replace(text,""));
-                }
-            }
+
+
         }
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient(){
@@ -140,7 +94,7 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mSVProgressHUD.dismiss();
-                titleNemeTv.setText(webView.getTitle());
+                titleNameTv.setText(webView.getTitle());
             }
 
             @Override
@@ -150,32 +104,19 @@ public class HomeTribeActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
-
-
-
-
     }
-
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-
-            case R.id.retrun_text_view:
-                finish();
-                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
-                break;
-
-
-
-
-        }
-
-
-
-
+        finish();
     }
-    //改写物理按键——返回的逻辑
+
+    /**
+     * 改写物理按键——返回的逻辑
+     * @param keyCode
+     * @param event
+     * @return
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub

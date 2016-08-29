@@ -10,8 +10,6 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -416,7 +414,6 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
          switch (v.getId()){
              case R.id.retrun_text_view:
                  finish();
-                 overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                  break;
              case R.id.network_remind_layout:
                  //跳转到设置界面
@@ -428,16 +425,6 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
          }
 
 
-    }
-    //判断网络
-    public static boolean isConn(Context context){
-        boolean bisConnFlag=false;
-        ConnectivityManager conManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo network = conManager.getActiveNetworkInfo();
-        if(network!=null){
-            bisConnFlag=conManager.getActiveNetworkInfo().isAvailable();
-        }
-        return bisConnFlag;
     }
 
     //点击事件
