@@ -160,7 +160,7 @@
                        android:textSize="@dimen/home_Size_14"
                        android:layout_marginTop="5dp"
                        android:layout_below="@+id/tailt_text_view"
-                       android:text="出厂时间:"
+                       android:text="出厂时间："
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content" />
                    <TextView

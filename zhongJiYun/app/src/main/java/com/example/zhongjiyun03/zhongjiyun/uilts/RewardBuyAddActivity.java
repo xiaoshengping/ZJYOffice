@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -115,8 +116,14 @@ public class RewardBuyAddActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-    private void initView() {
+    @Override
+    protected void onResume() {
+        super.onResume();
         initFacilly();
+    }
+
+    private void initView() {
+
         mSVProgressHUD = new SVProgressHUD(this);
         comtintJobText.setOnClickListener(this);
         retrunText.setOnClickListener(this);
@@ -163,7 +170,9 @@ public class RewardBuyAddActivity extends AppCompatActivity implements View.OnCl
     private void initCommitData() {
 
         if (!TextUtils.isEmpty(nameEdit.getText().toString())){
+            if (nameEdit.getText().toString().length()>1){
             if (!TextUtils.isEmpty(phoneContentText.getText().toString())){
+                if (phoneContentText.getText().toString().length()==11){
                 if (!TextUtils.isEmpty(buyNumberEdit.getText().toString())){
                     if (!TextUtils.isEmpty(facillyTextString)){
                         if (!TextUtils.isEmpty(workAddressTextString)){
@@ -194,11 +203,16 @@ public class RewardBuyAddActivity extends AppCompatActivity implements View.OnCl
 
                     MyAppliction.showToast("请输入购买数量");
                 }
-
+                }else {
+                    MyAppliction.showToast("请输入长度为11位的手机号");
+                }
             }else {
               MyAppliction.showToast("请输入手机号");
             }
+            }else {
 
+                MyAppliction.showToast("购买人姓名至少要2个字");
+            }
         }else {
 
             MyAppliction.showToast("请输入购买人姓名");
@@ -216,17 +230,8 @@ public class RewardBuyAddActivity extends AppCompatActivity implements View.OnCl
         requestParams.addBodyParameter("bossName",nameEdit.getText().toString());
         requestParams.addBodyParameter("bossPhone",phoneContentText.getText().toString());
         requestParams.addBodyParameter("buyCount",buyNumberEdit.getText().toString());
-        /*if (model.equals("全部")){
-            if (!manufacture.equals("全部")){
-                requestParams.addBodyParameter("manufacture",manufacture);
-            }else {
-
-            }
-        }else {
-            requestParams.addBodyParameter("manufacture",manufacture);
-            requestParams.addBodyParameter("noOfManufacture",model);
-        }*/
-
+        requestParams.addBodyParameter("manufacture",manufacture);
+        requestParams.addBodyParameter("noOfManufacture",model);
         requestParams.addBodyParameter("province",province);
         requestParams.addBodyParameter("city",city);
         requestParams.addBodyParameter("hourOfWork",workTimeTextString);
@@ -329,7 +334,7 @@ public class RewardBuyAddActivity extends AppCompatActivity implements View.OnCl
             pvOptions.setSelectOptions(typeOptions);
             Log.e("gqi",typeOptions+"");
         }else {
-            pvOptions.setTitle("选择钻机型号");
+            pvOptions.setTitle("选择设备型号");
             pvOptions.setPicker(facilly1Items, facilly2Items,true);
             //设置默认选中的三级项目
             pvOptions.setSelectOptions(facillyOptions01, facillyOptions01);
@@ -380,15 +385,9 @@ public class RewardBuyAddActivity extends AppCompatActivity implements View.OnCl
                         model=options2Items.get(options1).get(option2);
                         facillyOptions01=options1;
                         facillyOptions02=option2;
-                        /*if (model.equals("全部")){
-                            if (manufacture.equals("全部")){
-                                facillyText.setText("全部");
-                            }else {
-                                facillyText.setText(addressSelectString);
-                            }
-                        }else {
-                            facillyText.setText(addressSelectString);
-                        }*/
+
+                        facillyText.setText(facillyTextString);
+
                     }
 
 
@@ -412,7 +411,7 @@ public class RewardBuyAddActivity extends AppCompatActivity implements View.OnCl
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("设备厂商",responseInfo.result);
+                //Log.e("设备厂商",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppListDataBean<FacillyDataBean> appListDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<FacillyDataBean>>(){});
                     if (appListDataBean.getResult().equals("success")){
@@ -493,4 +492,23 @@ public class RewardBuyAddActivity extends AppCompatActivity implements View.OnCl
         return false;
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+// KeyEvent.KEYCODE_BACK代表返回操作.
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (pvOptions!=null){
+                if (pvOptions.isShowing()){
+                    pvOptions.dismiss();
+                }else {
+                    // 处理返回操作.
+                    finish();
+                }
+            }else {
+                finish();
+            }
+
+
+        }
+        return true;
+    }
 }

@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -208,14 +207,13 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
          //mSVProgressHUD.showWithStatus("正在加载中...");
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        Log.e("driverId",getIntent().getStringExtra("seekData").toString());
         requestParams.addBodyParameter("driverId",getIntent().getStringExtra("seekData").toString());
         messageLayout.setVisibility(View.GONE);
         mSVProgressHUD.showWithStatus("正在加载中...");
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSeekMachinisListParticualsData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-               // Log.e("机手详情",responseInfo.result);
+                //Log.e("机手详情",responseInfo.result);
                  if (!TextUtils.isEmpty(responseInfo.result)){
                      AppBean<SeekMachinistParticulasBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SeekMachinistParticulasBean>>() {
                      });
@@ -229,13 +227,13 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                                  unpterDataText.setText("更新时间"+seekMachinisDataBean.getLastUpdateTimeStr());
                                  addressText.setText("期望地:"+seekMachinisDataBean.getAddress());
                                  payText.setText("期望月薪:"+seekMachinisDataBean.getWage()+"元");
-
+                                 if (!TextUtils.isEmpty(seekMachinisDataBean.getAge())){
+                                     ageText.setText(seekMachinisDataBean.getAge()+"岁");
+                                 }
                                  if (seekMachinisDataBean.getWorkExperiences()!=null&&seekMachinisDataBean.getWorkExperiences().size()!=0){
                                      if (seekMachinisDataBean.getWorkExperiences().size()==1){
                                          workExperienceRlayout.setVisibility(View.VISIBLE);
-                                         if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkingAge())){
-                                             ageText.setText(seekMachinisDataBean.getWorkingAge()+"岁");
-                                         }
+
                                          if(!TextUtils.isEmpty(seekMachinisDataBean.getWorkExperiences().get(0).getBeginYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkExperiences().get(0).getBeginMonth())
                                                  &&!TextUtils.isEmpty(seekMachinisDataBean.getWorkExperiences().get(0).getEndYear())&&!TextUtils.isEmpty(seekMachinisDataBean.getWorkExperiences().get(0).getEndMonth())){
                                              workTimeText.setText("工作时间:"+seekMachinisDataBean.getWorkExperiences().get(0).getBeginYear()+"年"+
@@ -305,7 +303,6 @@ public class SeekMachinistParticulasActivity extends AppCompatActivity implement
                                              petyTextOne.setText("钻机机型:"+seekMachinisDataBean.getWorkExperiences().get(1).getManufacture()+
                                                      seekMachinisDataBean.getWorkExperiences().get(1).getNoOfManufacture());
                                          }else {
-                                             Log.e("钻机机型","钻机机型"+seekMachinisDataBean.getWorkExperiences().get(0)+seekMachinisDataBean.getWorkExperiences().get(1));
                                              petyTextOne.setText("钻机机型:暂无");
                                          }
                                          if (!TextUtils.isEmpty(seekMachinisDataBean.getWorkExperiences().get(1).getDescribing())) {

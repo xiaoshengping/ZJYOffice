@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -113,12 +114,19 @@ public class RewardSellAddActivity extends AppCompatActivity implements View.OnC
         init();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //选项选择器
+        pvOptions = new OptionsPickerView(RewardSellAddActivity.this);
+        initFacilly();
+    }
+
     private void init() {
         initView();
     }
 
     private void initView() {
-        initFacilly();
         mSVProgressHUD = new SVProgressHUD(this);
         comtintJobText.setOnClickListener(this);
         retrunText.setOnClickListener(this);
@@ -327,8 +335,7 @@ public class RewardSellAddActivity extends AppCompatActivity implements View.OnC
         final ArrayList<ArrayList<String>> compensationList2=new ArrayList();
 
         vMasker= findViewById(R.id.vMasker);
-        //选项选择器
-        pvOptions = new OptionsPickerView(RewardSellAddActivity.this);
+
 
         if (tage==1){
             pvOptions.setTitle("选择所在地");
@@ -336,7 +343,7 @@ public class RewardSellAddActivity extends AppCompatActivity implements View.OnC
             //设置默认选中的三级项目
             pvOptions.setSelectOptions(addressOptions01, addressOptions02);
         }else if (tage==2){
-            pvOptions.setTitle("选择工作小时");
+            pvOptions.setTitle("选择出厂时间");
             for (int i = 0; i <compensationData.length ; i++) {
                 compensationList1.add(compensationData[i]);
 
@@ -352,7 +359,7 @@ public class RewardSellAddActivity extends AppCompatActivity implements View.OnC
             pvOptions.setPicker(compensationList1,compensationList2,true);
             pvOptions.setSelectOptions(timeOptions,timeOptions1);
         }else {
-            pvOptions.setTitle("选择钻机型号");
+            pvOptions.setTitle("选择设备型号");
             if (facilly1Items.size()!=0&&facilly2Items.size()!=0){
                 pvOptions.setPicker(facilly1Items, facilly2Items,true);
                 //设置默认选中的三级项目
@@ -506,6 +513,19 @@ public class RewardSellAddActivity extends AppCompatActivity implements View.OnC
         }
         return false;
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+// KeyEvent.KEYCODE_BACK代表返回操作.
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (pvOptions.isShowing()){
+                pvOptions.dismiss();
+            }else {
+                // 处理返回操作.
+                finish();
+            }
 
+        }
+        return true;
+    }
 
 }

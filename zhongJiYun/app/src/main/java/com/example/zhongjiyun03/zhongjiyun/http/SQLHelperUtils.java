@@ -12,7 +12,11 @@ import android.text.TextUtils;
 public class SQLHelperUtils {
 
 
-
+    /**
+     * 查询id
+     * @param context
+     * @return
+     */
     public  static String  queryId(Context context){
         SQLhelper sqLhelper=new SQLhelper(context);
         SQLiteDatabase db= sqLhelper.getWritableDatabase();
@@ -70,6 +74,40 @@ public class SQLHelperUtils {
         }
         return tekon;
     }
+
+    /**
+     * 功能：查询头像
+     * @param context
+     * @return
+     */
+
+    public  static String queryHeadtHumb(Context context){
+        SQLhelper sqLhelper=new SQLhelper(context);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String headtHumb=null;  //手机号码
+        while (cursor.moveToNext()) {
+            headtHumb= cursor.getString(4);
+        }
+        return headtHumb;
+    }
+    /**
+     * 功能：查询头像
+     * @param context
+     * @return
+     */
+
+    public  static String queryName(Context context){
+        SQLhelper sqLhelper=new SQLhelper(context);
+        SQLiteDatabase db= sqLhelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
+        String name=null;  //手机号码
+        while (cursor.moveToNext()) {
+            name= cursor.getString(2);
+        }
+        return name;
+    }
+
     /**
      * 功能：修改手机号
      * @param context

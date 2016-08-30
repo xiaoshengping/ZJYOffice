@@ -6,17 +6,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
@@ -103,6 +107,9 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
     private String mannerText;  //加班费选中text
     private String serviceText;  //节假日休息选中text
     private String restText;  //其他选中text
+    @ViewInject(R.id.scrollview)
+    private ScrollView scrollview;
+    private SVProgressHUD mSVProgressHUD;//loding
 
 
 
@@ -125,6 +132,14 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initFacilly();
+        //选项选择器
+        pvOptions = new OptionsPickerView(ReleaseJobActivity.this);
+    }
+
     private void initView() {
         comtintJobText.setText("提交");
         titleNemeTv.setText("发布需求");
@@ -135,13 +150,31 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
         workTimeLayout.setOnClickListener(this);
         drillingTypeLayout.setOnClickListener(this);
         facillyDataBeens=new ArrayList<>();
-        initFacilly();
+
         efficiencyCheck.setOnCheckedChangeListener(this);
         manner_checkBox.setOnCheckedChangeListener(this);
         service_checkBox.setOnCheckedChangeListener(this);
         restRabutton.setOnCheckedChangeListener(this);
+        mSVProgressHUD = new SVProgressHUD(this);
+        officeEdit.setOnTouchListener(new View.OnTouchListener() {
 
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
 
+        scrollview.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                officeEdit.getParent().requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
+        });
 
 
     }
@@ -334,6 +367,7 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
         //步骤2：获取文件中的值
         String sesstionId = read.getString("code","");
         requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        mSVProgressHUD.showWithStatus("正在提交中...");
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getReleaseJobData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -350,12 +384,14 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
 
 
                    }
+                mSVProgressHUD.dismiss();
             }
 
             @Override
             public void onFailure(HttpException e, String s) {
                 Log.e("发布招聘onFailure",s);
                 MyAppliction.showToast("网络异常，请稍后重试");
+                mSVProgressHUD.dismiss();
             }
         });
 
@@ -398,8 +434,7 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
         String[] workTimeData={"不限","1年以下","1-3年","3-5年","5-10年","10年以上"};
         final ArrayList<String> workTimeList=new ArrayList();
         vMasker= findViewById(R.id.vMasker);
-        //选项选择器
-        pvOptions = new OptionsPickerView(ReleaseJobActivity.this);
+
 
         if (tage==1){
             pvOptions.setTitle("选择城市");
@@ -420,7 +455,6 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
             }
             pvOptions.setPicker(workTimeList);
             pvOptions.setSelectOptions(typeOptions);
-            Log.e("gqi",typeOptions+"");
         }else {
             pvOptions.setTitle("选择钻机型号");
             pvOptions.setPicker(facilly1Items, facilly2Items,true);
@@ -469,8 +503,8 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
                     if (!TextUtils.isEmpty(addressSelectString)){
                         drillingTypeText.setText(addressSelectString);
                         //addressTextString=addressSelectString;
-                        manufacture=options1Items.get(options1);
-                        model=options2Items.get(options1).get(option2);
+                        manufacture=facilly1Items.get(options1);
+                        model=facilly2Items.get(options1).get(option2);
                         facillyOptions01=options1;
                         facillyOptions02=option2;
                     }
@@ -484,6 +518,21 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
 
         pvOptions.show();
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+// KeyEvent.KEYCODE_BACK代表返回操作.
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (pvOptions.isShowing()){
+                pvOptions.dismiss();
+            }else {
+                // 处理返回操作.
+                finish();
+            }
+
+        }
+        return true;
     }
 
 

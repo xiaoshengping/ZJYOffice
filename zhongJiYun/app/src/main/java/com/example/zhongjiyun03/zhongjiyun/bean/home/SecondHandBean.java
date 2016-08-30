@@ -16,6 +16,7 @@ public class SecondHandBean implements Serializable {
     private int IsPayMargin;//	int	是否已缴纳保证金
     private int IsShowPrice;//	int	是否显示价格
     private String PriceStr;//	string	价格
+    private String Price;//	string	价格
     private String Province;//	string	省份
     private int SecondHandType;//	int	二手机类别（0=出租，1=出售）
     private String SecondHandTypeStr;//	string	二手机类别图片
@@ -30,6 +31,13 @@ public class SecondHandBean implements Serializable {
     private String HourOfWork;
 
 
+    public String getPrice() {
+        return Price;
+    }
+
+    public void setPrice(String price) {
+        Price = price;
+    }
 
     public String getHourOfWork() {
         return HourOfWork;
@@ -211,6 +219,7 @@ public class SecondHandBean implements Serializable {
                 ", IsPayMargin=" + IsPayMargin +
                 ", IsShowPrice=" + IsShowPrice +
                 ", PriceStr='" + PriceStr + '\'' +
+                ", Price='" + Price + '\'' +
                 ", Province='" + Province + '\'' +
                 ", SecondHandType=" + SecondHandType +
                 ", SecondHandTypeStr='" + SecondHandTypeStr + '\'' +

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
 
        <ScrollView
-           android:visibility="gone"
+
            android:id="@+id/message_layout"
            android:layout_below="@+id/tailt_layout"
            android:layout_width="match_parent"
@@ -53,7 +53,7 @@
               android:layout_marginTop="10dp"
               android:textColor="@color/ic_white"
               android:layout_marginRight="5dp"
-              android:textSize="@dimen/home_Size_18"
+              android:textSize="@dimen/home_Size_16"
               android:layout_toLeftOf="@+id/name_image"
               android:layout_below="@+id/usericon_background_iv"
               android:text="李少航"
@@ -72,10 +72,10 @@
               android:layout_marginTop="10dp"
               android:textColor="@color/ic_white"
               android:layout_marginLeft="5dp"
-              android:textSize="@dimen/home_Size_18"
+              android:textSize="@dimen/home_Size_16"
               android:layout_toRightOf="@+id/name_image"
               android:layout_below="@+id/usericon_background_iv"
-              android:text="李少航"
+
               android:layout_width="wrap_content"
               android:layout_height="wrap_content" />
 
@@ -83,7 +83,7 @@
               android:id="@+id/work_experience_text"
               android:layout_marginTop="10dp"
               android:textColor="@color/ic_white"
-              android:textSize="@dimen/home_Size_18"
+              android:textSize="@dimen/home_Size_16"
               android:layout_below="@+id/name_text"
               android:layout_toLeftOf="@+id/work_experience_image"
               android:text="3年工作经验"
@@ -105,21 +105,12 @@
               android:layout_marginLeft="10dp"
               android:layout_marginTop="10dp"
               android:textColor="@color/ic_white"
-              android:textSize="@dimen/home_Size_18"
+              android:textSize="@dimen/home_Size_16"
               android:layout_below="@+id/name_text"
               android:text="更新时间06月08日"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content" />
-          <TextView
 
-              android:layout_centerHorizontal="true"
-              android:layout_marginTop="25dp"
-              android:textColor="@color/ic_white"
-              android:gravity="center|left"
-              android:drawableLeft="@mipmap/phone_write"
-              android:layout_below="@+id/work_experience_image"
-              android:layout_width="130dp"
-              android:layout_height="wrap_content" />
           <TextView
 
                android:id="@+id/phone_tell"
@@ -131,10 +122,30 @@
               android:gravity="center"
               android:drawablePadding="10dp"
               android:layout_below="@+id/work_experience_image"
-              android:text="联系机手"
+
               android:layout_width="200dp"
               android:layout_height="40dp" />
-
+          <ImageView
+              android:id="@+id/phone_image"
+              android:layout_marginLeft="140dp"
+              android:layout_marginTop="27dp"
+              android:gravity="center|left"
+              android:src="@mipmap/phone_write"
+              android:layout_below="@+id/work_experience_image"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          <TextView
+              android:layout_centerHorizontal="true"
+              android:layout_marginLeft="10dp"
+              android:layout_marginTop="23dp"
+              android:textColor="@color/ic_white"
+              android:textSize="@dimen/home_Size_16"
+              android:drawablePadding="10dp"
+              android:layout_below="@+id/work_experience_image"
+              android:layout_toRightOf="@+id/phone_image"
+              android:text="联系机手"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
 
 
       </RelativeLayout>

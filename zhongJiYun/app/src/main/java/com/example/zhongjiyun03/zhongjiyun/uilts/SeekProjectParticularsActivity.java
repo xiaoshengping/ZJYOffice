@@ -3,8 +3,6 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -42,7 +40,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -185,7 +183,20 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
-        initData();
+        if (!TextUtils.isEmpty(SQLNewHelperUtils.queryProjectComment(SeekProjectParticularsActivity.this))){
+            Log.e("有",SQLNewHelperUtils.queryProjectComment(SeekProjectParticularsActivity.this));
+            if ((SQLNewHelperUtils.queryProjectComment(SeekProjectParticularsActivity.this)).equals("2")){
+
+                initData();
+                SQLNewHelperUtils.updateProjectComment(SeekProjectParticularsActivity.this,SQLNewHelperUtils.queryProjectCommentId(SeekProjectParticularsActivity.this),"1");
+            }
+
+        }else {
+            Log.e("没有","jjjdfjfjfj");
+            SQLNewHelperUtils.insertProjectComment(SeekProjectParticularsActivity.this,SQLNewHelperUtils.queryProjectCommentId(SeekProjectParticularsActivity.this),"1");
+
+        }
+
     }
 
     private void initData() {
@@ -473,17 +484,8 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        SQLhelper sqLhelper = new SQLhelper(SeekProjectParticularsActivity.this);
-        SQLiteDatabase db = sqLhelper.getWritableDatabase();
-        Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid = null;  //用户id
-        String states = null;  //用户星级
+        String uid = SQLHelperUtils.queryId(SeekProjectParticularsActivity.this);  //用户id
 
-        while (cursor.moveToNext()) {
-            uid = cursor.getString(0);
-            states = cursor.getString(3);
-
-        }
         switch (v.getId()) {
 
             case R.id.retrun_text_view:
@@ -584,7 +586,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCallOwerData(), requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("拨打业主电话", responseInfo.result);
+                    //Log.e("拨打业主电话", responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)) {
                         AppDataBean appDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppDataBean>() {
                         });
@@ -739,7 +741,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
             finish();
-            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;

@@ -126,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
-                android:maxLength="11"
+                android:maxLength="4"
                 android:inputType="phone"
                 android:background="@color/ic_white"
                 android:layout_centerInParent="true"

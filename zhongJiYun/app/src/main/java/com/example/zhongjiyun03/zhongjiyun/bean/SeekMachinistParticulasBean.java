@@ -15,8 +15,16 @@ public class SeekMachinistParticulasBean implements Serializable {
     private String Address	;//String	期望工作地址
     private String Wage	;//String	期望月薪
     private String DriverPhoneNumber	;//String	机手手机号码
+    private String Age;// 机手年龄
     private List<SeekWorkExperiencesBean> WorkExperiences;//	object	工作经验
 
+    public String getAge() {
+        return Age;
+    }
+
+    public void setAge(String age) {
+        Age = age;
+    }
 
     public String getDriverHeader() {
         return DriverHeader;
@@ -92,6 +100,7 @@ public class SeekMachinistParticulasBean implements Serializable {
                 ", Address='" + Address + '\'' +
                 ", Wage='" + Wage + '\'' +
                 ", DriverPhoneNumber='" + DriverPhoneNumber + '\'' +
+                ", Age='" + Age + '\'' +
                 ", WorkExperiences=" + WorkExperiences +
                 '}';
     }

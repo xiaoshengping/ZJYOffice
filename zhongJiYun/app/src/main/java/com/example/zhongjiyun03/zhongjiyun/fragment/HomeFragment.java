@@ -323,7 +323,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("推荐二手机",responseInfo.result);
+               // Log.e("推荐二手机",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<SecondHandDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandDataBean>>(){});
                     if ((appListDataBean.getResult()).equals("success")){

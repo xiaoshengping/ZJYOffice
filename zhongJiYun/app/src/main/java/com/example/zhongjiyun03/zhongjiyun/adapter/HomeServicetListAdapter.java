@@ -54,7 +54,7 @@ public class HomeServicetListAdapter extends AppBaseAdapter<ServiceProviderBean>
             if (!data.get(position).getDistance().equals("0")){
                 viewHold.addressTextView.setVisibility(View.VISIBLE);
                 viewHold.addressTextView.setText(data.get(position).getDistance()+"Km");
-            }else {
+            }else if (data.get(position).getDistance().equals("-1")){
                 viewHold.addressTextView.setVisibility(View.GONE);
             }
             viewHold.typeTextView.setText(data.get(position).getProviderTypeStr());

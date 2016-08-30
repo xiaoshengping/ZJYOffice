@@ -51,10 +51,10 @@ public class RecommendMachinistAdapter extends AppBaseAdapter<SecondHandBean> {
                 MyAppliction.imageLoader.displayImage(data.get(position).getDevicePhoto(),holderView.imageView,MyAppliction.options);
             }
 
-            if (data.get(position).getPriceStr().equals("面议")){
+            if (data.get(position).getPrice().equals("面议")){
                 holderView.priceTextView.setText("面议");
             }else {
-                holderView.priceTextView.setText(data.get(position).getPriceStr()+"万");
+                holderView.priceTextView.setText(data.get(position).getPrice()+"万");
             }
             if (data.get(position).getSecondHandType()==0){
                 holderView.dateTextVIew.setVisibility(View.VISIBLE);

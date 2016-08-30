@@ -34,6 +34,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.MyExtruderDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -145,19 +146,12 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initData(int pageIndex) {
-        SQLhelper sqLhelper=new SQLhelper(MyExtruderActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
 
-        }
         HttpUtils httpUtils=new HttpUtils();
         final RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("PageIndex",pageIndex+"");
         requestParams.addBodyParameter("PageSize","10");
-        requestParams.addBodyParameter("Id",uid);
+        requestParams.addBodyParameter("Id", SQLHelperUtils.queryId(MyExtruderActivity.this));
         //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
         //步骤2：获取文件中的值
@@ -167,7 +161,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMyExtruderListData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("我的钻机列表",responseInfo.result);
+                    //Log.e("我的钻机列表",responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)){
                         AppBean<MyExtruderDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<MyExtruderDataBean>>(){});
                         if ((appBean.getResult()).equals("success")){

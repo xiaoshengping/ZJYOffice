@@ -250,7 +250,7 @@ public class ServiceProviderActivity extends AppCompatActivity implements View.O
             orlder.add(strings[i]);
         }
         //物流=0, 主机=1, 常用配套=2, 消耗配套=3, 维修=4, 现场支持=5
-        String[] evstring={"物流","主机","常用配套","消耗配套","维修","现场支持"};
+        String[] evstring={"全部","物流","主机","常用配套","消耗配套","维修","现场支持"};
         for (int i = 0; i <evstring.length ; i++) {
             sortLists.add(evstring[i]);
         }

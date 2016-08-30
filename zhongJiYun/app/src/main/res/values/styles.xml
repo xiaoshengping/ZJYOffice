@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/red_light</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@mipmap/home_log_icon</item>
         <item name="android:windowIsTranslucent">false</item>
         <!-- 设置activity切换动画 -->
         <item name="android:windowAnimationStyle">@style/activityAnimation</item>

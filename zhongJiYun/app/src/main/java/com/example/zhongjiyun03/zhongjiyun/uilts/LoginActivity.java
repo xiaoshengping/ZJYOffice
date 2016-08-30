@@ -35,6 +35,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.main.LoginDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.MyCookieStore;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -194,7 +195,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                    httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getLoginData(),requestParams, new RequestCallBack<String>() {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
-                            Log.e("登录信息",responseInfo.result);
+                           // Log.e("登录信息",responseInfo.result);
                            // MyAppliction.showToast("恭喜您,登录成功!");
                             if (!TextUtils.isEmpty(responseInfo.result)){
                                 AppBean<AppUserDataBean<LoginDataBean>> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppUserDataBean<LoginDataBean>>>(){});
@@ -212,7 +213,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         //这里是读取Cookie['PHPSESSID']的值存在静态变量中，保证每次都是同一个值
                                         if ("ASP.NET_SessionId".equals(cookies.get(i).getName())) {
                                             aspSesstion = cookies.get(i).getValue();
-                                            Log.e("ASP.NET_SessionId", aspSesstion);
                                             break;
                                         }
                                     }
@@ -229,6 +229,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     insertData(sqLhelper, loginDataBean.getId(), loginDataBean.getPhoneNumber(), loginDataBean.getName(), loginDataBean.getStarRate()+"",
                                             loginDataBean.getHeadthumb(), loginDataBean.getRole());
 
+                                    if (!TextUtils.isEmpty(SQLNewHelperUtils.queryProjectComment(LoginActivity.this))){
+                                        SQLNewHelperUtils.updateProjectComment(LoginActivity.this,SQLNewHelperUtils.queryProjectCommentId(LoginActivity.this),"2");
+                                    }else {
+                                        SQLNewHelperUtils.insertProjectComment(LoginActivity.this,SQLNewHelperUtils.queryProjectCommentId(LoginActivity.this),"2");
+
+                                    }
+                                    
                                     mSVProgressHUD.dismiss();
                                     mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");
                                     finish();

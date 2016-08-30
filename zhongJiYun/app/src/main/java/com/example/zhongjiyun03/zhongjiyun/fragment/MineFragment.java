@@ -1,11 +1,8 @@
 package com.example.zhongjiyun03.zhongjiyun.fragment;
 
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -23,15 +20,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.MessageDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.SystemMessageDataBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.PersonageInformationBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
-import com.example.zhongjiyun03.zhongjiyun.http.SystemEvaluateSQLhelper;
-import com.example.zhongjiyun03.zhongjiyun.http.SystemMessageSQLhelper;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.uilts.AttentionExtrunActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.AttentionProjectActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.CommentActivity;
@@ -56,7 +50,6 @@ import com.lidroid.xutils.http.client.HttpRequest;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -90,7 +83,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private LinearLayout stingLayout;
 
     @ViewInject(R.id.comment_layout)
-    private LinearLayout commentLayout;
+    private LinearLayout commentLayout;   //评论布局
     @ViewInject(R.id.evaluate_remind_image)
     private ImageView evaluateRemindImage; //评论红点
     @ViewInject(R.id.projectReply_remind_image)
@@ -102,7 +95,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private String date;
     private PersonageInformationBean personageInformation;
     @ViewInject(R.id.rating_bar)
-    private RatingBar ratingBar;
+    private RatingBar ratingBar;   //星级
 
     @ViewInject(R.id.drilling_layout)
     private LinearLayout drillingLayout;  //我的钻机
@@ -160,21 +153,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        SQLhelper sqLhelper=new SQLhelper(getActivity());
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        String phone=null;  //手机号码
-        String name=null;     //名字
-        String StarRate=null; //等级
-        String headtHumb=null;  //头像路径
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-            phone= cursor.getString(1);
-            name = cursor.getString(2);
-            StarRate=cursor.getString(3);
-            headtHumb=cursor.getString(4);
-        }
+        String uid= SQLHelperUtils.queryId(getActivity());  //用户id
+        String phone=SQLHelperUtils.queryPhone(getActivity());  //手机号码
+        String name=SQLHelperUtils.queryName(getActivity());     //名字
+        String headtHumb=SQLHelperUtils.queryHeadtHumb(getActivity());  //头像路径
+
         if (!TextUtils.isEmpty(uid)){
             loginLayout.setVisibility(View.GONE);
             loingXshiLayout.setVisibility(View.VISIBLE);
@@ -203,18 +186,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initPersonageInformationData() {
-        SQLhelper sqLhelper=new SQLhelper(getActivity());
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
 
-        }
-        if (!TextUtils.isEmpty(uid)){
+        if (!TextUtils.isEmpty(SQLHelperUtils.queryId(getActivity()))){
             HttpUtils httpUtils=new HttpUtils();
             RequestParams requestParams=new RequestParams();
-            requestParams.addBodyParameter("ID",uid);
+            requestParams.addBodyParameter("ID",SQLHelperUtils.queryId(getActivity()));
             //步骤1：创建一个SharedPreferences接口对象
             SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
             //步骤2：获取文件中的值
@@ -272,46 +248,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
         if (!TextUtils.isEmpty(uid)){
-            if (MyAppliction.isProjectMessage()==true){
-                projectReplyeminDImage.setVisibility(View.VISIBLE);
-            }else {
-                projectReplyeminDImage.setVisibility(View.GONE);
-            }
-            intiMessageData();
-            requestParams.addBodyParameter("id",uid);
-            SystemMessageSQLhelper sqLhelper=new SystemMessageSQLhelper(getActivity());
-            SQLiteDatabase db= sqLhelper.getWritableDatabase();
-            Cursor cursor=db.query(SystemMessageSQLhelper.tableName, null, null, null, null, null, null);
-            String messageRemindId=null;  //id
-            String giftBag=null;     //我的红包数
-            while (cursor.moveToNext()) {
-                messageRemindId=cursor.getString(0);
-                giftBag=cursor.getString(1);
-            }
-            SystemEvaluateSQLhelper sqLhelpers=new SystemEvaluateSQLhelper(getActivity());
-            SQLiteDatabase dbs= sqLhelpers.getWritableDatabase();
-            Cursor cursors=dbs.query(SystemEvaluateSQLhelper.tableName, null, null, null, null, null, null);
-            String messageEvaluateId=null;  //id
-            String evaluate=null;  //我的评价数
-
-            while (cursors.moveToNext()) {
-                messageEvaluateId=cursors.getString(0);
-                evaluate=cursors.getString(1);
-
-
-            }
-
-            if (!TextUtils.isEmpty(evaluate)){
-            requestParams.addBodyParameter("evaluate",evaluate);
-                //Log.e("evaluate",evaluate);
-            }
-
-            if (!TextUtils.isEmpty(giftBag)){
-                requestParams.addBodyParameter("giftBag",giftBag);
-                //Log.e("giftBag11",giftBag);
-            }
-
-
+        requestParams.addBodyParameter("evaluate", SQLNewHelperUtils.queryEvaluate(getActivity()));
+        requestParams.addBodyParameter("message",SQLNewHelperUtils.queryMessage(getActivity()));
+        requestParams.addBodyParameter("giftBag",SQLNewHelperUtils.queryGiftBag(getActivity()));
+        requestParams.addBodyParameter("projectReply",SQLNewHelperUtils.queryProjectReply(getActivity()));
+        requestParams.addBodyParameter("userType","boss");
         //步骤1：创建一个SharedPreferences接口对象
         SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
         //步骤2：获取文件中的值
@@ -321,7 +262,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSystemMessageRemindData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("消息提醒",responseInfo.result);
+                //=-Log.e("消息提醒",responseInfo.result);
 
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<SystemMessageDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SystemMessageDataBean>>(){});
@@ -338,7 +279,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                             }else {
                                 giftBagRemindImage.setVisibility(View.GONE);
                             }
-
+                            if (systemMessageDataBean.getMessage()>0){
+                                messageemindImage.setVisibility(View.VISIBLE);
+                            }else {
+                                messageemindImage.setVisibility(View.GONE);
+                            }
+                            if (systemMessageDataBean.getProjectReply()>0){
+                                projectReplyeminDImage.setVisibility(View.VISIBLE);
+                            }else {
+                                projectReplyeminDImage.setVisibility(View.GONE);
+                            }
 
 
 
@@ -367,37 +317,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        SQLhelper sqLhelper=new SQLhelper(getActivity());
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-
-        }
-        //获取红包系统提醒数据
-        SystemMessageSQLhelper systemMessageSQLhelper=new SystemMessageSQLhelper(getActivity());
-        SQLiteDatabase sqLiteDatabase= systemMessageSQLhelper.getWritableDatabase();
-        Cursor cursors=sqLiteDatabase.query(SystemMessageSQLhelper.tableName, null, null, null, null, null, null);
-        String messageRemindId = null;  //id
-        String giftBag=null;     //我的红包数
-        while (cursors.moveToNext()) {
-            messageRemindId=cursors.getString(0);
-            giftBag = cursors.getString(1);
-
-        }
-        //获取评论系统提醒数据
-        SystemEvaluateSQLhelper systemEvaluateSQLhelper=new SystemEvaluateSQLhelper(getActivity());
-        SQLiteDatabase sqLiteDatabases= systemEvaluateSQLhelper.getWritableDatabase();
-        Cursor cursorss=sqLiteDatabases.query(SystemEvaluateSQLhelper.tableName, null, null, null, null, null, null);
-        String messageEvaluateId = null;  //id
-        String evaluate=null;     //我的红包数
-        while (cursorss.moveToNext()) {
-            messageEvaluateId=cursorss.getString(0);
-            evaluate = cursorss.getString(1);
-
-        }
-
+       String uid =SQLHelperUtils.queryId(getActivity());
         switch (v.getId()){
             case R.id.loing_layout:// 登录
                 Intent intent=new Intent(getActivity(), LoginActivity.class);
@@ -429,7 +349,15 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.competitive_layout:  //我的竞标
                 if (!TextUtils.isEmpty(uid)){
+                    if (!TextUtils.isEmpty(SQLNewHelperUtils.queryProjectReply(getActivity()))){
+                        SQLNewHelperUtils.updateProjectReply(getActivity(),SQLNewHelperUtils.queryProjectId(getActivity()),date);
+                    }else {
+                        if (!TextUtils.isEmpty(date)){
+                            SQLNewHelperUtils.insertprojectReply(getActivity(),SQLNewHelperUtils.queryProjectId(getActivity()),date);
+                        }
 
+                    }
+                    projectReplyeminDImage.setVisibility(View.GONE);
                     Intent competitveTenderIntent=new Intent(getActivity(), MyCompetitveTenderActivity.class);
                     startActivity(competitveTenderIntent);
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -442,6 +370,16 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.message_layout:   //系统消息
                 if (!TextUtils.isEmpty(uid)){
+                    if (!TextUtils.isEmpty(SQLNewHelperUtils.queryMessage(getActivity()))){
+                        SQLNewHelperUtils.updateMessage(getActivity(),SQLNewHelperUtils.queryMessageId(getActivity()),date);
+                    }else {
+                        if (!TextUtils.isEmpty(date)){
+                            SQLNewHelperUtils.insertMessage(getActivity(),SQLNewHelperUtils.queryMessageId(getActivity()),date);
+                        }
+
+                    }
+                    messageemindImage.setVisibility(View.GONE);
+
                     Intent messageIntent=new Intent(getActivity(), MessageActivity.class);
                     startActivity(messageIntent);
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -453,14 +391,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.redpacket_layout:   //我的红包
                 if (!TextUtils.isEmpty(uid)){
-                        if (!TextUtils.isEmpty(giftBag)){
-                            update(systemMessageSQLhelper,SystemMessageSQLhelper.tableName,SystemMessageSQLhelper.MESSAGEREMINDID,messageRemindId,SystemMessageSQLhelper.GIFTBAG,date);
-                        }else {
-                            if (!TextUtils.isEmpty(date)){
-                                insertData(systemMessageSQLhelper,SystemMessageSQLhelper.tableName,SystemMessageSQLhelper.MESSAGEREMINDID,SystemMessageSQLhelper.GIFTBAG,date);
-                            }
-
+                    if (!TextUtils.isEmpty(SQLNewHelperUtils.queryGiftBag(getActivity()))){
+                        SQLNewHelperUtils.updateGiftBag(getActivity(),SQLNewHelperUtils.queryGiftBagId(getActivity()),date);
+                    }else {
+                        if (!TextUtils.isEmpty(date)){
+                            SQLNewHelperUtils.insertGiftBag(getActivity(),SQLNewHelperUtils.queryGiftBagId(getActivity()),date);
                         }
+
+                    }
                     giftBagRemindImage.setVisibility(View.GONE);
                     Intent redPatckIntent=new Intent(getActivity(), MyRedPacketActivity.class);
                     startActivity(redPatckIntent);
@@ -484,13 +422,15 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.comment_layout:   //评论
                 if (!TextUtils.isEmpty(uid)){
 
-                    if (!TextUtils.isEmpty(evaluate)){
-                        updateEvaluate(systemEvaluateSQLhelper,SystemEvaluateSQLhelper.tableName,SystemEvaluateSQLhelper.MESSAGEEVALUATEID,messageEvaluateId,SystemEvaluateSQLhelper.EVALUATE,date);
+                    if (!TextUtils.isEmpty(SQLNewHelperUtils.queryEvaluateId(getActivity()))){
+                        SQLNewHelperUtils.updateEvaluate(getActivity(),SQLNewHelperUtils.queryEvaluateId(getActivity()),date);
                     }else {
                         if (!TextUtils.isEmpty(date)){
-                            insertEvaluateData(systemEvaluateSQLhelper,SystemEvaluateSQLhelper.tableName,SystemEvaluateSQLhelper.MESSAGEEVALUATEID,SystemEvaluateSQLhelper.EVALUATE,date);
+                            SQLNewHelperUtils.insertEvaluate(getActivity(),SQLNewHelperUtils.queryEvaluateId(getActivity()),date);
                         }
+
                     }
+                    evaluateRemindImage.setVisibility(View.GONE);
                     Intent commentIntent=new Intent(getActivity(), CommentActivity.class);
                     startActivity(commentIntent);
                     getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -557,122 +497,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         }
     }
-    /**
-     * 插入数据
-     */
-    public void insertData(SystemMessageSQLhelper sqLhelper,String tableName,String idName,String key,String value){
-        SQLiteDatabase db=sqLhelper.getWritableDatabase();
-        // db.execSQL("insert into user(uid,userName,userIcon,state) values('战士',3,5,7)");
-        ContentValues values=new ContentValues();
-        values.put(key,value);
-        db.insert(tableName, idName, values);
-        db.close();
-    }
-    /**
-     * 更新数据
-     */
-    public void update(SystemMessageSQLhelper sqLhelper,String tableName,String idName,String id,String key,String value){
-        SQLiteDatabase db = sqLhelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(key, value);
-        db.update(tableName, contentValues,
-                idName+"=?", new String[]{id});
-        //Log.e("更新了数据","更新了数据");
-    }
 
-    /**
-     * 评论插入数据
-     */
-    public void insertEvaluateData(SystemEvaluateSQLhelper sqLhelper,String tableName,String idName,String key,String value){
-        SQLiteDatabase db=sqLhelper.getWritableDatabase();
-        // db.execSQL("insert into user(uid,userName,userIcon,state) values('战士',3,5,7)");
-        ContentValues values=new ContentValues();
-        values.put(key,value);
-        db.insert(tableName, idName, values);
-        db.close();
-    }
-    /**
-     * 评论更新数据
-     */
-    public void updateEvaluate(SystemEvaluateSQLhelper sqLhelper,String tableName,String idName,String id,String key,String value){
-        SQLiteDatabase db = sqLhelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(key, value);
-        db.update(tableName, contentValues,
-                idName+"=?", new String[]{id});
-        //Log.e("更新了数据","更新了数据");
-    }
-
-   /* *//**
-     * 消息插入数据
-     *//*
-    public void insertMessageData(MianMessageSQLhelper sqLhelper,String tableName,String idName,String key,String value){
-        SQLiteDatabase db=sqLhelper.getWritableDatabase();
-        // db.execSQL("insert into user(uid,userName,userIcon,state) values('战士',3,5,7)");
-        ContentValues values=new ContentValues();
-        values.put(key,value);
-        db.insert(tableName, idName, values);
-        db.close();
-    }
-    *//**
-     * 消息更新数据
-     *//*
-    public void updateMessage(MianMessageSQLhelper sqLhelper,String tableName,String idName,String id,String key,String value){
-        SQLiteDatabase db = sqLhelper.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(key, value);
-        db.update(tableName, contentValues,
-                idName+"=?", new String[]{id});
-        //Log.e("更新了数据","更新了数据");
-    }*/
-
-
-    private void intiMessageData() {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getActivity().getSharedPreferences("lock", getActivity().MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getMessageListData(),requestParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<MessageDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<MessageDataBean>>(){});
-                    if (appListDataBean.getResult().equals("success")){
-                        List<MessageDataBean> messageDataBeen=  appListDataBean.getData();
-                        if (messageDataBeen!=null){
-                           if (MyAppliction.getMessageSize()!=0){
-                               if (messageDataBeen.size()>MyAppliction.getMessageSize()){
-                                  MyAppliction.setMessageSize(messageDataBeen.size());
-                                   messageemindImage.setVisibility(View.VISIBLE);
-
-                               }else {
-                                   messageemindImage.setVisibility(View.GONE);
-                               }
-                           }else {
-                               MyAppliction.setMessageSize(messageDataBeen.size());
-                           }
-
-                        }else {
-
-                        }
-
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-
-
-            }
-        });
-
-
-    }
 
 
 }

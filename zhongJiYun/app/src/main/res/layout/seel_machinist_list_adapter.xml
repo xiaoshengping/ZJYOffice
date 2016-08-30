@@ -101,7 +101,7 @@
         android:layout_height="wrap_content" />
     <ImageView
 
-        android:layout_marginLeft="110dp"
+        android:layout_marginLeft="100dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="5dp"
         android:layout_below="@+id/neirong_text_view"
@@ -115,7 +115,7 @@
     <TextView
         android:visibility="gone"
         android:text="hhhfh"
-        android:layout_marginLeft="110dp"
+        android:layout_marginLeft="100dp"
         android:id="@+id/text_view"
         android:layout_below="@+id/image_ligin_end"
         android:layout_marginTop="5dp"

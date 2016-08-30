@@ -277,9 +277,9 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
 
                             if (!TextUtils.isEmpty(secondHandBean.getPriceStr())){
                                 if (secondHandBean.getPriceStr().equals("面议")){
-                                    priceTextView.setText("面议");
+                                    priceTextView.setText("价格：面议");
                                 }else {
-                                    priceTextView.setText(secondHandBean.getPriceStr()+"万");
+                                    priceTextView.setText("价格："+secondHandBean.getPriceStr()+"万");
                                 }
 
                             }

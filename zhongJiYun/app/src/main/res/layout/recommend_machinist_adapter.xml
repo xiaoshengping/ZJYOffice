@@ -56,10 +56,9 @@
         android:layout_width="match_parent"
         android:layout_height="10dp" />
     <ImageView
-
         android:id="@+id/second_tage_image"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="9dp"
+        android:layout_marginLeft="6dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>

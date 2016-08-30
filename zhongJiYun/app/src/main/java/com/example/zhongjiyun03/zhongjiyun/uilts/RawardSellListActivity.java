@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -107,7 +106,7 @@ public class RawardSellListActivity extends AppCompatActivity implements View.On
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRawardSellListData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("我的招聘列表",responseInfo.result);
+                //Log.e("我的招聘列表",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<RawardBuyListPagerBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RawardBuyListPagerBean>>(){});
                     if (appBean.getResult().equals("success")){

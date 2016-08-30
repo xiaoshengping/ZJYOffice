@@ -94,7 +94,7 @@ public class AppUtilsUrl {
     //二手钻机列表
     public static String getSecondExtruderData(){
         // appapi/Boss/GetDevicesecondhandListByPage
-        return BaseUrl+"appapi/Boss/GetDevicesecondhandListByPage" ;
+        return BaseUrl+"appapi/seconddevice/getlist" ;
 
     }
     //二手钻机列表详情

@@ -75,14 +75,15 @@
         android:layout_below="@+id/company_text_view"
         android:id="@+id/type_text_view"
         android:layout_marginTop="2dp"
+        android:padding="2dp"
         android:layout_marginRight="20dp"
         android:textSize="@dimen/home_Size_14"
         android:text="板车运输"
         android:gravity="center"
         android:background="@drawable/service_text_view_corners"
         android:textColor="@color/blue_light"
-        android:layout_width="62dp"
-        android:layout_height="22dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <ImageView
 
         android:layout_below="@+id/image_view"

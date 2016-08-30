@@ -178,7 +178,7 @@ public class ResumeListActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ResumeListActivity.this, SeekMachinistParticulasActivity.class);
-                intent.putExtra("seekData", resumeListDataBeans.get(position - 1).getId());
+                intent.putExtra("seekData", resumeListDataBeans.get(position - 1).getDriverId());
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 startActivity(intent);
             }

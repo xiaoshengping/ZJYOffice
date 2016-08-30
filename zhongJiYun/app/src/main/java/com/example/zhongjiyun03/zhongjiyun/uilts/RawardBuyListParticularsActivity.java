@@ -53,6 +53,8 @@ public class RawardBuyListParticularsActivity extends AppCompatActivity implemen
     private TextView buyNumberText;   //购买数量
     @ViewInject(R.id.detail_content_text)
     private TextView detailContentText;  //求购细节
+    @ViewInject(R.id.detail_text)
+    private TextView detailText;
     @ViewInject(R.id.raward_layout)
     private RelativeLayout rawardLayout;
     private SVProgressHUD mSVProgressHUD;//loding
@@ -75,10 +77,12 @@ public class RawardBuyListParticularsActivity extends AppCompatActivity implemen
         retrunText.setOnClickListener(this);
         if (getIntent().getStringExtra("tage").equals("buy")){
             titleNemeTv.setText("悬赏求买详情");
+            detailText.setText("求购细节");
             initBuyData();
         }else {
             initSellData();
             titleNemeTv.setText("悬赏求卖详情");
+            detailText.setText("备注");
         }
 
 

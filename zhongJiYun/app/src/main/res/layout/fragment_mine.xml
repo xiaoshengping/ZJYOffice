@@ -227,32 +227,43 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <LinearLayout
-                    android:id="@+id/redpacket_layout"
+                <RelativeLayout
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/redpacket_layout"
+
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:layout_marginLeft="5dp"
+                            android:src="@mipmap/my_reward_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textSize="@dimen/home_Size_16"
+                            android:layout_marginLeft="10dp"
+                            android:text="我的红包"
+                            android:layout_alignParentRight="@+id/loing_user"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
                     <ImageView
-                        android:layout_marginLeft="10dp"
-                        android:src="@mipmap/my_reward_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:textSize="@dimen/home_Size_16"
-                        android:layout_marginLeft="10dp"
-                        android:text="我的红包"
-                        android:layout_alignParentRight="@+id/loing_user"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <ImageView
+                        android:id="@+id/giftBag_remind_image"
                         android:visibility="gone"
+                        android:layout_marginRight="3dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_alignParentRight="true"
                         android:layout_marginLeft="5dp"
                         android:src="@mipmap/circle_tip_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-                </LinearLayout>
+                </RelativeLayout>
+
                 <ImageView
                     android:background="#dedede"
                     android:layout_width="0.5dp"
@@ -281,32 +292,43 @@
                     android:background="#dedede"
                     android:layout_width="0.5dp"
                     android:layout_height="30dp" />
-                <LinearLayout
-                    android:id="@+id/comment_layout"
+                <RelativeLayout
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
-                    <ImageView
-                        android:src="@mipmap/my_eval_icon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:textSize="@dimen/home_Size_16"
-                        android:layout_marginLeft="10dp"
-                        android:text="我的评价"
-                        android:layout_alignParentRight="@+id/loing_user"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/comment_layout"
+
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+                        <ImageView
+                            android:src="@mipmap/my_eval_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textSize="@dimen/home_Size_16"
+                            android:layout_marginLeft="10dp"
+                            android:text="我的评价"
+                            android:layout_alignParentRight="@+id/loing_user"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
                     <ImageView
                         android:visibility="gone"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_alignParentRight="true"
                         android:id="@+id/evaluate_remind_image"
-                        android:layout_marginLeft="5dp"
                         android:src="@mipmap/circle_tip_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-                </LinearLayout>
+
+                </RelativeLayout>
+
 
 
             </LinearLayout>
@@ -349,7 +371,7 @@
                     android:layout_height="wrap_content" />
                 <ImageView
                     android:visibility="gone"
-                    android:id="@+id/giftBag_remind_image"
+                    android:id="@+id/message_remind_image"
                     android:layout_marginLeft="5dp"
                     android:src="@mipmap/circle_tip_icon"
                     android:layout_width="wrap_content"
@@ -434,7 +456,7 @@
                     android:layout_height="wrap_content" />
                 <ImageView
                     android:visibility="gone"
-                    android:id="@+id/message_remind_image"
+
                     android:layout_marginLeft="5dp"
                     android:src="@mipmap/circle_tip_icon"
                     android:layout_width="wrap_content"
