@@ -21,11 +21,11 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -52,6 +52,7 @@ public class  CompetitiveDescribeActivity extends AppCompatActivity implements V
     private Button competitiveButton;
     @ViewInject(R.id.edit_text)
     private EditText editText;
+    private SVProgressHUD mSVProgressHUD;//loding
     @Override
     protected void onResume() {
         super.onResume();
@@ -100,6 +101,7 @@ public class  CompetitiveDescribeActivity extends AppCompatActivity implements V
         titleNemeTv.setText("竞标描述");
         retrunText.setOnClickListener(this);
         competitiveButton.setOnClickListener(this);
+        mSVProgressHUD = new SVProgressHUD(this);
 
 
 
@@ -164,6 +166,7 @@ public class  CompetitiveDescribeActivity extends AppCompatActivity implements V
         requestParams.addBodyParameter("Id",uid);
         requestParams.addBodyParameter("ProjectId",ProjectId);
         requestParams.addBodyParameter("Description",text);
+        mSVProgressHUD.showWithStatus("正在提交中...");
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCompetitiveDescribeData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -174,15 +177,17 @@ public class  CompetitiveDescribeActivity extends AppCompatActivity implements V
                         MyAppliction.setProjectRequestTage("competitive");//全局变量
                         showExitGameAlert("\u3000\u3000"+"尊敬的用户,您已成功竞标,请您耐心等待业主选标,为提高您中标的概率,现建议您先缴纳1000元的保证金,谢谢!");
                         MyAppliction.setIsProjectMessage(true);
-                        if (!TextUtils.isEmpty(SQLNewHelperUtils.queryProjectComment(CompetitiveDescribeActivity.this))){
-                                SQLNewHelperUtils.updateProjectReply(CompetitiveDescribeActivity.this,SQLNewHelperUtils.queryProjectCommentId(CompetitiveDescribeActivity.this),"2");
+                        /*if (!TextUtils.isEmpty(SQLNewHelperUtils.queryProjectComment(CompetitiveDescribeActivity.this))){
+                            SQLNewHelperUtils.updateProjectComment(CompetitiveDescribeActivity.this,SQLNewHelperUtils.queryProjectCommentId(CompetitiveDescribeActivity.this),"2");
                         }else {
                             SQLNewHelperUtils.insertProjectComment(CompetitiveDescribeActivity.this,SQLNewHelperUtils.queryProjectCommentId(CompetitiveDescribeActivity.this),"2");
 
-                        }
-                        
+                        }*/
+                        MyAppliction.setProjectRefresh("2");
+                        mSVProgressHUD.dismiss();
                     }else {
                         MyAppliction.showToast(appDataBean.getMsg());
+                        mSVProgressHUD.dismiss();
                     }
                 }
 
@@ -192,6 +197,7 @@ public class  CompetitiveDescribeActivity extends AppCompatActivity implements V
             public void onFailure(HttpException e, String s) {
                 Log.e("项目竞标",s);
                 MyAppliction.showToast("网络异常，请稍后重试");
+                mSVProgressHUD.dismiss();
             }
         });
 

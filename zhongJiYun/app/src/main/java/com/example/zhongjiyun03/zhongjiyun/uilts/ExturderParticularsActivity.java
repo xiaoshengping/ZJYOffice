@@ -193,6 +193,9 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
     @ViewInject(R.id.image_view_six)
     private ImageView imageViewSix;
     private SecondHandHandler secondHandHandler;
+    @ViewInject(R.id.tenancy_text_view)
+    private TextView tenancyTextView;//租期
+
 
 
 
@@ -266,7 +269,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
             public void onSuccess(ResponseInfo<String> responseInfo) {
 
                 if (!TextUtils.isEmpty(responseInfo.result)){
-                    //Log.e("二手钻机详情",responseInfo.result);
+                    Log.e("二手钻机详情",responseInfo.result);
                     AppBean<SecondHandListProjectBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandListProjectBean>>(){});
                      if (appListDataBean.getResult().equals("success")){
                          secondHandBean=    appListDataBean.getData();
@@ -283,6 +286,15 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                                 }
 
                             }
+                            if (secondHandBean.getSecondHandType()==0){
+                                if (secondHandBean.getTenancy()!=0){
+                                    tenancyTextView.setVisibility(View.VISIBLE);
+                                    tenancyTextView.setText("租期："+secondHandBean.getTenancy()+"个月");
+                                }
+                            }else {
+                                tenancyTextView.setVisibility(View.GONE);
+                            }
+
 
                             boxNameText.setText(secondHandBean.getDeviceDto().getBossName());
                             if (!TextUtils.isEmpty(secondHandBean.getDeviceDto().getHourOfWork())){

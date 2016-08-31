@@ -68,52 +68,47 @@
        android:layout_marginTop="5dp"
        android:layout_marginRight="20dp"
        android:layout_below="@+id/address_text"
-       android:background="@color/color_dedede"
+       android:background="@color/color_dadada"
        android:layout_width="match_parent"
-       android:layout_height="1dp" />
-   <!-- <ImageView
-        android:layout_marginTop="8dp"
-        android:background="@mipmap/project_bond"
-        android:layout_marginLeft="20dp"
+       android:layout_height="0.5dp" />
+
+    <LinearLayout
+        android:gravity="right"
+        android:orientation="horizontal"
         android:layout_below="@+id/address_image"
-        android:id="@+id/cash_deposit_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />-->
-    <TextView
-        android:gravity="center"
-        android:layout_toLeftOf="@+id/comment_button"
-        android:id="@+id/cash_deposit_button"
-        android:textColor="@color/red"
-        android:layout_below="@+id/address_image"
-        android:textSize="@dimen/home_Size_16"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
-        android:text="缴纳保证金"
-        android:layout_marginBottom="5dp"
-        android:layout_width="100dp"
-        android:layout_height="25dp" />
-  <!--  <ImageView
-        android:layout_toLeftOf="@+id/comment_button"
-        android:layout_marginTop="8dp"
-        android:background="@mipmap/eval_icon"
-        android:layout_marginRight="5dp"
-        android:layout_below="@+id/address_image"
-        android:id="@+id/comment_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />-->
-    <TextView
-        android:gravity="center"
-        android:id="@+id/comment_button"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/red"
-        android:layout_below="@+id/address_image"
-        android:textSize="@dimen/home_Size_16"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        android:text="立即评价"
-        android:layout_marginBottom="5dp"
-        android:layout_width="80dp"
-        android:layout_height="25dp" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:gravity="center"
+            android:layout_toLeftOf="@+id/comment_button"
+            android:id="@+id/cash_deposit_button"
+            android:textColor="@color/red"
+            android:layout_below="@+id/address_image"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:text="缴纳保证金"
+            android:layout_marginBottom="5dp"
+            android:layout_width="100dp"
+            android:layout_height="25dp" />
+        <TextView
+            android:gravity="center"
+            android:id="@+id/comment_button"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/red"
+            android:layout_below="@+id/address_image"
+            android:textSize="@dimen/home_Size_16"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:text="立即评价"
+            android:layout_marginBottom="5dp"
+            android:layout_width="80dp"
+            android:layout_height="25dp" />
+
+
+
+    </LinearLayout>
+
 
    <!-- <ImageView
         android:scaleType="centerCrop"

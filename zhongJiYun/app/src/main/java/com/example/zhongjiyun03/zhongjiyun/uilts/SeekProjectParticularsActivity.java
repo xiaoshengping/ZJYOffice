@@ -40,7 +40,6 @@ import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -183,11 +182,17 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
-        if (!TextUtils.isEmpty(SQLNewHelperUtils.queryProjectComment(SeekProjectParticularsActivity.this))){
+        if (!TextUtils.isEmpty(MyAppliction.getProjectRefresh())){
+            if (MyAppliction.getProjectRefresh().equals("2")){
+                initData();
+                MyAppliction.setProjectRefresh("1");
+            }
+        }
+        /*if (!TextUtils.isEmpty(SQLNewHelperUtils.queryProjectComment(SeekProjectParticularsActivity.this))){
             Log.e("有",SQLNewHelperUtils.queryProjectComment(SeekProjectParticularsActivity.this));
             if ((SQLNewHelperUtils.queryProjectComment(SeekProjectParticularsActivity.this)).equals("2")){
 
-                initData();
+
                 SQLNewHelperUtils.updateProjectComment(SeekProjectParticularsActivity.this,SQLNewHelperUtils.queryProjectCommentId(SeekProjectParticularsActivity.this),"1");
             }
 
@@ -195,7 +200,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
             Log.e("没有","jjjdfjfjfj");
             SQLNewHelperUtils.insertProjectComment(SeekProjectParticularsActivity.this,SQLNewHelperUtils.queryProjectCommentId(SeekProjectParticularsActivity.this),"1");
 
-        }
+        }*/
 
     }
 
@@ -503,6 +508,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                             Intent intent = new Intent(SeekProjectParticularsActivity.this, CompetitiveDescribeActivity.class);
                             intent.putExtra("ProjectId", seekProjectId);
                             startActivity(intent);
+                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 
                         } else {
                             if (seekProjectBean.getCanReply().equals("添加钻机后可投标")){

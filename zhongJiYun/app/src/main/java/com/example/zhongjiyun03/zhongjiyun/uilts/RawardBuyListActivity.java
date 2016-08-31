@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -50,6 +52,15 @@ public class RawardBuyListActivity extends AppCompatActivity implements View.OnC
     private List<RawardBuyListBean> releaseJobListBeens;
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
     private RawardBuyListAdapter releaseJobListAdapter; //adapter
+
+    @ViewInject(R.id.not_data_layout)
+    private LinearLayout notDataLayout; //没有数据
+    @ViewInject(R.id.network_remind_layout)
+    private LinearLayout networkRemindLayout; //没有网络
+    @ViewInject(R.id.not_data_image)
+    private ImageView notDataImage; //没有网络和没有数据显示
+    @ViewInject(R.id.not_data_text)
+    private TextView notDataText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +117,7 @@ public class RawardBuyListActivity extends AppCompatActivity implements View.OnC
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRawardBuyListData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("我的招聘列表",responseInfo.result);
+               // Log.e("我的招聘列表",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<RawardBuyListPagerBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RawardBuyListPagerBean>>(){});
                     if (appBean.getResult().equals("success")){
@@ -126,22 +137,22 @@ public class RawardBuyListActivity extends AppCompatActivity implements View.OnC
                             releaseJobListAdapter.notifyDataSetChanged();
                             releaseJobListView.onRefreshComplete();
                         }
-                        // notDataLayout.setVisibility(View.GONE);
+                         notDataLayout.setVisibility(View.GONE);
                     }else if ((appBean.getResult()).equals("nomore")){
                         MyAppliction.showToast("已到最底了");
                         releaseJobListAdapter.notifyDataSetChanged();
                         releaseJobListView.onRefreshComplete();
-                        //notDataLayout.setVisibility(View.GONE);
                     }else  if ((appBean.getResult()).equals("empty")){
-                        //MyAppliction.showToast("没有更多数据");
                         if (isPullDownRefresh) {
                             releaseJobListBeens.clear();
                         }
-                            /*notDataLayout.setVisibility(View.VISIBLE);
-                            notDataImage.setBackgroundResource(R.mipmap.no_project_icon);
-                            notDataText.setText("还没有找到项目哦");
-                            homeProjectlsitAdapter.notifyDataSetChanged();
-                            projectListView.onRefreshComplete();*/
+                            notDataLayout.setVisibility(View.VISIBLE);
+                            notDataImage.setBackgroundResource(R.mipmap.no_other);
+                            notDataText.setText("您还没有发布悬赏求买信息");
+                        releaseJobListAdapter.notifyDataSetChanged();
+                        releaseJobListView.onRefreshComplete();
+                    }else {
+                        MyAppliction.showToast(appBean.getMsg());
                     }
 
 
@@ -154,7 +165,14 @@ public class RawardBuyListActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public void onFailure(HttpException e, String s) {
-
+                networkRemindLayout.setVisibility(View.VISIBLE);
+                releaseJobListAdapter.notifyDataSetChanged();
+                releaseJobListView.onRefreshComplete();
+                if (releaseJobListBeens.size()==0){
+                    notDataLayout.setVisibility(View.VISIBLE);
+                    notDataImage.setBackgroundResource(R.mipmap.no_wifi_icon);
+                    notDataText.setText("没有网络哦");
+                }
             }
         });
 
@@ -166,9 +184,9 @@ public class RawardBuyListActivity extends AppCompatActivity implements View.OnC
         releaseJobListView.setOnRefreshListener(this);
         ILoadingLayout endLabels  = releaseJobListView
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = releaseJobListView
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示

@@ -65,11 +65,11 @@
 
         </RelativeLayout>
         <ImageView
-            android:src="@color/background"
+            android:src="@color/color_dadada"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <RelativeLayout
 
             android:orientation="horizontal"
@@ -103,15 +103,15 @@
 
         </RelativeLayout>
         <ImageView
-            android:src="@color/background"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
     </LinearLayout>
     <ImageView
         android:layout_marginTop="10dp"
-        android:src="@color/background"
+        android:src="@color/color_dadada"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="0.5dp" />
     <LinearLayout
         android:background="@color/ic_white"
         android:orientation="vertical"
@@ -151,11 +151,11 @@
 
         </LinearLayout>
         <ImageView
-            android:src="@color/background"
+            android:src="@color/color_dadada"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -190,9 +190,9 @@
         <ImageView
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:src="@color/background"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -236,9 +236,9 @@
                 android:layout_height="wrap_content" />
         </RelativeLayout>
         <ImageView
-            android:src="@color/background"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
 
 
 
@@ -248,9 +248,9 @@
 
         <ImageView
             android:layout_marginTop="10dp"
-            android:src="@color/background"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <LinearLayout
             android:background="@color/ic_white"
             android:orientation="vertical"
@@ -285,14 +285,14 @@
         </LinearLayout>
         <ImageView
 
-            android:src="@color/background"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <ImageView
             android:layout_marginTop="10dp"
-            android:src="@color/background"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <RelativeLayout
             android:layout_marginBottom="30dp"
             android:background="@color/ic_white"
@@ -522,22 +522,39 @@
             android:layout_height="fill_parent"/>
 </LinearLayout>
       </ScrollView>
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_alignParentBottom="true"
+
+    <RelativeLayout
+        android:id="@+id/competitive_layout"
+        android:gravity="center"
         android:background="@color/white"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="60dp">
-    <Button
-        android:id="@+id/sell_save_button"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/ic_white"
-        android:background="@drawable/loing_button_corners"
-        android:textSize="@dimen/home_Size_18"
-        android:text="我要出售" />
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/image_view"
+            android:src="@color/color_dadada"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        <Button
+            android:background="@drawable/loing_button_corners"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/image_view"
+            android:gravity="center"
+            android:id="@+id/sell_save_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_16"
+            android:text="我要出售"
+            />
+        <ImageView
+            android:layout_below="@+id/sell_save_button"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+    </RelativeLayout>
+
+
      </RelativeLayout>
 

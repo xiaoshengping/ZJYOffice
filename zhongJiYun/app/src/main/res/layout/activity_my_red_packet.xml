@@ -95,23 +95,35 @@
 
 
     </LinearLayout>
-<LinearLayout
-
-    android:gravity="center_vertical"
-    android:background="@color/white"
-    android:layout_alignParentBottom="true"
-    android:layout_width="match_parent"
-    android:layout_height="60dp">
-    <Button
-        android:id="@+id/get_packed_button"
+    <RelativeLayout
+        android:id="@+id/competitive_layout"
+        android:gravity="center"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/ic_white"
-        android:textSize="@dimen/home_Size_16"
-        android:text="一键领取" />
-
-</LinearLayout>
+        android:layout_height="60dp">
+        <ImageView
+            android:id="@+id/image_view"
+            android:src="@color/color_dadada"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/image_view"
+            android:gravity="center"
+            android:id="@+id/get_packed_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/ic_white"
+            android:textSize="@dimen/home_Size_16"
+            android:text="一键领取"
+            />
+        <ImageView
+            android:layout_below="@+id/get_packed_button"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+    </RelativeLayout>
 
 </RelativeLayout>

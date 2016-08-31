@@ -309,6 +309,11 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 Log.e("消息提醒",s);
             }
         });
+        }else {
+            evaluateRemindImage.setVisibility(View.GONE);
+            giftBagRemindImage.setVisibility(View.GONE);
+            messageemindImage.setVisibility(View.GONE);
+            projectReplyeminDImage.setVisibility(View.GONE);
         }
 
 
@@ -322,18 +327,18 @@ public class MineFragment extends Fragment implements View.OnClickListener {
             case R.id.loing_layout:// 登录
                 Intent intent=new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                //getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
 
             case R.id.attention_layout:  //关注项目
                 if (!TextUtils.isEmpty(uid)){
                 Intent attentionIntent=new Intent(getActivity(), AttentionProjectActivity.class);
                 startActivity(attentionIntent);
-                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                    //getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }else {
                     Intent intent1=new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent1);
-                    getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                    //getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 }
                 break;
             case R.id.extruder_layout:  // 关注钻机

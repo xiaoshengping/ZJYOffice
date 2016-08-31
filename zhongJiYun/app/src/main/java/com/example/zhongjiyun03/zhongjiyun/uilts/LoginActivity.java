@@ -35,7 +35,6 @@ import com.example.zhongjiyun03.zhongjiyun.bean.main.LoginDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.MyCookieStore;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -229,12 +228,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     insertData(sqLhelper, loginDataBean.getId(), loginDataBean.getPhoneNumber(), loginDataBean.getName(), loginDataBean.getStarRate()+"",
                                             loginDataBean.getHeadthumb(), loginDataBean.getRole());
 
-                                    if (!TextUtils.isEmpty(SQLNewHelperUtils.queryProjectComment(LoginActivity.this))){
-                                        SQLNewHelperUtils.updateProjectComment(LoginActivity.this,SQLNewHelperUtils.queryProjectCommentId(LoginActivity.this),"2");
-                                    }else {
-                                        SQLNewHelperUtils.insertProjectComment(LoginActivity.this,SQLNewHelperUtils.queryProjectCommentId(LoginActivity.this),"2");
-
-                                    }
+                                    MyAppliction.setProjectRefresh("2");
                                     
                                     mSVProgressHUD.dismiss();
                                     mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");

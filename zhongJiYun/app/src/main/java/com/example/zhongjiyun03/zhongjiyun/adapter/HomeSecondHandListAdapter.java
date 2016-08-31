@@ -65,9 +65,14 @@ public class HomeSecondHandListAdapter extends AppBaseAdapter<SecondHandBean> {
 
 
 
-            if (!TextUtils.isEmpty(data.get(position).getDistanceStr())){
-                viewHold.distanceTextView.setVisibility(View.VISIBLE);
-                viewHold.distanceTextView.setText(data.get(position).getDistanceStr()+"Km");
+            if (!TextUtils.isEmpty(data.get(position).getDistance())){
+                if (data.get(position).getDistance().equals("-1")){
+                    viewHold.distanceTextView.setVisibility(View.GONE);
+                }else {
+                    viewHold.distanceTextView.setVisibility(View.VISIBLE);
+                    viewHold.distanceTextView.setText(data.get(position).getDistance()+"Km");
+                }
+
             }else {
                 viewHold.distanceTextView.setVisibility(View.GONE);
             }
@@ -77,11 +82,11 @@ public class HomeSecondHandListAdapter extends AppBaseAdapter<SecondHandBean> {
 
 
 
-           if (!TextUtils.isEmpty(data.get(position).getPriceStr())){
-               if (data.get(position).getPriceStr().equals("面议")){
-                   viewHold.priceTextView.setText(data.get(position).getPriceStr());
+           if (!TextUtils.isEmpty(data.get(position).getPrice())){
+               if (data.get(position).getPrice().equals("面议")){
+                   viewHold.priceTextView.setText(data.get(position).getPrice());
                }else {
-                   viewHold.priceTextView.setText(data.get(position).getPriceStr()+"万");
+                   viewHold.priceTextView.setText(data.get(position).getPrice()+"万");
                }
            }
             viewHold.updateTimeTextViewl.setText(data.get(position).getUpdateDateStr()+"更新");

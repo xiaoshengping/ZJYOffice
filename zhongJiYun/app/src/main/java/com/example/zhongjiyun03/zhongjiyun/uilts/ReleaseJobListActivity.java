@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -206,7 +205,7 @@ public class ReleaseJobListActivity extends AppCompatActivity implements View.On
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getReleaseJobListData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("我的招聘列表",responseInfo.result);
+                //Log.e("我的招聘列表",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<ReleaseJobPagerBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ReleaseJobPagerBean>>(){});
                         if (appBean.getResult().equals("success")){
@@ -237,7 +236,7 @@ public class ReleaseJobListActivity extends AppCompatActivity implements View.On
                                 releaseJobListBeens.clear();
                             }
                             notDataLayout.setVisibility(View.VISIBLE);
-                            notDataImage.setBackgroundResource(R.mipmap.no_project_icon);
+                            notDataImage.setBackgroundResource(R.mipmap.no_other);
                             notDataText.setText("您还没有发布招聘");
                             releaseJobListAdapter.notifyDataSetChanged();
                             releaseJobListView.onRefreshComplete();
@@ -280,9 +279,9 @@ public class ReleaseJobListActivity extends AppCompatActivity implements View.On
         releaseJobListView.setOnRefreshListener(this);
         ILoadingLayout endLabels  = releaseJobListView
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = releaseJobListView
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示

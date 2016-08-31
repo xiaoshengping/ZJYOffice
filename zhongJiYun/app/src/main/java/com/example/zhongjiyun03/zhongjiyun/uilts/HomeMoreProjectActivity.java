@@ -4,8 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -45,7 +43,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.popwin.FirstClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.PopupWindowHelper;
 import com.example.zhongjiyun03.zhongjiyun.popwin.ScreenUtils;
@@ -234,14 +232,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     private void initListData(int PageIndex,String cityName,String State ,String Order) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(HomeMoreProjectActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
-
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-        }
+        String uid= SQLHelperUtils.queryId(HomeMoreProjectActivity.this);  //用户id
         if (!TextUtils.isEmpty(uid)){
             requestParams.addBodyParameter("Id",uid);
             //步骤1：创建一个SharedPreferences接口对象
@@ -250,7 +241,6 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
             String sesstionId = read.getString("code","");
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         }
-        Log.e("PageIndex",PageIndex+"");
         requestParams.addBodyParameter("PageIndex",PageIndex+"");
         requestParams.addBodyParameter("PageSize","10");
         if (!TextUtils.isEmpty(cityName)){
@@ -262,19 +252,13 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                 }else {
                     requestParams.addBodyParameter("City",cityName);
                 }
-
             }
-
-
         }
-
         if (!TextUtils.isEmpty(State)){
             requestParams.addBodyParameter("State",State);
-
         }
         if (!TextUtils.isEmpty(Order)){
             requestParams.addBodyParameter("Order",Order);
-
         }
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctListData(),requestParams, new RequestCallBack<String>() {
             @Override
@@ -304,9 +288,7 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                         MyAppliction.showToast("已到最底了");
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         projectListView.onRefreshComplete();
-                        //notDataLayout.setVisibility(View.GONE);
                     }else  if ((appBean.getResult()).equals("empty")){
-                        //MyAppliction.showToast("没有更多数据");
                         if (isPullDownRefresh) {
                             seekProjectBeans.clear();
                         }
@@ -315,12 +297,15 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
                         notDataText.setText("还没有找到项目哦");
                         homeProjectlsitAdapter.notifyDataSetChanged();
                         projectListView.onRefreshComplete();
+                    }else {
+                        MyAppliction.showToast(appBean.getMsg());
                     }
 
 
                 }else {
                     homeProjectlsitAdapter.notifyDataSetChanged();
                     projectListView.onRefreshComplete();
+
                 }
                 networkRemindLayout.setVisibility(View.GONE);
             }
@@ -365,9 +350,9 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         projectListView.setOnRefreshListener(this);
         ILoadingLayout endLabels  = projectListView
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = projectListView
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示

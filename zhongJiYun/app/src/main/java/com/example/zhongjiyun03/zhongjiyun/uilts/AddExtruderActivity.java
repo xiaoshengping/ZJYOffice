@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -140,6 +141,8 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
        private String NoOfManufacture; //设备型号
        private String Province;  //省份
        private String City; //城市
+      @ViewInject(R.id.competitive_layout)
+      private RelativeLayout competitiveLayout;
 
 
 

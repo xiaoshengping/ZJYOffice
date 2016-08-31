@@ -29,7 +29,7 @@
         android:textColor="@color/tailt_dark"
         android:textSize="@dimen/home_Size_16"
         android:text="广州中基配件服务有限公司"
-        android:layout_width="180dp"
+        android:layout_width="160dp"
         android:layout_height="wrap_content" />
     <TextView
 

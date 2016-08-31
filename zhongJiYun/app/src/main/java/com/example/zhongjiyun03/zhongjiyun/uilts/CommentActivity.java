@@ -176,7 +176,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                     public void onSuccess(ResponseInfo<String> responseInfo) {
 
                         if (!TextUtils.isEmpty(responseInfo.result)){
-                            Log.e("我的评论",responseInfo.result);
+                            //Log.e("我的评论",responseInfo.result);
                             if (!TextUtils.isEmpty(responseInfo.result)){
                                 AppBean<CommentDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<CommentDataBean>>(){});
                                 if (appBean.getResult().equals("success")){
@@ -272,7 +272,7 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
                     public void onSuccess(ResponseInfo<String> responseInfo) {
 
                         if (!TextUtils.isEmpty(responseInfo.result)){
-                            Log.e("我的评论",responseInfo.result);
+                            //Log.e("我的评论",responseInfo.result);
                             if (!TextUtils.isEmpty(responseInfo.result)){
                                 AppBean<CommentDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<CommentDataBean>>(){});
                                 if (appBean.getResult().equals("success")){
@@ -365,9 +365,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         ILoadingLayout endLabels  = mineCommentListView
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = mineCommentListView
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
@@ -401,9 +401,9 @@ public class CommentActivity extends AppCompatActivity implements View.OnClickLi
 
         ILoadingLayout endLabels  = commentMineListView
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = commentMineListView
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示

@@ -10,7 +10,7 @@ public class SecondHandBean implements Serializable {
     private String Address ;//string	详细地址
     private String City	;//string	设备所在城市
     private DeviceDtoBean DeviceDto;//	object	钻机数据对象
-    private double Distance;//	double	二手机与机主的距离（单位：KM）
+    private String Distance;//	double	二手机与机主的距离（单位：KM）
     private String DistanceStr;//	string	二手机与机主的距离（当未传ID时，该参数返回null）
     private String  Id;//	string	二手机ID
     private int IsPayMargin;//	int	是否已缴纳保证金
@@ -103,11 +103,11 @@ public class SecondHandBean implements Serializable {
         DeviceDto = deviceDto;
     }
 
-    public double getDistance() {
+    public String getDistance() {
         return Distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(String distance) {
         Distance = distance;
     }
 

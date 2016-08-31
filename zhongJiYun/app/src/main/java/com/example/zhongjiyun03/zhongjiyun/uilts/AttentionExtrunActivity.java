@@ -162,7 +162,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionExtrunListData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("关注钻机",responseInfo.result);
+                   // Log.e("关注钻机",responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)){
                         AppBean<AttentionSecondHandDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AttentionSecondHandDataBean>>(){});
                         if ((appListDataBean.getResult()).equals("success")){
@@ -231,9 +231,9 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
         attentionExtrunLsitview.setOnRefreshListener(this);
         ILoadingLayout endLabels  = attentionExtrunLsitview
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = attentionExtrunLsitview
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示

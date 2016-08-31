@@ -137,12 +137,17 @@ public class MessageActivity extends AppCompatActivity implements View.OnClickLi
                             notDataLayout.setVisibility(View.GONE);
                            list.addAll(messageDataBeen);
                             //Log.e("title",list.get(0).getTitle());
-                            InitListView(messageDataBeen);
+                            if (appListDataBean.getData()!=null&&appListDataBean.getData().size()!=0){
+                                notDataLayout.setVisibility(View.GONE);
+                                InitListView(messageDataBeen);
+                            }else {
+                                notDataLayout.setVisibility(View.VISIBLE);
+                                notDataImage.setBackgroundResource(R.mipmap.no_info_icon);
+                                notDataText.setText("暂时没有新消息");
+                            }
                         }else if (appListDataBean.getResult().equals("unlogin")){
                             showExitGameAlertUnLonding("本次登录已过期");
                         }else {
-                            notDataLayout.setVisibility(View.VISIBLE);
-                            notDataImage.setBackgroundResource(R.mipmap.no_info_icon);
                             notDataText.setText("您还没有收到消息哦");
                         }
 

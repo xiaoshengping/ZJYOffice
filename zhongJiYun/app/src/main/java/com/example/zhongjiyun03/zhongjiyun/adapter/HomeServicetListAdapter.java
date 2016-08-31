@@ -51,12 +51,17 @@ public class HomeServicetListAdapter extends AppBaseAdapter<ServiceProviderBean>
             MyAppliction.imageLoader.displayImage(data.get(position).getThumbnail(),viewHold.imageView,MyAppliction.RoundedOptionsOne);
             viewHold.describeTextView.setText(data.get(position).getSummary());
             viewHold.companyTextView.setText(data.get(position).getProviderName());
-            if (!data.get(position).getDistance().equals("0")){
-                viewHold.addressTextView.setVisibility(View.VISIBLE);
-                viewHold.addressTextView.setText(data.get(position).getDistance()+"Km");
-            }else if (data.get(position).getDistance().equals("-1")){
+            if (!TextUtils.isEmpty(data.get(position).getDistance())){
+                 if (data.get(position).getDistance().equals("-1")){
+                     viewHold.addressTextView.setVisibility(View.GONE);
+                }else {
+                     viewHold.addressTextView.setVisibility(View.VISIBLE);
+                     viewHold.addressTextView.setText(data.get(position).getDistance()+"Km");
+                 }
+            }else {
                 viewHold.addressTextView.setVisibility(View.GONE);
             }
+
             viewHold.typeTextView.setText(data.get(position).getProviderTypeStr());
             if (!TextUtils.isEmpty(data.get(position).getProvince())&&!TextUtils.isEmpty(data.get(position).getCity())){
                 viewHold.addressText.setText("所在地："+data.get(position).getProvince()+data.get(position).getCity());

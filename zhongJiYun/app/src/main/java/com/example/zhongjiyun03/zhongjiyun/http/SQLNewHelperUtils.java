@@ -182,7 +182,7 @@ public class SQLNewHelperUtils {
         ContentValues contentValues = new ContentValues();
         contentValues.put(SQLNewHelper.PROJECTCOMMENT, evaluate);
         db.update(SQLNewHelper.projectCommentTableName, contentValues,
-                "projectCommentID=?", new String[]{id});
+                "projectCommentNewID=?", new String[]{id});
     }
     /**
      * 功能：修改竞标红点提示时间

@@ -50,6 +50,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.ClippingPageActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.SelectImagesFromLocalActivity;
@@ -442,6 +443,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
             if (!TextUtils.isEmpty(rentAddressParticulars.getText().toString())){
                 if (!TextUtils.isEmpty(rentPriceEdit.getText().toString())){
                     if (!TextUtils.isEmpty(rentTenancyTerm.getText().toString())){
+                        if (!rentTenancyTerm.getText().toString().equals("0")){
                         if (!TextUtils.isEmpty(rentDescribe.getText().toString())){
 
                             if (!TextUtils.isEmpty(leavePath)) {
@@ -478,13 +480,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                             }
 
                                         }
-                                        SQLhelper sqLhelper=new SQLhelper(RentOutExtruderActivity.this);
-                                        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-                                        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-                                        String uid=null;  //用户id
-                                        while (cursor.moveToNext()) {
-                                            uid=cursor.getString(0);
-                                        }
+
                                         HttpUtils httpUtils=new HttpUtils();
                                         RequestParams requestParams=new RequestParams();
                                         //步骤1：创建一个SharedPreferences接口对象
@@ -492,7 +488,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                         //步骤2：获取文件中的值
                                         String sesstionId = read.getString("code","");
                                         requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-                                        requestParams.addBodyParameter("Id",uid);
+                                        requestParams.addBodyParameter("Id",SQLHelperUtils.queryId(RentOutExtruderActivity.this));
                                         requestParams.addBodyParameter("DeviceId",myExtruderBean.getId());
                                         requestParams.addBodyParameter("SecondHandType","0");
                                         if (!TextUtils.isEmpty(Province)){
@@ -519,7 +515,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                         /*Log.e("sdhhdhdhhdhdh","'"+leaveImageID+","+panoramaImageID+","+invoiceImageID+","+contractImageID+","+qualifiedImageID+"'".replace("null",""));*/
                                         requestParams.addBodyParameter("updateImgs", (leaveImageID+","+panoramaImageID+","+invoiceImageID+","+contractImageID+","+qualifiedImageID).replace("null",""));
                                         mSVProgressHUD.showWithStatus("正在提交中...");
-                                        final String finalUid = uid;
+
                                         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
                                             @Override
                                             public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -535,7 +531,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                                                                     int imageType=11;
                                                                     for (int i = 0; i <phoneListPath.size() ; i++) {
-                                                                        intiPhontData7(finalUid,imageType,phoneListPath.get(i),rentOutExtruderDeviceDataBean.getId(),i);
+                                                                        intiPhontData7(SQLHelperUtils.queryId(RentOutExtruderActivity.this),imageType,phoneListPath.get(i),rentOutExtruderDeviceDataBean.getId(),i);
                                                                         imageType++;
                                                                     }
                                                                 }else {
@@ -575,6 +571,10 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             MyAppliction.showToast("请输入描述");
 
                         }
+                        }else {
+                            MyAppliction.showToast("租期不能为0");
+
+                        }
                     }else {
                         MyAppliction.showToast("请输租期");
 
@@ -611,15 +611,11 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
             if (!TextUtils.isEmpty(rentAddressParticulars.getText().toString())){
                 if (!TextUtils.isEmpty(rentPriceEdit.getText().toString())){
                     if (!TextUtils.isEmpty(rentTenancyTerm.getText().toString())){
+                        if (!rentTenancyTerm.getText().toString().equals("0")){
                         if (!TextUtils.isEmpty(rentDescribe.getText().toString())){
                         if (phoneListPath.size()>=3){
-                        SQLhelper sqLhelper=new SQLhelper(RentOutExtruderActivity.this);
-                        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-                        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-                        String uid=null;  //用户id
-                        while (cursor.moveToNext()) {
-                        uid=cursor.getString(0);
-                                        }
+
+                        String uid= SQLHelperUtils.queryId(RentOutExtruderActivity.this);  //用户id
                         HttpUtils httpUtils=new HttpUtils();
                             RequestParams requestParams=new RequestParams();
                             //步骤1：创建一个SharedPreferences接口对象
@@ -710,6 +706,10 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
                         }else {
                             MyAppliction.showToast("请输入描述");
+
+                        }
+                        }else {
+                            MyAppliction.showToast("租期不能为0");
 
                         }
                     }else {

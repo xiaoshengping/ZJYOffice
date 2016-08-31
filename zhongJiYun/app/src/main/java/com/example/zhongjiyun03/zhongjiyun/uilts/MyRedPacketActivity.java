@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -80,6 +81,8 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
     @ViewInject(R.id.not_data_text)
     private TextView notDataText;
     private AppBean<RedPacketDataBean> appBean;
+    @ViewInject(R.id.competitive_layout)
+    private RelativeLayout competitiveLayout;
 
     @Override
     protected void onResume() {
@@ -130,9 +133,9 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
         redPatckListview.setOnRefreshListener(this);
         ILoadingLayout endLabels  = redPatckListview
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = redPatckListview
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
@@ -182,7 +185,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                         notDataLayout.setVisibility(View.GONE);
                     } else if ((appBean.getResult()).equals("empty")) {
                         //MyAppliction.showToast("您还没有收到红包哦");
-                        getPackedButton.setVisibility(View.GONE);
+                        competitiveLayout.setVisibility(View.GONE);
                         notDataLayout.setVisibility(View.VISIBLE);
                         notDataImage.setBackgroundResource(R.mipmap.no_reward_icon);
                         notDataText.setText("您还没有收到红包哦");
@@ -192,7 +195,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                         //notDataLayout.setVisibility(View.GONE);
                     }else if (appBean.getResult().equals("unlogin")){
                         showExitGameAlertUnLonding("本次登录已过期");
-                        getPackedButton.setVisibility(View.GONE);
+                        competitiveLayout.setVisibility(View.GONE);
                     }
                     myredAdapter.notifyDataSetChanged();
                     redPatckListview.onRefreshComplete();

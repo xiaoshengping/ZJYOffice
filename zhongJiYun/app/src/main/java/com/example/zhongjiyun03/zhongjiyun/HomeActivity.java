@@ -43,7 +43,7 @@ import com.example.zhongjiyun03.zhongjiyun.fragment.MoreFragment;
 import com.example.zhongjiyun03.zhongjiyun.fragment.SeekProjectFragment;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.Base64;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
+import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.service.UpdateService;
 import com.lidroid.xutils.HttpUtils;
@@ -121,12 +121,7 @@ public class HomeActivity extends AppCompatActivity {
             testAddContacts();  //添加联系人
             editor.putBoolean("isFirstRun", false);
             editor.commit();
-            if (!TextUtils.isEmpty(SQLNewHelperUtils.queryProjectComment(HomeActivity.this))){
-                SQLNewHelperUtils.updateProjectReply(HomeActivity.this,SQLNewHelperUtils.queryProjectCommentId(HomeActivity.this),"1");
-            }else {
-                    SQLNewHelperUtils.insertProjectComment(HomeActivity.this,SQLNewHelperUtils.queryProjectCommentId(HomeActivity.this),"1");
-
-            }
+            MyAppliction.setProjectRefresh("1");
 
 
         }else{

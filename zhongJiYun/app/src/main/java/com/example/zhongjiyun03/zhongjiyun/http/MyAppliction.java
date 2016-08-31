@@ -43,6 +43,7 @@ public class MyAppliction extends Application {
     private static boolean isCheck; //是否接受推送消息
     private static String cacheData;
     private static boolean jiGuangIsCheck;
+    private static String projectRefresh;//项目详情刷新
 
     public static MyAppliction getInstance() {
         if (instance == null) {
@@ -198,6 +199,15 @@ public class MyAppliction extends Application {
     public static void setProjectRequestTage(String projectRequestTage) {
         MyAppliction.projectRequestTage = projectRequestTage;
     }
+
+    public static String getProjectRefresh() {
+        return projectRefresh;
+    }
+
+    public static void setProjectRefresh(String projectRefresh) {
+        MyAppliction.projectRefresh = projectRefresh;
+    }
+
     //对话框
     public static void showExitGameAlert(String text,Context app) {
         final AlertDialog dlg = new AlertDialog.Builder(app).create();

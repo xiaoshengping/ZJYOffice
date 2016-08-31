@@ -67,11 +67,11 @@
 
     </LinearLayout>
     <ImageView
-        android:src="@color/background"
+        android:src="@color/color_dadada"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="0.5dp" />
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -86,6 +86,7 @@
                 android:layout_height="wrap_content" />
 
             <EditText
+                android:maxLength="6"
                 android:id="@+id/work_time_edit"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -102,15 +103,15 @@
 
         </LinearLayout>
         <ImageView
-            android:src="@color/background"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
     </LinearLayout>
         <ImageView
-            android:layout_marginTop="3dp"
-            android:src="@color/background"
+            android:layout_marginTop="10dp"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <LinearLayout
             android:background="@color/ic_white"
             android:orientation="vertical"
@@ -150,11 +151,11 @@
 
             </LinearLayout>
             <ImageView
-                android:src="@color/background"
+                android:src="@color/color_dadada"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="0.5dp" />
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -188,9 +189,9 @@
             <ImageView
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
-                android:src="@color/background"
+                android:src="@color/color_dadada"
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="0.5dp" />
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -221,9 +222,9 @@
 
             </LinearLayout>
             <ImageView
-                android:src="@color/background"
+                android:src="@color/color_dadada"
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="0.5dp" />
 
 
 
@@ -231,10 +232,10 @@
         </LinearLayout>
 
         <ImageView
-            android:layout_marginTop="3dp"
-            android:src="@color/background"
+            android:layout_marginTop="10dp"
+            android:src="@color/color_dadada"
             android:layout_width="match_parent"
-            android:layout_height="1dp" />
+            android:layout_height="0.5dp" />
         <RelativeLayout
             android:layout_marginBottom="30dp"
             android:background="@color/ic_white"
@@ -472,27 +473,38 @@
 
 
    </ScrollView>
-    <LinearLayout
 
+    <RelativeLayout
+        android:id="@+id/competitive_layout"
         android:gravity="center"
         android:background="@color/white"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="60dp">
+        <ImageView
+            android:id="@+id/image_view"
+            android:src="@color/color_dadada"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp" />
         <Button
-
+            android:background="@drawable/loing_button_corners"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/image_view"
+            android:gravity="center"
             android:id="@+id/save_button"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-
-
             android:textColor="@color/ic_white"
-            android:background="@drawable/loing_button_corners"
-            android:textSize="@dimen/home_Size_18"
-            android:text="保存" />
-    </LinearLayout>
+            android:textSize="@dimen/home_Size_16"
+            android:text="保存"
+            />
+        <ImageView
+            android:layout_below="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+    </RelativeLayout>
 
 
    </RelativeLayout>

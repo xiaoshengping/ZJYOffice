@@ -187,6 +187,19 @@
                    android:text="88万"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content" />
+               <TextView
+                   android:visibility="gone"
+                   android:layout_toRightOf="@+id/price_text_view"
+                   android:layout_below="@+id/leixing_rlayout"
+                   android:layout_marginBottom="5dp"
+                   android:layout_marginLeft="20dp"
+                   android:layout_marginTop="2dp"
+                   android:textColor="@color/color_14b8e1"
+                   android:id="@+id/tenancy_text_view"
+                   android:textSize="@dimen/home_Size_16"
+                   android:text="88万"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
                  <ImageView
                      android:layout_marginTop="15dp"
                      android:layout_marginRight="10dp"

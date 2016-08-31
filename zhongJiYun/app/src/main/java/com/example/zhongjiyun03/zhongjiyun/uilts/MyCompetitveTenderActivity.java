@@ -3,8 +3,6 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -31,7 +29,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.main.ProjectlistBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.ProjectlistDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -128,14 +126,8 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
     private void initListData(int pageIndex) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
-        SQLhelper sqLhelper=new SQLhelper(MyCompetitveTenderActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
 
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-        }
+        String uid= SQLHelperUtils.queryId(MyCompetitveTenderActivity.this);  //用户id
         if (!TextUtils.isEmpty(uid)){
             //步骤1：创建一个SharedPreferences接口对象
             SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
@@ -227,9 +219,9 @@ public class MyCompetitveTenderActivity extends AppCompatActivity implements Vie
         competitveTenderLsitview.setOnRefreshListener(this);
         ILoadingLayout endLabels  = competitveTenderLsitview
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = competitveTenderLsitview
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示

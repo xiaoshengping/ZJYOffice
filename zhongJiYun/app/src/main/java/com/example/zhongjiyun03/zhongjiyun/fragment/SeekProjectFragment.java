@@ -137,7 +137,7 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
     }
 
     private void intiView() {
-        titlNameTv.setText("新闻中心");
+        titlNameTv.setText("资讯");
         registerTv.setVisibility(View.GONE);
         retrunTv.setVisibility(View.GONE);
         newsDataBeens=new ArrayList<>();//新闻动态数据
@@ -156,7 +156,7 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getNewsData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("新闻",responseInfo.result);
+                //Log.e("新闻",responseInfo.result);
                 AppListDataBean<NewsDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<NewsDataBean>>(){});
                 if ((appListDataBean.getResult()).equals("success")){
 
@@ -336,9 +336,9 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
         });
         ILoadingLayout endLabels  = dynamicListView
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = dynamicListView
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
@@ -381,9 +381,9 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
         });
         ILoadingLayout endLabels  = andustryListView
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = andustryListView
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
@@ -425,9 +425,9 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
         });
         ILoadingLayout endLabels  = enterpriseListView
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = enterpriseListView
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
@@ -469,9 +469,9 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
         });
         ILoadingLayout endLabels  = bidsListView
                 .getLoadingLayoutProxy(false, true);
-        endLabels.setPullLabel("上拉刷新...");// 刚下拉时，显示的提示
-        endLabels.setRefreshingLabel("正在刷新...");// 刷新时
-        endLabels.setReleaseLabel("放开刷新...");// 下来达到一定距离时，显示的提示
+        endLabels.setPullLabel("上拉加载...");// 刚上拉时，显示的提示
+        endLabels.setRefreshingLabel("正在加载...");// 刷新时
+        endLabels.setReleaseLabel("放开加载...");// 上来达到一定距离时，显示的提示
         ILoadingLayout startLabels  = bidsListView
                 .getLoadingLayoutProxy(true, false);
         startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
