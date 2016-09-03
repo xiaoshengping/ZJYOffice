@@ -165,6 +165,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
+            android:maxLength="18"
             android:id="@+id/id_card_edit"
             android:layout_width="match_parent"
             android:layout_height="45dp"

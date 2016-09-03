@@ -50,6 +50,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.ClippingPageActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.SelectImagesFromLocalActivity;
@@ -152,6 +153,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
+        intiPvAddress();
     }
     @Override
     protected void onPause() {
@@ -207,7 +209,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
             intiData();
             sellSaveButton.setText("修改出售信息");
         }
-        intiPvAddress();
+
         contractCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -294,14 +296,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         if (!TextUtils.isEmpty(secondHandBeanId)) {
             HttpUtils httpUtils = new HttpUtils();
             RequestParams requestParams = new RequestParams();
-            SQLhelper sqLhelper = new SQLhelper(SellExtruderActivity.this);
-            SQLiteDatabase db = sqLhelper.getWritableDatabase();
-            Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
-            String uid = null;  //用户id
-
-            while (cursor.moveToNext()) {
-                uid = cursor.getString(0);
-            }
+            String uid = SQLHelperUtils.queryId(SellExtruderActivity.this);  //用户id
             if (!TextUtils.isEmpty(uid)) {
                 requestParams.addBodyParameter("id", uid);
                 //步骤1：创建一个SharedPreferences接口对象
@@ -317,7 +312,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                 public void onSuccess(ResponseInfo<String> responseInfo) {
 
                     if (!TextUtils.isEmpty(responseInfo.result)) {
-                        Log.e("二手钻机详情", responseInfo.result);
+                       // Log.e("二手钻机详情", responseInfo.result);
                         AppBean<SecondHandListProjectBean> appListDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SecondHandListProjectBean>>() {
                         });
                         if (appListDataBean.getResult().equals("success")) {
@@ -462,13 +457,8 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                                 }
 
                             }
-                            SQLhelper sqLhelper=new SQLhelper(SellExtruderActivity.this);
-                            SQLiteDatabase db= sqLhelper.getWritableDatabase();
-                            Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-                            String uid=null;  //用户id
-                            while (cursor.moveToNext()) {
-                                uid=cursor.getString(0);
-                            }
+
+                            String uid= SQLHelperUtils.queryId(SellExtruderActivity.this);  //用户id
                             HttpUtils httpUtils=new HttpUtils();
                             RequestParams requestParams=new RequestParams();
                             //步骤1：创建一个SharedPreferences接口对象
@@ -505,7 +495,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
                                 @Override
                                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                                    Log.e("修改出售",responseInfo.result);
+                                    //Log.e("修改出售",responseInfo.result);
                                     if (!TextUtils.isEmpty(responseInfo.result)){
                                         AppBean<RentOutExtruderDeviceBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceBean>>(){});
                                         if (appBean.getResult().equals("success")){
@@ -573,7 +563,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
 
         }else {
-            MyAppliction.showToast("请输入停放地");
+            MyAppliction.showToast("请选择停放地");
 
         }
 
@@ -634,7 +624,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
                                     httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(), requestParams, new RequestCallBack<String>() {
                                         @Override
                                         public void onSuccess(ResponseInfo<String> responseInfo) {
-                                            Log.e("出售", responseInfo.result);
+                                            //Log.e("出售", responseInfo.result);
                                             if (!TextUtils.isEmpty(responseInfo.result)) {
                                                 AppBean<RentOutExtruderDeviceBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<RentOutExtruderDeviceBean>>() {
                                                 });
@@ -702,7 +692,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 
 
         } else {
-            MyAppliction.showToast("请输入停放地");
+            MyAppliction.showToast("请选择停放地");
 
         }
 
@@ -722,14 +712,13 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         //步骤2：获取文件中的值
         String sesstionId = read.getString("code", "");
         requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        Log.e("AddSesstionId", sesstionId);
         requwstParams.addBodyParameter("OwnId", ownId);
         httpUtils.configSoTimeout(1200000);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求", responseInfo.result);
+                //Log.e("照片请求", responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)) {
                     AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
                     });
@@ -771,274 +760,7 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-    /*private void intiPhontData0(final String id, String imageType, String imagePath, final String OwnId) {
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams requwstParams = new RequestParams();
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        requwstParams.addBodyParameter("Id", id);
-        requwstParams.addBodyParameter("ImageType", imageType);
-        requwstParams.addBodyParameter("UserType", "boss");
-        requwstParams.addBodyParameter("SourceType", "4");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        requwstParams.addBodyParameter("OwnId", OwnId);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求", responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)) {
-                    AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
-                    });
 
-                    if (appBean.getResult().equals("success")) {
-
-                        if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传中照片(4/5张)...");
-                        } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传中照片(3/4张)...");
-                        }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.showWithStatus("上传中照片(2/3张)...");
-                        }
-                        intiPhontData1(id, "12", phoneListPath.get(1), OwnId);
-
-
-                    } else {
-                        MyAppliction.showToast("上传照片失败");
-                        mSVProgressHUD.dismiss();
-
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求", s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-
-    private void intiPhontData1(final String id, String iamgeType, String imagePath, final String OwnId) {
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams requwstParams = new RequestParams();
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        requwstParams.addBodyParameter("Id", id);
-        requwstParams.addBodyParameter("ImageType", iamgeType);
-        requwstParams.addBodyParameter("UserType", "boss");
-        requwstParams.addBodyParameter("SourceType", "4");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        requwstParams.addBodyParameter("OwnId", OwnId);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求", responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)) {
-                    AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
-                    });
-
-                    if (appBean.getResult().equals("success")) {
-
-                        if (phoneListPath.size()==5){
-                            mSVProgressHUD.showWithStatus("上传中照片(3/5张)...");
-                        } else if (phoneListPath.size()==4){
-                            mSVProgressHUD.showWithStatus("上传中照片(2/4张)...");
-                        }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.showWithStatus("上传中照片(1/3张)...");
-                        }
-                        intiPhontData2(id, "13", phoneListPath.get(2),OwnId);
-
-
-                    } else {
-                        mSVProgressHUD.dismiss();
-                        MyAppliction.showToast("上传照片失败");
-
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求", s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-
-    private void intiPhontData2(final String id, String imageType, String imagePath, final String OwnId) {
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams requwstParams = new RequestParams();
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        requwstParams.addBodyParameter("Id", id);
-        requwstParams.addBodyParameter("ImageType", imageType);
-        requwstParams.addBodyParameter("UserType", "boss");
-        requwstParams.addBodyParameter("SourceType", "4");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        requwstParams.addBodyParameter("OwnId", OwnId);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求", responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)) {
-                    AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
-                    });
-
-                    if (appBean.getResult().equals("success")) {
-                        if (phoneListPath.size() == 5) {
-                            mSVProgressHUD.showWithStatus("上传中照片(2/5张)...");
-                        } else if (phoneListPath.size() == 4) {
-                            mSVProgressHUD.showWithStatus("上传中照片(1/4张)...");
-                        }else if (phoneListPath.size()==3){
-                            mSVProgressHUD.dismiss();
-                            mSVProgressHUD.showSuccessWithStatus("出售钻机成功");
-                            showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出售申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
-
-                        }
-
-                        if (phoneListPath.size() > 3) {
-                            intiPhontData3(id, "14", phoneListPath.get(3),OwnId);
-                        }
-
-
-                    } else {
-                        MyAppliction.showToast(appBean.getMsg());
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求", s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-
-    private void intiPhontData3(final String id, String imageType, String imagePath, final String OwnId) {
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams requwstParams = new RequestParams();
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        requwstParams.addBodyParameter("Id", id);
-        requwstParams.addBodyParameter("ImageType", imageType);
-        requwstParams.addBodyParameter("UserType", "boss");
-        requwstParams.addBodyParameter("SourceType", "3");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        requwstParams.addBodyParameter("OwnId", OwnId);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求", responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)) {
-                    AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
-                    });
-
-                    if (appBean.getResult().equals("success")) {
-                        if (phoneListPath.size() == 5) {
-                            mSVProgressHUD.showWithStatus("上传中照片(1/5张)...");
-                        } else if (phoneListPath.size() == 4) {
-                            mSVProgressHUD.dismiss();
-                            mSVProgressHUD.showSuccessWithStatus("出售钻机成功");
-                            showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出售申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
-
-                        }
-                        if (phoneListPath != null && phoneListPath.size() == 5) {
-
-                            intiPhontData4(id, "15", phoneListPath.get(4),OwnId);
-                        }
-
-
-                    } else {
-                        MyAppliction.showToast("上传照片失败");
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求", s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }
-
-    private void intiPhontData4(final String id, String userType, String imagePath,String OwnId) {
-        HttpUtils httpUtils = new HttpUtils();
-        RequestParams requwstParams = new RequestParams();
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        requwstParams.addBodyParameter("Id", id);
-        requwstParams.addBodyParameter("ImageType", userType);
-        requwstParams.addBodyParameter("UserType", "boss");
-        requwstParams.addBodyParameter("SourceType", "3");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        requwstParams.addBodyParameter("OwnId", OwnId);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(), requwstParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求", responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)) {
-                    AppBean<AppDataBean> appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<AppDataBean>>() {
-                    });
-
-                    if (appBean.getResult().equals("success")) {
-                        mSVProgressHUD.dismiss();
-                        mSVProgressHUD.showSuccessWithStatus("出售钻机成功");
-                        showExitGameAlert("\u3000\u3000"+"敬的用户，您的钻机出售申请已提交成功，请等待后台审核，为提高您审核通过的概率，现建议您去缴纳1000元的保证金，谢谢!","提交成功，等待后台审核");
-
-
-                    } else {
-                        MyAppliction.showToast("上传照片失败");
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求", s);
-                mSVProgressHUD.dismiss();
-            }
-        });
-
-
-    }*/
     //对话框
     private void showExitGameAlert(String text,String tailtText) {
         final AlertDialog dlg = new AlertDialog.Builder(SellExtruderActivity.this).create();
@@ -1427,8 +1149,16 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
 // KeyEvent.KEYCODE_BACK代表返回操作.
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 处理返回操作.
-            finish();
-            overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+            if (pvOptions!=null){
+                if (pvOptions.isShowing()){
+                    pvOptions.dismiss();
+                }else {
+                    // 处理返回操作.
+                    finish();
+                }
+            }else {
+                finish();
+            }
 
         }
         return true;

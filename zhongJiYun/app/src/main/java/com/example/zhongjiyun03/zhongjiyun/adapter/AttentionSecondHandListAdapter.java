@@ -65,12 +65,18 @@ public class AttentionSecondHandListAdapter extends AppBaseAdapter<SecondHandBea
 
 
 
-            if (!TextUtils.isEmpty(data.get(position).getDistanceStr())){
-                viewHold.distanceTextView.setVisibility(View.VISIBLE);
-                viewHold.distanceTextView.setText(data.get(position).getDistanceStr()+"Km");
+            /*if (!TextUtils.isEmpty(data.get(position).getDistanceStr())){
+                if (data.get(position).getDistanceStr().equals("-1")){
+                    viewHold.distanceTextView.setVisibility(View.GONE);
+                }else {
+                    viewHold.distanceTextView.setVisibility(View.VISIBLE);
+                    viewHold.distanceTextView.setText(data.get(position).getDistanceStr()+"Km");
+
+                }
+
             }else {
                 viewHold.distanceTextView.setVisibility(View.GONE);
-            }
+            }*/
             if (!TextUtils.isEmpty(data.get(position).getCity())){
                 viewHold.addressTextView.setText(data.get(position).getCity());
             }

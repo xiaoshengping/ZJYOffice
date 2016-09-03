@@ -279,7 +279,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
 
                     int scrollY=view.getScrollY();
                     imageHeight = advertismentRlayout.getHeight();
-                    Log.e("ACTION_MOVE-----","ACTION_MOVE"+scrollY);
                     if (scrollY <= 30) {
                         headTextLayout.setBackgroundColor(Color.argb((int) 50, 227, 29, 26));//AGB由相关工具获得，或者美工提供
                     } else if (scrollY > 0 && scrollY <= imageHeight) {
@@ -288,12 +287,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                         // 只是layout背景透明(仿知乎滑动效果)
                         headTextLayout.setBackgroundColor(Color.argb((int) alpha, 227, 29, 26));
                     } else {
-                        headTextLayout.setBackgroundColor(Color.argb((int) 255, 227, 29, 26));
+                        headTextLayout.setBackgroundColor(Color.argb((int) 255, 202, 20, 29));
                     }
 
                     break;
                 case MotionEvent.ACTION_UP:
-                    Log.e("ACTION_UP-------------","ACTION_UP");
+                    //Log.e("ACTION_UP-------------","ACTION_UP");
                    // headTextLayout.setVisibility(View.VISIBLE);
                     break;
 

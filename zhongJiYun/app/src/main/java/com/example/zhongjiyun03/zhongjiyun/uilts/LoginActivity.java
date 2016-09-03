@@ -174,28 +174,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             if ((phoneEdit.getText().toString()).length()==11){
                 if (!TextUtils.isEmpty(codeEdit.getText().toString())){
+                    if (codeEdit.getText().toString().length()==4){
                     RequestParams requestParams=new RequestParams();
                     requestParams.addBodyParameter("PhoneNumber",phoneEdit.getText().toString());
                     requestParams.addBodyParameter("SmsCode",codeEdit.getText().toString());
                     requestParams.addBodyParameter("userType","boss");
                     requestParams.addBodyParameter("jiGuangID",JPushInterface.getRegistrationID(LoginActivity.this));
-                   // mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");
-                   // mSVProgressHUD.showErrorWithStatus("不约，叔叔我们不约～", SVProgressHUD.SVProgressHUDMaskType.GradientCancel);
                     mSVProgressHUD.showWithStatus("登录中...");
-                   //httpUtils.configCookieStore(MyCookieStore.cookieStore);
                     //步骤1：创建一个SharedPreferences接口对象
                     SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
                     //步骤2：获取文件中的值
                     String value = read.getString("code","");
                     if (!TextUtils.isEmpty(value)){
                         requestParams.setHeader("Cookie","ASP.NET_SessionId=" +  value );
-                        //Log.e("jdfjfj",value);
                     }
                    httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getLoginData(),requestParams, new RequestCallBack<String>() {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
                            // Log.e("登录信息",responseInfo.result);
-                           // MyAppliction.showToast("恭喜您,登录成功!");
                             if (!TextUtils.isEmpty(responseInfo.result)){
                                 AppBean<AppUserDataBean<LoginDataBean>> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppUserDataBean<LoginDataBean>>>(){});
                                 if (appBean.getResult().equals("success")){
@@ -250,7 +246,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             mSVProgressHUD.dismiss();
                         }
                     });
+                    }else {
 
+                        MyAppliction.showToast("请输入长度为4的验证码");
+                    }
 
                 }else {
 

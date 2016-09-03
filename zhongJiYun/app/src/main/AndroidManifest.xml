@@ -128,16 +128,6 @@
     <uses-feature android:name="android.hardware.autofocus" />
     <uses-feature android:name="android.hardware.flash" />
 
-    <!--
-    &lt;!&ndash; Push service 运行需要的权限 &ndash;&gt;
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    &lt;!&ndash; for log. &ndash;&gt;
-    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
-    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    -->
     <application
         android:name=".http.MyAppliction"
         android:allowBackup="true"

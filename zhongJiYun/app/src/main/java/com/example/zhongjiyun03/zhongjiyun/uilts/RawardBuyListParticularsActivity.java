@@ -116,7 +116,7 @@ public class RawardBuyListParticularsActivity extends AppCompatActivity implemen
                                 phoneText.setText("所在地："+rawardBuyParticulasBean.getProvince()+rawardBuyParticulasBean.getCity());
                                 addressText.setText("出厂时间："+rawardBuyParticulasBean.getDateOfManufacture()+"年"+rawardBuyParticulasBean.getDateMonthOfManufacture()+"月");
                                 facilltyText.setText("出厂编号："+rawardBuyParticulasBean.getDeviceNo());
-                                facilityTypeText.setText("价格："+rawardBuyParticulasBean.getPrice());
+                                facilityTypeText.setText("价格："+rawardBuyParticulasBean.getPrice()+"万");
                                 workTimeText.setText("机主姓名："+rawardBuyParticulasBean.getBossName());
                                 workAgeText.setText("机主手机："+rawardBuyParticulasBean.getBossPhone());
                                 buyNumberText.setText("钻机工作时长："+rawardBuyParticulasBean.getHourOfWork());
@@ -204,6 +204,6 @@ public class RawardBuyListParticularsActivity extends AppCompatActivity implemen
 
     @Override
     public void onClick(View v) {
-
+         finish();
     }
 }

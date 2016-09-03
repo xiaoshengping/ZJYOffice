@@ -19,90 +19,7 @@
         android:background="@color/background"
         android:orientation="vertical">
 
-
-
-        <LinearLayout
-            android:background="@color/ic_white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:drawableRight="@mipmap/select_arrow"
-                android:id="@+id/main_tab1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:text="@string/main_tab1"
-                android:gravity="center" />
-            <ImageView
-                android:layout_marginTop="8dp"
-                android:background="@color/div_gray"
-                android:layout_width="1dp"
-                android:layout_height="30dp" />
-            <TextView
-                android:drawableRight="@mipmap/select_arrow"
-                android:id="@+id/evolve_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:maxEms="4"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:text="@string/main_tab2"
-                android:gravity="center" />
-            <ImageView
-                android:layout_marginTop="8dp"
-                android:background="@color/div_gray"
-                android:layout_width="1dp"
-                android:layout_height="30dp" />
-            <TextView
-                android:drawableRight="@mipmap/select_arrow"
-                android:id="@+id/sort_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:maxEms="4"
-                android:singleLine="true"
-                android:ellipsize="end"
-                android:text="@string/main_tab3"
-                android:gravity="center" />
-
-
-        </LinearLayout>
-
-        <View
-
-            android:id="@+id/main_div_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/div_gray"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!-- your views...-->
-            <!-- <TextView
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:text="This is a test." />-->
-
-            <!--使背景变灰-->
-            <View
-                android:id="@+id/main_darkview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/dark_bg"
-                android:visibility="gone" />
-
-        </RelativeLayout>
+        <include   android:id="@+id/select_layout" android:layout_height="wrap_content" android:layout_width="match_parent" layout="@layout/project_select_layout"/>
         <LinearLayout
             android:visibility="gone"
             android:id="@+id/network_remind_layout"
@@ -131,15 +48,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:dividerHeight="10dp"
             android:divider="#00000000"
             android:id="@+id/project_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-
     </LinearLayout>
 
     <LinearLayout

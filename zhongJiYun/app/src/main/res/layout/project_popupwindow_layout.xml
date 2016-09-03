@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="#00000000"
     android:orientation="vertical"
-
     android:id="@+id/popupwindow">
     <LinearLayout
         android:id="@+id/select_left_layout"
@@ -25,15 +24,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <ImageView
-
             android:layout_weight="1"
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
         android:visibility="gone"
-        android:id="@+id/select_middle_layout"
+        android:id="@+id/select_middle_layout_one"
         android:background="@mipmap/alpha"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -52,7 +53,37 @@
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/select_middle_layout"
+        android:background="@mipmap/alpha"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:src="@mipmap/top_icon"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/select_right_layout"
         android:visibility="gone"
@@ -60,6 +91,10 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <ImageView
             android:layout_weight="1"
             android:layout_width="wrap_content"

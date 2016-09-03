@@ -1,16 +1,12 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.PaintDrawable;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,14 +23,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -45,21 +40,18 @@ import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.SecondHandDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.SecondHandBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.select.FacillyChildsBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.FacillyDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
-import com.example.zhongjiyun03.zhongjiyun.popwin.FacillyFirstClassAdapter;
-import com.example.zhongjiyun03.zhongjiyun.popwin.FacillySecondClassAdapter;
-import com.example.zhongjiyun03.zhongjiyun.popwin.FirstClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.PopupWindowHelper;
-import com.example.zhongjiyun03.zhongjiyun.popwin.ScreenUtils;
-import com.example.zhongjiyun03.zhongjiyun.popwin.SecondClassAdapter;
+import com.example.zhongjiyun03.zhongjiyun.popwindon.RootListViewAdapter;
+import com.example.zhongjiyun03.zhongjiyun.popwindon.ScreenUtils;
+import com.example.zhongjiyun03.zhongjiyun.popwindon.SubListViewAdapter;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -95,65 +87,82 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     @ViewInject(R.id.retrun_text_view)
     private TextView retrunText;     //头部左边
 
-    //排序
-    @ViewInject(R.id.time_text_view)
-    private TextView sortButton; //排序选项
-    PopupWindow popupWindowTime;
-    private List<String> list;
-    int cur_pos = -1;// 当前显示的一行
-    int popTag = 1;
+    /**
+     * 筛选
+     * @param savedInstanceState
+     */
+    private List<ProvinceCityBean> provinceCityBeens ;//地域数据
+    /**
+     * 项目进展筛选按钮
+     */
+    @ViewInject(R.id.evolve_llayout)
+    private LinearLayout evolveLlayout;
+    /**
+     * popupwindow
+     *
+     */
+    private PopupWindow mPopupWindow;
+    /**
+     * 二级菜单的根目录
+     */
+    private ListView rootListView;
 
-    //项目进展
-    @ViewInject(R.id.evolve_text_view)
-    private TextView evolveButton;
-    int cur_evolve_pos = -1;// 当前显示的一行
+    private ListView subListView;
+
+    /**
+     * 弹出的popupWindow布局
+     */
+    private LinearLayout popupLayout;
+
+    /**
+     * 子目录的布局
+     */
+    private FrameLayout subLayout;
+
+    /**
+     * 根目录被选中的节点
+     */
+    private int selectedPosition;
+    /**
+     * 点击关闭popwindow
+     */
+    private  LinearLayout popWindowDisminLayout;
+
+    /**
+     * 地域筛选数据
+     *
+     */
+    private List<String> sortLists;
+
+    /**
+     * 地域筛选按钮
+     *
+     */
+    @ViewInject(R.id.address_llayout)
+    private LinearLayout addressLayout;
+    @ViewInject(R.id.evolve_text)
+    private TextView evolveText; //项目进展筛选text
+    @ViewInject(R.id.address_text)
+    private TextView addressText;  //地域筛选text
+    private String province;  //省份
+    private String city;  //城市
+    private String orderText;//选择的排序内容
+    private List<String> orlder;
+    @ViewInject(R.id.order_llayout)
+    private LinearLayout orderLlayout;//排序点击按钮
+    @ViewInject(R.id.order_text)
+    private TextView orderTextView;  //排序txtview
+    private String evolveTextString;
+    @ViewInject(R.id.facility_llayout)
+    private LinearLayout facillyLayout;  //设备型号按钮
+    @ViewInject(R.id.facility_text)
+    private TextView facillyText; //品牌筛选text
+    private String manufacture;
+    private String type;
 
 
-    private TextView mainTab1TV;
-    /**左侧一级分类的数据*/
-    private List<ProvinceCityBean> firstList;
-    /**右侧二级分类的数据*/
-    private List<ProvinceCityChildsBean> secondList;
-
-    /**使用PopupWindow显示一级分类和二级分类*/
-    private PopupWindow popupWindow;
-
-    /**左侧和右侧两个ListView*/
-    private ListView leftLV, rightLV;
-    //弹出PopupWindow时背景变暗
-    private View darkView;
-
-    //弹出PopupWindow时，背景变暗的动画
-    private Animation animIn, animOut;
-
-    private int pageIndex = 1; //page
-    private List<SecondHandBean> secondHandBeens;
-
-    //设备产商
-    private PopupWindow popupWindowFacilly;
-    /**左侧和右侧两个ListView*/
-    private ListView facillyLeftLV, facillyRightLV;
-    @ViewInject(R.id.facilly_text_view)
-    private TextView facillyText;
-    /**左侧一级分类的数据*/
-    // private List<FacillyDataBean> facilluyFirstList=new ArrayList<>();
-    /**右侧二级分类的数据*/
-    private List<FacillyChildsBean> facillySecondList;
-    private String type; //型号
-    private String facillyTaye;//商家
-    private String city;   //城市
-    private String year; //出厂时间
-    private String order;  //排序
-
-    @ViewInject(R.id.facilly_text_view)
-    private TextView facillyTextView;
-    private LocationManager lm;
-    private static final String TAG = "GpsActivity";
-    private String Longitude;
-    private String Latitude;
     private HomeSecondHandListAdapter homeSecondHandListAdapter;
     private boolean isPullDownRefresh = true; //判断是下拉，还是上拉的标记
-    private String province;
     @ViewInject(R.id.not_data_layout)
     private LinearLayout notDataLayout;//没有数据显示
     @ViewInject(R.id.network_remind_layout)
@@ -165,8 +174,10 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     private List<FacillyDataBean> facillyDataBeens ;//设备厂商数据
     private SecondHandHandler secondHandHandler;
     private AppBean<SecondHandDataBean> appListDataBean;  //列表数据
-    @ViewInject(R.id.tailt_layout)
-    private LinearLayout tailtLayout; //筛选布局
+    @ViewInject(R.id.drilling_select_layout)
+    private RelativeLayout drillingSelectLayout; //筛选布局
+    private int pageIndex = 1; //page
+    private List<SecondHandBean> secondHandBeens;  //列表数据
 
     @Override
     protected void onResume() {
@@ -235,32 +246,11 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         win.setAttributes(winParams);
     }
     private void inti() {
-        facillyDataBeens=new ArrayList<>();
         secondHandBeens = new ArrayList<>();
-        sortButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showSortPopupWindow(sortButton);
-                popTag = 1;
-
-            }
-        });
-        evolveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showEvolvePopupWindow(evolveButton);
-                popTag = 2;
-            }
-        });
-
-        findView();
-        initData();
-        initPopup();
-
-        OnClickListenerImpl l = new OnClickListenerImpl();
-        mainTab1TV.setOnClickListener(l);
+        addressLayout.setOnClickListener(this);
+        evolveLlayout.setOnClickListener(this);
+        orderLlayout.setOnClickListener(this);
+        facillyLayout.setOnClickListener(this);
         shareTextView.setOnClickListener(this);
         titleName.setText("二手机");
         retrunText.setOnClickListener(this);
@@ -269,22 +259,12 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         networkRemindLayout.setOnClickListener(this);
         secondHandHandler=new SecondHandHandler();
 
-        facillyTextView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (facillyDataBeens.size()!=0){
-                    tabFacillynClick();
-                }else {
-                    MyAppliction.showToast("网络异常，请稍后重试");
-                }
-
-            }
-        });
         if (getIntent().getStringExtra("tage").equals("matingFacily")){
-            tailtLayout.setVisibility(View.GONE);
+            drillingSelectLayout.setVisibility(View.GONE);
         }else {
-            tailtLayout.setVisibility(View.VISIBLE);
+            drillingSelectLayout.setVisibility(View.VISIBLE);
         }
+        initData();
 
 
 
@@ -342,23 +322,34 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 break;
+            case R.id.order_llayout:   //排序筛选
+                showPopBtn(4);
+                break;
+            case R.id.evolve_llayout:  //项目进展
+                showPopBtn(2);
+                break;
+            case R.id.address_llayout:  //地域筛选
+                showPopBtn(3);
+                break;
+            case R.id.facility_llayout:
+                showPopBtn(1);
+
+                break;
+            default:
+                break;
+
 
 
         }
     }
+    
+    
+    
 
-    private void initListData(final int pageIndex, String type, String city, String year, String order) {
+    private void initListData(final int pageIndex) {
         HttpUtils httpUtils = new HttpUtils();
         final RequestParams requestParams = new RequestParams();
-        SQLhelper sqLhelper = new SQLhelper(SecondHandActivity.this);
-        SQLiteDatabase db = sqLhelper.getWritableDatabase();
-        Cursor cursor = db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid = null;  //用户id
-
-        while (cursor.moveToNext()) {
-            uid = cursor.getString(0);
-
-        }
+        String uid= SQLHelperUtils.queryId(SecondHandActivity.this);
         if (!TextUtils.isEmpty(uid)) {
             requestParams.addBodyParameter("Id", uid);
             //步骤1：创建一个SharedPreferences接口对象
@@ -368,44 +359,45 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         }
 
-        if (!TextUtils.isEmpty(city)) {
-
-            if (province.equals("全部")) {
-
-            } else {
-                if (city.equals("全部")) {
-                    requestParams.addBodyParameter("province", province);
-                } else {
-                    requestParams.addBodyParameter("city", city);
-                }
-
-            }
-
-
-        }
         if (getIntent().getStringExtra("tage").equals("matingFacily")) {
             if (!TextUtils.isEmpty(getIntent().getStringExtra("data"))) {
                 requestParams.addBodyParameter("province", getIntent().getStringExtra("data").toString());
             }
 
         }
-        if (!TextUtils.isEmpty(type)) {
-            if (facillyTaye.equals("全部")){
-
+        if (!TextUtils.isEmpty(city)){
+            if (city.equals("全部")){
+                if (!province.equals("全部")){
+                    requestParams.addBodyParameter("province",province);
+                }
             }else {
-                if (type.equals("全部")){
-                    requestParams.addBodyParameter("manufacture",facillyTaye);
-                }else {
-                    requestParams.addBodyParameter("type", type);
+                requestParams.addBodyParameter("province",province);
+                requestParams.addBodyParameter("city",city);
+            }
+        }
+
+        if (!TextUtils.isEmpty(type)){
+            if (!type.equals("全部")){
+                requestParams.addBodyParameter("manufacture",manufacture);
+                requestParams.addBodyParameter("type",type);
+            }else {
+                if (!TextUtils.isEmpty(manufacture)){
+                    if (!manufacture.equals("全部")){
+                        requestParams.addBodyParameter("manufacture",manufacture);
+                    }
+
                 }
             }
-
         }
-        if (!TextUtils.isEmpty(year)) {
-            requestParams.addBodyParameter("year", year);
+        if (!TextUtils.isEmpty(evolveTextString)) {
+            if (!evolveTextString.equals("全部")) {
+                requestParams.addBodyParameter("year", evolveTextString);
+            }
         }
-        if (!TextUtils.isEmpty(order)) {
-            requestParams.addBodyParameter("order", order);
+        if (!TextUtils.isEmpty(orderText)) {
+            if (!orderText.equals("默认排序")) {
+                requestParams.addBodyParameter("order", orderText);
+            }
         }
         if (!TextUtils.isEmpty(MyAppliction.getLatitude())) {
             requestParams.addBodyParameter("latitude", MyAppliction.getLatitude());
@@ -419,7 +411,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSecondExtruderData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("二手钻机", responseInfo.result);
+                //Log.e("二手钻机", responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)) {
                      appListDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<SecondHandDataBean>>() {
                     });
@@ -485,30 +477,282 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
         pageIndex = 1;
         isPullDownRefresh = true;
-        initListData(pageIndex, type, city, year, order);
+        initListData(pageIndex);
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
          pageIndex++;
         isPullDownRefresh = false;
-        initListData(pageIndex, type, city, year, order);
+        initListData(pageIndex);
 
 
     }
 
-    private void findView() {
-        mainTab1TV = (TextView)findViewById(R.id.main_tab1);
-        darkView =findViewById(R.id.main_darkview);
 
-        animIn = AnimationUtils.loadAnimation(SecondHandActivity.this, R.anim.fade_in_anim);
-        animOut = AnimationUtils.loadAnimation(SecondHandActivity.this, R.anim.fade_out_anim);
+    /**
+     * 筛选
+     * @param tage
+     */
+
+    private void showPopBtn( final int tage) {
+        LayoutInflater inflater = LayoutInflater.from(SecondHandActivity.this);
+        popupLayout = (LinearLayout) inflater.inflate(R.layout.project_popupwindow_layout, null, false);
+        rootListView = (ListView) popupLayout.findViewById(R.id.root_listview);
+        popWindowDisminLayout= (LinearLayout) popupLayout.findViewById(R.id.popupwindow_dismin);
+        LinearLayout selectRightLayout= (LinearLayout) popupLayout.findViewById(R.id.select_right_layout);
+        LinearLayout selectMiddleLayout= (LinearLayout) popupLayout.findViewById(R.id.select_middle_layout);
+        LinearLayout selectLeftLayout= (LinearLayout) popupLayout.findViewById(R.id.select_left_layout);
+        LinearLayout selectMiddleLayoutOne= (LinearLayout) popupLayout.findViewById(R.id.select_middle_layout_one);
+        /**
+         * 初始化mPopupWindow
+         */
+        mPopupWindow = new PopupWindow(popupLayout, ScreenUtils.getScreenWidth(SecondHandActivity.this), ViewGroup.LayoutParams.MATCH_PARENT, true);
+
+        /**
+         * 有了mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+         * 这句可以使点击popupwindow以外的区域时popupwindow自动消失 但这句必须放在showAsDropDown之前
+         */
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+        popWindowDisminLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPopupWindow.isShowing()){
+                    mPopupWindow.dismiss();
+                }
+
+            }
+        });
+        /**
+         * popupwindow的位置，第一个参数表示位于哪个控件之下 第二个参数表示向左右方向的偏移量，正数表示向左偏移，负数表示向右偏移
+         * 第三个参数表示向上下方向的偏移量，正数表示向下偏移，负数表示向上偏移
+         *
+         */
+        if (tage==3){
+            mPopupWindow.showAsDropDown(addressLayout, -5, 0);// 在控件下方显示popwindow
+            selectLeftLayout.setVisibility(View.GONE);
+            selectRightLayout.setVisibility(View.GONE);
+            selectMiddleLayout.setVisibility(View.GONE);
+            selectMiddleLayoutOne.setVisibility(View.VISIBLE);
+        }else if (tage==2) {
+            mPopupWindow.showAsDropDown(evolveLlayout, -5, 0);// 在控件下方显示popwindow
+            selectMiddleLayoutOne.setVisibility(View.GONE);
+            selectMiddleLayout.setVisibility(View.VISIBLE);
+            selectLeftLayout.setVisibility(View.GONE);
+            selectRightLayout.setVisibility(View.GONE);
+        }else if (tage==4){
+            mPopupWindow.showAsDropDown(orderLlayout, -5, 0);// 在控件下方显示popwindow
+            selectMiddleLayout.setVisibility(View.GONE);
+            selectLeftLayout.setVisibility(View.GONE);
+            selectRightLayout.setVisibility(View.VISIBLE);
+            selectMiddleLayoutOne.setVisibility(View.GONE);
+        }else {
+            mPopupWindow.showAsDropDown(facillyLayout, -5, 0);// 在控件下方显示popwindow
+            selectLeftLayout.setVisibility(View.VISIBLE);
+            selectRightLayout.setVisibility(View.GONE);
+            selectMiddleLayout.setVisibility(View.GONE);
+            selectMiddleLayoutOne.setVisibility(View.GONE);
+        }
+        mPopupWindow.update();
+
+        final RootListViewAdapter adapter = new RootListViewAdapter(SecondHandActivity.this);
+        /**
+         * 子popupWindow
+         */
+        subLayout = (FrameLayout) popupLayout.findViewById(R.id.sub_popupwindow);
+        /**
+         * 初始化subListview
+         */
+        subListView = (ListView) popupLayout.findViewById(R.id.sub_listview);
+        /**
+         * 弹出popupwindow时，二级菜单默认隐藏，当点击某项时，二级菜单再弹出
+         */
+        if (tage==3){
+            adapter.setTage(3);
+            adapter.setItems(provinceCityBeens);
+            subLayout.setVisibility(View.VISIBLE);
+        }else if (tage==2){
+            adapter.setTage(2);
+            adapter.setItems(sortLists);
+            subLayout.setVisibility(View.GONE);
+        }else if (tage==4){
+            adapter.setTage(4);
+            adapter.setItems(orlder);
+            subLayout.setVisibility(View.GONE);
+        }else {
+            adapter.setTage(1);
+            adapter.setItems(facillyDataBeens);
+            subLayout.setVisibility(View.VISIBLE);
+
+        }
+        rootListView.setAdapter(adapter);
+        rootListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // TODO Auto-generated method stub
+                if (tage==3){
+
+                    SubListViewAdapter subAdapter = new SubListViewAdapter(
+                            SecondHandActivity.this, provinceCityBeens.get(position).getProvinceCityChilds(), position,3);
+                    subListView.setAdapter(subAdapter);
+                    /**
+                     * 选中root某项时改变该ListView item的背景色
+                     */
+                    adapter.setSelectedPosition(position);
+                    adapter.notifyDataSetInvalidated();
+                    selectedPosition=position;
+                    /**
+                     * 选中某个根节点时，使显示相应的子目录可见
+                     */
+                    subListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(
+                                AdapterView<?> parent, View view,
+                                int position, long id) {
+                            // TODO Auto-generated method stub
+                            mPopupWindow.dismiss();
+                            addressText.setTextColor(getResources().getColor(R.color.red_light));
+
+                            Drawable drawable = getResources().getDrawable(R.mipmap.drop_down_icon_cur);
+                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                            addressText.setCompoundDrawables(null,null , drawable, null);//画在右边
+                            province=provinceCityBeens.get(selectedPosition).getName();
+                            city=provinceCityBeens.get(selectedPosition).getProvinceCityChilds().get(position).getName();
+                            if (city.equals("全部")){
+                                if (province.equals("全部")){
+                                    addressText.setText("全国项目");
+                                }else {
+                                    addressText.setText(provinceCityBeens.get(selectedPosition).getName());
+                                }
+                            }else {
+                                addressText.setText(provinceCityBeens.get(selectedPosition).getName()+provinceCityBeens.get(selectedPosition).getProvinceCityChilds().get(position).getName());
+                            }
+                            pageIndex=1;
+                            initListData(pageIndex);
+                            isPullDownRefresh=true;
+
+
+                        }
+                    });
+                }else if (tage==2){
+                    SubListViewAdapter  subAdapter = new SubListViewAdapter(
+                            SecondHandActivity.this, sortLists, position,2);
+                    subListView.setAdapter(subAdapter);
+                    /**
+                     * 选中root某项时改变该ListView item的背景色
+                     */
+                    adapter.setSelectedPosition(position);
+                    adapter.notifyDataSetInvalidated();
+                    mPopupWindow.dismiss();
+                    evolveText.setTextColor(getResources().getColor(R.color.red_light));
+                    evolveText.setText(sortLists.get(position));
+                    Drawable drawable = getResources().getDrawable(R.mipmap.drop_down_icon_cur);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                    evolveText.setCompoundDrawables(null,null, drawable, null);//画在右边
+                    evolveTextString=sortLists.get(position);
+                    pageIndex=1;
+                    initListData(pageIndex);
+                    isPullDownRefresh=true;
+
+
+                }else if (tage==4){
+                    SubListViewAdapter  subAdapter = new SubListViewAdapter(
+                            SecondHandActivity.this, sortLists, position,4);
+                    subListView.setAdapter(subAdapter);
+                    /**
+                     * 选中root某项时改变该ListView item的背景色
+                     */
+                    adapter.setSelectedPosition(position);
+                    adapter.notifyDataSetInvalidated();
+                    mPopupWindow.dismiss();
+                    orderTextView.setTextColor(getResources().getColor(R.color.red_light));
+                    orderTextView.setText(orlder.get(position));
+                    Drawable drawable = getResources().getDrawable(R.mipmap.drop_down_icon_cur);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                    orderTextView.setCompoundDrawables(null,null, drawable, null);//画在右边
+                    orderText=orlder.get(position);
+                    pageIndex=1;
+                    initListData(pageIndex);
+                    isPullDownRefresh=true;
+
+
+                }else {
+
+
+                    SubListViewAdapter subAdapter = new SubListViewAdapter(
+                            SecondHandActivity.this, facillyDataBeens.get(position).getChilds(), position,1);
+                    subListView.setAdapter(subAdapter);
+                    /**
+                     * 选中root某项时改变该ListView item的背景色
+                     */
+                    adapter.setSelectedPosition(position);
+                    adapter.notifyDataSetInvalidated();
+                    selectedPosition=position;
+                    /**
+                     * 选中某个根节点时，使显示相应的子目录可见
+                     */
+                    subListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(
+                                AdapterView<?> parent, View view,
+                                int position, long id) {
+                            // TODO Auto-generated method stub
+                            mPopupWindow.dismiss();
+                            facillyText.setTextColor(getResources().getColor(R.color.red_light));
+
+                            Drawable drawable = getResources().getDrawable(R.mipmap.drop_down_icon_cur);
+                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                            facillyText.setCompoundDrawables(null,null , drawable, null);//画在右边
+                            manufacture=facillyDataBeens.get(selectedPosition).getText();
+                            type=facillyDataBeens.get(selectedPosition).getChilds().get(position).getText();
+                            if (type.equals("全部")){
+                                if (manufacture.equals("全部")){
+                                    facillyText.setText("全部");
+                                }else {
+                                    facillyText.setText(facillyDataBeens.get(selectedPosition).getText());
+                                }
+                            }else {
+                                facillyText.setText(facillyDataBeens.get(selectedPosition).getText()+facillyDataBeens.get(selectedPosition).getChilds().get(position).getText());
+                            }
+                            pageIndex=1;
+                            initListData(pageIndex);
+                            isPullDownRefresh=true;
+                        }
+                    });
+
+
+
+                }
+
+
+
+
+
+            }
+        });
     }
 
     private void initData() {
+        provinceCityBeens=new ArrayList<>();
+        orlder=new ArrayList<>();
+        facillyDataBeens=new ArrayList<>();
+        sortLists=new ArrayList<>();
+        String[] strings={"默认排序","按价格从低到高","按价格从高到低","按距离由近到远","按距离由远到近"};
+        for (int i = 0; i <strings.length ; i++) {
+            orlder.add(strings[i]);
+        }
+        String[] evstring={"全部","2016","2015","2014","2013","2012","2011","2010","2009","2008","2007","2006","2005","2004","2003","2002","2001","2000"};
+        for (int i = 0; i <evstring.length ; i++) {
+            sortLists.add(evstring[i]);
+        }
         ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
         if (provinceCityDataBean!=null){
-            firstList=provinceCityDataBean.getProvinceCity();
+            provinceCityBeens.addAll(provinceCityDataBean.getProvinceCity());
         }
 
         //设备厂商
@@ -518,15 +762,13 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("设备厂商",responseInfo.result);
+                //Log.e("设备厂商",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppListDataBean<FacillyDataBean> appListDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<FacillyDataBean>>(){});
                     if (appListDataBean.getResult().equals("success")){
                         List<FacillyDataBean> facillyDataBeen=  appListDataBean.getData();
-                        //facilluyFirstList.addAll(facillyDataBeen);
                         if (facillyDataBeen.size()!=0){
                             facillyDataBeens.addAll(facillyDataBeen);
-                            initPopupFacilly(facillyDataBeens);
                         }
 
 
@@ -547,491 +789,6 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
         });
 
     }
-
-    private void initPopupFacilly(final List<FacillyDataBean> facilluyFirstList) {
-        popupWindowFacilly = new PopupWindow(SecondHandActivity.this);
-        View view = LayoutInflater.from(SecondHandActivity.this).inflate(R.layout.facilly_popup_layout, null);
-        facillyLeftLV = (ListView) view.findViewById(R.id.facilly_pop_listview_left);
-        facillyRightLV = (ListView) view.findViewById(R.id.facilly_pop_listview_right);
-
-
-
-        popupWindowFacilly.setContentView(view);
-        popupWindowFacilly.setBackgroundDrawable(new PaintDrawable());
-        popupWindowFacilly.setFocusable(true);
-
-        popupWindowFacilly.setHeight(ScreenUtils.getScreenH(SecondHandActivity.this) * 2 / 3);
-        popupWindowFacilly.setWidth(ScreenUtils.getScreenW(SecondHandActivity.this));
-
-        popupWindowFacilly.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                darkView.startAnimation(animOut);
-                darkView.setVisibility(View.GONE);
-
-                facillyLeftLV.setSelection(0);
-                facillyRightLV.setSelection(0);
-            }
-        });
-
-
-        //为了方便扩展，这里的两个ListView均使用BaseAdapter.如果分类名称只显示一个字符串，建议改为ArrayAdapter.
-        //加载一级分类
-        final FacillyFirstClassAdapter firstAdapter = new FacillyFirstClassAdapter(SecondHandActivity.this, facilluyFirstList);
-        facillyLeftLV.setAdapter(firstAdapter);
-
-        //加载左侧第一行对应右侧二级分类
-        facillySecondList = new ArrayList<FacillyChildsBean>();
-        facillySecondList.addAll(facilluyFirstList.get(0).getChilds());
-        final FacillySecondClassAdapter secondAdapter = new FacillySecondClassAdapter(SecondHandActivity.this, facillySecondList);
-        facillyRightLV.setAdapter(secondAdapter);
-
-        //左侧ListView点击事件
-        facillyLeftLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //二级数据
-                List<FacillyChildsBean> list2 = facilluyFirstList.get(position).getChilds();
-                //如果没有二级类，则直接跳转
-                if (list2 == null || list2.size() == 0) {
-                    popupWindowFacilly.dismiss();
-
-                    String  firstId = facilluyFirstList.get(position).getText();
-                    String selectedName = facilluyFirstList.get(position).getText();
-                    facillyHandleResult(firstId, "-1", selectedName);
-                    return;
-                }
-
-                FacillyFirstClassAdapter adapter = (FacillyFirstClassAdapter) (parent.getAdapter());
-                //如果上次点击的就是这一个item，则不进行任何操作
-                if (adapter.getSelectedPosition() == position){
-                    return;
-                }
-
-                //根据左侧一级分类选中情况，更新背景色
-                adapter.setSelectedPosition(position);
-                adapter.notifyDataSetChanged();
-
-                //显示右侧二级分类
-                facillyUpdateSecondListView(list2, secondAdapter);
-            }
-        });
-
-        //右侧ListView点击事件
-        facillyRightLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //关闭popupWindow，显示用户选择的分类
-                popupWindowFacilly.dismiss();
-
-                int firstPosition = firstAdapter.getSelectedPosition();
-                String  firstId = facilluyFirstList.get(firstPosition).getText();
-                String secondId = facilluyFirstList.get(firstPosition).getChilds().get(position).getValue();
-                String selectedName = facilluyFirstList.get(firstPosition).getChilds().get(position)
-                        .getText();
-                facillyHandleResult(firstId, secondId, selectedName);
-
-
-            }
-        });
-    }
-    //顶部第一个标签的点击事件
-    private void tabFacillynClick() {
-        if (popupWindowFacilly.isShowing()) {
-            popupWindowFacilly.dismiss();
-        } else {
-            popupWindowFacilly.showAsDropDown(SecondHandActivity.this.findViewById(R.id.main_div_line));
-            popupWindowFacilly.setAnimationStyle(-1);
-            //背景变暗
-            darkView.startAnimation(animIn);
-            darkView.setVisibility(View.VISIBLE);
-        }
-    }
-    //刷新右侧ListView
-    private void facillyUpdateSecondListView(List<FacillyChildsBean> list2,
-                                             FacillySecondClassAdapter secondAdapter) {
-        facillySecondList.clear();
-        facillySecondList.addAll(list2);
-        secondAdapter.notifyDataSetChanged();
-    }
-
-    //处理点击结果
-    private void facillyHandleResult(String firstId, String  secondId, String selectedName){
-        String text = "first id:" + firstId + ",second id:" + secondId;
-        //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
-
-        facillyText.setText(selectedName);
-        facillyText.setTextColor(getResources().getColor(R.color.red_light));
-        Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
-        img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-        facillyText.setCompoundDrawables(null, null, img, null);
-        facillyTaye=firstId;
-        type=selectedName;
-        secondHandBeens.clear();
-        isPullDownRefresh=true;
-        secondHandListview.setRefreshing(true);
-        pageIndex=1;
-        initListData(pageIndex,selectedName,city,year,order);
-        //secondHandListview.setRefreshing();
-    }
-
-    //点击事件
-    class OnClickListenerImpl implements View.OnClickListener {
-
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.main_tab1:
-                    tab1OnClick();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    private void initPopup() {
-        popupWindow = new PopupWindow(SecondHandActivity.this);
-        View view = LayoutInflater.from(SecondHandActivity.this).inflate(R.layout.popup_layout, null);
-        leftLV = (ListView) view.findViewById(R.id.pop_listview_left);
-        rightLV = (ListView) view.findViewById(R.id.pop_listview_right);
-
-        popupWindow.setContentView(view);
-        popupWindow.setBackgroundDrawable(new PaintDrawable());
-        popupWindow.setFocusable(true);
-
-        popupWindow.setHeight(ScreenUtils.getScreenH(SecondHandActivity.this) * 2 / 3);
-        popupWindow.setWidth(ScreenUtils.getScreenW(SecondHandActivity.this));
-
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                darkView.startAnimation(animOut);
-                darkView.setVisibility(View.GONE);
-
-                leftLV.setSelection(0);
-                rightLV.setSelection(0);
-            }
-        });
-
-
-        //为了方便扩展，这里的两个ListView均使用BaseAdapter.如果分类名称只显示一个字符串，建议改为ArrayAdapter.
-        //加载一级分类
-        final FirstClassAdapter firstAdapter = new FirstClassAdapter(SecondHandActivity.this, firstList);
-        leftLV.setAdapter(firstAdapter);
-
-        //加载左侧第一行对应右侧二级分类
-        secondList = new ArrayList<ProvinceCityChildsBean>();
-        secondList.addAll(firstList.get(0).getProvinceCityChilds());
-        final SecondClassAdapter secondAdapter = new SecondClassAdapter(SecondHandActivity.this, secondList);
-        rightLV.setAdapter(secondAdapter);
-
-        //左侧ListView点击事件
-        leftLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //二级数据
-                List<ProvinceCityChildsBean> list2 = firstList.get(position).getProvinceCityChilds();
-                //如果没有二级类，则直接跳转
-                if (list2 == null || list2.size() == 0) {
-                    popupWindow.dismiss();
-
-                    String  firstId = firstList.get(position).getName();
-                    String selectedName = firstList.get(position).getName();
-                    handleResult(firstId, "-1", selectedName);
-                    return;
-                }
-
-                FirstClassAdapter adapter = (FirstClassAdapter) (parent.getAdapter());
-                //如果上次点击的就是这一个item，则不进行任何操作
-                if (adapter.getSelectedPosition() == position){
-                    return;
-                }
-
-                //根据左侧一级分类选中情况，更新背景色
-                adapter.setSelectedPosition(position);
-                adapter.notifyDataSetChanged();
-
-                //显示右侧二级分类
-                updateSecondListView(list2, secondAdapter);
-            }
-        });
-
-        //右侧ListView点击事件
-        rightLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //关闭popupWindow，显示用户选择的分类
-                popupWindow.dismiss();
-
-                int firstPosition = firstAdapter.getSelectedPosition();
-                String firstId = firstList.get(firstPosition).getName();
-                String secondId = firstList.get(firstPosition).getProvinceCityChilds().get(position).getId();
-                String selectedName = firstList.get(firstPosition).getProvinceCityChilds().get(position)
-                        .getName();
-                handleResult(firstId, secondId, selectedName);
-                //secondHandListview.setRefreshing();
-            }
-        });
-    }
-
-    //顶部第一个标签的点击事件
-    private void tab1OnClick() {
-        if (popupWindow.isShowing()) {
-            popupWindow.dismiss();
-        } else {
-            popupWindow.showAsDropDown(findViewById(R.id.main_div_line));
-            popupWindow.setAnimationStyle(-1);
-            //背景变暗
-            darkView.startAnimation(animIn);
-            darkView.setVisibility(View.VISIBLE);
-        }
-    }
-
-    //刷新右侧ListView
-    private void updateSecondListView(List<ProvinceCityChildsBean> list2,
-                                      SecondClassAdapter secondAdapter) {
-        secondList.clear();
-        secondList.addAll(list2);
-        secondAdapter.notifyDataSetChanged();
-    }
-
-    //处理点击结果
-    private void handleResult(String firstId, String secondId, String selectedName){
-        String text = "first id:" + firstId + ",second id:" + secondId;
-        //Toast.makeText(SecondHandActivity.this, text, Toast.LENGTH_SHORT).show();
-            mainTab1TV.setText(selectedName);
-            mainTab1TV.setTextColor(getResources().getColor(R.color.red_light));
-            Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
-            img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-            mainTab1TV.setCompoundDrawables(null, null, img, null);
-        province=firstId;
-        city=selectedName;
-        secondHandBeens.clear();
-        isPullDownRefresh=true;
-        secondHandListview.setRefreshing();
-        pageIndex=1;
-        initListData(pageIndex,type,selectedName,year,order);
-
-    }
-
-
-
-    public void showSortPopupWindow(View parent) {
-        LinearLayout layout;
-        ListView listView;
-        list=new ArrayList<>();
-        list.add("默认排序");
-        list.add("按价格从低到高");
-        list.add("按价格从高到低");
-        list.add("按距离由近到远");
-        list.add("按距离由远到近");
-
-        //加载布局
-        layout = (LinearLayout) LayoutInflater.from(SecondHandActivity.this).inflate(
-                R.layout.pop_time_contant_layout, null);
-        //找到布局的控件
-        listView = (ListView) layout.findViewById(R.id.pop_listview);
-        //设置适配器
-        //popWinListAdapter=new PopWinListAdapter(list,HomeMoreProjectActivity.this,cur_pos);
-        MyAdapter myAdapter=new MyAdapter(SecondHandActivity.this);
-        listView.setAdapter(myAdapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);// 一定要设置这个属性，否则ListView不会刷新
-        myAdapter.notifyDataSetChanged();
-        // 实例化popupWindow
-        popupWindowTime = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        //控制键盘是否可以获得焦点
-        popupWindowTime.setFocusable(true);
-        //设置popupWindow弹出窗体的背景
-        popupWindowTime.setBackgroundDrawable(new BitmapDrawable(null, ""));
-        WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        popupWindowTime.setOutsideTouchable(true);
-        popupWindowTime.setFocusable(true);
-        @SuppressWarnings("deprecation")
-        //获取xoff
-                int xpos = manager.getDefaultDisplay().getWidth() / 30 - popupWindowTime.getWidth() / 30;
-        //xoff,yoff基于anchor的左下角进行偏移。
-        popupWindowTime.showAsDropDown(parent, xpos, 1);
-        //popupWindow.showAtLocation(parent, Gravity.TOP, 200, 250);
-
-
-        //监听
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                //关闭popupWindow
-                popupWindowTime.dismiss();
-                popupWindowTime = null;
-                //showPopupWindowOne(seekButtonA);
-                sortButton.setText(list.get(arg2));
-                sortButton.setTextColor(getResources().getColor(R.color.red_light));
-                Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
-                img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                sortButton.setCompoundDrawables(null, null, img, null);
-                cur_pos=arg2;
-                 if (list.get(arg2).equals("默认排序")){
-                     order="";
-                 }else {
-                     order=list.get(arg2);
-                 }
-                secondHandListview.onRefreshComplete();
-                secondHandBeens.clear();
-                isPullDownRefresh=true;
-                secondHandListview.setRefreshing();
-                pageIndex=1;
-                initListData(pageIndex,type,city,year,order);
-
-            }
-
-
-        });
-
-
-
-    }
-    public void showEvolvePopupWindow(View parent) {
-        LinearLayout layout;
-        ListView listView;
-        list=new ArrayList<>();
-        list.add("全部");
-        list.add("2016");
-        list.add("2015");
-        list.add("2014");
-        list.add("2013");
-        list.add("2012");
-        list.add("2011");
-        list.add("2010");
-        list.add("2009");
-        list.add("2008");
-        list.add("2007");
-        list.add("2006");
-        list.add("2005");
-        list.add("2004");
-        list.add("2003");
-        list.add("2002");
-        list.add("2001");
-        list.add("2000");
-        //加载布局
-        layout = (LinearLayout) LayoutInflater.from(SecondHandActivity.this).inflate(
-                R.layout.pop_time_contant_layout, null);
-        //找到布局的控件
-        listView = (ListView) layout.findViewById(R.id.pop_listview);
-        //设置适配器
-        //popWinListAdapter=new PopWinListAdapter(list,HomeMoreProjectActivity.this,cur_pos);
-        MyAdapter myAdapter=new MyAdapter(SecondHandActivity.this);
-        listView.setAdapter(myAdapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);// 一定要设置这个属性，否则ListView不会刷新
-        myAdapter.notifyDataSetChanged();
-        // 实例化popupWindow
-        popupWindowTime = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        //控制键盘是否可以获得焦点
-        popupWindowTime.setFocusable(true);
-        //设置popupWindow弹出窗体的背景
-        popupWindowTime.setBackgroundDrawable(new BitmapDrawable(null, ""));
-        WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        popupWindowTime.setOutsideTouchable(true);
-        popupWindowTime.setFocusable(true);
-        @SuppressWarnings("deprecation")
-        //获取xoff
-                int xpos = manager.getDefaultDisplay().getWidth() / 30 - popupWindowTime.getWidth() / 30;
-        //xoff,yoff基于anchor的左下角进行偏移。
-        popupWindowTime.showAsDropDown(parent, xpos, 4);
-        //popupWindow.showAtLocation(parent, Gravity.TOP, 200, 250);
-
-
-        //监听
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                //关闭popupWindow
-                popupWindowTime.dismiss();
-                popupWindowTime = null;
-                //showPopupWindowOne(seekButtonA);
-                evolveButton.setText(list.get(arg2));
-                evolveButton.setTextColor(getResources().getColor(R.color.red_light));
-                Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
-                img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                evolveButton.setCompoundDrawables(null, null, img, null);
-                cur_evolve_pos=arg2;
-                  if (list.get(arg2).equals("全部")){
-                      year="";
-                  }else {
-                      year=list.get(arg2);
-
-                  }
-                secondHandListview.onRefreshComplete();
-                secondHandBeens.clear();
-                secondHandListview.setRefreshing();
-                pageIndex=1;
-                initListData(pageIndex,type,city,year,order);
-
-
-
-            }
-
-
-        });
-
-
-
-    }
-
-
-
-    private class MyAdapter extends BaseAdapter {
-        private LayoutInflater inflater;
-
-        public MyAdapter(Context context) {
-            inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            //Log.e("TEST", "refresh once");
-            convertView = inflater.inflate(R.layout.item_layout, null, false);
-
-            TextView tv = (TextView) convertView
-                    .findViewById(R.id.item_text);// 显示文字
-            tv.setText(list.get(position));
-            if (popTag == 1) {
-                if (position == cur_pos) {// 如果当前的行就是ListView中选中的一行，就更改显示样式
-                    convertView.setBackgroundColor(getResources().getColor(R.color.background));// 更改整行的背景色
-                    tv.setTextColor(Color.RED);// 更改字体颜色
-                }
-            }else {
-                if (position == cur_evolve_pos) {// 如果当前的行就是ListView中选中的一行，就更改显示样式
-                    convertView.setBackgroundColor(getResources().getColor(R.color.background));// 更改整行的背景色
-                    tv.setTextColor(Color.RED);// 更改字体颜色
-                }
-            }
-
-
-            return convertView;
-        }
-    }
-
-
-
 
 
     @Override

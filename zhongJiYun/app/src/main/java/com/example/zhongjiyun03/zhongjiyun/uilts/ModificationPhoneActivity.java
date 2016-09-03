@@ -86,6 +86,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintResource(R.color.red_light);//通知栏所需颜色
         }
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_modification_phone);
         ViewUtils.inject(this);
         inti();
@@ -218,7 +219,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
 
         }
             }else {
-                MyAppliction.showToast("您输入您的旧手机号码不正确");
+                MyAppliction.showToast("您输入您的当前的手机号码不正确");
 
 
             }

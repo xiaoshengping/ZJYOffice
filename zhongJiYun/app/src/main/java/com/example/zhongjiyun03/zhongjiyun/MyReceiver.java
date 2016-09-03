@@ -49,11 +49,11 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
-        Log.d(TAG, "onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
+        //Log.d(TAG, "onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
-            Log.d(TAG, "接收Registration Id : " + regId);
+            //Log.d(TAG, "接收Registration Id : " + regId);
             if (!TextUtils.isEmpty(regId)){
              initRegistration(context,regId);
             }
@@ -61,12 +61,12 @@ public class MyReceiver extends BroadcastReceiver {
 
             //send the Registration Id to your server...
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-            Log.d(TAG, "接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
+            //Log.d(TAG, "接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
 
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-            Log.d(TAG, "接收到推送下来的通知");
+            //Log.d(TAG, "接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
-            Log.d(TAG, "接收到推送下来的通知的ID: " + notifactionId);
+            //Log.d(TAG, "接收到推送下来的通知的ID: " + notifactionId);
 
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "用户点击打开了通知");
@@ -80,38 +80,46 @@ public class MyReceiver extends BroadcastReceiver {
                             //打开自定义的Activity
                             Intent i = new Intent(context, ReleaseJobListActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
                         }else if ((extrasBean.getBLLCode()).equals("App_Home")){  //app首页
 
                             Intent i = new Intent(context, HomeActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
                         }else if ((extrasBean.getBLLCode()).equals("App_SaleBuy")){  //悬赏求买
                             Intent i = new Intent(context, RawardBuyListActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
 
 
                         }else if ((extrasBean.getBLLCode()).equals("App_SaleSell")){  //悬赏求卖
                             Intent i=new Intent(context, RawardSellListActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
                         }else if ((extrasBean.getBLLCode()).equals("App_SecondDeviceDetail")){
                             Intent i=new Intent(context, ExturderParticularsActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             i.putExtra("secondHandData",extrasBean.getApiParams());
                             context.startActivity(i);
                         }else if ((extrasBean.getBLLCode()).equals("App_DeviceAudit")){
                             Intent i=new Intent(context, MyExtruderActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
                         }else if ((extrasBean.getBLLCode()).equals("App_SendGift")){
                             Intent i=new Intent(context, MyRedPacketActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
                         }else  {
                             Intent i = new Intent(context, HomeActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
                         }
 
@@ -121,12 +129,14 @@ public class MyReceiver extends BroadcastReceiver {
                             Intent i = new Intent(context, HomeMarketActivity.class);
                             i.putExtra("tage","0");
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
                         }else if ((extrasBean.getBLLCode()).equals("WebApp_Product")){ //商城商品
                             Intent i = new Intent(context, HomeMarketActivity.class);
                             i.putExtra("tage","1");
                             i.putExtra("appUrl",extrasBean.getApiUrl());
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
 
                         }else if ((extrasBean.getBLLCode()).equals("WebApp_TribePost")){ //部落帖子
@@ -134,22 +144,26 @@ public class MyReceiver extends BroadcastReceiver {
                             i.putExtra("tage","3");
                             i.putExtra("appUrl",extrasBean.getApiUrl());
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
 
                         }else if ((extrasBean.getBLLCode()).equals("WebApp_Tribe")){ //部落首页
                             Intent i = new Intent(context, HomeTribeActivity.class);
                             i.putExtra("tage","2");
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
                         }else {
                             Intent i = new Intent(context, HomeActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(i);
                         }
 
                     }else if ((extrasBean.getType()).equals("Web")) {
                         Intent jpushIntent=new Intent(context, JpushWebViewActivity.class);
                         jpushIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        jpushIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         if (!TextUtils.isEmpty(extrasBean.getApiUrl())){
                             jpushIntent.putExtra("url",extrasBean.getApiUrl());
                         }
@@ -157,6 +171,7 @@ public class MyReceiver extends BroadcastReceiver {
                     }else {
                         Intent i = new Intent(context, HomeActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         context.startActivity(i);
                     }
 

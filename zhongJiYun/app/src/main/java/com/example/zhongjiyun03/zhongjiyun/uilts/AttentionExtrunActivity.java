@@ -162,7 +162,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionExtrunListData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                   // Log.e("关注钻机",responseInfo.result);
+                    Log.e("关注钻机",responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)){
                         AppBean<AttentionSecondHandDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AttentionSecondHandDataBean>>(){});
                         if ((appListDataBean.getResult()).equals("success")){

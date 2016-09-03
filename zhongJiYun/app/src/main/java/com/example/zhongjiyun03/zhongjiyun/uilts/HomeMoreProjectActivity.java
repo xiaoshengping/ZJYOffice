@@ -1,13 +1,10 @@
 package com.example.zhongjiyun03.zhongjiyun.uilts;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.PaintDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -20,10 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,16 +33,15 @@ import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
-import com.example.zhongjiyun03.zhongjiyun.popwin.FirstClassAdapter;
 import com.example.zhongjiyun03.zhongjiyun.popwin.PopupWindowHelper;
-import com.example.zhongjiyun03.zhongjiyun.popwin.ScreenUtils;
-import com.example.zhongjiyun03.zhongjiyun.popwin.SecondClassAdapter;
+import com.example.zhongjiyun03.zhongjiyun.popwindon.RootListViewAdapter;
+import com.example.zhongjiyun03.zhongjiyun.popwindon.ScreenUtils;
+import com.example.zhongjiyun03.zhongjiyun.popwindon.SubListViewAdapter;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -68,61 +62,89 @@ import cn.jpush.android.api.JPushInterface;
 
 public class HomeMoreProjectActivity extends AppCompatActivity implements PullToRefreshBase.OnRefreshListener2<ListView>,View.OnClickListener {
 
-     //排序
-    @ViewInject(R.id.sort_text_view)
-    private TextView sortButton; //排序选项
-    PopupWindow popupWindowTime;
-    private  List<String> list;
-    int popTag=1;
-    int cur_pos = -1;// 当前显示的一行
-
-    //项目进展
-    @ViewInject(R.id.evolve_text_view)
-    private TextView evolveButton;
-    int cur_evolve_pos = -1;// 当前显示的一行
-
-    private TextView mainTab1TV;
-    /**
-     * 左侧一级分类的数据
-     */
-    private List<ProvinceCityBean> firstList;
-    /**
-     * 右侧二级分类的数据
-     */
-    private List<ProvinceCityChildsBean> secondList;
-
-    /**
-     * 使用PopupWindow显示一级分类和二级分类
-     */
-    private PopupWindow popupWindow;
-
-    /**
-     * 左侧和右侧两个ListView
-     */
-    private ListView leftLV, rightLV;
-    //弹出PopupWindow时背景变暗
-    private View darkView;
-
-    //弹出PopupWindow时，背景变暗的动画
-    private Animation animIn, animOut;
-
-
-    @ViewInject(R.id.project_list_view)
-    private PullToRefreshListView projectListView;
-    private int PageIndex=1;
     @ViewInject(R.id.retrun_text_view)
     private TextView retrunTextView;
     @ViewInject(R.id.title_name_tv)
     private TextView tailtNameTv;
     @ViewInject(R.id.register_tv)
     private TextView registerTv;
+
+    /**
+     * 筛选
+     * @param savedInstanceState
+     */
+    private List<ProvinceCityBean> provinceCityBeens ;//地域数据
+    /**
+     * 项目进展筛选按钮
+     */
+    @ViewInject(R.id.evolve_llayout)
+    private LinearLayout evolveLlayout;
+    /**
+     * popupwindow
+     *
+     */
+    private PopupWindow mPopupWindow;
+    /**
+     * 二级菜单的根目录
+     */
+    private ListView rootListView;
+
+    private ListView subListView;
+
+    /**
+     * 弹出的popupWindow布局
+     */
+    private LinearLayout popupLayout;
+
+    /**
+     * 子目录的布局
+     */
+    private FrameLayout subLayout;
+
+    /**
+     * 根目录被选中的节点
+     */
+    private int selectedPosition;
+    /**
+     * 点击关闭popwindow
+     */
+    private  LinearLayout popWindowDisminLayout;
+
+    /**
+     * 地域筛选数据
+     *
+     */
+    private List<String> sortLists;
+
+    /**
+     * 地域筛选按钮
+     *
+     */
+    @ViewInject(R.id.address_llayout)
+    private LinearLayout addressLayout;
+    @ViewInject(R.id.evolve_text)
+    private TextView evolveText; //项目进展筛选text
+    @ViewInject(R.id.address_text)
+    private TextView addressText;  //地域筛选text
+    private String province;  //省份
+    private String city;  //城市
+    private String orderText;//选择的排序内容
+    private List<String> orlder;
+    @ViewInject(R.id.order_llayout)
+    private LinearLayout orderLlayout;//排序点击按钮
+    @ViewInject(R.id.order_text)
+    private TextView orderTextView;
+    private String evolveTextString;
+
+
+
+
+    @ViewInject(R.id.project_list_view)
+    private PullToRefreshListView projectListView;
+    private int PageIndex=1;
     private List<SeekProjectBean> seekProjectBeans;
-    private String cityName;  //城市
-    private String State;//项目状态
-    private String Order ;//排序
     private boolean isPullDownRefresh=true; //判断是下拉，还是上拉的标记
     private HomeProjectListAdapter homeProjectlsitAdapter;
-    private String province;//省份
     @ViewInject(R.id.not_data_layout)
     private LinearLayout notDataLayout; //没有数据
     @ViewInject(R.id.network_remind_layout)
@@ -190,32 +212,9 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
 
     private void inti() {
         initView();
-
-        sortButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                showSortPopupWindow(sortButton);
-                popTag=1;
-
-            }
-        });
-        evolveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showEvolvePopupWindow(evolveButton);
-                popTag=2;
-            }
-        });
-
-        findView();
-        initData();
-        initPopup();
-
-        OnClickListenerImpl l = new OnClickListenerImpl();
-        mainTab1TV.setOnClickListener(l);
         intiPullToRefresh();
         initListView();
+        initFacility();
 
     }
 
@@ -226,10 +225,18 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         registerTv.setVisibility(View.GONE);
         seekProjectBeans=new ArrayList<>();
         networkRemindLayout.setOnClickListener(this);
+        addressLayout.setOnClickListener(this);
+        evolveLlayout.setOnClickListener(this);
+        orderLlayout.setOnClickListener(this);
+        sortLists=new ArrayList<>();
+        orlder=new ArrayList<>();
+        provinceCityBeens=new ArrayList<>();
+        evolveText.setText("项目进展");
+
 
     }
 
-    private void initListData(int PageIndex,String cityName,String State ,String Order) {
+    private void initListData(int PageIndex) {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
         String uid= SQLHelperUtils.queryId(HomeMoreProjectActivity.this);  //用户id
@@ -243,22 +250,31 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
         }
         requestParams.addBodyParameter("PageIndex",PageIndex+"");
         requestParams.addBodyParameter("PageSize","10");
-        if (!TextUtils.isEmpty(cityName)){
-            if (province.equals("全部")){
-
-            }else {
-                if (cityName.equals("全部")){
+        if (!TextUtils.isEmpty(city)){
+            if (city.equals("全部")){
+                if (!province.equals("全部")){
                     requestParams.addBodyParameter("province",province);
-                }else {
-                    requestParams.addBodyParameter("City",cityName);
                 }
+            }else {
+                requestParams.addBodyParameter("province",province);
+                requestParams.addBodyParameter("city",city);
             }
         }
-        if (!TextUtils.isEmpty(State)){
-            requestParams.addBodyParameter("State",State);
+        if (!TextUtils.isEmpty(evolveTextString)){
+            if (evolveTextString.equals("招标中")){
+                requestParams.addBodyParameter("State","1");
+            }else if (evolveTextString.equals("已启动")){
+                requestParams.addBodyParameter("State","2");
+            }else if (evolveTextString.equals("已关闭")){
+                requestParams.addBodyParameter("State","3");
+            }
         }
-        if (!TextUtils.isEmpty(Order)){
-            requestParams.addBodyParameter("Order",Order);
+        if (!TextUtils.isEmpty(orderText)){
+            if (orderText.equals("时间由近到远")){
+                requestParams.addBodyParameter("Order","0");
+            }else if (orderText.equals("时间由远到近")){
+                requestParams.addBodyParameter("Order","1");
+            }
         }
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getProjecctListData(),requestParams, new RequestCallBack<String>() {
             @Override
@@ -363,47 +379,41 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
     }
 
 
-    private void findView() {
-        mainTab1TV = (TextView) findViewById(R.id.main_tab1);
-        darkView = findViewById(R.id.main_darkview);
-
-        animIn = AnimationUtils.loadAnimation(HomeMoreProjectActivity.this, R.anim.fade_in_anim);
-        animOut = AnimationUtils.loadAnimation(HomeMoreProjectActivity.this, R.anim.fade_out_anim);
-    }
     @Override
     public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 
                  PageIndex=1;
                  isPullDownRefresh=true;
-                 initListData(PageIndex,cityName,State,Order);
+                 initListData(PageIndex);
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
         PageIndex++;
         isPullDownRefresh=false;
-        initListData(PageIndex,cityName,State,Order);
+        initListData(PageIndex);
 
-    }
-    private void initData() {
-        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
-        if (provinceCityDataBean!=null){
-            firstList=provinceCityDataBean.getProvinceCity();
-
-        }
     }
 
     @Override
     public void onClick(View v) {
 
          switch (v.getId()){
-             case R.id.retrun_text_view:
+             case R.id.retrun_text_view://返回
                  finish();
                  break;
-             case R.id.network_remind_layout:
-                 //跳转到设置界面
+             case R.id.network_remind_layout: //跳转到设置界面
                  Intent intent = new Intent(Settings.ACTION_SETTINGS);
                  startActivity(intent);
+                 break;
+             case R.id.order_llayout:   //排序筛选
+                 showPopBtn(4);
+                 break;
+             case R.id.evolve_llayout:  //项目进展
+                 showPopBtn(2);
+                 break;
+             case R.id.address_llayout:  //地域筛选
+                 showPopBtn(3);
                  break;
 
 
@@ -412,354 +422,218 @@ public class HomeMoreProjectActivity extends AppCompatActivity implements PullTo
 
     }
 
-    //点击事件
-    class OnClickListenerImpl implements View.OnClickListener {
 
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.main_tab1:
-                    tab1OnClick();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+    /**
+     * 筛选
+     * @param tage
+     */
 
-    private void initPopup() {
-        popupWindow = new PopupWindow(HomeMoreProjectActivity.this);
-        View view = LayoutInflater.from(HomeMoreProjectActivity.this).inflate(R.layout.popup_layout, null);
-        leftLV = (ListView) view.findViewById(R.id.pop_listview_left);
-        rightLV = (ListView) view.findViewById(R.id.pop_listview_right);
+    private void showPopBtn( final int tage) {
+        LayoutInflater inflater = LayoutInflater.from(HomeMoreProjectActivity.this);
+        popupLayout = (LinearLayout) inflater.inflate(R.layout.project_popupwindow_layout, null, false);
+        rootListView = (ListView) popupLayout.findViewById(R.id.root_listview);
+        popWindowDisminLayout= (LinearLayout) popupLayout.findViewById(R.id.popupwindow_dismin);
+        LinearLayout selectRightLayout= (LinearLayout) popupLayout.findViewById(R.id.select_right_layout);
+        LinearLayout selectMiddleLayout= (LinearLayout) popupLayout.findViewById(R.id.select_middle_layout);
+        LinearLayout selectLeftLayout= (LinearLayout) popupLayout.findViewById(R.id.select_left_layout);
+        /**
+         * 初始化mPopupWindow
+         */
+        mPopupWindow = new PopupWindow(popupLayout, ScreenUtils.getScreenWidth(HomeMoreProjectActivity.this),ViewGroup.LayoutParams.MATCH_PARENT, true);
 
-        popupWindow.setContentView(view);
-        popupWindow.setBackgroundDrawable(new PaintDrawable());
-        popupWindow.setFocusable(true);
+        /**
+         * 有了mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+         * 这句可以使点击popupwindow以外的区域时popupwindow自动消失 但这句必须放在showAsDropDown之前
+         */
+        mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
 
-        popupWindow.setHeight(ScreenUtils.getScreenH(HomeMoreProjectActivity.this) * 2 / 3);
-        popupWindow.setWidth(ScreenUtils.getScreenW(HomeMoreProjectActivity.this));
-
-        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        popWindowDisminLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDismiss() {
-                darkView.startAnimation(animOut);
-                darkView.setVisibility(View.GONE);
-
-                leftLV.setSelection(0);
-                rightLV.setSelection(0);
-            }
-        });
-
-
-        //为了方便扩展，这里的两个ListView均使用BaseAdapter.如果分类名称只显示一个字符串，建议改为ArrayAdapter.
-        //加载一级分类
-        final FirstClassAdapter firstAdapter = new FirstClassAdapter(HomeMoreProjectActivity.this, firstList);
-        leftLV.setAdapter(firstAdapter);
-
-        //加载左侧第一行对应右侧二级分类
-        secondList = new ArrayList<ProvinceCityChildsBean>();
-        secondList.addAll(firstList.get(0).getProvinceCityChilds());
-        final SecondClassAdapter secondAdapter = new SecondClassAdapter(HomeMoreProjectActivity.this, secondList);
-        rightLV.setAdapter(secondAdapter);
-
-        //左侧ListView点击事件
-        leftLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //二级数据
-                List<ProvinceCityChildsBean> list2 = firstList.get(position).getProvinceCityChilds();
-                //如果没有二级类，则直接跳转
-                if (list2 == null || list2.size() == 0) {
-                    popupWindow.dismiss();
-
-                    String firstId = firstList.get(position).getName();
-                    String selectedName = firstList.get(position).getName();
-                    handleResult(firstId, "-1", selectedName);
-                    return;
+            public void onClick(View v) {
+                if (mPopupWindow.isShowing()){
+                    mPopupWindow.dismiss();
                 }
-
-                FirstClassAdapter adapter = (FirstClassAdapter) (parent.getAdapter());
-                //如果上次点击的就是这一个item，则不进行任何操作
-                if (adapter.getSelectedPosition() == position){
-                    return;
-                }
-                //provinceName=firstList.get(position).getName();
-               /* if (!TextUtils.isEmpty(provinceName)){
-                    requestParams.addBodyParameter("Province",firstList.get(position).getName());
-                }*/
-
-                //根据左侧一级分类选中情况，更新背景色
-                adapter.setSelectedPosition(position);
-                adapter.notifyDataSetChanged();
-
-                //显示右侧二级分类
-                updateSecondListView(list2, secondAdapter);
-            }
-        });
-
-        //右侧ListView点击事件
-        rightLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //关闭popupWindow，显示用户选择的分类
-                popupWindow.dismiss();
-
-                int firstPosition = firstAdapter.getSelectedPosition();
-                String firstId = firstList.get(firstPosition).getName();
-                String  secondId = firstList.get(firstPosition).getProvinceCityChilds().get(position).getId();
-                String selectedName =firstList.get(firstPosition).getProvinceCityChilds().get(position)
-                        .getName();
-                handleResult(firstId, secondId, selectedName);
-                /*if (!TextUtils.isEmpty(cityName)){
-                    requestParams.addBodyParameter("City",selectedName);
-                }*/
-
 
             }
         });
-    }
+        /**
+         * popupwindow的位置，第一个参数表示位于哪个控件之下 第二个参数表示向左右方向的偏移量，正数表示向左偏移，负数表示向右偏移
+         * 第三个参数表示向上下方向的偏移量，正数表示向下偏移，负数表示向上偏移
+         *
+         */
+        if (tage==3){
+            mPopupWindow.showAsDropDown(addressLayout, -5, 0);// 在控件下方显示popwindow
+            selectLeftLayout.setVisibility(View.VISIBLE);
+            selectRightLayout.setVisibility(View.GONE);
+            selectMiddleLayout.setVisibility(View.GONE);
+        }else if (tage==2) {
+            mPopupWindow.showAsDropDown(evolveLlayout, -5, 0);// 在控件下方显示popwindow
 
-    //顶部第一个标签的点击事件
-    private void tab1OnClick() {
-        if (popupWindow.isShowing()) {
-            popupWindow.dismiss();
-        } else {
-            popupWindow.showAsDropDown((HomeMoreProjectActivity.this).findViewById(R.id.main_div_line));
-            popupWindow.setAnimationStyle(-1);
-            //背景变暗
-            darkView.startAnimation(animIn);
-            darkView.setVisibility(View.VISIBLE);
+            selectMiddleLayout.setVisibility(View.VISIBLE);
+            selectLeftLayout.setVisibility(View.GONE);
+            selectRightLayout.setVisibility(View.GONE);
+        }else if (tage==4){
+            mPopupWindow.showAsDropDown(orderLlayout, -5, 0);// 在控件下方显示popwindow
+            selectMiddleLayout.setVisibility(View.GONE);
+            selectLeftLayout.setVisibility(View.GONE);
+            selectRightLayout.setVisibility(View.VISIBLE);
         }
-    }
+        mPopupWindow.update();
 
-    //刷新右侧ListView
-    private void updateSecondListView(List<ProvinceCityChildsBean> list2,
-                                      SecondClassAdapter secondAdapter) {
-        secondList.clear();
-        secondList.addAll(list2);
-        secondAdapter.notifyDataSetChanged();
-    }
+        final RootListViewAdapter adapter = new RootListViewAdapter(HomeMoreProjectActivity.this);
+        /**
+         * 子popupWindow
+         */
+        subLayout = (FrameLayout) popupLayout.findViewById(R.id.sub_popupwindow);
+        /**
+         * 初始化subListview
+         */
+        subListView = (ListView) popupLayout.findViewById(R.id.sub_listview);
+        /**
+         * 弹出popupwindow时，二级菜单默认隐藏，当点击某项时，二级菜单再弹出
+         */
+        if (tage==3){
+            adapter.setTage(3);
+            adapter.setItems(provinceCityBeens);
+            subLayout.setVisibility(View.VISIBLE);
+        }else if (tage==2){
+            adapter.setTage(2);
+            adapter.setItems(sortLists);
+            subLayout.setVisibility(View.GONE);
+        }else if (tage==4){
+            adapter.setTage(4);
+            adapter.setItems(orlder);
+            subLayout.setVisibility(View.GONE);
+        }
+        rootListView.setAdapter(adapter);
+        rootListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-    //处理点击结果
-    private void handleResult(String firstId, String secondId, String selectedName){
-        String text = "first id:" + firstId + ",second id:" + secondId;
-        //Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
-        province=firstId;
-        cityName=selectedName;
-        mainTab1TV.setText(selectedName);
-        mainTab1TV.setTextColor(getResources().getColor(R.color.red_light));
-        Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
-        img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-        mainTab1TV.setCompoundDrawables(null, null, img, null);
-        seekProjectBeans.clear();
-
-        projectListView.onRefreshComplete();
-        projectListView.setRefreshing(true);
-        int PageIndex=1;
-        initListData(PageIndex,cityName,State,Order);
-
-
-
-    }
-
-
-    public void showSortPopupWindow(View parent) {
-        LinearLayout layout;
-        ListView listView;
-         list=new ArrayList<>();
-         list.add("默认排序");
-        list.add("按时间由近到远");
-        list.add("按时间由远到近");
-
-
-        //加载布局
-        layout = (LinearLayout) LayoutInflater.from(HomeMoreProjectActivity.this).inflate(
-                R.layout.pop_time_contant_layout, null);
-        //找到布局的控件
-        listView = (ListView) layout.findViewById(R.id.pop_listview);
-        //设置适配器
-        //popWinListAdapter=new PopWinListAdapter(list,HomeMoreProjectActivity.this,cur_pos);
-        MyAdapter myAdapter=new MyAdapter(HomeMoreProjectActivity.this);
-        listView.setAdapter(myAdapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);// 一定要设置这个属性，否则ListView不会刷新
-        myAdapter.notifyDataSetChanged();
-        // 实例化popupWindow
-        popupWindowTime = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        //控制键盘是否可以获得焦点
-        popupWindowTime.setFocusable(true);
-        //设置popupWindow弹出窗体的背景
-        popupWindowTime.setBackgroundDrawable(new BitmapDrawable(null, ""));
-        WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        popupWindowTime.setOutsideTouchable(true);
-        popupWindowTime.setFocusable(true);
-        @SuppressWarnings("deprecation")
-        //获取xoff
-                int xpos = manager.getDefaultDisplay().getWidth() / 30 - popupWindowTime.getWidth() / 30;
-        //xoff,yoff基于anchor的左下角进行偏移。
-        popupWindowTime.showAsDropDown(parent, xpos, 1);
-        //popupWindow.showAtLocation(parent, Gravity.TOP, 200, 250);
-
-
-        //监听
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                //关闭popupWindow
-                popupWindowTime.dismiss();
-                popupWindowTime = null;
-                //showPopupWindowOne(seekButtonA);
-                sortButton.setText(list.get(arg2));
-                sortButton.setTextColor(getResources().getColor(R.color.red_light));
-                Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
-                img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                sortButton.setCompoundDrawables(null, null, img, null);
-                cur_pos=arg2;
-                if (list.get(arg2).equals("默认排序")){
-                    Order="";
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                // TODO Auto-generated method stub
+                if (tage==3){
 
-                }else {
-                    Order=arg2+"";
+                    SubListViewAdapter subAdapter = new SubListViewAdapter(
+                            HomeMoreProjectActivity.this, provinceCityBeens.get(position).getProvinceCityChilds(), position,3);
+                    subListView.setAdapter(subAdapter);
+                    /**
+                     * 选中root某项时改变该ListView item的背景色
+                     */
+                    adapter.setSelectedPosition(position);
+                    adapter.notifyDataSetInvalidated();
+                    selectedPosition=position;
+                    /**
+                     * 选中某个根节点时，使显示相应的子目录可见
+                     */
+                    subListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(
+                                AdapterView<?> parent, View view,
+                                int position, long id) {
+                            // TODO Auto-generated method stub
+                            mPopupWindow.dismiss();
+                            addressText.setTextColor(getResources().getColor(R.color.red_light));
+
+                            Drawable drawable = getResources().getDrawable(R.mipmap.drop_down_icon_cur);
+                            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                            addressText.setCompoundDrawables(null,null , drawable, null);//画在右边
+                            province=provinceCityBeens.get(selectedPosition).getName();
+                            city=provinceCityBeens.get(selectedPosition).getProvinceCityChilds().get(position).getName();
+                            if (city.equals("全部")){
+                                if (province.equals("全部")){
+                                    addressText.setText("全国项目");
+                                }else {
+                                    addressText.setText(provinceCityBeens.get(selectedPosition).getName());
+                                }
+                            }else {
+                                addressText.setText(provinceCityBeens.get(selectedPosition).getName()+provinceCityBeens.get(selectedPosition).getProvinceCityChilds().get(position).getName());
+                            }
+                            PageIndex=1;
+                            initListData(PageIndex);
+                            isPullDownRefresh=true;
+
+
+                        }
+                    });
+                }else if (tage==2){
+                    SubListViewAdapter  subAdapter = new SubListViewAdapter(
+                            HomeMoreProjectActivity.this, sortLists, position,2);
+                    subListView.setAdapter(subAdapter);
+                    /**
+                     * 选中root某项时改变该ListView item的背景色
+                     */
+                    adapter.setSelectedPosition(position);
+                    adapter.notifyDataSetInvalidated();
+                    mPopupWindow.dismiss();
+                    evolveText.setTextColor(getResources().getColor(R.color.red_light));
+                    evolveText.setText(sortLists.get(position));
+                    Drawable drawable = getResources().getDrawable(R.mipmap.drop_down_icon_cur);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                    evolveText.setCompoundDrawables(null,null, drawable, null);//画在右边
+                    evolveTextString=sortLists.get(position);
+                    PageIndex=1;
+                    initListData(PageIndex);
+                    isPullDownRefresh=true;
+
+
+                }else if (tage==4){
+                    SubListViewAdapter  subAdapter = new SubListViewAdapter(
+                            HomeMoreProjectActivity.this, sortLists, position,4);
+                    subListView.setAdapter(subAdapter);
+                    /**
+                     * 选中root某项时改变该ListView item的背景色
+                     */
+                    adapter.setSelectedPosition(position);
+                    adapter.notifyDataSetInvalidated();
+                    mPopupWindow.dismiss();
+                    orderTextView.setTextColor(getResources().getColor(R.color.red_light));
+                    orderTextView.setText(orlder.get(position));
+                    Drawable drawable = getResources().getDrawable(R.mipmap.drop_down_icon_cur);
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight()); //设置边界
+                    orderTextView.setCompoundDrawables(null,null, drawable, null);//画在右边
+                    orderText=orlder.get(position);
+                    PageIndex=1;
+                    initListData(PageIndex);
+                    isPullDownRefresh=true;
+
+
                 }
-                seekProjectBeans.clear();
-                projectListView.setRefreshing();
-                PageIndex=1;
-                initListData(PageIndex,cityName,State,Order);
+
+
+
 
 
             }
-
-
         });
-
-
-
     }
-    public void showEvolvePopupWindow(View parent) {
-        LinearLayout layout;
-        ListView listView;
-        list=new ArrayList<>();
-        list.add("默认排序");
-        list.add("招标中");
-        list.add("已启动");
-        list.add("已关闭");
-
-
-        //加载布局
-        layout = (LinearLayout) LayoutInflater.from(HomeMoreProjectActivity.this).inflate(
-                R.layout.pop_time_contant_layout, null);
-        //找到布局的控件
-        listView = (ListView) layout.findViewById(R.id.pop_listview);
-        //设置适配器
-        //popWinListAdapter=new PopWinListAdapter(list,HomeMoreProjectActivity.this,cur_pos);
-        MyAdapter myAdapter=new MyAdapter(HomeMoreProjectActivity.this);
-        listView.setAdapter(myAdapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);// 一定要设置这个属性，否则ListView不会刷新
-        myAdapter.notifyDataSetChanged();
-        // 实例化popupWindow
-        popupWindowTime = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        //控制键盘是否可以获得焦点
-        popupWindowTime.setFocusable(true);
-        //设置popupWindow弹出窗体的背景
-        popupWindowTime.setBackgroundDrawable(new BitmapDrawable(null, ""));
-        WindowManager manager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        popupWindowTime.setOutsideTouchable(true);
-        popupWindowTime.setFocusable(true);
-        @SuppressWarnings("deprecation")
-        //获取xoff
-                int xpos = manager.getDefaultDisplay().getWidth() / 30 - popupWindowTime.getWidth() / 30;
-        //xoff,yoff基于anchor的左下角进行偏移。
-        popupWindowTime.showAsDropDown(parent, xpos, 4);
-        //popupWindow.showAtLocation(parent, Gravity.TOP, 200, 250);
-
-
-        //监听
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                //关闭popupWindow
-                popupWindowTime.dismiss();
-                popupWindowTime = null;
-                //showPopupWindowOne(seekButtonA);
-                evolveButton.setText(list.get(arg2));
-                evolveButton.setTextColor(getResources().getColor(R.color.red_light));
-                Drawable img = getResources().getDrawable(R.mipmap.select_arrow_cur);
-                img.setBounds(0, 0, img.getMinimumWidth(), img.getMinimumHeight());
-                evolveButton.setCompoundDrawables(null, null, img, null);
-                cur_evolve_pos=arg2;
-                if (list.get(arg2).equals("默认排序")){
-                    State="";
-
-                }else {
-                    State=arg2+"";
-                }
-                seekProjectBeans.clear();
-                projectListView.setRefreshing();
-                PageIndex=1;
-                initListData(PageIndex,cityName,State,Order);
-
-
-            }
-
-
-        });
-
+    /**
+     *
+     * 筛选数据
+     */
+    private void initFacility() {
+        String[] strings={"默认排序","时间由近到远","时间由远到近"};
+        for (int i = 0; i <strings.length ; i++) {
+            orlder.add(strings[i]);
+        }
+        String[] evstring={"默认排序","招标中","已启动","已关闭"};
+        for (int i = 0; i <evstring.length ; i++) {
+            sortLists.add(evstring[i]);
+        }
+        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityData+SelectData.selectCityDataOne+SelectData.selectCityDataTwo,new TypeReference<ProvinceCityDataBean>(){});
+        if (provinceCityDataBean!=null){
+            provinceCityBeens.addAll(provinceCityDataBean.getProvinceCity());
+        }
 
 
     }
 
 
 
-    private class MyAdapter extends BaseAdapter {
-        private LayoutInflater inflater;
 
-        public MyAdapter(Context context) {
-            inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
 
-        @Override
-        public int getCount() {
-            return list.size();
-        }
 
-        @Override
-        public Object getItem(int position) {
-            return list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            //Log.e("TEST", "refresh once");
-            convertView = inflater.inflate(R.layout.item_layout, null, false);
-
-            TextView tv = (TextView) convertView
-                    .findViewById(R.id.item_text);// 显示文字
-            tv.setText(list.get(position));
-
-            if (popTag == 1) {
-                if (position == cur_pos) {// 如果当前的行就是ListView中选中的一行，就更改显示样式
-                    convertView.setBackgroundColor(getResources().getColor(R.color.background));// 更改整行的背景色
-                    tv.setTextColor(Color.RED);// 更改字体颜色
-                }
-            }else {
-                if (position == cur_evolve_pos) {// 如果当前的行就是ListView中选中的一行，就更改显示样式
-                    convertView.setBackgroundColor(getResources().getColor(R.color.background));// 更改整行的背景色
-                    tv.setTextColor(Color.RED);// 更改字体颜色
-                }
-            }
-            return convertView;
-        }
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

@@ -36,7 +36,7 @@
             android:listSelector="@null"
             android:numColumns="5"
             android:background="@color/ic_white"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="13dp"
             android:scrollbars="none"
             android:stretchMode="columnWidth"
             >
@@ -44,7 +44,7 @@
         </com.example.zhongjiyun03.zhongjiyun.view.MyGridView>
 
     <ImageView
-        android:layout_marginTop="3dp"
+
         android:layout_below="@+id/home_gridView"
         android:background="@color/color_dedede"
         android:layout_width="match_parent"

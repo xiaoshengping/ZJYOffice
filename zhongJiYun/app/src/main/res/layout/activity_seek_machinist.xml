@@ -14,152 +14,52 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
-    <LinearLayout
-        android:id="@+id/facilly_layout"
-        android:layout_below="@+id/head_layout"
-        android:background="@color/ic_white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+   <LinearLayout
+       android:layout_below="@+id/head_layout"
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <include  android:layout_width="match_parent" android:layout_height="wrap_content" layout="@layout/drilling_select_layout"/>
 
-        <TextView
+       <LinearLayout
+           android:layout_below="@+id/main_div_layout"
+           android:visibility="gone"
+           android:id="@+id/network_remind_layout"
+           android:gravity="center_vertical"
+           android:background="@color/network_remind_color"
+           android:layout_width="match_parent"
+           android:layout_height="50dp">
 
-            android:drawableRight="@mipmap/select_arrow"
-            android:id="@+id/facilly_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:text="设备"
-            android:maxEms="4"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:gravity="center" />
-        <ImageView
-            android:layout_marginTop="8dp"
-            android:background="@color/div_gray"
-            android:layout_width="1dp"
-            android:layout_height="30dp" />
-        <TextView
-            android:drawableRight="@mipmap/select_arrow"
-            android:maxEms="5"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:id="@+id/main_tab1"
+           <ImageView
+               android:layout_marginLeft="10dp"
+               android:background="@mipmap/tip_icon"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+           <TextView
+               android:textSize="@dimen/home_Size_15"
+               android:textColor="@color/tailt_dark"
+               android:layout_marginLeft="10dp"
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:text="期望地"
-            android:gravity="center" />
-        <ImageView
-            android:layout_marginTop="8dp"
-            android:background="@color/div_gray"
-            android:layout_width="1dp"
-            android:layout_height="30dp" />
-        <TextView
-            android:drawableRight="@mipmap/select_arrow"
-            android:maxEms="6"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:id="@+id/evolve_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:layout_weight="1"
-            android:textSize="15sp"
-            android:text="工作年限"
-            android:gravity="center" />
-        <ImageView
-            android:layout_marginTop="8dp"
-            android:background="@color/div_gray"
-            android:layout_width="1dp"
-            android:layout_height="30dp" />
-        <TextView
-            android:drawableRight="@mipmap/select_arrow"
-            android:maxEms="4"
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:id="@+id/time_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:layout_weight="1"
-            android:textSize="16sp"
-            android:text="排序"
-            android:gravity="center" />
+               android:text="世界上最遥远的距离就是没网。检查设置"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+           <TextView
+               android:paddingRight="20dp"
+               android:drawableRight="@mipmap/gray_arrow_icon"
+               android:layout_alignParentRight="@+id/loing_user"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content" />
+       </LinearLayout>
+       <com.handmark.pulltorefresh.library.PullToRefreshListView
+           android:layout_below="@+id/network_remind_layout"
+           android:dividerHeight="7dp"
+           android:divider="@color/background"
+           android:id="@+id/seek_machinist_listview"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           />
+   </LinearLayout>
 
-
-    </LinearLayout>
-
-    <View
-        android:layout_below="@+id/facilly_layout"
-        android:id="@+id/main_div_line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/div_gray"/>
-
-    <RelativeLayout
-        android:id="@+id/main_div_layout"
-        android:layout_below="@+id/main_div_line"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!-- your views...-->
-        <!-- <TextView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:text="This is a test." />-->
-
-        <!--使背景变灰-->
-        <View
-            android:id="@+id/main_darkview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/dark_bg"
-            android:visibility="gone" />
-
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_below="@+id/main_div_layout"
-        android:visibility="gone"
-        android:id="@+id/network_remind_layout"
-        android:gravity="center_vertical"
-        android:background="@color/network_remind_color"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <ImageView
-            android:layout_marginLeft="10dp"
-            android:background="@mipmap/tip_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:textSize="@dimen/home_Size_15"
-            android:textColor="@color/tailt_dark"
-            android:layout_marginLeft="10dp"
-
-            android:text="世界上最遥远的距离就是没网。检查设置"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:paddingRight="20dp"
-            android:drawableRight="@mipmap/gray_arrow_icon"
-            android:layout_alignParentRight="@+id/loing_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:layout_below="@+id/network_remind_layout"
-        android:dividerHeight="7dp"
-        android:divider="@color/background"
-        android:id="@+id/seek_machinist_listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/not_data_layout"

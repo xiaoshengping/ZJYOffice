@@ -12,7 +12,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -389,14 +392,24 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
 
 
 
-                            if (!TextUtils.isEmpty(secondHandBean.getProvince())&&!TextUtils.isEmpty(secondHandBean.getAddress())){
-                             addressText.setText(secondHandBean.getProvince()+secondHandBean.getAddress());
-                            }else if (!TextUtils.isEmpty(secondHandBean.getProvince())){
+                            if (!TextUtils.isEmpty(secondHandBean.getProvince())&&!TextUtils.isEmpty(secondHandBean.getAddress())&&!TextUtils.isEmpty(secondHandBean.getCity())){
+                             addressText.setText(secondHandBean.getProvince()+" "+secondHandBean.getCity()+" "+secondHandBean.getAddress());
+                            }else if (!TextUtils.isEmpty(secondHandBean.getProvince())&&!TextUtils.isEmpty(secondHandBean.getCity())){
+                                addressText.setText(secondHandBean.getProvince()+" "+secondHandBean.getCity());
+                            }else {
                                 addressText.setText(secondHandBean.getProvince());
                             }
                             if (!TextUtils.isEmpty(secondHandBean.getDescribing())){
                                 shuiMingText.setVisibility(View.VISIBLE);
-                                shuiMingText.setText(secondHandBean.getDescribing());
+                                String miaoshuiString="“ "+secondHandBean.getDescribing()+" ”";
+                                int bstart=miaoshuiString.indexOf("“ ");
+                                int bend=bstart+"“ ".length();
+                                int fstart=miaoshuiString.indexOf(" ”");
+                                int fend=fstart+" ”".length();
+                                SpannableStringBuilder style=new SpannableStringBuilder(miaoshuiString);
+                                style.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_888888)),bstart,bend, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                style.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.color_888888)),fstart,fend,Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                                shuiMingText.setText(style);
                             }else {
                                 shuiMingText.setVisibility(View.GONE);
                             }
