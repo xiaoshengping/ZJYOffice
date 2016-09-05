@@ -5,8 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -32,6 +30,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -51,7 +50,6 @@ import com.example.zhongjiyun03.zhongjiyun.bean.select.SelectData;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.ClippingPageActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.SelectImagesFromLocalActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.constants.ConstantSet;
@@ -154,6 +152,8 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
     private String contractImageID;//全景照4ID
     private String qualifiedImageID;//全景照5ID
     private String modifiRentTage;
+    @ViewInject(R.id.rent_out_scrollView)
+    private ScrollView rentOutScrollView;
 
 
 
@@ -258,6 +258,27 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
             modifiRentData();
             rentOutButton.setText("修改钻机出租信息");
         }
+
+        rentDescribe.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
+        rentOutScrollView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                rentDescribe.getParent().requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
+        });
+
     }
 
     private void modifiRentData() {
@@ -265,15 +286,8 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         if (!TextUtils.isEmpty(secondHandBeanId)){
             HttpUtils httpUtils=new HttpUtils();
             RequestParams requestParams=new RequestParams();
-            SQLhelper sqLhelper=new SQLhelper(RentOutExtruderActivity.this);
-            SQLiteDatabase db= sqLhelper.getWritableDatabase();
-            Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-            String uid=null;  //用户id
 
-            while (cursor.moveToNext()) {
-                uid=cursor.getString(0);
-
-            }
+            String uid=SQLHelperUtils.queryId(RentOutExtruderActivity.this);  //用户id
             if (!TextUtils.isEmpty(uid)){
                 requestParams.addBodyParameter("id",uid);
                 //步骤1：创建一个SharedPreferences接口对象
@@ -289,7 +303,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                 public void onSuccess(ResponseInfo<String> responseInfo) {
 
                     if (!TextUtils.isEmpty(responseInfo.result)){
-                        Log.e("出租修改信息",responseInfo.result);
+                        //Log.e("出租修改信息",responseInfo.result);
                         AppBean<SecondHandListProjectBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandListProjectBean>>(){});
                         if (appListDataBean.getResult().equals("success")){
                            secondHandListProjectBean= appListDataBean.getData();
@@ -519,7 +533,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
                                             @Override
                                             public void onSuccess(ResponseInfo<String> responseInfo) {
-                                                Log.e("修改出租",responseInfo.result);
+                                                //Log.e("修改出租",responseInfo.result);
                                                 if (!TextUtils.isEmpty(responseInfo.result)){
                                                     AppBean<RentOutExtruderDeviceBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceBean>>(){});
                                                     if (appBean.getResult().equals("success")){
@@ -657,7 +671,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRentOrSellData(),requestParams, new RequestCallBack<String>() {
                             @Override
                             public void onSuccess(ResponseInfo<String> responseInfo) {
-                                Log.e("出租",responseInfo.result);
+                                //Log.e("出租",responseInfo.result);
                                 if (!TextUtils.isEmpty(responseInfo.result)){
                                     AppBean<RentOutExtruderDeviceBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RentOutExtruderDeviceBean>>(){});
                                     if (appBean.getResult().equals("success")){
@@ -668,7 +682,6 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
                                                     if (phoneListPath!=null){
                                                         int imageType=11;
                                                         for (int i = 0; i <phoneListPath.size() ; i++) {
-                                                            Log.e("imageType",imageType+"");
                                                             intiPhontData7(finalUid,imageType,phoneListPath.get(i),rentOutExtruderDeviceDataBean.getId(),i);
                                                             imageType++;
 
@@ -757,7 +770,6 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
         //步骤2：获取文件中的值
         String sesstionId = read.getString("code","");
         requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        Log.e("AddSesstionId",sesstionId);
         requwstParams.addBodyParameter("OwnId",ownId);
         httpUtils.configSoTimeout(1200000);
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
@@ -769,7 +781,7 @@ public class RentOutExtruderActivity extends AppCompatActivity implements View.O
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
+                //Log.e("照片请求",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<AppDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
                     int tage=tages+1;

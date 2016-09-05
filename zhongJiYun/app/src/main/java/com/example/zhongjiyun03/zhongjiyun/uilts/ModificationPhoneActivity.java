@@ -28,6 +28,7 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -114,12 +115,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
     @Override
     protected void onResume() {
         super.onResume();
-        SQLhelper sqLhelper=new SQLhelper(ModificationPhoneActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        while (cursor.moveToNext()) {
-            phone=cursor.getString(1);
-        }
+         phone= SQLNewHelperUtils.queryPhone(ModificationPhoneActivity.this);
         if (!TextUtils.isEmpty(phone)){
             StringBuffer stringBuffer=new StringBuffer(phone);
             stringBuffer.replace(3,7,"****");
@@ -133,7 +129,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
     private void intiView() {
         controlKeyboardLayout(rootLayout,modifyPhoneButton);
         addExtruderTv.setVisibility(View.GONE);
-        titleNemeTv.setText("修改手号码");
+        titleNemeTv.setText("修改手机号码");
         retrunText.setOnClickListener(this);
         modifyPhoneButton.setOnClickListener(this);
         codeButton.setOnClickListener(this);
@@ -296,6 +292,12 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                                     update(finalUid,phoneNewEdit.getText().toString());
                                     mSVProgressHUD.dismiss();
                                     mSVProgressHUD.showSuccessWithStatus("恭喜，修改成功！");
+                                    if (!TextUtils.isEmpty(SQLNewHelperUtils.queryPhone(ModificationPhoneActivity.this))){
+                                        SQLNewHelperUtils.updatePhone(ModificationPhoneActivity.this,SQLNewHelperUtils.queryProjectId(ModificationPhoneActivity.this),phoneNewEdit.getText().toString());
+                                    }else {
+                                        SQLNewHelperUtils.insertPhone(ModificationPhoneActivity.this,SQLNewHelperUtils.queryPhoneID(ModificationPhoneActivity.this),phoneNewEdit.getText().toString());
+
+                                    }
                                     finish();
                                 }else {
                                     mSVProgressHUD.dismiss();

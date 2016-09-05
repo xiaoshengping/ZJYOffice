@@ -497,7 +497,7 @@ public class SecondHandActivity extends AppCompatActivity implements OnClickList
 
     private void showPopBtn( final int tage) {
         LayoutInflater inflater = LayoutInflater.from(SecondHandActivity.this);
-        popupLayout = (LinearLayout) inflater.inflate(R.layout.project_popupwindow_layout, null, false);
+        popupLayout = (LinearLayout) inflater.inflate(R.layout.secondhand_popupwindow_layout, null, false);
         rootListView = (ListView) popupLayout.findViewById(R.id.root_listview);
         popWindowDisminLayout= (LinearLayout) popupLayout.findViewById(R.id.popupwindow_dismin);
         LinearLayout selectRightLayout= (LinearLayout) popupLayout.findViewById(R.id.select_right_layout);

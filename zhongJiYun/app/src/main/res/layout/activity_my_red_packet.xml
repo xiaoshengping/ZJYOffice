@@ -45,35 +45,13 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
         <com.handmark.pulltorefresh.library.PullToRefreshListView
-         android:layout_marginBottom="70dp"
+         android:layout_marginBottom="60dp"
          android:dividerHeight="0dp"
          android:divider="#00000000"
          android:id="@+id/red_patck_listview"
          android:layout_width="match_parent"
          android:layout_height="match_parent"/>
     </LinearLayout>
-   <!-- <LinearLayout
-
-        android:visibility="gone"
-        android:id="@+id/not_data_layout"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_marginTop="200dp"
-        android:layout_width="match_parent"
-        android:layout_height="200dp">
-        <ImageView
-            android:src="@mipmap/no_reward_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
-        <TextView
-            android:textColor="@color/nodata_background"
-            android:layout_marginTop="5dp"
-            android:text="您还没有收到红包哦"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
-    </LinearLayout>-->
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/not_data_layout"

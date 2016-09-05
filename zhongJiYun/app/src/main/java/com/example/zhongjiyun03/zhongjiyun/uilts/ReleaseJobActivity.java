@@ -459,7 +459,7 @@ public class ReleaseJobActivity extends AppCompatActivity implements View.OnClic
             pvOptions.setTitle("选择钻机型号");
             pvOptions.setPicker(facilly1Items, facilly2Items,true);
             //设置默认选中的三级项目
-            pvOptions.setSelectOptions(facillyOptions01, facillyOptions01);
+            pvOptions.setSelectOptions(facillyOptions01, facillyOptions02);
         }
         pvOptions.setCyclic(false, false, true);
 

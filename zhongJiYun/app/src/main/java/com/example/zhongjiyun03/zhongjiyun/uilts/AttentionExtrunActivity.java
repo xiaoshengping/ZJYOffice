@@ -162,7 +162,7 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionExtrunListData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("关注钻机",responseInfo.result);
+                    //Log.e("关注钻机",responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)){
                         AppBean<AttentionSecondHandDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AttentionSecondHandDataBean>>(){});
                         if ((appListDataBean.getResult()).equals("success")){
@@ -181,7 +181,6 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                             }
                             notDataLayout.setVisibility(View.GONE);
                         }else if ((appListDataBean.getResult()).equals("nomore")){
-                            //notDataLayout.setVisibility(View.GONE);
                             attentionExtrunLsitview.onRefreshComplete();
                             MyAppliction.showToast("已到最底了");
                             homeSecondHandListAdapter.notifyDataSetChanged();
@@ -191,7 +190,6 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                             }
                             notDataLayout.setVisibility(View.VISIBLE);
                             attentionExtrunLsitview.onRefreshComplete();
-                            //MyAppliction.showToast("您还没有关注钻机哦");
                             homeSecondHandListAdapter.notifyDataSetChanged();
                             notDataImage.setBackgroundResource(R.mipmap.no_rig_icon);
                             notDataText.setText("您还没有关注的二手钻机哦");
@@ -325,11 +323,11 @@ public class AttentionExtrunActivity extends AppCompatActivity implements View.O
                     if (!TextUtils.isEmpty(responseInfo.result)){
                         AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                         if (appDataBean.getResult().equals("success")){
-                            mSVProgressHUD.showSuccessWithStatus("删除二手钻机成功");
+                            mSVProgressHUD.showSuccessWithStatus("取消成功");
                             attentionExtrunLsitview.setRefreshing();
                             homeSecondHandListAdapter.notifyDataSetChanged();
                         }else {
-                            mSVProgressHUD.showErrorWithStatus("删除二手钻机失败");
+                            mSVProgressHUD.showErrorWithStatus("取消失败");
                         }
                     }
 

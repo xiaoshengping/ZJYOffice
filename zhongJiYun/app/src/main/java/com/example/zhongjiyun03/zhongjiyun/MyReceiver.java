@@ -193,7 +193,7 @@ public class MyReceiver extends BroadcastReceiver {
 
     //提交用户信息
     private void initRegistration(Context context,String jiGuangID) {
-        Log.e("提交用户信息","提交用户信息");
+        //Log.e("提交用户信息","提交用户信息");
         HttpUtils httpUtils=new HttpUtils();
         TelephonyManager telephonyManager =( TelephonyManager )context.getSystemService( Context.TELEPHONY_SERVICE );
         RequestParams requestParams=new RequestParams();
@@ -203,7 +203,7 @@ public class MyReceiver extends BroadcastReceiver {
         requestParams.addBodyParameter("versionType","0");
         requestParams.addBodyParameter("softUserType","0");
         requestParams.addBodyParameter("jiGuangID",jiGuangID);
-        Log.e("极光id", jiGuangID);
+        //Log.e("极光id", jiGuangID);
         try {
             requestParams.addBodyParameter("softVersion",getVersionName(context));
         } catch (Exception e) {

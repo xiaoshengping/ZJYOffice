@@ -157,7 +157,7 @@
     <ImageView
         android:visibility="gone"
         android:id="@+id/image_chuz_tage"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="40dp"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"

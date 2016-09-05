@@ -13,6 +13,7 @@
         android:layout_height="wrap_content" layout="@layout/app_head_layout"/>
 
     <ScrollView
+        android:id="@+id/rent_out_scrollView"
         android:layout_below="@+id/tailt_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -205,9 +206,9 @@
                         android:layout_height="wrap_content" />
 
                     <EditText
+                        android:maxLength="4"
                         android:id="@+id/rent_price_edit"
                         android:layout_toLeftOf="@+id/price_text"
-
                         android:layout_width="200dp"
                         android:layout_height="45dp"
                         android:background="@color/ic_white"
@@ -317,6 +318,7 @@
                     android:layout_height="wrap_content" />
 
                 <EditText
+                    android:layout_marginBottom="5dp"
                     android:id="@+id/rent_describe"
                     android:gravity="top"
                     android:layout_width="match_parent"
@@ -328,7 +330,7 @@
                     android:drawablePadding="10dp"
                     android:textSize="@dimen/home_Size_14"
                     android:hint="未填写"
-                    android:inputType="text"
+                    android:inputType="textMultiLine"
                     />
 
             </LinearLayout>

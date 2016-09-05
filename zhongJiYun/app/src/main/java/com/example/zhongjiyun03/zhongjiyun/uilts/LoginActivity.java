@@ -35,6 +35,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.main.LoginDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.MyCookieStore;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -191,7 +192,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                    httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getLoginData(),requestParams, new RequestCallBack<String>() {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
-                           // Log.e("登录信息",responseInfo.result);
+                            //Log.e("登录信息",responseInfo.result);
                             if (!TextUtils.isEmpty(responseInfo.result)){
                                 AppBean<AppUserDataBean<LoginDataBean>> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppUserDataBean<LoginDataBean>>>(){});
                                 if (appBean.getResult().equals("success")){
@@ -225,6 +226,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             loginDataBean.getHeadthumb(), loginDataBean.getRole());
 
                                     MyAppliction.setProjectRefresh("2");
+                                    if (!TextUtils.isEmpty(SQLNewHelperUtils.queryPhone(LoginActivity.this))){
+                                        SQLNewHelperUtils.updatePhone(LoginActivity.this,SQLNewHelperUtils.queryProjectId(LoginActivity.this),phoneEdit.getText().toString());
+                                         //Log.e("修改",SQLNewHelperUtils.queryPhone(LoginActivity.this));
+                                    }else {
+                                        SQLNewHelperUtils.insertPhone(LoginActivity.this,SQLNewHelperUtils.queryPhoneID(LoginActivity.this),phoneEdit.getText().toString());
+
+                                    }
                                     
                                     mSVProgressHUD.dismiss();
                                     mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");

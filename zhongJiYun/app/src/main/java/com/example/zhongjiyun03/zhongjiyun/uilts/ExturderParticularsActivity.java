@@ -272,7 +272,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
             public void onSuccess(ResponseInfo<String> responseInfo) {
 
                 if (!TextUtils.isEmpty(responseInfo.result)){
-                    Log.e("二手钻机详情",responseInfo.result);
+                    //Log.e("二手钻机详情",responseInfo.result);
                     AppBean<SecondHandListProjectBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandListProjectBean>>(){});
                      if (appListDataBean.getResult().equals("success")){
                          secondHandBean=    appListDataBean.getData();
@@ -633,12 +633,12 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     if (!TextUtils.isEmpty(responseInfo.result)){
-                        Log.e("取消关注",responseInfo.result);
+                        //Log.e("取消关注",responseInfo.result);
                         AppDataBean appDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                         if (appDataBean.getResult().equals("success")){
-                            mSVProgressHUD.showSuccessWithStatus("您已取消关注！");
+                            mSVProgressHUD.showSuccessWithStatus("取消成功！");
                         }else {
-                            mSVProgressHUD.showErrorWithStatus("噢噢,取消关注失败");
+                            mSVProgressHUD.showErrorWithStatus("取消失败");
                         }
                     }
 
@@ -677,10 +677,10 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                     if (!TextUtils.isEmpty(responseInfo.result)){
                         AppDataBean appDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                         if (appDataBean.getResult().equals("success")){
-                            Log.e("关注",responseInfo.result);
+                            //Log.e("关注",responseInfo.result);
                             mSVProgressHUD.showSuccessWithStatus("关注成功！");
                         }else {
-                            mSVProgressHUD.showErrorWithStatus("噢噢,关注失败");
+                            mSVProgressHUD.showErrorWithStatus("关注失败");
                         }
                     }
 
@@ -820,7 +820,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
                 @Override
                 public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
 
-                    Log.e("分享成功","分享回调成功");
+                    //Log.e("分享成功","分享回调成功");
                     //MyAppliction.showToast("分享回调成功");
                     Message msg = new Message();
                     Bundle b = new Bundle();// 存放数据

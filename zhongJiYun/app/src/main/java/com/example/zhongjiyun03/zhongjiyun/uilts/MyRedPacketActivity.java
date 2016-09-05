@@ -32,6 +32,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.main.RePackedListBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.RedPacketDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -160,7 +161,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRedPacketListData(), requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("我的红包", responseInfo.result);
+                    //Log.e("我的红包", responseInfo.result);
                     appBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppBean<RedPacketDataBean>>() {
                     });
                     if (appBean.getActions()!=null&&appBean.getActions().equals("nogifget")){
@@ -184,7 +185,6 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
                         }
                         notDataLayout.setVisibility(View.GONE);
                     } else if ((appBean.getResult()).equals("empty")) {
-                        //MyAppliction.showToast("您还没有收到红包哦");
                         competitiveLayout.setVisibility(View.GONE);
                         notDataLayout.setVisibility(View.VISIBLE);
                         notDataImage.setBackgroundResource(R.mipmap.no_reward_icon);
@@ -192,23 +192,19 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
 
                     }else if ((appBean.getResult()).equals("nomore")) {
                         MyAppliction.showToast("已到最底了");
-                        //notDataLayout.setVisibility(View.GONE);
                     }else if (appBean.getResult().equals("unlogin")){
                         showExitGameAlertUnLonding("本次登录已过期");
                         competitiveLayout.setVisibility(View.GONE);
                     }
                     myredAdapter.notifyDataSetChanged();
                     redPatckListview.onRefreshComplete();
-                    //mSVProgressHUD.dismiss();
                     networkRemindLayout.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void onFailure(HttpException e, String s) {
                     Log.e("我的红包", s);
-                    //mSVProgressHUD.dismiss();
                     networkRemindLayout.setVisibility(View.VISIBLE);
-                    //MyAppliction.showToast("网络异常,请稍后重试!");
                     redPatckListview.onRefreshComplete();
                     if (rePackedListBeens.size()==0){
                         notDataLayout.setVisibility(View.VISIBLE);
@@ -306,7 +302,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRedPacketData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("领取红包",responseInfo.result);
+                   // Log.e("领取红包",responseInfo.result);
                 AppBean<MyRedPackedDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<MyRedPackedDataBean>>(){});
                 if ((appBean.getResult()).equals("success")){
                     if ((appBean.getData().getGetCloudMoney()).equals("0")){
@@ -387,6 +383,7 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
             public void onClick(View v) {
                 Intent intent=new Intent(MyRedPacketActivity.this,LoginActivity.class);
                 startActivity(intent);
+                SQLHelperUtils.deleteUid(MyRedPacketActivity.this);
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                 dlg.cancel();
             }

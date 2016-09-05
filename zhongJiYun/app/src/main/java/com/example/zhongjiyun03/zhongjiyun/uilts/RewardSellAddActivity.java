@@ -363,7 +363,7 @@ public class RewardSellAddActivity extends AppCompatActivity implements View.OnC
             if (facilly1Items.size()!=0&&facilly2Items.size()!=0){
                 pvOptions.setPicker(facilly1Items, facilly2Items,true);
                 //设置默认选中的三级项目
-                pvOptions.setSelectOptions(facillyOptions01, facillyOptions01);
+                pvOptions.setSelectOptions(facillyOptions01, facillyOptions02);
             }
 
         }

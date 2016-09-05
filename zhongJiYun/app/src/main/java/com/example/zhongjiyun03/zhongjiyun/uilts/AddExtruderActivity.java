@@ -89,23 +89,48 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
         @ViewInject(R.id.retrun_text_view)
         private TextView retrunText;       //左边
 
+
+
+    private View vMasker;     //地址联动
+    private OptionsPickerView pvOptions;  //地址联动
+    private int addressOptions01; //地域选择标记一级
+    private int addressOptions02; //地域选择标记二级
+    private int timeOptions; //时间选择标记
+    private int timeOptions1; //时间选择标记
+
+    List<FacillyDataBean> facillyDataBeens;//设备厂商数据
+    private int facillyOptions01;
+    private int facillyOptions02;
+    private String manufacture; //厂商
+    private String model;// 型号
+    private ArrayList<String> facilly1Items;
+    private  ArrayList<ArrayList<String>> facilly2Items;
+    @ViewInject(R.id.facility_layout)
+    private RelativeLayout facilityLayout; //设备型号
+    @ViewInject(R.id.facilly_text)
+    private TextView facillyText;  //设备型号text
+    private String  facillyTextString;  //设备型号String
+    @ViewInject(R.id.work_address_layout)
+    private RelativeLayout workAddressLayout; //所在地
+    @ViewInject(R.id.work_address)
+    private TextView workAddressText;  //所在地text
+    private String workAddressTextString;  //所在地String
+    private String province;  //省份
+    private String city;  //城市
+    @ViewInject(R.id.work_time_layout)
+    private RelativeLayout workTimeLayout; //出厂时间范围
+    @ViewInject(R.id.work_time_text)
+    private TextView workTimeText;  //出厂时间text
+    private String workTimeTextString;  //出厂时间String
+    private String dateOfManufacture;  //出厂年份
+    private String dateMonthOfManufacture;  //出厂月份
+
         @ViewInject(R.id.save_button)
         private Button saveButton;  //保存数据按钮
         @ViewInject(R.id.serial_number_edit)
         private EditText serialNumberEdit;  //出厂编号
         @ViewInject(R.id.work_time_edit)
         private EditText workTimeEdit;       //工作时长
-       @ViewInject(R.id.model_edit)
-       private TextView modelEdit;          //设备型号
-       @ViewInject(R.id.leave_factory_time_edit)
-       private TextView leaveFactoryTimeEdit;  //出厂时间
-       @ViewInject(R.id.address_text)
-       private TextView addressText;         //所在地
-       private OptionsPickerView pvOptions;
-       private OptionsPickerView pvOptionsTime;
-       private OptionsPickerView pvOptionsType;
-       @ViewInject(R.id.company_vMasker)
-       private View vMasker;   //弹出选择地点view
        @ViewInject(R.id.rood_layout)
        private ScrollView roodLayout;
        @ViewInject(R.id.leave_factory_layout)
@@ -135,16 +160,6 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
        private String qualifiedPath;
        private List<String> phoneListPath=new ArrayList<>();//图片路径集合
        private List<String> ImageTypeList =new ArrayList<>();
-        private String DateOfManufacture; //年份
-        private String DateMonthOfManufacture; //月份
-       private String Manufacture;  //设备厂商
-       private String NoOfManufacture; //设备型号
-       private String Province;  //省份
-       private String City; //城市
-      @ViewInject(R.id.competitive_layout)
-      private RelativeLayout competitiveLayout;
-
-
 
 
     private static final String IMAGE_FILE_LOCATION = ConstantSet.LOCALFILE;//temp file
@@ -158,6 +173,9 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
+        //选项选择器
+        pvOptions = new OptionsPickerView(AddExtruderActivity.this);
+        initFacilly();
     }
     @Override
     protected void onPause() {
@@ -195,10 +213,6 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
     }
     private void init() {
          initView();
-        intiPvAddress();
-        facillyData();
-        timeData();
-
     }
 
     private void initView() {
@@ -218,6 +232,11 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
         invoiceLayout.setOnClickListener(this);
         contractLayout.setOnClickListener(this);
         qualifiedLayout.setOnClickListener(this);
+
+        facilityLayout.setOnClickListener(this);
+        workAddressLayout.setOnClickListener(this);
+        workTimeLayout.setOnClickListener(this);
+        facillyDataBeens=new ArrayList<>();
         /**
          * 限制只能输入字母和数字，默认弹出英文输入法
          */
@@ -282,6 +301,15 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
             case R.id.qualified_layout:
                 showDialog(ConstantSet.TAKEPICTURE3,ConstantSet.SELECTPICTURE3,imageUri);
                 break;
+            case R.id.facility_layout:
+                intiPvTime(4);
+                break;
+            case R.id.work_address_layout:
+                intiPvTime(1);
+                break;
+            case R.id.work_time_layout:
+                intiPvTime(2);
+                break;
 
 
 
@@ -295,11 +323,9 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
     private void saveExtruderData(final String uid) {
             if (!TextUtils.isEmpty(serialNumberEdit.getText().toString())){
                 if (!TextUtils.isEmpty(workTimeEdit.getText().toString())){
-                    if (!TextUtils.isEmpty(modelEdit.getText().toString())){
-
-                        if (!TextUtils.isEmpty(leaveFactoryTimeEdit.getText().toString())){
-
-                            if (!TextUtils.isEmpty(addressText.getText().toString())){
+                    if (!TextUtils.isEmpty(facillyTextString)){
+                        if (!TextUtils.isEmpty(workTimeTextString)){
+                            if (!TextUtils.isEmpty(workAddressTextString)){
                                 if (!TextUtils.isEmpty(leavePath)){
                                     phoneListPath.add(leavePath);
                                     ImageTypeList.add("6");
@@ -330,27 +356,22 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                     requestParams.addBodyParameter("Id",uid);
                                     requestParams.addBodyParameter("DeviceNo",serialNumberEdit.getText().toString());
                                     requestParams.addBodyParameter("HourOfWork",workTimeEdit.getText().toString());
-                                    requestParams.addBodyParameter("DateOfManufacture",DateOfManufacture);
-                                    requestParams.addBodyParameter("DateMonthOfManufacture",DateMonthOfManufacture);
-                                    requestParams.addBodyParameter("Manufacture",Manufacture);
-                                    requestParams.addBodyParameter("NoOfManufacture",NoOfManufacture);
-                                    requestParams.addBodyParameter("Province",Province);
-                                    requestParams.addBodyParameter("City",City);
+                                    requestParams.addBodyParameter("DateOfManufacture",dateOfManufacture);
+                                    requestParams.addBodyParameter("DateMonthOfManufacture",dateMonthOfManufacture);
+                                    requestParams.addBodyParameter("Manufacture",manufacture);
+                                    requestParams.addBodyParameter("NoOfManufacture",model);
+                                    requestParams.addBodyParameter("Province",province);
+                                    requestParams.addBodyParameter("City",city);
                                     requestParams.addBodyParameter("DeviceNoPhoto","photo.jpg");
                                     requestParams.addBodyParameter("DevicePhoto","photo.jpg");
                                     requestParams.addBodyParameter("DeviceInvoicePhoto","photo.jpg");
                                     requestParams.addBodyParameter("DeviceContractPhoto","photo.jpg");
                                     requestParams.addBodyParameter("DeviceCertificatePhoto","photo.jpg");
-                                    /*if (phoneListPath.size()==5){
-                                        mSVProgressHUD.showWithStatus("上传照片中(5)...");
-                                    }else if (phoneListPath.size()==4){
-                                        mSVProgressHUD.showWithStatus("上传照片中(4)...");
-                                    }*/
                                     mSVProgressHUD.showWithStatus("正在提交中...");
                                     httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAddMyExtruderData(),requestParams, new RequestCallBack<String>() {
                                         @Override
                                         public void onSuccess(ResponseInfo<String> responseInfo) {
-                                            Log.e("增加钻机",responseInfo.result);
+                                           // Log.e("增加钻机",responseInfo.result);
                                             if (!TextUtils.isEmpty(responseInfo.result)){
                                                 AppBean<ExtruderDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ExtruderDataBean>>(){});
                                                 if (appBean.getResult().equals("success")){
@@ -463,7 +484,7 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("照片请求",responseInfo.result);
+                //Log.e("照片请求",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<AppDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
                     int tage=tages+1;
@@ -754,186 +775,17 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
         return file;
 
     }
-    public  void timeData(){
-        //时间
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("DeviceJsonType","3");
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("设备厂商",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<FacillyDataBean> appListDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<FacillyDataBean>>(){});
-                    if (appListDataBean.getResult().equals("success")){
-                        List<FacillyDataBean> facillyDataBeen=  appListDataBean.getData();
-                        //facilluyFirstList.addAll(facillyDataBeen);
 
-                        intiPvTime(facillyDataBeen);
-
-                    }
-
-
-
-                }
-
-
-
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-
-            }
-        });
-
-
-    }
-     public  void facillyData(){
-         //设备厂商
-         HttpUtils httpUtils=new HttpUtils();
-         RequestParams requestParams=new RequestParams();
-         requestParams.addBodyParameter("DeviceJsonType","2");
-         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
-             @Override
-             public void onSuccess(ResponseInfo<String> responseInfo) {
-                 //Log.e("设备厂商",responseInfo.result);
-                 if (!TextUtils.isEmpty(responseInfo.result)){
-                     AppListDataBean<FacillyDataBean> appListDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<FacillyDataBean>>(){});
-                     if (appListDataBean.getResult().equals("success")){
-                         List<FacillyDataBean> facillyDataBeen=  appListDataBean.getData();
-                         //facilluyFirstList.addAll(facillyDataBeen);
-
-                         intiPvType(facillyDataBeen);
-
-                     }
-
-
-
-                 }
-
-
-
-             }
-
-             @Override
-             public void onFailure(HttpException e, String s) {
-
-             }
-         });
-
-
-     }
-
-    private void intiPvType(List<FacillyDataBean> facillyDataBeen) {
-        final ArrayList<String> options1Items = new ArrayList<String>();
-        final ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
-        for (int i = 0; i <facillyDataBeen.size() ; i++) {
-            options1Items.add(facillyDataBeen.get(i).getText());
-            List<FacillyChildsBean> facillyChildBean= facillyDataBeen.get(i).getChilds();
-            ArrayList<String> arrayList=new ArrayList<String>();
-            for (int j = 0; j < facillyChildBean.size(); j++) {
-                arrayList.add(facillyChildBean.get(j).getText());
-            }
-            options2Items.add(arrayList);
-        }
-        //选项选择器
-        pvOptionsType = new OptionsPickerView(AddExtruderActivity.this);
-
-        //二级联动
-        pvOptionsType.setPicker(options1Items, options2Items,  true);
-        //设置选择的三级单位
-//        pwOptions.setLabels("省", "市", "区");
-        pvOptionsType.setTitle("选择设备型号");
-        pvOptionsType.setCyclic(false, false, true);
-        //设置默认选中的三级项目
-        //监听确定选择按钮
-        pvOptionsType.setSelectOptions(1, 1, 1);
-        pvOptionsType.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-               /* //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).getPickerViewText()
-                        + options2Items.get(options1).get(option2)
-                        + options3Items.get(options1).get(option2).get(options3);*/
-                //返回的分别是两个级别的选中位置
-                String tx = options1Items.get(options1)
-                        + options2Items.get(options1).get(option2);
-                modelEdit.setText(tx);
-                Manufacture=options1Items.get(options1);
-                NoOfManufacture=options2Items.get(options1).get(option2);
-                vMasker.setVisibility(View.GONE);
-            }
-        });
-        //点击弹出选项选择器
-        modelEdit.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                pvOptionsType.show();
-            }
-        });
-    }
-
-    private void intiPvTime (List<FacillyDataBean> facillyDataBeen) {
-        final ArrayList<String> options1Items = new ArrayList<String>();
-        final ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
-        for (int i = 0; i <facillyDataBeen.size() ; i++) {
-            options1Items.add(facillyDataBeen.get(i).getText());
-            List<FacillyChildsBean> facillyChildBean= facillyDataBeen.get(i).getChilds();
-            ArrayList<String> arrayList=new ArrayList<String>();
-            for (int j = 0; j < facillyChildBean.size(); j++) {
-                arrayList.add(facillyChildBean.get(j).getText());
-            }
-            options2Items.add(arrayList);
-        }
-
-
-        //选项选择器
-        pvOptionsTime = new OptionsPickerView(AddExtruderActivity.this);
-
-        //二级联动
-        pvOptionsTime.setPicker(options1Items, options2Items,  true);
-        //设置选择的三级单位
-//        pwOptions.setLabels("省", "市", "区");
-        pvOptionsTime.setTitle("选择年份月份");
-        pvOptionsTime.setCyclic(false, false, true);
-        //设置默认选中的三级项目
-        //监听确定选择按钮
-        pvOptionsTime.setSelectOptions(1, 1, 1);
-        pvOptionsTime.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
-
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3) {
-               /* //返回的分别是三个级别的选中位置
-                String tx = options1Items.get(options1).getPickerViewText()
-                        + options2Items.get(options1).get(option2)
-                        + options3Items.get(options1).get(option2).get(options3);*/
-                //返回的分别是两个级别的选中位置
-                String tx = options1Items.get(options1)+"年"
-                        + options2Items.get(options1).get(option2)+"月";
-                leaveFactoryTimeEdit.setText(tx);
-                DateOfManufacture=options1Items.get(options1);
-                DateMonthOfManufacture=options2Items.get(options1).get(option2);
-                vMasker.setVisibility(View.GONE);
-            }
-        });
-        //点击弹出选项选择器
-        leaveFactoryTimeEdit.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                pvOptionsTime.show();
-            }
-        });
-    }
-    private void intiPvAddress() {
+    /**
+     * 联动
+     * @param tage 类型
+     */
+    private void intiPvTime(final int tage) {
+        //地址数据
         final ArrayList<String> options1Items = new ArrayList<String>();
         final ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
 
-
-        ProvinceCityDataBean provinceCityDataBean=JSONObject.parseObject(SelectData.selectCityDatas+SelectData.selectCityDataOnes+SelectData.selectCityDataTwos,new TypeReference<ProvinceCityDataBean>(){});
+        ProvinceCityDataBean provinceCityDataBean= JSONObject.parseObject(SelectData.selectCityDatas+SelectData.selectCityDataOnes+SelectData.selectCityDataTwos,new TypeReference<ProvinceCityDataBean>(){});
         if (provinceCityDataBean!=null){
             ArrayList<ProvinceCityBean>  options1Itemss= (ArrayList<ProvinceCityBean>) provinceCityDataBean.getProvinceCity();
             for (int i = 0; i <options1Itemss.size() ; i++) {
@@ -948,75 +800,148 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                 options2Items.add(arrayList);
 
             }
-
-
-
         }
 
 
+        //工作小时数据
+        String[] compensationData={"2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016"};
+        String[] compensationData1={"01","02","03","04","05","06","07","08","09","10","11","12"};
+        final ArrayList<String> compensationList1=new ArrayList();
+        final ArrayList<ArrayList<String>> compensationList2=new ArrayList();
+
+        vMasker= findViewById(R.id.vMasker);
 
 
+        if (tage==1){
+            pvOptions.setTitle("选择所在地");
+            pvOptions.setPicker(options1Items, options2Items,true);
+            //设置默认选中的三级项目
+            pvOptions.setSelectOptions(addressOptions01, addressOptions02);
+        }else if (tage==2){
+            pvOptions.setTitle("选择出厂时间");
+            for (int i = 0; i <compensationData.length ; i++) {
+                compensationList1.add(compensationData[i]);
 
+            }
+            for (int i = 0; i <compensationData.length ; i++) {
+                ArrayList<String> list=new ArrayList<>();
+                for (int J = 0; J <compensationData1.length ; J++) {
+                    list.add(compensationData1[J]);
+                }
+                compensationList2.add(list);
+            }
 
+            pvOptions.setPicker(compensationList1,compensationList2,true);
+            pvOptions.setSelectOptions(timeOptions,timeOptions1);
+        }else {
+            pvOptions.setTitle("选择设备型号");
+            if (facilly1Items.size()!=0&&facilly2Items.size()!=0){
+                pvOptions.setPicker(facilly1Items, facilly2Items,true);
+                //设置默认选中的三级项目
+                pvOptions.setSelectOptions(facillyOptions01, facillyOptions02);
+            }
 
-
-        //选项选择器
-        pvOptions = new OptionsPickerView(AddExtruderActivity.this);
-       /* //选项1
-        options1Items.add(new ProvinceBean(0,"广东"));
-        options1Items.add(new ProvinceBean(1,"湖南"));
-        options1Items.add(new ProvinceBean(3,"广西"));
-
-        //选项2
-        ArrayList<String> options2Items_01=new ArrayList<String>();
-        options2Items_01.add("广州");
-        options2Items_01.add("佛山");
-        options2Items_01.add("东莞");
-        options2Items_01.add("阳江");
-        options2Items_01.add("珠海");
-        ArrayList<String> options2Items_02=new ArrayList<String>();
-        options2Items_02.add("长沙");
-        options2Items_02.add("岳阳");
-        ArrayList<String> options2Items_03=new ArrayList<String>();
-        options2Items_03.add("桂林");
-        options2Items.add(options2Items_01);
-        options2Items.add(options2Items_02);
-        options2Items.add(options2Items_03);*/
-
-
-        //二级联动
-
-        pvOptions.setPicker(options1Items, options2Items,  true);
-        //设置选择的三级单位
-//        pwOptions.setLabels("省", "市", "区");
-        pvOptions.setTitle("选择城市");
+        }
         pvOptions.setCyclic(false, false, true);
-        //设置默认选中的三级项目
+
+
         //监听确定选择按钮
-        pvOptions.setSelectOptions(1, 1, 1);
+
         pvOptions.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
 
             @Override
             public void onOptionsSelect(int options1, int option2, int options3) {
                 //返回的分别是三个级别的选中位置
-               /* String tx = options1Items.get(options1).getPickerViewText()
-                        + options2Items.get(options1).get(option2)
-                        + options3Items.get(options1).get(option2).get(options3);*/
-                //返回的分别是两个级别的选中位置
-                String tx = options1Items.get(options1)
-                        + options2Items.get(options1).get(option2);
-                Province=options1Items.get(options1);
-                City=options2Items.get(options1).get(option2);
-                addressText.setText(tx);
+                if (tage==1){
+                    String addressSelectString = options1Items.get(options1)
+                            + options2Items.get(options1).get(option2);
+                    if (!TextUtils.isEmpty(addressSelectString)){
+                        workAddressText.setText(addressSelectString);
+                        workAddressTextString=addressSelectString;
+                        province=options1Items.get(options1);
+                        city=options2Items.get(options1).get(option2);
+                        addressOptions01=options1;
+                        addressOptions02=option2;
+                    }
+
+
+                }else if (tage==2){
+                    if (!TextUtils.isEmpty(compensationList1.get(options1))){
+                        workTimeText.setText(compensationList1.get(options1)+"年"+compensationList2.get(options1).get(option2)+"月");
+                        workTimeTextString=compensationList1.get(options1);
+                        dateOfManufacture=compensationList1.get(options1);
+                        dateMonthOfManufacture=compensationList2.get(options1).get(option2);
+                        timeOptions=options1;
+                        timeOptions1=option2;
+                    }
+
+                }else {
+                    String addressSelectString = facilly1Items.get(options1)
+                            + facilly2Items.get(options1).get(option2);
+                    if (!TextUtils.isEmpty(addressSelectString)){
+                        facillyText.setText(addressSelectString);
+                        facillyTextString=addressSelectString;
+                        manufacture=facilly1Items.get(options1);
+                        model=facilly2Items.get(options1).get(option2);
+                        facillyOptions01=options1;
+                        facillyOptions02=option2;
+                    }
+
+
+
+                }
                 vMasker.setVisibility(View.GONE);
             }
         });
-        //点击弹出选项选择器
-        addressText.setOnClickListener(new View.OnClickListener() {
+
+        pvOptions.show();
+
+    }
+
+    private void initFacilly() {
+        facilly1Items = new ArrayList<String>();
+        facilly2Items = new ArrayList<ArrayList<String>>();
+        //设备厂商
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+        requestParams.addBodyParameter("DeviceJsonType","2");
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getFacillyData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                Log.e("设备厂商",responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    AppListDataBean<FacillyDataBean> appListDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<FacillyDataBean>>(){});
+                    if (appListDataBean.getResult().equals("success")){
+                        ArrayList<FacillyDataBean> facillyDataBeen= (ArrayList<FacillyDataBean>) appListDataBean.getData();
+                        //facilluyFirstList.addAll(facillyDataBeen);
+                        if (facillyDataBeen.size()!=0){
+                            for (int i = 0; i <facillyDataBeen.size() ; i++) {
+                                facilly1Items.add(facillyDataBeen.get(i).getText());
+                            }
+                            for (int i = 0; i <facillyDataBeen.size() ; i++) {
+                                ArrayList<FacillyChildsBean> facillyChildsData= (ArrayList<FacillyChildsBean>) facillyDataBeen.get(i).getChilds();
+                                ArrayList<String> arrayList=new ArrayList<>();
+                                for (int j = 0; j <facillyChildsData.size() ; j++) {
+                                    arrayList.add(facillyChildsData.get(j).getText());
+                                }
+                                facilly2Items.add(arrayList);
+                            }
+                        }
+
+
+                    }
+
+
+
+                }
+
+
+
+            }
 
             @Override
-            public void onClick(View v) {
-                pvOptions.show();
+            public void onFailure(HttpException e, String s) {
+
             }
         });
     }

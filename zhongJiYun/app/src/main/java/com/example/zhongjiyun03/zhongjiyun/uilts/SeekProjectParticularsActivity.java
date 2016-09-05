@@ -692,9 +692,9 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                                 new TypeReference<AppDataBean>() {
                         });
                         if (appDataBean.getResult().equals("success")) {
-                            mSVProgressHUD.showSuccessWithStatus("您已取消关注！");
+                            mSVProgressHUD.showSuccessWithStatus("取消成功");
                         } else {
-                            mSVProgressHUD.showErrorWithStatus("噢噢,取消关注失败");
+                            mSVProgressHUD.showErrorWithStatus("关注失败");
                         }
                     }
                 }
@@ -722,10 +722,10 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                         AppDataBean appDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppDataBean>() {
                         });
                         if (appDataBean.getResult().equals("success")) {
-                            mSVProgressHUD.showSuccessWithStatus("关注成功！");
+                            mSVProgressHUD.showSuccessWithStatus("关注成功");
 
                         } else {
-                            mSVProgressHUD.showErrorWithStatus("噢噢,关注失败");
+                            mSVProgressHUD.showErrorWithStatus("关注失败");
                         }
                     }
 

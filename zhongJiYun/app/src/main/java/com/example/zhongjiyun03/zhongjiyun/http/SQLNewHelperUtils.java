@@ -140,6 +140,38 @@ public class SQLNewHelperUtils {
     }
 
     /**
+     * 功能：查询用户手机号id
+     * @param context
+     * @return
+     */
+    public  static String  queryPhoneID(Context context){
+        SQLNewHelper SQLNewHelper=new SQLNewHelper(context);
+        SQLiteDatabase db= SQLNewHelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLNewHelper.phoneNewTableName, null, null, null, null, null, null);
+        String phoneId=null;  //手机号码
+        while (cursor.moveToNext()) {
+            phoneId= cursor.getString(0);
+        }
+        return phoneId;
+    }
+
+    /**
+     * 功能：查询用户手机号
+     * @param context
+     * @return
+     */
+    public  static String  queryPhone(Context context){
+        SQLNewHelper SQLNewHelper=new SQLNewHelper(context);
+        SQLiteDatabase db= SQLNewHelper.getWritableDatabase();
+        Cursor cursor=db.query(SQLNewHelper.phoneNewTableName, null, null, null, null, null, null);
+        String phoneId=null;  //手机号码
+        while (cursor.moveToNext()) {
+            phoneId= cursor.getString(1);
+        }
+        return phoneId;
+    }
+
+    /**
      * 功能：查询是否刷新项目详情
      * @param context
      * @return
@@ -170,6 +202,22 @@ public class SQLNewHelperUtils {
         }
         return projectCommentId;
     }
+
+    /**
+     * 功能：修改用户手机号
+     * @param context
+     * @param id
+     * @param phone
+     */
+    public static void updatePhone(Context context,String id,String phone){
+        SQLNewHelper SQLNewHelper= new SQLNewHelper(context);
+        SQLiteDatabase db = SQLNewHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SQLNewHelper.PHONECOMMENT, phone);
+        db.update(SQLNewHelper.phoneNewTableName, contentValues,
+                "PhoneNewID=?", new String[]{id});
+    }
+
     /**
      * 功能：修改是否刷新项目详情
      * @param context
@@ -242,6 +290,24 @@ public class SQLNewHelperUtils {
         db.update(SQLNewHelper.giftBagTableName, contentValues,
                 "giftBagNewID=?", new String[]{id});
     }
+
+
+    /**
+     * 插入用户手机号
+     * @param context
+     * @param phoneId
+     * @param phone
+     */
+    public static void insertPhone(Context context,String phoneId,String phone){
+        SQLNewHelper SQLNewHelper= new SQLNewHelper(context);
+        SQLiteDatabase db=SQLNewHelper.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(SQLNewHelper.PHONENEWID,phoneId);
+        values.put(SQLNewHelper.PHONECOMMENT,phone);
+        db.insert(SQLNewHelper.phoneNewTableName, SQLNewHelper.PHONENEWID, values);
+        db.close();
+    }
+
 
     /**
      * 插入评价数据

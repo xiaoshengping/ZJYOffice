@@ -38,6 +38,7 @@ import com.example.zhongjiyun03.zhongjiyun.bean.ModifatyHeadImage;
 import com.example.zhongjiyun03.zhongjiyun.bean.main.PersonageInformationBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.ClippingPageActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.selectPicture.activity.SelectImagesFromLocalActivity;
@@ -216,15 +217,6 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
                                     typeText.setText("企业");
 
                                 }
-                                /*if (!TextUtils.isEmpty(personageInformation.getIdCardImage1())){
-                                    MyAppliction.imageLoader.displayImage(personageInformation.getIdCardImage1(),idcardFrontIamge,MyAppliction.options);
-                                }
-                                if (!TextUtils.isEmpty(personageInformation.getIdCardImage2())){
-                                    MyAppliction.imageLoader.displayImage(personageInformation.getIdCardImage2(),idcardVersoIamge,MyAppliction.options);
-                                }
-                                if (!TextUtils.isEmpty(personageInformation.getPhoto())){
-                                    MyAppliction.imageLoader.displayImage(personageInformation.getPhoto(),personageImage,MyAppliction.options);
-                                }*/
                                 mSVProgressHUD.dismiss();
 
                             }
@@ -578,7 +570,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
             public void onClick(View v) {
                 Intent intent=new Intent(PersonageInformationActivity.this,LoginActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                SQLHelperUtils.deleteUid(PersonageInformationActivity.this);
                 dlg.cancel();
             }
         });
@@ -588,6 +580,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
         cancel.setText("暂不去");
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                finish();
                 dlg.cancel();
             }
         });

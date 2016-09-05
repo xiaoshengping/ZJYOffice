@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -332,12 +331,11 @@ public class RewardBuyAddActivity extends AppCompatActivity implements View.OnCl
             }
             pvOptions.setPicker(workTimeList);
             pvOptions.setSelectOptions(typeOptions);
-            Log.e("gqi",typeOptions+"");
         }else {
             pvOptions.setTitle("选择设备型号");
             pvOptions.setPicker(facilly1Items, facilly2Items,true);
             //设置默认选中的三级项目
-            pvOptions.setSelectOptions(facillyOptions01, facillyOptions01);
+            pvOptions.setSelectOptions(facillyOptions01, facillyOptions02);
         }
         pvOptions.setCyclic(false, false, true);
 

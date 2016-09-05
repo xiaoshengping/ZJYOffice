@@ -168,7 +168,7 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionProjectListData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("关注项目",responseInfo.result);
+                    //Log.e("关注项目",responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)){
                         AppBean<AttentionProjectDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AttentionProjectDataBean>>(){});
                         if ((appBean.getResult()).equals("success")){
@@ -309,7 +309,6 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
             String sesstionId = read.getString("code","");
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
             requestParams.addBodyParameter("Id",uid);
-            Log.e("collectId",position+"");
             requestParams.addBodyParameter("collectId",attentionProjectBeens.get(position).getId());
             requestParams.addBodyParameter("collectType","1");
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAttentionNoData(),requestParams, new RequestCallBack<String>() {
@@ -318,11 +317,11 @@ public class AttentionProjectActivity extends AppCompatActivity implements View.
                     if (!TextUtils.isEmpty(responseInfo.result)){
                         AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                         if (appDataBean.getResult().equals("success")){
-                            mSVProgressHUD.showSuccessWithStatus("删除项目成功");
+                            mSVProgressHUD.showSuccessWithStatus("取消成功");
                             attentionProjectListview.setRefreshing();
                             homeProjectlsitAdapter.notifyDataSetChanged();
                         }else {
-                            mSVProgressHUD.showErrorWithStatus("删除项目失败");
+                            mSVProgressHUD.showErrorWithStatus("取消失败");
                         }
                     }
 

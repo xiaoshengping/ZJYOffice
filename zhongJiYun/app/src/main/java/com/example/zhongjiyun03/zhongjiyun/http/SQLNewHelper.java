@@ -21,6 +21,10 @@ public class SQLNewHelper extends SQLiteOpenHelper{
 	public static final String projectCommentTableName="projectCommentNew";
 	public static final String PROJECTCOMMENTID="projectCommentNewID";
 	public static final String PROJECTCOMMENT="projectComment";
+	public static final String phoneNewTableName="PhoneNew";
+	public static final String PHONENEWID="PhoneNewID";
+	public static final String PHONECOMMENT="phoneComment";
+
 
 	private static final int VERSION=1;
 
@@ -37,6 +41,7 @@ public class SQLNewHelper extends SQLiteOpenHelper{
 		db.execSQL("create table if not exists giftBagNew(giftBagNewID varchar pr imary key,giftBag varchar)");
 		db.execSQL("create table if not exists projectReplyNew(projectReplyNewID varchar pr imary key,projectReply varchar)");
 		db.execSQL("create table if not exists projectCommentNew(projectCommentNewID varchar pr imary key,projectComment varchar)");
+		db.execSQL("create table if not exists PhoneNew(PhoneNewID varchar pr imary key,phoneComment varchar)");
 	}
 
 	@Override
@@ -46,6 +51,7 @@ public class SQLNewHelper extends SQLiteOpenHelper{
 		db.execSQL("drop table if exists"+giftBagTableName);
 		db.execSQL("drop table if exists"+projectReplyTableName);
 		db.execSQL("drop table if exists"+projectCommentTableName);
+		db.execSQL("drop table if exists"+phoneNewTableName);
 		onCreate(db);
 	}
 

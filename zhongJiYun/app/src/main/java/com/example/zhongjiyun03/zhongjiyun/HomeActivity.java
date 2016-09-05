@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -19,15 +17,12 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +39,7 @@ import com.example.zhongjiyun03.zhongjiyun.fragment.SeekProjectFragment;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.Base64;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.service.UpdateService;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -71,16 +66,6 @@ public class HomeActivity extends AppCompatActivity {
     @ViewInject(R.id.home_rg)
     private RadioGroup homeRG;
     private long mExitTime;
-    public Boolean isInitTage = true;
-    @ViewInject(R.id.progress_bar)
-    private ProgressBar progressBar;
-    @ViewInject(R.id.loding_layout)
-    private LinearLayout loodingLayout;
-    @ViewInject(R.id.progress_bar_text)
-    private TextView progressBarText;
-    private static final int MSG_PROGRESS_UPDATE = 0x110;
-    private TextView tailteTv;
-    private boolean isCommitData=true;//是否提交用户信息
     public static final String appName = "中基云机主端";
 
 
@@ -132,14 +117,14 @@ public class HomeActivity extends AppCompatActivity {
 
         if (isNetworkAvailable(HomeActivity.this)) {
             getVersontData();//版本更新
-            if (isCommitData) {
+            /*if (isCommitData) {
                 if (!TextUtils.isEmpty(JPushInterface.getRegistrationID(HomeActivity.this))){
                     //Log.e("极光id",JPushInterface.getRegistrationID(HomeActivity.this));
                     initRegistration();//提交用户信息
                 }
 
 
-            }
+            }*/
             try {
                 userLoginData();
             } catch (Exception e) {
@@ -156,19 +141,12 @@ public class HomeActivity extends AppCompatActivity {
     }
         //防止sesstion丢失登录
     private void userLoginData() throws Exception {
-        SQLhelper sqLhelper=new SQLhelper(HomeActivity.this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String PhoneNumber=null;  //用户id
-        while (cursor.moveToNext()) {
-            PhoneNumber=cursor.getString(1);
 
-        }
-        if (!TextUtils.isEmpty(PhoneNumber)){
+        if (!TextUtils.isEmpty(SQLNewHelperUtils.queryPhone(HomeActivity.this))){
         String Password = "zjy888888";
         // 从文件中得到公钥
         String key="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDqi/nzVA6vTRoCgzH1zN9KsFz8ph3T4RHzfEPHnpsa2VF1FyhOg34HYiwors5bM87uFvyNAoFOHFt6JdtE8mICBI/PAxBFPy+wP6uUEjZz58MjJwGhTK3t4IP+gbq6sU0I10USFga6UswKWgMCDhfe91FWyXmhTccZcREMKiedIwIDAQAB";
-        String phoneNumber = encryptByPublic(PhoneNumber,key);
+        String phoneNumber = encryptByPublic(SQLNewHelperUtils.queryPhone(HomeActivity.this),key);
         String password = encryptByPublic(Password,key);
            // Log.e("phoneNumber",phoneNumber);
            // Log.e("password",password);
@@ -291,7 +269,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         return false;
     }
-    //提交用户信息
+    /*//提交用户信息
     private void initRegistration() {
         //Log.e("提交用户信息","提交用户信息");
         HttpUtils httpUtils=new HttpUtils();
@@ -326,7 +304,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-    }
+    }*/
     private void getVersontData() {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
@@ -342,7 +320,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-             Log.e("获取本版信息",responseInfo.result);
+             //Log.e("获取本版信息",responseInfo.result);
                if (!TextUtils.isEmpty(responseInfo.result)){
                    AppBean<VersontDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<VersontDataBean>>(){});
                    if (appBean!=null){
