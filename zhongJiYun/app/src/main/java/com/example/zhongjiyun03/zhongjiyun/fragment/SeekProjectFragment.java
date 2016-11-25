@@ -352,7 +352,7 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent dynamicIntetn=new Intent(getActivity(),NewsListParticularsActivity.class);
-                dynamicIntetn.putExtra("newDataId",newsDataBeens.get(position).getId());
+                dynamicIntetn.putExtra("newDataId",newsDataBeens.get(position-1).getId());
                 startActivity(dynamicIntetn);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
@@ -397,7 +397,7 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent dynamicIntetn=new Intent(getActivity(),NewsListParticularsActivity.class);
-                dynamicIntetn.putExtra("newDataId",andustryNewsDataBeen.get(position).getId());
+                dynamicIntetn.putExtra("newDataId",andustryNewsDataBeen.get(position-1).getId());
                 startActivity(dynamicIntetn);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
@@ -441,7 +441,7 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent dynamicIntetn=new Intent(getActivity(),NewsListParticularsActivity.class);
-                dynamicIntetn.putExtra("newDataId",enterpriseNewsDataBeen.get(position).getId());
+                dynamicIntetn.putExtra("newDataId",enterpriseNewsDataBeen.get(position-1).getId());
                 startActivity(dynamicIntetn);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }
@@ -485,7 +485,7 @@ public class SeekProjectFragment extends Fragment implements View.OnClickListene
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent dynamicIntetn=new Intent(getActivity(),NewsListParticularsActivity.class);
-                dynamicIntetn.putExtra("newDataId",bidsNewsDataBeen.get(position).getId());
+                dynamicIntetn.putExtra("newDataId",bidsNewsDataBeen.get(position-1).getId());
                 startActivity(dynamicIntetn);
                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
             }

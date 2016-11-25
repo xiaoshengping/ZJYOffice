@@ -79,7 +79,7 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter implements ViewPage
             holder = (ViewHolder) view.getTag();
         }
         holder.imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        bitmapUtils.display(holder.imageView, iamgeUrls.get(getPosition(position)).getImg());
+        bitmapUtils.display(holder.imageView, iamgeUrls.get(getPosition(position)).getImageUrl());
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,23 +95,23 @@ public class ImagePagerAdapter extends RecyclingPagerAdapter implements ViewPage
 
                     }
                     //Log.e("iamgeUrls.get(position).getLinkType()",iamgeUrls.get(position).getLinkType()+"");
-                        if (iamgeUrls.get(getPosition(position)).getLinkType()==2){
+                        if ((iamgeUrls.get(getPosition(position)).getLinkType()).equals("2")){
 
                             if (!TextUtils.isEmpty(uid)){
                                 Intent intent=new Intent(context, AdvertisementParticulsrsActivity.class);
                                 String imageString =AppUtilsUrl.BaseUrl+"store/mobile/selfreg.php?asp_user_id="+uid+"&redir=";
                                 intent.putExtra("url",imageString+iamgeUrls.get(getPosition(position)).getUrl());
-                                intent.putExtra("name",iamgeUrls.get(getPosition(position)).getName());
+                                intent.putExtra("name",iamgeUrls.get(getPosition(position)).getTitle());
                                 context.startActivity(intent);
                             }else {
                                 Intent loginIntent=new Intent(context, LoginActivity.class);
                                 context.startActivity(loginIntent);
                             }
 
-                        }else if (iamgeUrls.get(getPosition(position)).getLinkType()==1){
+                        }else if ((iamgeUrls.get(getPosition(position)).getLinkType()).equals("1")){
                             Intent intent1=new Intent(context, AdvertisementParticulsrsActivity.class);
                             intent1.putExtra("url",iamgeUrls.get(getPosition(position)).getUrl());
-                            intent1.putExtra("name",iamgeUrls.get(getPosition(position)).getName());
+                            intent1.putExtra("name",iamgeUrls.get(getPosition(position)).getTitle());
                             context.startActivity(intent1);
                         }
 

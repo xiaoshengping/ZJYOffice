@@ -3,7 +3,6 @@ package com.example.zhongjiyun03.zhongjiyun.uilts;
 import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Rect;
 import android.os.Build;
@@ -28,7 +27,7 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
+import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -115,7 +114,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
     @Override
     protected void onResume() {
         super.onResume();
-         phone= SQLNewHelperUtils.queryPhone(ModificationPhoneActivity.this);
+         phone= SQLHelperUtils.queryPhone(ModificationPhoneActivity.this);
         if (!TextUtils.isEmpty(phone)){
             StringBuffer stringBuffer=new StringBuffer(phone);
             stringBuffer.replace(3,7,"****");
@@ -161,11 +160,9 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
 
 
         if (!TextUtils.isEmpty(editFormmerPhone.getText().toString())){
-            if (phone.equals(editFormmerPhone.getText().toString())){
+            if ((MyAppliction.getPhone()).equals(editFormmerPhone.getText().toString())){
         if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())) {
             if (phoneNewEdit.getText().toString().length()==11){
-              if (isMobileNO(phoneNewEdit.getText().toString())){
-
 
               if (!(phoneNewEdit.getText().toString()).equals(phone)){
 
@@ -201,10 +198,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                 }
             });
               }else {
-                  MyAppliction.showToast("请输入新的手机号码");
-              }
-              }else {
-                  MyAppliction.showToast("请输入正确的新手机号码");
+                  MyAppliction.showToast("新手机号码与旧号码不能相同");
               }
             }else {
                 MyAppliction.showToast("请输入长度为11位的手机号码");
@@ -226,12 +220,6 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
          }
 
     }
-    public static boolean isMobileNO(String mobiles) {
-        String telRegex = "13\\d{9}|14[57]\\d{8}|15[012356789]\\d{8}|18[01256789]\\d{8}|17[0678]\\d{8}";
-        if (TextUtils.isEmpty(mobiles)) return false;
-        else return mobiles.matches(telRegex);
-    }
-
     class TimeCount extends CountDownTimer {
         public TimeCount(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);//参数依次为总时长,和计时的时间间隔
@@ -252,16 +240,8 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
     }
     private void saveData() {
 
-        SQLhelper sqLhelper=new SQLhelper(this);
-        SQLiteDatabase db= sqLhelper.getWritableDatabase();
-        Cursor cursor=db.query(SQLhelper.tableName, null, null, null, null, null, null);
-        String uid=null;  //用户id
 
-        while (cursor.moveToNext()) {
-            uid=cursor.getString(0);
-
-        }
-        if (!phone.equals(phoneNewEdit.getText().toString())){
+        if (!(MyAppliction.getPhone()).equals(phoneNewEdit.getText().toString())){
 
 
         if (!TextUtils.isEmpty(phoneNewEdit.getText().toString())){
@@ -269,8 +249,8 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                 if (!TextUtils.isEmpty(editCode.getText().toString())){
                     HttpUtils httpUtils=new HttpUtils();
                     RequestParams requestParams=new RequestParams();
-                    if (!TextUtils.isEmpty(uid)){
-                        requestParams.addBodyParameter("id",uid);
+                    if (!TextUtils.isEmpty(SQLHelperUtils.queryId(ModificationPhoneActivity.this))){
+                        requestParams.addBodyParameter("id",SQLHelperUtils.queryId(ModificationPhoneActivity.this));
                     }
                     //步骤1：创建一个SharedPreferences接口对象
                     SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
@@ -281,7 +261,7 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                     requestParams.addBodyParameter("SmsCode",editCode.getText().toString());
                     requestParams.addBodyParameter("oldPhoneNumber",editFormmerPhone.getText().toString());
                     mSVProgressHUD.showWithStatus("提交中...");
-                    final String finalUid = uid;
+
                     httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getModifyPhoneData(),requestParams, new RequestCallBack<String>() {
                         @Override
                         public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -289,15 +269,10 @@ public class ModificationPhoneActivity extends AppCompatActivity  implements Vie
                             if (!TextUtils.isEmpty(responseInfo.result)){
                                 AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                                 if (appDataBean.getResult().equals("success")){
-                                    update(finalUid,phoneNewEdit.getText().toString());
+                                    update(SQLHelperUtils.queryId(ModificationPhoneActivity.this),phoneNewEdit.getText().toString());
                                     mSVProgressHUD.dismiss();
                                     mSVProgressHUD.showSuccessWithStatus("恭喜，修改成功！");
-                                    if (!TextUtils.isEmpty(SQLNewHelperUtils.queryPhone(ModificationPhoneActivity.this))){
-                                        SQLNewHelperUtils.updatePhone(ModificationPhoneActivity.this,SQLNewHelperUtils.queryProjectId(ModificationPhoneActivity.this),phoneNewEdit.getText().toString());
-                                    }else {
-                                        SQLNewHelperUtils.insertPhone(ModificationPhoneActivity.this,SQLNewHelperUtils.queryPhoneID(ModificationPhoneActivity.this),phoneNewEdit.getText().toString());
-
-                                    }
+                                    MyAppliction.setPhone(phoneNewEdit.getText().toString());
                                     finish();
                                 }else {
                                     mSVProgressHUD.dismiss();

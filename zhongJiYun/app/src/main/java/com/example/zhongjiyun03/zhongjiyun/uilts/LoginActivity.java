@@ -35,7 +35,6 @@ import com.example.zhongjiyun03.zhongjiyun.bean.main.LoginDataBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.MyCookieStore;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -76,6 +75,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @ViewInject(R.id.code_button)
     private Button codeButton;  //获取验证码按钮
     public static String PHPSESSID = null;
+    @ViewInject(R.id.register_text)
+    private TextView registerText;  //注册
     @Override
     protected void onResume() {
         super.onResume();
@@ -127,7 +128,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         time = new TimeCount(60000, 1000);//构造CountDownTimer对象
         mSVProgressHUD = new SVProgressHUD(this);
         retrunText.setOnClickListener(this);
-        registerTv.setOnClickListener(this);
+        registerText.setOnClickListener(this);
+        registerTv.setVisibility(View.GONE);
         loginButton.setOnClickListener(this);
         codeButton.setOnClickListener(this);
         //Log.e("极光id",JPushInterface.getRegistrationID(LoginActivity.this));
@@ -143,7 +145,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 finish();
                 overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
                 break;
-            case R.id.register_tv:
+            case R.id.register_text:
                 Intent intent=new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -226,13 +228,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             loginDataBean.getHeadthumb(), loginDataBean.getRole());
 
                                     MyAppliction.setProjectRefresh("2");
-                                    if (!TextUtils.isEmpty(SQLNewHelperUtils.queryPhone(LoginActivity.this))){
-                                        SQLNewHelperUtils.updatePhone(LoginActivity.this,SQLNewHelperUtils.queryProjectId(LoginActivity.this),phoneEdit.getText().toString());
-                                         //Log.e("修改",SQLNewHelperUtils.queryPhone(LoginActivity.this));
-                                    }else {
-                                        SQLNewHelperUtils.insertPhone(LoginActivity.this,SQLNewHelperUtils.queryPhoneID(LoginActivity.this),phoneEdit.getText().toString());
-
-                                    }
+                                    MyAppliction.setPhone(phoneEdit.getText().toString());
                                     
                                     mSVProgressHUD.dismiss();
                                     mSVProgressHUD.showSuccessWithStatus("恭喜，提交成功！");

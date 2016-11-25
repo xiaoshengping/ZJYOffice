@@ -78,10 +78,10 @@ public class ReleaseJobListAdapter extends AppBaseAdapter<ReleaseJobListBean> {
             if (!TextUtils.isEmpty(data.get(position).getCount())){
                 if (Integer.valueOf(data.get(position).getCount())>0){
                     viewHold.deliverNumberText.setText(data.get(position).getCount());
-                    viewHold.deliverNumberText.setVisibility(View.VISIBLE);
+                    viewHold.deliverNumberText.setTextColor(context.getResources().getColor(R.color.red_light));
                 }else {
-                    viewHold.deliverNumberText.setVisibility(View.GONE);
-                    viewHold.deliverText.setText("0 投递");
+                    viewHold.deliverNumberText.setText("0");
+                    viewHold.deliverNumberText.setTextColor(context.getResources().getColor(R.color.color_888888));
                 }
 
             }

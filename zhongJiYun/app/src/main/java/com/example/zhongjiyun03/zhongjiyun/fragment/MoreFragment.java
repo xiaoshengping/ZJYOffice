@@ -11,11 +11,7 @@ import android.widget.AdapterView;
 
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.MoreGridAdapter;
-import com.example.zhongjiyun03.zhongjiyun.uilts.CooperationActivity;
-import com.example.zhongjiyun03.zhongjiyun.uilts.MoreConersionActivity;
-import com.example.zhongjiyun03.zhongjiyun.uilts.MoreDuoBaoActivity;
-import com.example.zhongjiyun03.zhongjiyun.uilts.MoreEasyBuyActivity;
-import com.example.zhongjiyun03.zhongjiyun.uilts.MoreHotActivity;
+import com.example.zhongjiyun03.zhongjiyun.uilts.HomeTribeActivity;
 import com.example.zhongjiyun03.zhongjiyun.view.MyGridView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -87,26 +83,31 @@ public class MoreFragment extends Fragment {
 
                         switch (index){
                             case 1:
-                                Intent projectIntent=new Intent(getActivity(),MoreHotActivity.class);
+                                Intent projectIntent=new Intent(getActivity(),HomeTribeActivity.class);
+                                projectIntent.putExtra("type","mainproject");
                                 startActivity(projectIntent);
                                 break;
 
                             case 2:
-                                Intent tribeIntent=new Intent(getActivity(), MoreEasyBuyActivity.class);
+                                Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class);
                                 tribeIntent.putExtra("tage","2");
+                                tribeIntent.putExtra("type","MoreEasyBuy");
                                 startActivity(tribeIntent);
 
                                 break;
                             case 3:
-                                Intent blacklistIntent=new Intent(getActivity(), MoreDuoBaoActivity.class);
+                                Intent blacklistIntent=new Intent(getActivity(), HomeTribeActivity.class);
+                                blacklistIntent.putExtra("type","MoreDuoBao");
                                 startActivity(blacklistIntent);
                                 break;
                             case 4:
-                                Intent newsIntent=new Intent(getActivity(), MoreConersionActivity.class)  ;
+                                Intent newsIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
+                                newsIntent.putExtra("type","MoreConersion");
                                 startActivity(newsIntent);
                                 break;
                             case 5:
-                                Intent partnerIntent=new Intent(getActivity(), CooperationActivity.class)  ;
+                                Intent partnerIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
+                                partnerIntent.putExtra("type","Cooperation");
                                 startActivity(partnerIntent);
                                 break;
 

@@ -16,6 +16,7 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -278,6 +279,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 submitCompanyData();
+                InputMethodManager imm = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
             }
         });
@@ -389,7 +393,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 submitPersonageData();
-                //intiPhontData();
+                InputMethodManager imm = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
 
             }
@@ -471,12 +477,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);//action is capture
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(intent,captureIndext );//or TAKE_SMALL_PICTURE
-               // 调用系统的拍照功能
-                /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                   // 指定调用相机拍照后照片的储存路径
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(tempFile));
-                startActivityForResult(intent, PHOTO_REQUEST_TAKEPHOTO);*/
 
                 dialog.dismiss();
 
@@ -487,21 +487,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(View v) {
                 Intent sintent = new Intent(RegisterActivity.this, SelectImagesFromLocalActivity.class);
                 startActivityForResult(sintent,pickIndext );
-                /*try {
-                    //选择照片的时候也一样，我们用Action为Intent.ACTION_GET_CONTENT，
-                    //有些人使用其他的Action但我发现在有些机子中会出问题，所以优先选择这个
-                    Intent intent = new Intent();
-                    intent.setType("image*//*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(intent, 32);
-                } catch (ActivityNotFoundException e) {
-
-                }*/
-                /*Intent intent = new Intent(Intent.ACTION_PICK, null);
-                intent.setDataAndType(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        "image*//*");
-                startActivityForResult(intent, PHOTO_REQUEST_GALLERY);*/
                 dialog.dismiss();
 
 
@@ -601,7 +586,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                  if (bitmaps!=null){
                      idCardImage.setImageBitmap(bitmaps);
                  }
-
                 String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                 File file2=  getFile(biss,Environment.getExternalStorageDirectory()+"/zhongJiYun",name);
                 if (!TextUtils.isEmpty(file2.getPath())){
@@ -613,8 +597,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Intent persongeTakIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
                 persongeTakIntent.putExtra("type", "takePicture");
                 startActivityForResult(persongeTakIntent, ConstantSet.CROPPICTURE1);
-
-
 
                 break;
 
@@ -866,7 +848,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                                     AppBean<RegisterBean> appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RegisterBean>>(){});
                                                                     if ((appDataBean.getResult()).equals("success")){
                                                                         RegisterBean registerBean=   appDataBean.getData();
-                                                                          Log.e("id",registerBean.getId());
                                                                        if (companyListPath!=null&&companyListPath.size()==5){
                                                                             if (!TextUtils.isEmpty(registerBean.getId())){
 
@@ -1269,93 +1250,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         //选项选择器
         pvOptions = new OptionsPickerView(RegisterActivity.this);
-
-
-
-        /*//选项1
-        options1Items.add(new ProvinceBean(0,"广东"));
-        options1Items.add(new ProvinceBean(1,"湖南"));
-        options1Items.add(new ProvinceBean(3,"广西"));
-
-        //选项2
-        ArrayList<String> options2Items_01=new ArrayList<String>();
-        options2Items_01.add("广州");
-        options2Items_01.add("佛山");
-        options2Items_01.add("东莞");
-        options2Items_01.add("阳江");
-        options2Items_01.add("珠海");
-        ArrayList<String> options2Items_02=new ArrayList<String>();
-        options2Items_02.add("长沙");
-        options2Items_02.add("岳阳");
-        ArrayList<String> options2Items_03=new ArrayList<String>();
-        options2Items_03.add("桂林");
-        options2Items.add(options2Items_01);
-        options2Items.add(options2Items_02);
-        options2Items.add(options2Items_03);
-
-        //选项3
-        ArrayList<ArrayList<String>> options3Items_01 = new ArrayList<ArrayList<String>>();
-        ArrayList<ArrayList<String>> options3Items_02 = new ArrayList<ArrayList<String>>();
-        ArrayList<ArrayList<String>> options3Items_03 = new ArrayList<ArrayList<String>>();
-        ArrayList<String> options3Items_01_01=new ArrayList<String>();
-        options3Items_01_01.add("白云");
-        options3Items_01_01.add("天河");
-        options3Items_01_01.add("海珠");
-        options3Items_01_01.add("越秀");
-        options3Items_01.add(options3Items_01_01);
-        ArrayList<String> options3Items_01_02=new ArrayList<String>();
-        options3Items_01_02.add("南海");
-        options3Items_01_02.add("高明");
-        options3Items_01_02.add("顺德");
-        options3Items_01_02.add("禅城");
-        options3Items_01.add(options3Items_01_02);
-        ArrayList<String> options3Items_01_03=new ArrayList<String>();
-        options3Items_01_03.add("其他");
-        options3Items_01_03.add("常平");
-        options3Items_01_03.add("虎门");
-        options3Items_01.add(options3Items_01_03);
-        ArrayList<String> options3Items_01_04=new ArrayList<String>();
-        options3Items_01_04.add("其他1");
-        options3Items_01_04.add("其他2");
-        options3Items_01_04.add("其他3");
-        options3Items_01.add(options3Items_01_04);
-        ArrayList<String> options3Items_01_05=new ArrayList<String>();
-        options3Items_01_05.add("其他1");
-        options3Items_01_05.add("其他2");
-        options3Items_01_05.add("其他3");
-        options3Items_01.add(options3Items_01_05);
-
-        ArrayList<String> options3Items_02_01=new ArrayList<String>();
-        options3Items_02_01.add("长沙长沙长沙长沙长沙长沙长沙长沙长沙1111111111");
-        options3Items_02_01.add("长沙2");
-        options3Items_02_01.add("长沙3");
-        options3Items_02_01.add("长沙4");
-        options3Items_02_01.add("长沙5");
-        options3Items_02_01.add("长沙6");
-        options3Items_02_01.add("长沙7");
-        options3Items_02_01.add("长沙8");
-        options3Items_02.add(options3Items_02_01);
-        ArrayList<String> options3Items_02_02=new ArrayList<String>();
-        options3Items_02_02.add("岳1");
-        options3Items_02_02.add("岳2");
-        options3Items_02_02.add("岳3");
-        options3Items_02_02.add("岳4");
-        options3Items_02_02.add("岳5");
-        options3Items_02_02.add("岳6");
-        options3Items_02_02.add("岳7");
-        options3Items_02_02.add("岳8");
-        options3Items_02_02.add("岳9");
-        options3Items_02.add(options3Items_02_02);
-        ArrayList<String> options3Items_03_01=new ArrayList<String>();
-        options3Items_03_01.add("好山水");
-        options3Items_03.add(options3Items_03_01);
-
-        options3Items.add(options3Items_01);
-        options3Items.add(options3Items_02);
-        options3Items.add(options3Items_03);
-
-        //三级联动效果
-        pvOptions.setPicker(options1Items, options2Items, options3Items, true);*/
         //设置选择的三级单位
 //        pwOptions.setLabels("省", "市", "区");
         pvOptions.setPicker(options1Items, options2Items,true);
@@ -1384,6 +1278,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 pvOptions.show();
+                InputMethodManager imm = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
     }
@@ -1528,6 +1425,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 pvOptionsCompany.show();
+                InputMethodManager imm = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
             }
         });
     }
@@ -1698,48 +1598,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    /*
-      * 软键盘隐藏和显示
-      * */
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (isShouldHideInput(v, ev)) {
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                }
-            }
-            return super.dispatchTouchEvent(ev);
-        }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) {
-            return true;
-        }
-        return onTouchEvent(ev);
-    }
-
-    public  boolean isShouldHideInput(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {
-            int[] leftTop = { 0, 0 };
-            //获取输入框当前的location位置
-            v.getLocationInWindow(leftTop);
-            int left = leftTop[0];
-            int top = leftTop[1];
-            int bottom = top + v.getHeight();
-            int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private void initViewPager() {
         personageRisterView=getLayoutInflater().inflate(R.layout.fragment_personage_risterg, null);
@@ -1842,14 +1701,43 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 // KeyEvent.KEYCODE_BACK代表返回操作.
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            showExitGameAlertUnLonding("确定要退出注册？");
             // 处理返回操作.
-            finish();
             overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
         }
         return true;
     }
 
+    //对话框
+    private void showExitGameAlertUnLonding(String text) {
+        final AlertDialog dlg = new AlertDialog.Builder(RegisterActivity.this).create();
+        dlg.show();
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(text);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("确定");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+               finish();
+                dlg.cancel();
+            }
+        });
 
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("取消");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dlg.cancel();
+
+            }
+        });
+    }
 
 }

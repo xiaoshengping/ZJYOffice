@@ -395,6 +395,8 @@ public class MyRedPacketActivity extends AppCompatActivity implements View.OnCli
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dlg.cancel();
+                finish();
+                SQLHelperUtils.deleteUid(MyRedPacketActivity.this);
             }
         });
     }

@@ -558,26 +558,26 @@
 
         <service android:name=".service.UpdateService" />
 
-        <activity android:name=".uilts.HomeRewardActivity" />
-        <activity android:name=".uilts.HomeGameActivity" />
-        <activity android:name=".uilts.HomeDiscuntCouponActivity" />
-        <activity android:name=".uilts.ReleaseJobActivity" />
-        <activity android:name=".uilts.QuestionnaireListActivity" />
-        <activity android:name=".uilts.QuestionnaireParticularsActivity" />
-        <activity android:name=".uilts.CommentServiceActivity" />
-        <activity android:name=".uilts.MoreHotActivity" />
-        <activity android:name=".uilts.MoreEasyBuyActivity" />
-        <activity android:name=".uilts.MoreDuoBaoActivity" />
-        <activity android:name=".uilts.MoreConersionActivity" />
-        <activity android:name=".uilts.RewardBuyAddActivity" />
-        <activity android:name=".uilts.RewardParticularsActivity" />
-        <activity android:name=".uilts.RewardSellAddActivity" />
-        <activity android:name=".uilts.RawardSellListActivity" />
-        <activity android:name=".uilts.RawardBuyListActivity" />
-        <activity android:name=".uilts.ReleaseJobListActivity" />
-        <activity android:name=".uilts.ResumeListActivity" />
-        <activity android:name=".uilts.RawardBuyListParticularsActivity" />
-        <activity android:name=".uilts.JpushWebViewActivity"></activity>
+        <activity android:screenOrientation="portrait" android:name=".uilts.HomeRewardActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.HomeGameActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.HomeDiscuntCouponActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.ReleaseJobActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.QuestionnaireListActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.QuestionnaireParticularsActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.CommentServiceActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.MoreHotActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.MoreEasyBuyActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.MoreDuoBaoActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.MoreConersionActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.RewardBuyAddActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.RewardParticularsActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.RewardSellAddActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.RawardSellListActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.RawardBuyListActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.ReleaseJobListActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.ResumeListActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.RawardBuyListParticularsActivity" />
+        <activity android:screenOrientation="portrait" android:name=".uilts.JpushWebViewActivity"></activity>
     </application>
 
 </manifest>

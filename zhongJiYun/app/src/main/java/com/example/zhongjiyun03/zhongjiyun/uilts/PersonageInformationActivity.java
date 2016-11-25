@@ -581,6 +581,7 @@ public class PersonageInformationActivity extends AppCompatActivity implements V
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();
+                SQLHelperUtils.deleteUid(PersonageInformationActivity.this);
                 dlg.cancel();
             }
         });

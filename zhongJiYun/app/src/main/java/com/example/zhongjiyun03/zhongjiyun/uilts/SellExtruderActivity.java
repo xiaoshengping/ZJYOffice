@@ -32,6 +32,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -147,6 +148,8 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
     private String contractImageID;//全景照4ID
     private String qualifiedImageID;//全景照5ID
     private  String modifiSell;
+    @ViewInject(R.id.sell_out_scrollView)
+    private ScrollView sellOutScrollView;  //scrollview
 
 
     @Override
@@ -246,6 +249,25 @@ public class SellExtruderActivity extends AppCompatActivity implements View.OnCl
         contractLayout.setOnClickListener(this);
         qualifiedLayout.setOnClickListener(this);
         leaveFactoryLayout.setOnClickListener(this);
+        jzhuMiaosEdit.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
+
+        sellOutScrollView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                jzhuMiaosEdit.getParent().requestDisallowInterceptTouchEvent(false);
+                return false;
+            }
+        });
 
 
     }

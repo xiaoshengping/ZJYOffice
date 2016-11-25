@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -205,7 +206,7 @@ public class ReleaseJobListActivity extends AppCompatActivity implements View.On
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getReleaseJobListData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("我的招聘列表",responseInfo.result);
+                Log.e("我的招聘列表",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<ReleaseJobPagerBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ReleaseJobPagerBean>>(){});
                         if (appBean.getResult().equals("success")){

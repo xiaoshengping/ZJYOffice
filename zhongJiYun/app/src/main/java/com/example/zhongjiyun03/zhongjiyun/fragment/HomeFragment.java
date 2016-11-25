@@ -34,11 +34,12 @@ import com.example.zhongjiyun03.zhongjiyun.adapter.HomeProjectListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.adapter.ImagePagerAdapter;
 import com.example.zhongjiyun03.zhongjiyun.adapter.RecommendMachinistAdapter;
 import com.example.zhongjiyun03.zhongjiyun.baidumap.LocationService;
+import com.example.zhongjiyun03.zhongjiyun.bean.AdvertisementDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.AdvertisementPagerData;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.QuestionnaireBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.SecondHandDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AdvertisementBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.SecondHandBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectDataBean;
@@ -47,10 +48,6 @@ import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.http.SQLhelper;
 import com.example.zhongjiyun03.zhongjiyun.uilts.ExturderParticularsActivity;
-import com.example.zhongjiyun03.zhongjiyun.uilts.HomeBlackListActivity;
-import com.example.zhongjiyun03.zhongjiyun.uilts.HomeDiscuntCouponActivity;
-import com.example.zhongjiyun03.zhongjiyun.uilts.HomeGameActivity;
-import com.example.zhongjiyun03.zhongjiyun.uilts.HomeMarketActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeMoreProjectActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeRewardActivity;
 import com.example.zhongjiyun03.zhongjiyun.uilts.HomeTribeActivity;
@@ -165,15 +162,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                 //Log.e("jhhshhd;",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                    AppBean<QuestionnaireBean> appBean=JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<QuestionnaireBean>>(){});
-                    if (appBean.getResult().equals("success")){
-                       QuestionnaireBean questionnaireBean= appBean.getData();
-                        if (!questionnaireBean.getCount().equals("0")){
-                            questionnaireLayout.setVisibility(View.VISIBLE);
-                        }else {
-                            questionnaireLayout.setVisibility(View.GONE);
+                    if (appBean!=null) {
+                        if (appBean.getResult().equals("success")) {
+                            QuestionnaireBean questionnaireBean = appBean.getData();
+                            if (!questionnaireBean.getCount().equals("0")) {
+                                questionnaireLayout.setVisibility(View.VISIBLE);
+                            } else {
+                                questionnaireLayout.setVisibility(View.GONE);
+                            }
                         }
                     }
-
                 }
 
 
@@ -201,13 +199,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
             public void onSuccess(ResponseInfo<String> responseInfo) {
                 //Log.e("图片联播",responseInfo.result);
                 if(!TextUtils.isEmpty(responseInfo.result)){
-                    AppListDataBean<AdvertisementBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppListDataBean<AdvertisementBean>>(){});
+                    AdvertisementDataBean appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AdvertisementDataBean>(){});
                     if (appListDataBean.getResult().equals("success")){
                         //MyAppliction.showToast("执行刷新了");
-                        List<AdvertisementBean> advertisementBeen=appListDataBean.getData();
+                        AdvertisementPagerData advertisementBeen=appListDataBean.getData();
                         if (advertisementBeen!=null){
                             imageUrls.clear();
-                            imageUrls.addAll(advertisementBeen);
+                            imageUrls.addAll(advertisementBeen.getPagerData());
                             pagerAdapter.refreshData(true);
                             isRefresh=true;
                         }
@@ -272,7 +270,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     //MyAppliction.showToast("和经济数据");
-                    Log.e("ACTION_DOWN------------","ACTION_DOWN");
+                    //Log.e("ACTION_DOWN------------","ACTION_DOWN");
                     //headTextLayout.setVisibility(View.GONE);
                     break;
                 case MotionEvent.ACTION_MOVE:
@@ -325,14 +323,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                // Log.e("推荐二手机",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<SecondHandDataBean> appListDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SecondHandDataBean>>(){});
-                    if ((appListDataBean.getResult()).equals("success")){
-                        SecondHandDataBean    secondHandDataBean=appListDataBean.getData();
-                        if (secondHandDataBean!=null){
-                            List<SecondHandBean>    secondHandBeen=  secondHandDataBean.getPagerData();
-                            intiGridView(secondHandBeen);
+                    if (appListDataBean!=null) {
+                        if ((appListDataBean.getResult()).equals("success")) {
+                            SecondHandDataBean secondHandDataBean = appListDataBean.getData();
+                            if (secondHandDataBean != null) {
+                                List<SecondHandBean> secondHandBeen = secondHandDataBean.getPagerData();
+                                intiGridView(secondHandBeen);
+                            }
+
+
                         }
-
-
                     }
 
                 }
@@ -393,13 +393,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                 //Log.e("推荐的项目",responseInfo.result);
                 if (!TextUtils.isEmpty(responseInfo.result)){
                     AppBean<SeekProjectDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<SeekProjectDataBean>>(){});
-                    if ((appBean.getResult()).equals("success")){
-                        SeekProjectDataBean seekProjectBeanList=appBean.getData();
-                        if (seekProjectBeanList!=null){
-                            List<SeekProjectBean> seekProjectBean= seekProjectBeanList.getPagerData();
-                            if (seekProjectBean!=null){
-                                intiListView(seekProjectBean);
+                    if (appBean!=null) {
+                        if ((appBean.getResult()).equals("success")) {
+                            SeekProjectDataBean seekProjectBeanList = appBean.getData();
+                            if (seekProjectBeanList != null) {
+                                List<SeekProjectBean> seekProjectBean = seekProjectBeanList.getPagerData();
+                                if (seekProjectBean != null) {
+                                    intiListView(seekProjectBean);
 
+                                }
                             }
                         }
                     }
@@ -470,13 +472,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                 //getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 4: //商城
-                                Intent marketIntent=new Intent(getActivity(), HomeMarketActivity.class)  ;
+                                Intent marketIntent=new Intent(getActivity(),HomeTribeActivity.class);
+                                marketIntent.putExtra("type","HomeShoping");
                                 marketIntent.putExtra("tage","0");
                                 startActivity(marketIntent);
-                                getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
                                 break;
                             case 5:  //部落
-                                Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
+                                Intent tribeIntent=new Intent(getActivity(), HomeTribeActivity.class);
+                                tribeIntent.putExtra("type","Tribe");
                                 tribeIntent.putExtra("tage","2");
                                 startActivity(tribeIntent);
                                 getActivity().overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
@@ -487,16 +490,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener,PullT
                                  startActivity(rewardIntent);
                                 break;
                             case 7:  //黑名单
-                                Intent blackListIntent=new Intent(getActivity(), HomeBlackListActivity.class)  ;
-                                startActivity(blackListIntent);
+                                Intent blacklistIntent=new Intent(getActivity(), HomeTribeActivity.class);
+                                blacklistIntent.putExtra("type","blacklist");
+                                startActivity(blacklistIntent);
                             break;
                             case 8:  //游戏
-                                Intent gameIntent=new Intent(getActivity(), HomeGameActivity.class)  ;
+                                Intent gameIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
+                                gameIntent.putExtra("type","game");
                                 startActivity(gameIntent);
 
                                 break;
                             case 9:  //优惠券
-                                Intent dicuntCouponIntent=new Intent(getActivity(), HomeDiscuntCouponActivity.class)  ;
+                                Intent dicuntCouponIntent=new Intent(getActivity(), HomeTribeActivity.class)  ;
+                                dicuntCouponIntent.putExtra("type","dicuntCoupon");
                                 startActivity(dicuntCouponIntent);
                             break;
 

@@ -236,7 +236,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         initView();
 
         initPager();
-        intiData();
+        //intiData();
 
 
     }
@@ -262,7 +262,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
              SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
              //步骤2：获取文件中的值
              String sesstionId = read.getString("code","");
-             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         requestParams.addBodyParameter("deviceId",secondHandBeanId);
         messageScrollView.setVisibility(View.GONE);
         mSVProgressHUD.showWithStatus("正在加载中...");
@@ -721,6 +721,7 @@ public class ExturderParticularsActivity extends AppCompatActivity implements Vi
         super.onResume();
         autoPager.startAutoScroll();
         JPushInterface.onResume(this);
+        intiData();
     }
 
     @Override

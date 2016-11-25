@@ -39,7 +39,6 @@ import com.example.zhongjiyun03.zhongjiyun.fragment.SeekProjectFragment;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.Base64;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
-import com.example.zhongjiyun03.zhongjiyun.http.SQLNewHelperUtils;
 import com.example.zhongjiyun03.zhongjiyun.service.UpdateService;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -142,11 +141,11 @@ public class HomeActivity extends AppCompatActivity {
         //防止sesstion丢失登录
     private void userLoginData() throws Exception {
 
-        if (!TextUtils.isEmpty(SQLNewHelperUtils.queryPhone(HomeActivity.this))){
+        if (!TextUtils.isEmpty(MyAppliction.getPhone())){
         String Password = "zjy888888";
         // 从文件中得到公钥
         String key="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDqi/nzVA6vTRoCgzH1zN9KsFz8ph3T4RHzfEPHnpsa2VF1FyhOg34HYiwors5bM87uFvyNAoFOHFt6JdtE8mICBI/PAxBFPy+wP6uUEjZz58MjJwGhTK3t4IP+gbq6sU0I10USFga6UswKWgMCDhfe91FWyXmhTccZcREMKiedIwIDAQAB";
-        String phoneNumber = encryptByPublic(SQLNewHelperUtils.queryPhone(HomeActivity.this),key);
+        String phoneNumber = encryptByPublic(MyAppliction.getPhone(),key);
         String password = encryptByPublic(Password,key);
            // Log.e("phoneNumber",phoneNumber);
            // Log.e("password",password);
@@ -166,7 +165,7 @@ public class HomeActivity extends AppCompatActivity {
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getUserLoginData(), requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {
-                    Log.e("防止sesstion丢失登录",responseInfo.result);
+                   // Log.e("防止sesstion丢失登录",responseInfo.result);
             }
 
             @Override
@@ -269,42 +268,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         return false;
     }
-    /*//提交用户信息
-    private void initRegistration() {
-        //Log.e("提交用户信息","提交用户信息");
-        HttpUtils httpUtils=new HttpUtils();
-        TelephonyManager telephonyManager =( TelephonyManager )getSystemService( Context.TELEPHONY_SERVICE );
-        RequestParams requestParams=new RequestParams();
-        requestParams.addBodyParameter("deviceId",telephonyManager.getDeviceId());
-        requestParams.addBodyParameter("deviceOS",android.os.Build.VERSION.RELEASE);
-        requestParams.addBodyParameter("deviceType",android.os.Build.MODEL);
-        requestParams.addBodyParameter("versionType","0");
-        requestParams.addBodyParameter("softUserType","0");
-        requestParams.addBodyParameter("jiGuangID",JPushInterface.getRegistrationID(HomeActivity.this));
-        //Log.e("极光id", JPushInterface.getRegistrationID(HomeActivity.this));
-        try {
-            requestParams.addBodyParameter("softVersion",getVersionName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        httpUtils.configSoTimeout(1200000);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegistrationData(),requestParams, new RequestCallBack<String>() {
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                Log.e("极光提交用户信息",responseInfo.result);
-                isCommitData=false;
-            }
 
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("极光提交用户信息onFailure",s);
-                isCommitData=true;
-            }
-        });
-
-
-
-    }*/
     private void getVersontData() {
         HttpUtils httpUtils=new HttpUtils();
         RequestParams requestParams=new RequestParams();
@@ -338,12 +302,12 @@ public class HomeActivity extends AppCompatActivity {
                                    }
                                }else if (versontDataBean.getUpdateLevel()==2){  //强制更新
 
-
+                                   showGameAlert("版本更新",versontDataBean.getContent(),versontDataBean.getDownloadUrl());
                                    //showExitGameAlert("版本更新","更新的本版号为V"+versontDataBean.getNo(),versontDataBean.getDownloadUrl());
-                                   Intent intent = new Intent(HomeActivity.this,UpdateService.class);
+                                   /*Intent intent = new Intent(HomeActivity.this,UpdateService.class);
                                    intent.putExtra("Key_App_Name",appName);
                                    intent.putExtra("Key_Down_Url",versontDataBean.getDownloadUrl());
-                                   startService(intent);
+                                   startService(intent);*/
                                }
                            }
                        }
@@ -363,7 +327,48 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 功能：强制更新
+     * @param text
+     * @param url
+     */
+    private void showGameAlert(String text,String texttv, final String url) {
+        final AlertDialog dlg = new AlertDialog.Builder(HomeActivity.this).create();
+        dlg.setCancelable(false);
+        dlg.show();
 
+        Window window = dlg.getWindow();
+        // *** 主要就是在这里实现这种效果的.
+        // 设置窗口的内容页面,shrew_exit_dialog.xml文件中定义view内容
+        window.setContentView(R.layout.shrew_exit_dialog);
+        TextView tailte = (TextView) window.findViewById(R.id.tailte_tv);
+        tailte.setText(texttv);
+        // 为确认按钮添加事件,执行退出应用操作
+        TextView ok = (TextView) window.findViewById(R.id.btn_ok);
+        ok.setText("马上更新");
+        ok.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent(HomeActivity.this,UpdateService.class);
+                intent.putExtra("Key_App_Name",appName);
+                intent.putExtra("Key_Down_Url",url);
+                startService(intent);
+                MyAppliction.showToast("已开始下载应用包，可以在通知栏查看下载进度");
+                //finish();
+                dlg.cancel();
+            }
+        });
+
+        // 关闭alert对话框架
+        TextView cancel = (TextView) window.findViewById(R.id.btn_cancel);
+        cancel.setText("稍后更新");
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+                dlg.cancel();
+            }
+        });
+    }
 
     //不强制下载对话框
 

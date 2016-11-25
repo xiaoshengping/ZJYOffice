@@ -44,6 +44,7 @@ public class MyAppliction extends Application {
     private static String cacheData;
     private static boolean jiGuangIsCheck;
     private static String projectRefresh;//项目详情刷新
+    private static String phone;  //用户手机号码
 
     public static MyAppliction getInstance() {
         if (instance == null) {
@@ -58,7 +59,7 @@ public class MyAppliction extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-        //CrashHandler.getInstance().init(getApplicationContext()); //异常处理
+        CrashHandler.getInstance().init(getApplicationContext()); //异常处理
         JPushInterface.init(getApplicationContext());
         JPushInterface.setDebugMode(true);
         app=this;
@@ -206,6 +207,15 @@ public class MyAppliction extends Application {
 
     public static void setProjectRefresh(String projectRefresh) {
         MyAppliction.projectRefresh = projectRefresh;
+    }
+
+
+    public static String getPhone() {
+        return phone;
+    }
+
+    public static void setPhone(String phone) {
+        MyAppliction.phone = phone;
     }
 
     //对话框

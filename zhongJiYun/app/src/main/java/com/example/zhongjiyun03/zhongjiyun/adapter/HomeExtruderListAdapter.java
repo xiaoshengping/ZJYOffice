@@ -85,7 +85,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
             }else if (data.get(position).getSecondHandState()==0){
                 viewHold.imageChuzTage.setBackgroundResource(R.mipmap.audit_ing_icon);
             }else {
-                viewHold.imageChuzTage.setBackgroundResource(0);
+                viewHold.imageChuzTage.setBackgroundResource(R.mipmap.audit_failure);
             }
         }else {
             viewHold.imageChuzTage.setVisibility(View.GONE);
@@ -172,6 +172,23 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
 
 
                       }
+                  }else {
+                      if (data.get(position).getSecondHandType()==0){
+                          viewHold.sellTextView.setText("撤回出租");
+                          viewHold.sellImage.setBackgroundResource(R.mipmap.retract_icon);
+                          viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_icon);
+                          viewHold.rentOutTextView.setText("重新更新");
+                          viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.color_2361ac));
+                      }else {
+                          viewHold.rentOutImage.setBackgroundResource(R.mipmap.update_icon);
+                          viewHold.sellTextView.setText("撤回出售");
+                          viewHold.sellImage.setBackgroundResource(R.mipmap.retract_icon);
+                          viewHold.rentOutTextView.setText("重新更新");
+                          viewHold.rentOutTextView.setTextColor(context.getResources().getColor(R.color.color_2361ac));
+
+                      }
+
+
                   }
 
 
@@ -247,6 +264,18 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                                 }
                             }
 
+                        }else {
+                            if (data.get(position).getSecondHandType()==0){
+                                Intent modifiRentExtruderInent=new Intent(context, RentOutExtruderActivity.class);
+                                modifiRentExtruderInent.putExtra("data",data.get(position));
+                                modifiRentExtruderInent.putExtra("tage","modifiRent");
+                                context.startActivity(modifiRentExtruderInent);
+                            }else {
+                                Intent modifiSellExtruderInent=new Intent(context, SellExtruderActivity.class);
+                                modifiSellExtruderInent.putExtra("data",data.get(position));
+                                modifiSellExtruderInent.putExtra("tage","modifiSell");
+                                context.startActivity(modifiSellExtruderInent);
+                            }
                         }
                     }else {
                         Intent rentOutIntent=new Intent(context, RentOutExtruderActivity.class);
@@ -254,7 +283,6 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
                         rentOutIntent.putExtra("tage","rent");
                         context.startActivity(rentOutIntent);
                     }
-                    //Log.e("steta________", position + "");
                 } else if (isChecked.get(position) == true){
                     isChecked.put(position, false);  // 根据点击的情况来将其位置和相应的状态存入
 
@@ -279,7 +307,7 @@ public class HomeExtruderListAdapter extends AppBaseAdapter<MyExtruderBean> {
             if (vid == viewHold.sellTextView.getId()){
                 if (isChecked.get(position) == false){
                     isChecked.put(position, true);   // 根据点击的情况来将其位置和相应的状态存入
-                    Log.e("secondHandId",data.get(position).getSecondHandId()+"---"+position);
+                    //Log.e("secondHandId",data.get(position).getSecondHandId()+"---"+position);
                     if (!TextUtils.isEmpty(data.get(position).getSecondHandId())){
                         if (data.get(position).getSecondHandType()==0){
                             //MyAppliction.showToast("已撤回出租");

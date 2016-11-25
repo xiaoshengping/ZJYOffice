@@ -326,7 +326,7 @@
                         android:layout_height="2dp" />
                     <ImageView
                         android:id="@+id/panorama_image"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         android:src="@mipmap/camera_icon"
                         android:layout_width="match_parent"
                         android:layout_height="128dp" />

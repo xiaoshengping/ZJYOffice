@@ -76,7 +76,6 @@
         android:id="@+id/deliver_number_text"
         android:layout_toRightOf="@+id/limit_age_image"
         android:layout_below="@+id/tailt_text"
-        android:textColor="@color/red_light"
         android:textSize="@dimen/home_Size_18"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="2dp"

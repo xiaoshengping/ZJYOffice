@@ -51,7 +51,7 @@
         android:text="取消"
         android:textSize="@dimen/home_Size_16"
         android:layout_alignLeft="@+id/exitGameBackground"
-
+        android:layout_marginTop="3dp"
         android:layout_marginLeft="35dp"
         android:textColor="@color/blue"
         android:id="@+id/btn_cancel"
@@ -73,6 +73,7 @@
     <TextView
         android:textSize="@dimen/home_Size_16"
         android:text="确定"
+        android:layout_marginTop="3dp"
         android:layout_below="@+id/line_image"
         android:id="@+id/btn_ok"
         android:layout_marginRight="35dp"

@@ -224,7 +224,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("contents",result);
         requestParams.addBodyParameter("equipmentInfo",android.os.Build.VERSION.RELEASE+android.os.Build.MODEL);
-        requestParams.addBodyParameter("aPPVesion",infos.get("versionName")+infos.get("versionCode"));
+        requestParams.addBodyParameter("aPPVesion","机主端："+infos.get("versionName")+infos.get("versionCode"));
         httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getLoggerData(),requestParams, new RequestCallBack<String>() {
             @Override
             public void onSuccess(ResponseInfo<String> responseInfo) {

@@ -8,24 +8,17 @@ import java.io.Serializable;
 public class AdvertisementBean implements Serializable {
 
     private String Url;
-    private String Img;
-    private String Name;
-    private int LinkType;
+    private String ImageUrl;
+    private String Title;
+    private String LinkType;
 
-    public int getLinkType() {
+
+    public String getLinkType() {
         return LinkType;
     }
 
-    public void setLinkType(int linkType) {
+    public void setLinkType(String linkType) {
         LinkType = linkType;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
-        Name = name;
     }
 
     public String getUrl() {
@@ -36,21 +29,29 @@ public class AdvertisementBean implements Serializable {
         Url = url;
     }
 
-    public String getImg() {
-        return Img;
+    public String getImageUrl() {
+        return ImageUrl;
     }
 
-    public void setImg(String img) {
-        Img = img;
+    public void setImageUrl(String imageUrl) {
+        ImageUrl = imageUrl;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
     }
 
     @Override
     public String toString() {
         return "AdvertisementBean{" +
                 "Url='" + Url + '\'' +
-                ", Img='" + Img + '\'' +
-                ", Name='" + Name + '\'' +
-                ", LinkType=" + LinkType +
+                ", ImageUrl='" + ImageUrl + '\'' +
+                ", Title='" + Title + '\'' +
+                ", LinkType='" + LinkType + '\'' +
                 '}';
     }
 }

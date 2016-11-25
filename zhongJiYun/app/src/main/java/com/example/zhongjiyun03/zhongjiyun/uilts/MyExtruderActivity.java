@@ -440,6 +440,7 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                 Intent intent=new Intent(MyExtruderActivity.this,LoginActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                SQLHelperUtils.deleteUid(MyExtruderActivity.this);
                 dlg.cancel();
             }
         });
@@ -450,6 +451,8 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dlg.cancel();
+                finish();
+                SQLHelperUtils.deleteUid(MyExtruderActivity.this);
             }
         });
     }

@@ -14,6 +14,7 @@
 
 
       <ScrollView
+          android:id="@+id/sell_out_scrollView"
           android:layout_below="@+id/tailt_layout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
@@ -278,7 +279,7 @@
                 android:drawablePadding="10dp"
                 android:textSize="@dimen/home_Size_14"
                 android:hint="未填写"
-                android:inputType="text"
+                android:inputType="textMultiLine"
 
 
                 />

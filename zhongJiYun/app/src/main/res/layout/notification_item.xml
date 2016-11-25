@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:padding="3dp" >
 
     <ImageView
         android:id="@+id/notificationImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/stat_sys_download" 
+        android:src="@android:drawable/stat_sys_download"
         android:paddingLeft="16dp"/>
 
     <TextView
@@ -18,18 +19,18 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/notificationImage"
         android:paddingLeft="26dp"
-        style="@style/NotificationTitle"
-        android:textColor="#FFFFFFFF" />
+        style="@style/NotificationText"
+        />
     <!-- android:textColor="#FF000000"  -->
 
     <TextView
-        style="@style/NotificationTitle"
+        style="@style/NotificationText"
         android:id="@+id/notificationPercent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/notificationImage"
         android:paddingTop="2dp"
-        android:textColor="#FFFFFFFF"
+
         android:paddingLeft="16dp"/>
 
     <ProgressBar

@@ -5,13 +5,13 @@ package com.example.zhongjiyun03.zhongjiyun.http;
  */
 public class AppUtilsUrl {
 
-    public static final String BaseUrl="http://h148a34804.iok.la/";
+    public static final String BaseUrl="http://www.zhongjiyun.cn/";
     //public  static final String ImageBaseUrl="http://www.zhongjiyun.cn/""http://h148a34804.iok.la/""http://dev.zhongjiyun.cn/";
 
     //首页广告
     public static String getAdvertisementData(){
-        //Common/GetAdContentList
-        return BaseUrl+"appapi/Common/GetAdvertisementList" ;
+        //appapi/system/AppAdvertisementList
+        return BaseUrl+"appapi/system/AppAdvertisementList" ;
 
     }
 
@@ -241,10 +241,10 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/system/checkappversion" ;
 
     }
-    //获取本版信息
+    //拨打电话
     public static String getCallOwerData(){
         //  appapi/communicationapi/callowner
-        return BaseUrl+"appapi/communicationapi/callowner" ;
+        return BaseUrl+"appapi/communicationapi/callownerv2" ;
 
     }
 

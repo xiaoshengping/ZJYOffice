@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -36,6 +37,7 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.MyAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.CellPhoneDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.seekProject.SeekProjectBean;
 import com.example.zhongjiyun03.zhongjiyun.http.AppUtilsUrl;
 import com.example.zhongjiyun03.zhongjiyun.http.MyAppliction;
@@ -188,19 +190,6 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 MyAppliction.setProjectRefresh("1");
             }
         }
-        /*if (!TextUtils.isEmpty(SQLNewHelperUtils.queryProjectComment(SeekProjectParticularsActivity.this))){
-            Log.e("有",SQLNewHelperUtils.queryProjectComment(SeekProjectParticularsActivity.this));
-            if ((SQLNewHelperUtils.queryProjectComment(SeekProjectParticularsActivity.this)).equals("2")){
-
-
-                SQLNewHelperUtils.updateProjectComment(SeekProjectParticularsActivity.this,SQLNewHelperUtils.queryProjectCommentId(SeekProjectParticularsActivity.this),"1");
-            }
-
-        }else {
-            Log.e("没有","jjjdfjfjfj");
-            SQLNewHelperUtils.insertProjectComment(SeekProjectParticularsActivity.this,SQLNewHelperUtils.queryProjectCommentId(SeekProjectParticularsActivity.this),"1");
-
-        }*/
 
     }
 
@@ -594,12 +583,18 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     //Log.e("拨打业主电话", responseInfo.result);
                     if (!TextUtils.isEmpty(responseInfo.result)) {
-                        AppDataBean appDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<AppDataBean>() {
+                        CellPhoneDataBean appDataBean = JSONObject.parseObject(responseInfo.result, new TypeReference<CellPhoneDataBean>() {
                         });
                         if (appDataBean != null) {
                             if (appDataBean.getResult().equals("success")) {
-                                time.start();
-                                showExitGameAlert("正在为您拨打电话中", "尊敬的用户，中基云平台正在为您拨打机主电话，请耐心等待10秒钟");
+                                if (!TextUtils.isEmpty(appDataBean.getData().getPhoneNumber())){
+                                Intent intent = new Intent(Intent.ACTION_DIAL);
+                                Uri data = Uri.parse("tel:" + appDataBean.getData().getPhoneNumber());
+                                intent.setData(data);
+                                startActivity(intent);
+                                }
+                                //time.start();
+                                //showExitGameAlert("正在为您拨打电话中", "尊敬的用户，中基云平台正在为您拨打机主电话，请耐心等待10秒钟");
                             } else {
                                 MyAppliction.showToast("拨打电话失败");
                             }
@@ -610,6 +605,7 @@ public class SeekProjectParticularsActivity extends AppCompatActivity implements
                 @Override
                 public void onFailure(HttpException e, String s) {
                     Log.e("拨打业主电话", s);
+                    MyAppliction.showToast("呼叫业主失败");
                 }
             });
 
