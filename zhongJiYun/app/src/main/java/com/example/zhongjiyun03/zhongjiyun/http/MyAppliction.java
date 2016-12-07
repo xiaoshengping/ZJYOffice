@@ -45,6 +45,19 @@ public class MyAppliction extends Application {
     private static boolean jiGuangIsCheck;
     private static String projectRefresh;//项目详情刷新
     private static String phone;  //用户手机号码
+    private static String IdCardFrontId;  //身份证正面照片id
+    private static String certificateId;  //个人照片id
+    private static String companyFrontId;  //企业身份证正面照片id
+    private static String companyPersongeId;  //企业个人照片id
+    private static String companyTradingId;  //企业营业执照或者资格证书照片id
+    private static String leaveFactoryId;  //添加钻机出厂牌id
+    private static String panoramaId;  //添加钻机设备全景id
+    private static String invoiceId;  //添加钻机设备发票id
+    private static String contractId;  //添加钻机设备发票id
+    private static String qualifiedId;  //添加钻机设备合格证id
+
+
+
 
     public static MyAppliction getInstance() {
         if (instance == null) {
@@ -135,6 +148,88 @@ public class MyAppliction extends Application {
 
     public static void setJiGuangIsCheck(boolean jiGuangIsCheck) {
         MyAppliction.jiGuangIsCheck = jiGuangIsCheck;
+    }
+
+
+    public static String getQualifiedId() {
+        return qualifiedId;
+    }
+
+    public static void setQualifiedId(String qualifiedId) {
+        MyAppliction.qualifiedId = qualifiedId;
+    }
+
+    public static String getContractId() {
+        return contractId;
+    }
+
+    public static void setContractId(String contractId) {
+        MyAppliction.contractId = contractId;
+    }
+
+    public static String getInvoiceId() {
+        return invoiceId;
+    }
+
+    public static void setInvoiceId(String invoiceId) {
+        MyAppliction.invoiceId = invoiceId;
+    }
+
+    public static String getPanoramaId() {
+        return panoramaId;
+    }
+
+    public static void setPanoramaId(String panoramaId) {
+        MyAppliction.panoramaId = panoramaId;
+    }
+
+    public static String getLeaveFactoryId() {
+        return leaveFactoryId;
+    }
+
+    public static void setLeaveFactoryId(String leaveFactoryId) {
+        MyAppliction.leaveFactoryId = leaveFactoryId;
+    }
+
+    public static String getCertificateId() {
+        return certificateId;
+    }
+
+
+    public static String getCompanyTradingId() {
+        return companyTradingId;
+    }
+
+    public static void setCompanyTradingId(String companyTradingId) {
+        MyAppliction.companyTradingId = companyTradingId;
+    }
+
+    public static String getCompanyPersongeId() {
+        return companyPersongeId;
+    }
+
+    public static void setCompanyPersongeId(String companyPersongeId) {
+        MyAppliction.companyPersongeId = companyPersongeId;
+    }
+
+    public static String getCompanyFrontId() {
+        return companyFrontId;
+    }
+
+    public static void setCompanyFrontId(String companyFrontId) {
+        MyAppliction.companyFrontId = companyFrontId;
+    }
+
+    public static void setCertificateId(String certificateId) {
+        MyAppliction.certificateId = certificateId;
+    }
+
+    public static String getIdCardFrontId() {
+        return IdCardFrontId;
+    }
+
+    public static void setIdCardFrontId(String idCardFrontId) {
+        IdCardFrontId = idCardFrontId;
     }
 
     public static String getCacheData() {

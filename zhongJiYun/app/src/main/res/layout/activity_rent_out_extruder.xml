@@ -40,7 +40,7 @@
                     <TextView
                         android:textColor="@color/tailt_dark"
                         android:textSize="@dimen/home_Size_15"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="2dp"
                         android:id="@+id/text_view"
                         android:layout_marginLeft="20dp"
                         android:text="是否显示合同照"
@@ -49,6 +49,7 @@
 
 
                     <CheckBox
+                        android:layout_marginTop="3dp"
                         android:id="@+id/contract_check"
                         android:button="@null"
                         android:layout_marginRight="30dp"
@@ -79,7 +80,7 @@
                     <TextView
                         android:textSize="@dimen/home_Size_15"
                         android:textColor="@color/tailt_dark"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="2dp"
 
                         android:layout_marginLeft="20dp"
                         android:text="是否显示发票照"
@@ -88,6 +89,7 @@
 
 
                     <CheckBox
+                        android:layout_marginTop="3dp"
                         android:id="@+id/invoice_check"
                         android:layout_marginRight="30dp"
                         android:layout_width="20dp"
@@ -225,8 +227,8 @@
                     <TextView
                         android:textColor="@color/tailt_dark"
                         android:id="@+id/price_text"
-                        android:textSize="@dimen/home_Size_18"
-                        android:layout_marginTop="10dp"
+                        android:textSize="@dimen/home_Size_15"
+                        android:layout_marginTop="12dp"
                         android:layout_alignParentRight="true"
                         android:text="万元"
                         android:layout_marginRight="20dp"
@@ -284,8 +286,8 @@
                 <TextView
                     android:textColor="@color/tailt_dark"
                     android:id="@+id/tenacy_term_text_view"
-                    android:textSize="@dimen/home_Size_18"
-                    android:layout_marginTop="10dp"
+                    android:textSize="@dimen/home_Size_15"
+                    android:layout_marginTop="12dp"
                     android:layout_alignParentRight="true"
                     android:text="月"
                     android:layout_marginRight="20dp"

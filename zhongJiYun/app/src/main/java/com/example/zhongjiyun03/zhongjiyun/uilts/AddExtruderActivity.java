@@ -43,7 +43,8 @@ import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
-import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppPhotoBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.PhotoDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.ExtruderDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.FacillyChildsBean;
@@ -326,26 +327,13 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                     if (!TextUtils.isEmpty(facillyTextString)){
                         if (!TextUtils.isEmpty(workTimeTextString)){
                             if (!TextUtils.isEmpty(workAddressTextString)){
-                                if (!TextUtils.isEmpty(leavePath)){
-                                    phoneListPath.add(leavePath);
-                                    ImageTypeList.add("6");
-                                    if (!TextUtils.isEmpty(panoramaPath)){
-                                        phoneListPath.add(panoramaPath);
-                                        ImageTypeList.add("7");
-                                        if (!TextUtils.isEmpty(invoicePath)||!TextUtils.isEmpty(contractPath)){
-                                            if (!TextUtils.isEmpty(invoicePath)){
-                                                phoneListPath.add(invoicePath);
-                                                ImageTypeList.add("8");
-                                            }
+                                if (!TextUtils.isEmpty(MyAppliction.getLeaveFactoryId())){
 
-                                            if (!TextUtils.isEmpty(contractPath)){
-                                                phoneListPath.add(contractPath);
-                                                ImageTypeList.add("9");
-                                            }
-                                            if (!TextUtils.isEmpty(qualifiedPath)){
-                                                    phoneListPath.add(qualifiedPath);
-                                                    ImageTypeList.add("10");
-                                            }
+                                    if (!TextUtils.isEmpty(MyAppliction.getPanoramaId())){
+
+                                        if (!TextUtils.isEmpty(MyAppliction.getInvoiceId())||!TextUtils.isEmpty(MyAppliction.getContractId())){
+
+
                                     HttpUtils httpUtils=new HttpUtils();
                                     RequestParams requestParams=new RequestParams();
                                     //步骤1：创建一个SharedPreferences接口对象
@@ -362,11 +350,18 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                     requestParams.addBodyParameter("NoOfManufacture",model);
                                     requestParams.addBodyParameter("Province",province);
                                     requestParams.addBodyParameter("City",city);
-                                    requestParams.addBodyParameter("DeviceNoPhoto","photo.jpg");
-                                    requestParams.addBodyParameter("DevicePhoto","photo.jpg");
-                                    requestParams.addBodyParameter("DeviceInvoicePhoto","photo.jpg");
-                                    requestParams.addBodyParameter("DeviceContractPhoto","photo.jpg");
-                                    requestParams.addBodyParameter("DeviceCertificatePhoto","photo.jpg");
+                                    requestParams.addBodyParameter("DeviceNoPhoto",MyAppliction.getLeaveFactoryId());
+                                    requestParams.addBodyParameter("DevicePhoto",MyAppliction.getPanoramaId());
+                                     if (!TextUtils.isEmpty(MyAppliction.getInvoiceId())){
+                                         requestParams.addBodyParameter("DeviceInvoicePhoto",MyAppliction.getInvoiceId());
+                                     }
+                                     if (!TextUtils.isEmpty(MyAppliction.getContractId())){
+                                         requestParams.addBodyParameter("DeviceContractPhoto",MyAppliction.getContractId());
+                                     }
+                                     if (!TextUtils.isEmpty(MyAppliction.getQualifiedId())){
+                                        requestParams.addBodyParameter("DeviceCertificatePhoto",MyAppliction.getQualifiedId());
+                                     }
+
                                     mSVProgressHUD.showWithStatus("正在提交中...");
                                     httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getAddMyExtruderData(),requestParams, new RequestCallBack<String>() {
                                         @Override
@@ -375,7 +370,7 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                                             if (!TextUtils.isEmpty(responseInfo.result)){
                                                 AppBean<ExtruderDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<ExtruderDataBean>>(){});
                                                 if (appBean.getResult().equals("success")){
-                                                    ExtruderDataBean extruderDataBean=appBean.getData();
+                                                    /*ExtruderDataBean extruderDataBean=appBean.getData();
                                                     if (extruderDataBean!=null&&!TextUtils.isEmpty(extruderDataBean.getId())){
                                                         if (phoneListPath!=null&&phoneListPath.size()!=0) {
 
@@ -386,7 +381,10 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
 
 
                                                         }
-                                                    }
+                                                    }*/
+                                                    MyAppliction.showToast("添加钻机成功");
+                                                    mSVProgressHUD.dismiss();
+                                                    finish();
                                                 }else {
                                                     MyAppliction.showToast(appBean.getMsg());
                                                     mSVProgressHUD.dismiss();
@@ -409,20 +407,20 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
 
                                         }else {
 
-                                            MyAppliction.showToast("请选择设备发票图或者设备合同图其中一个");
+                                            MyAppliction.showToast("请上传设备发票图或者设备合同图其中一个");
                                         }
 
 
                                     }else {
 
-                                            MyAppliction.showToast("请选择设备全景图");
+                                            MyAppliction.showToast("请上传设备全景图");
                                         }
 
 
-                                        }else {
+                                }else {
 
-                                            MyAppliction.showToast("请选择设备出厂牌图片");
-                                        }
+                                   MyAppliction.showToast("请上传设备出厂牌图片");
+                                }
                             }else {
 
                                 MyAppliction.showToast("请输入所在地");
@@ -460,61 +458,6 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void intiPhontData7(String id, String imageType, String imagePath, String ownId, final int tages) {
-        HttpUtils httpUtils=new HttpUtils();
-        RequestParams requwstParams=new RequestParams();
-        requwstParams.addBodyParameter("Id",id);
-        requwstParams.addBodyParameter("ImageType",imageType);
-        requwstParams.addBodyParameter("UserType","boss");
-        requwstParams.addBodyParameter("SourceType","3");
-        requwstParams.addBodyParameter("File", new File(imagePath));
-        //步骤1：创建一个SharedPreferences接口对象
-        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
-        //步骤2：获取文件中的值
-        String sesstionId = read.getString("code","");
-        requwstParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
-        requwstParams.addBodyParameter("OwnId",ownId);
-        httpUtils.configSoTimeout(1200000);
-        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getPhoneData(),requwstParams, new RequestCallBack<String>() {
-
-            @Override
-            public void onLoading(long total, long current, boolean isUploading) {
-                super.onLoading(total, current, isUploading);
-            }
-
-            @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                //Log.e("照片请求",responseInfo.result);
-                if (!TextUtils.isEmpty(responseInfo.result)){
-                    AppBean<AppDataBean> appBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<AppDataBean>>(){});
-                    int tage=tages+1;
-                    if (appBean.getResult().equals("success")){
-                            if (tage==phoneListPath.size()){
-                                MyAppliction.showToast("添加钻机成功");
-                                mSVProgressHUD.dismiss();
-                                finish();
-                            }
-                    }else {
-                        MyAppliction.showToast("上传照片失败");
-                        mSVProgressHUD.dismiss();
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
-                Log.e("照片请求s",s);
-                MyAppliction.showToast("网络异常,请稍后重试");
-                mSVProgressHUD.dismiss();
-                finish();
-            }
-        });
-
-
-    }
 
 
 
@@ -602,13 +545,13 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                 byte[] bis = data.getByteArrayExtra("result");
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bis, 0, bis.length);
                 if (bitmap != null) {
-                    leaveFactoryImage.setImageBitmap(bitmap);
-                }
-
-                String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File frontFile = getFile(bis, Environment.getExternalStorageDirectory()+"/zhongJiYun", frontName);
-                if (!TextUtils.isEmpty(frontFile.getPath())) {
-                    leavePath = frontFile.getPath();
+                    String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                    File frontFile = getFile(bis, Environment.getExternalStorageDirectory() + "/zhongJiYun", frontName);
+                    if (!TextUtils.isEmpty(frontFile.getPath())) {
+                        upterImageData(1, bitmap, BitmapUtils.bitmapToString(frontFile.getPath()));
+                    }
+                } else {
+                    MyAppliction.showToast("上传照片失败");
                 }
 
                 break;
@@ -634,12 +577,13 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                 byte[] biss = data.getByteArrayExtra("result");
                 Bitmap bitmaps = BitmapFactory.decodeByteArray(biss, 0, biss.length);
                 if (bitmaps != null) {
-                    panoramaImage.setImageBitmap(bitmaps);
-                }
-                String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File file2 = getFile(biss, Environment.getExternalStorageDirectory()+"/zhongJiYun", name);
-                if (!TextUtils.isEmpty(file2.getPath())) {
-                    panoramaPath = file2.getPath();
+                    String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                    File file2 = getFile(biss, Environment.getExternalStorageDirectory() + "/zhongJiYun", name);
+                    if (!TextUtils.isEmpty(file2.getPath())) {
+                        upterImageData(2, bitmaps, BitmapUtils.bitmapToString(file2.getPath()));
+                    }
+                } else {
+                    MyAppliction.showToast("上传照片失败");
                 }
                 break;
             case ConstantSet.TAKEPICTURE1:
@@ -664,12 +608,13 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                 byte[] bisPersonge = data.getByteArrayExtra("result");
                 Bitmap bitmapPersonge = BitmapFactory.decodeByteArray(bisPersonge, 0, bisPersonge.length);
                 if (bitmapPersonge != null) {
-                    invoiceImage.setImageBitmap(bitmapPersonge);
-                }
-                String namePersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File filePersonge = getFile(bisPersonge, Environment.getExternalStorageDirectory()+"/zhongJiYun", namePersonge);
-                if (!TextUtils.isEmpty(filePersonge.getPath())) {
-                    invoicePath = filePersonge.getPath();
+                    String namePersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                    File filePersonge = getFile(bisPersonge, Environment.getExternalStorageDirectory() + "/zhongJiYun", namePersonge);
+                    if (!TextUtils.isEmpty(filePersonge.getPath())) {
+                        upterImageData(3, bitmapPersonge, BitmapUtils.bitmapToString(filePersonge.getPath()));
+                    }
+                } else {
+                    MyAppliction.showToast("上传照片失败");
                 }
                 break;
             case ConstantSet.TAKEPICTURE2:
@@ -694,13 +639,15 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                 byte[] forntBis = data.getByteArrayExtra("result");
                 Bitmap frontBitmap = BitmapFactory.decodeByteArray(forntBis, 0, forntBis.length);
                 if (frontBitmap != null) {
-                    contractImage.setImageBitmap(frontBitmap);
-                }
                 String nameFront = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileFront = getFile(forntBis, Environment.getExternalStorageDirectory()+"/zhongJiYun", nameFront);
+                File fileFront = getFile(forntBis, Environment.getExternalStorageDirectory() + "/zhongJiYun", nameFront);
                 if (!TextUtils.isEmpty(fileFront.getPath())) {
-                    contractPath = fileFront.getPath();
+                    upterImageData(4, frontBitmap, BitmapUtils.bitmapToString(fileFront.getPath()));
                 }
+                }else {
+                    MyAppliction.showToast("上传照片失败");
+                }
+
                 break;
             case ConstantSet.TAKEPICTURE3:
                 Intent companyVesonTakIntent = new Intent(AddExtruderActivity.this, ClippingPageActivity.class);
@@ -724,17 +671,89 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
                 byte[] vesonBis = data.getByteArrayExtra("result");
                 Bitmap vesonBitmap = BitmapFactory.decodeByteArray(vesonBis, 0, vesonBis.length);
                 if (vesonBitmap != null) {
-                    qualifiedImage.setImageBitmap(vesonBitmap);
-                }
                 String nameVeson = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                 File fileVeson = getFile(vesonBis,Environment.getExternalStorageDirectory()+"/zhongJiYun", nameVeson);
                 if (!TextUtils.isEmpty(fileVeson.getPath())) {
-                    qualifiedPath = fileVeson.getPath();
+                    upterImageData(5, vesonBitmap, BitmapUtils.bitmapToString(fileVeson.getPath()));
+                }
+                }else {
+                    MyAppliction.showToast("上传照片失败");
                 }
                 break;
 
 
         }
+    }
+
+
+    /**
+     * 上传照片
+     */
+    private void upterImageData(final int tage, final Bitmap bitmap, String photoString) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requeatParams=new RequestParams();
+        requeatParams.addBodyParameter("fileByte",photoString);
+        mSVProgressHUD.showWithStatus("正在上传中...", SVProgressHUD.SVProgressHUDMaskType.Black);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegistImageData(),requeatParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                //Log.e("注册上传图片onSuccess",responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    //mSVProgressHUD.dismiss();
+                    AppPhotoBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppPhotoBean>(){});
+                    if (appDataBean!=null){
+                        if (appDataBean.getResult().equals("success")){
+                            PhotoDataBean photoDataBean=appDataBean.getData();
+                            if (photoDataBean!=null){
+                                if (tage==1){
+                                    MyAppliction.setLeaveFactoryId(photoDataBean.getId());
+                                    leaveFactoryImage.setImageBitmap(bitmap);
+
+                                }else if (tage==2){
+                                    MyAppliction.setPanoramaId(photoDataBean.getId());
+                                    panoramaImage.setImageBitmap(bitmap);
+                                }else if (tage==3){
+                                    MyAppliction.setInvoiceId(photoDataBean.getId());
+                                    invoiceImage.setImageBitmap(bitmap);
+
+                                }else if (tage==4){
+                                    MyAppliction.setContractId(photoDataBean.getId());
+                                    contractImage.setImageBitmap(bitmap);
+                                }else if (tage==5){
+                                    MyAppliction.setQualifiedId(photoDataBean.getId());
+                                    qualifiedImage.setImageBitmap(bitmap);
+                                }
+
+                            }
+                            MyAppliction.showToast("上传照片成功");
+                            mSVProgressHUD.dismiss();
+                        }else {
+                            MyAppliction.showToast(appDataBean.getMsg());
+                            mSVProgressHUD.dismiss();
+
+                        }
+
+                    }else {
+                        MyAppliction.showToast("上传照片失败");
+                    }
+                }else {
+                    MyAppliction.showToast("上传照片失败");
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("注册上传图片onFailure",s);
+                mSVProgressHUD.dismiss();
+            }
+        });
+
+
+
+
+
     }
 
     /**
@@ -1028,5 +1047,14 @@ public class AddExtruderActivity extends AppCompatActivity implements View.OnCli
         return false;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyAppliction.setLeaveFactoryId(null);
+        MyAppliction.setPanoramaId(null);
+        MyAppliction.setInvoiceId(null);
+        MyAppliction.setContractId(null);
+        MyAppliction.setQualifiedId(null);
 
+    }
 }

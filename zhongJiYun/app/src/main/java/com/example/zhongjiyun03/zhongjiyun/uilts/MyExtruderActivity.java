@@ -198,8 +198,11 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                             notDataImage.setBackgroundResource(R.mipmap.no_rig_icon);
                             notDataText.setText("您还没有添加钻机哦");
                         }else if (appBean.getResult().equals("unlogin")){
-                            //MyAppliction.showToast("登录已失效，请重新登陆");
+                            SQLHelperUtils.deleteUid(MyExtruderActivity.this);
                             showExitGameAlert("本次登录已过期");
+                            notDataLayout.setVisibility(View.VISIBLE);
+                            notDataImage.setBackgroundResource(R.mipmap.no_other);
+                            notDataText.setText("登录已过期请重新登录");
 
                         }
 
@@ -440,7 +443,6 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
                 Intent intent=new Intent(MyExtruderActivity.this,LoginActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                SQLHelperUtils.deleteUid(MyExtruderActivity.this);
                 dlg.cancel();
             }
         });
@@ -452,8 +454,10 @@ public class MyExtruderActivity extends AppCompatActivity implements View.OnClic
             public void onClick(View v) {
                 dlg.cancel();
                 finish();
-                SQLHelperUtils.deleteUid(MyExtruderActivity.this);
             }
         });
     }
+
+
+
 }

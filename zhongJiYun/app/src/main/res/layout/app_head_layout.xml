@@ -36,7 +36,7 @@
             android:text="登录"
             android:gravity="center"
             android:textColor="@color/ic_white"
-            android:textSize="@dimen/home_Size_20"
+            android:textSize="@dimen/home_Size_18"
             android:layout_centerInParent="true"/>
         <TextView
             android:id="@+id/register_tv"
@@ -47,7 +47,7 @@
             android:text="注册"
             android:gravity="center"
             android:textColor="@color/ic_white"
-            android:textSize="@dimen/home_Size_18"
+            android:textSize="@dimen/home_Size_16"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 </LinearLayout>

@@ -24,8 +24,7 @@
                  android:id="@+id/log_image"
                  android:layout_marginTop="50dp"
                  android:layout_centerHorizontal="true"
-
-                 android:src="@mipmap/logo"
+                 android:src="@mipmap/boss_logo"
                  android:layout_width="100dp"
                  android:layout_height="100dp" />
 

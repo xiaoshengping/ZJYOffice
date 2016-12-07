@@ -41,7 +41,7 @@
             <TextView
                 android:textSize="@dimen/home_Size_15"
                 android:textColor="@color/tailt_dark"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:id="@+id/text_view"
                 android:layout_marginLeft="20dp"
                 android:text="是否显示合同照"
@@ -50,6 +50,7 @@
 
 
             <CheckBox
+                android:layout_marginTop="3dp"
                 android:id="@+id/contract_checkbox"
                 android:layout_marginRight="30dp"
                 android:layout_width="20dp"
@@ -78,7 +79,7 @@
             android:gravity="center_vertical"
             android:layout_height="50dp">
             <TextView
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 android:textSize="@dimen/home_Size_15"
                 android:textColor="@color/tailt_dark"
                 android:layout_marginLeft="20dp"
@@ -88,6 +89,7 @@
 
 
             <CheckBox
+                android:layout_marginTop="3dp"
                 android:id="@+id/invoice_checkBox"
                 android:layout_marginRight="30dp"
                 android:layout_width="20dp"
@@ -229,8 +231,8 @@
             <TextView
                 android:textColor="@color/tailt_dark"
                 android:id="@+id/price_text"
-                android:textSize="@dimen/home_Size_18"
-                android:layout_marginTop="10dp"
+                android:textSize="@dimen/home_Size_15"
+                android:layout_marginTop="12dp"
                 android:layout_alignParentRight="true"
                 android:text="万元"
                 android:layout_marginRight="20dp"

@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -62,6 +61,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView retrunText;     //头部左边
     @ViewInject(R.id.root_layout)
     private ScrollView rootLayout;
+    @ViewInject(R.id.title_name_tv)
+    private TextView titleNameTv;
 
 
     @ViewInject(R.id.login_button)
@@ -132,6 +133,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         registerTv.setVisibility(View.GONE);
         loginButton.setOnClickListener(this);
         codeButton.setOnClickListener(this);
+        titleNameTv.setText("机主登录");
         //Log.e("极光id",JPushInterface.getRegistrationID(LoginActivity.this));
 
     }
@@ -299,16 +301,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         RequestParams requestParams=new RequestParams();
         requestParams.addBodyParameter("PhoneNumber",phone);
         requestParams.addBodyParameter("SmsType","1");
-
         if (!TextUtils.isEmpty(phone)) {
             if (phone.length()==11){
-            if (isMobileNO(phone)){
-
             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getCodeData(),requestParams, new RequestCallBack<String>() {
                 @Override
                 public void onSuccess(ResponseInfo<String> responseInfo) {
                     if (!TextUtils.isEmpty(responseInfo.result)){
-                        Log.e("登录验证码",responseInfo.result);
+                        //Log.e("登录验证码",responseInfo.result);
                         AppDataBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppDataBean>(){});
                         if ((appDataBean.getResult()).equals("success")){
                             MyAppliction.showToast("验证码已发送成功");
@@ -331,9 +330,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     MyAppliction.showToast("网络异常,请稍后重试");
                 }
             });
-            }else {
-                MyAppliction.showToast("请输入正确的手机号码");
-            }
+
         }else {
             MyAppliction.showToast("请输入长度为11位的手机号码");
 
@@ -345,11 +342,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public static boolean isMobileNO(String mobiles) {
-               String telRegex = "13\\d{9}|14[57]\\d{8}|15[012356789]\\d{8}|18[01256789]\\d{8}|17[0678]\\d{8}";
-                if (TextUtils.isEmpty(mobiles)) return false;
-                 else return mobiles.matches(telRegex);
-          }
+
 
     class TimeCount extends CountDownTimer {
         public TimeCount(long millisInFuture, long countDownInterval) {

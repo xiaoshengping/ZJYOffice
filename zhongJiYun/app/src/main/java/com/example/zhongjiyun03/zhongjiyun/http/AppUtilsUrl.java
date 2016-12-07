@@ -5,7 +5,7 @@ package com.example.zhongjiyun03.zhongjiyun.http;
  */
 public class AppUtilsUrl {
 
-    public static final String BaseUrl="http://www.zhongjiyun.cn/";
+    public static final String BaseUrl="http://h148a34804.iok.la/";
     //public  static final String ImageBaseUrl="http://www.zhongjiyun.cn/""http://h148a34804.iok.la/""http://dev.zhongjiyun.cn/";
 
     //首页广告
@@ -63,7 +63,7 @@ public class AppUtilsUrl {
     //注册上传字符内容
     public static String getRegisterData(){
         // appapi/giftbag/list
-        return BaseUrl+"appapi/boss/register" ;
+        return BaseUrl+"AppApi/boss/Registerv2" ;
 
     }
     //登录
@@ -86,8 +86,8 @@ public class AppUtilsUrl {
     }
     //添加钻机
     public static String getAddMyExtruderData(){
-        // appapi/boss/createdevice
-        return BaseUrl+"appapi/boss/createdevice" ;
+        // appapi/boss/createdevicev2
+        return BaseUrl+"appapi/boss/createdevicev2" ;
 
     }
 
@@ -117,8 +117,8 @@ public class AppUtilsUrl {
     }
     //出租出售
     public static String getRentOrSellData(){
-        // appapi/boss/RentOutOrSellDevice
-        return BaseUrl+"appapi/boss/RentOutOrSellDevice" ;
+        // appapi/boss/rentoutorselldevicev2
+        return BaseUrl+"appapi/boss/rentoutorselldevicev2" ;
 
     }
     //撤回出租出售
@@ -380,6 +380,18 @@ public class AppUtilsUrl {
         return BaseUrl+"appapi/driver/detail" ;
 
     }
+    //获取钻机数据用于发布招聘用
+    public static String getSeekDrllingData(){
+        // /appapi/System/HaveDevice
+        return BaseUrl+"appapi/System/HaveDevice" ;
 
+    }
+
+    //上传注册图片
+    public static String getRegistImageData(){
+        // AppApi/Media/AsyncUploadImage
+        return BaseUrl+"AppApi/Media/AsyncUploadImage" ;
+
+    }
 
 }

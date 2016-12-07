@@ -310,138 +310,151 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />
 
-        <LinearLayout
 
-
-            android:background="@color/ic_white"
-            android:orientation="horizontal"
+        <RelativeLayout
+            android:id="@+id/certificate_layout"
+            android:background="@color/white"
+            android:layout_below="@+id/address_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-
+            <ImageView
+                android:id="@+id/certificate_top_image"
+                android:src="@color/color_dadada"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
 
             <LinearLayout
-                android:layout_weight="1"
-                android:id="@+id/front_idcard_layout"
-                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/certificate_top_image"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/certificate_tailt_text"
+                    android:textSize="@dimen/home_Size_16"
+                    android:textColor="@color/color_222222"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="本人照片"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="@dimen/home_Size_12"
+                    android:textColor="@color/color_888888"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="请上传本人照片"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/certificate_image"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="170dp">
-                <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:gravity="center"
-                    android:text="身份证正面"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/front_idcard_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/add_img"
+                android:layout_toLeftOf="@+id/certificate_arrow_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
 
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_weight="1"
-                android:id="@+id/id_card_zheng_layout"
-                android:background="@color/phont_background"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="5dp"
+            <ImageView
+                android:id="@+id/certificate_arrow_image"
                 android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/my_arrow"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_below="@+id/company_front_image"
+                android:src="@color/color_dadada"
                 android:layout_width="match_parent"
-                android:layout_height="170dp">
-                <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                     android:gravity="center"
-                    android:text="身份证反面"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/id_card_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
-
-
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-
-            android:background="@color/ic_white"
-            android:layout_marginBottom="30dp"
+                android:layout_height="0.5dp" />
+        </RelativeLayout>
+        <ImageView
+            android:src="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <RelativeLayout
+            android:id="@+id/front_idcard_layout"
+            android:layout_marginBottom="60dp"
+            android:background="@color/white"
+            android:layout_below="@+id/address_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_weight="1"
-                android:id="@+id/certificate_layout"
-                android:layout_marginBottom="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
+            <ImageView
+                android:id="@+id/top_image"
+                android:src="@color/color_dadada"
                 android:layout_width="match_parent"
-                android:layout_height="170dp">
+                android:layout_height="0.5dp" />
+
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/top_image"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
                 <TextView
-                    android:gravity="center"
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:text="个人照片"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
+                    android:id="@+id/tailt_text"
                     android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/certificate_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
+                    android:textColor="@color/color_222222"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="身份证正面"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="@dimen/home_Size_12"
+                    android:textColor="@color/color_888888"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="请上传身份证正面"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_marginBottom="40dp"
-                android:layout_marginLeft="5dp"
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/front_idcard_image"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/add_img"
+                android:layout_toLeftOf="@+id/arrow_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <ImageView
+                android:id="@+id/arrow_image"
                 android:layout_marginRight="20dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/my_arrow"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_below="@+id/company_front_image"
+                android:src="@color/color_dadada"
                 android:layout_width="match_parent"
-                android:layout_height="170dp">
+                android:layout_height="0.5dp" />
+        </RelativeLayout>
 
 
-            </LinearLayout>
 
-        </LinearLayout>
+
+
+
+
         <View
             android:id="@+id/vMasker"
             android:visibility="gone"

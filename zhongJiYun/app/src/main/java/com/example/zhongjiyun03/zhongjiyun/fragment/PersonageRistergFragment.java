@@ -15,8 +15,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
@@ -41,10 +39,7 @@ import java.util.Date;
 public class PersonageRistergFragment extends Fragment implements View.OnClickListener {
 
 
-    @ViewInject(R.id.id_card_zheng_layout)
-    private LinearLayout idCardZhengLayout;
-    @ViewInject(R.id.id_card_image)
-    private ImageView idCardImage;
+
     @ViewInject(R.id.address_textview)
     private TextView addressTextView;
 
@@ -215,7 +210,7 @@ public class PersonageRistergFragment extends Fragment implements View.OnClickLi
     }
 
     private void intiImage() {
-        idCardZhengLayout.setOnClickListener(this);
+
 
 
     }
@@ -281,10 +276,10 @@ public class PersonageRistergFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.id_card_zheng_layout:  //身份证正面照片上传
+           /* case R.id.id_card_zheng_layout:  //身份证正面照片上传
                 showDialog();
 
-              break;
+              break;*/
 
 
 
@@ -319,7 +314,7 @@ public class PersonageRistergFragment extends Fragment implements View.OnClickLi
                     //sentPicToNext(data);
                 {
                     Bundle bundle = data.getExtras();
-                    idCardImage.setImageBitmap(bundle.<Bitmap>getParcelable("data"));
+                    //idCardImage.setImageBitmap(bundle.<Bitmap>getParcelable("data"));
                     Log.e("hsdhdfhd",data.getData().toString());
                 }
 
@@ -350,14 +345,14 @@ public class PersonageRistergFragment extends Fragment implements View.OnClickLi
         if (bundle != null) {
             Bitmap photo = bundle.getParcelable("data");
             if (photo == null) {
-                idCardImage.setImageResource(R.mipmap.ic_launcher);
+                //idCardImage.setImageResource(R.mipmap.ic_launcher);
             } else {
                 //Bitmap zoomBitmap = ImageUtil.zoomBitmap(photo, 100, 100);
                 //获取圆角图片
                 //Bitmap roundBitmap = ImageUtil.getRoundedCornerBitmap(zoomBitmap, 200.0f);
                 //获取倒影图片
                 //Bitmap reflectBitmap = ImageUtil.createReflectionImageWithOrigin(roundBitmap);
-                idCardImage.setImageBitmap(photo);
+                //idCardImage.setImageBitmap(photo);
 //                设置文本内容为    图片绝对路径和名字
                 //text.setText(tempFile.getAbsolutePath());
                 //Log.e("tempFile",tempFile.getAbsolutePath());

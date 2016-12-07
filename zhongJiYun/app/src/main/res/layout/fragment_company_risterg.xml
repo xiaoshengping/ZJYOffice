@@ -309,219 +309,219 @@
             android:src="@color/color_dadada"
             android:layout_width="match_parent"
             android:layout_height="0.5dp" />
-        <LinearLayout
-
-            android:layout_marginTop="3dp"
-            android:background="@color/ic_white"
-            android:orientation="horizontal"
+        <RelativeLayout
+            android:id="@+id/company_personge_layout"
+            android:background="@color/white"
+            android:layout_below="@+id/address_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-
+            <ImageView
+                android:id="@+id/company_top_image"
+                android:src="@color/color_dadada"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
 
             <LinearLayout
-                android:layout_weight="1"
-                android:id="@+id/company_front_layout"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/company_top_image"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="170dp">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
                 <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:gravity="center"
-                    android:text="身份证正面"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
+                    android:id="@+id/company_tailt_text"
                     android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/company_front_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_weight="1"
-                 android:id="@+id/company_verso_layout"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="170dp">
-                <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:gravity="center"
-                    android:text="身份证反面"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                     android:id="@+id/company_verso_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
-
-
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-
-            android:background="@color/ic_white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_weight="1"
-                 android:id="@+id/company_personge_layout"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="170dp">
-                <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:gravity="center"
+                    android:textColor="@color/color_222222"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
                     android:text="本人照片"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                     android:id="@+id/company_personge_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
-
+                    android:layout_marginTop="5dp"
+                    android:textSize="@dimen/home_Size_12"
+                    android:textColor="@color/color_888888"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="请上传本人照片"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_weight="1"
-                  android:id="@+id/company_trading_layout"
-                android:layout_marginTop="20dp"
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/company_personge_image"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/add_img"
+                android:layout_toLeftOf="@+id/company_arrow_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <ImageView
+                android:id="@+id/company_arrow_image"
                 android:layout_marginRight="20dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/my_arrow"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_below="@+id/company_personge_image"
+                android:src="@color/color_dadada"
                 android:layout_width="match_parent"
-                android:layout_height="170dp">
-                <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:gravity="center"
-                    android:text="营业执照"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
-                    android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/company_trading_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
+                android:layout_height="0.5dp" />
+        </RelativeLayout>
 
 
-            </LinearLayout>
+        <ImageView
+            android:src="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <RelativeLayout
+            android:id="@+id/company_front_layout"
 
-        </LinearLayout>
-        <LinearLayout
-            android:background="@color/ic_white"
-            android:layout_marginBottom="30dp"
+            android:background="@color/white"
+            android:layout_below="@+id/address_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_weight="1"
-               android:id="@+id/company_status_layout"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/phont_background"
-                android:gravity="center"
-                android:orientation="vertical"
+            <ImageView
+                android:id="@+id/top_image"
+                android:src="@color/color_dadada"
                 android:layout_width="match_parent"
-                android:layout_height="170dp">
+                android:layout_height="0.5dp" />
+
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/top_image"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
                 <TextView
-                    android:textColor="@color/tailt_dark"
-                    android:textSize="@dimen/home_Size_15"
-                    android:gravity="center"
-                    android:text="资格证书"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp" />
-                <TextView
+                    android:id="@+id/tailt_text"
                     android:textSize="@dimen/home_Size_16"
-                    android:gravity="center"
-                    android:background="@mipmap/dashed_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp" />
-                <ImageView
-                    android:id="@+id/company_status_image"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/camera_icon"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp" />
-
+                    android:textColor="@color/color_222222"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="身份证正面"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="@dimen/home_Size_12"
+                    android:textColor="@color/color_888888"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="请上传身份证正面"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
+
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/company_front_image"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/add_img"
+                android:layout_toLeftOf="@+id/arrow_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
+
+            <ImageView
+                android:id="@+id/arrow_image"
+                android:layout_marginRight="20dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/my_arrow"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_below="@+id/company_front_image"
+                android:src="@color/color_dadada"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+        </RelativeLayout>
+        <ImageView
+            android:src="@color/color_dedede"
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+
+
+        <RelativeLayout
+            android:id="@+id/company_trading_layout"
+            android:layout_marginBottom="60dp"
+            android:background="@color/white"
+            android:layout_below="@+id/address_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/trading_top_image"
+                android:src="@color/color_dadada"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
 
             <LinearLayout
-                android:layout_weight="1"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/white"
-                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_below="@+id/trading_top_image"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="170dp">
-
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/trading_tailt_text"
+                    android:textSize="@dimen/home_Size_16"
+                    android:textColor="@color/color_222222"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="营业执照或者资格证书"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textSize="@dimen/home_Size_12"
+                    android:textColor="@color/color_888888"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="请上传营业执照或者资格证书"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
-        </LinearLayout>
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/company_trading_image"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/add_img"
+                android:layout_toLeftOf="@+id/trading_arrow_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp" />
 
+            <ImageView
+                android:id="@+id/trading_arrow_image"
+                android:layout_marginRight="20dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/my_arrow"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_below="@+id/company_trading_image"
+                android:src="@color/color_dadada"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp" />
+        </RelativeLayout>
         <View
             android:id="@+id/company_vMasker"
             android:visibility="gone"

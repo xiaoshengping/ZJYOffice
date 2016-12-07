@@ -35,7 +35,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -48,6 +47,8 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.MyAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppDataBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.AppPhotoBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.PhotoDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.RegisterBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.ProvinceCityChildsBean;
@@ -127,12 +128,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private TextView addressTextView;
     private View vMasker;
     private  OptionsPickerView pvOptions;
-    private ImageView idCardImage;
-    private LinearLayout idCardZhengLayout; //身份证反面
     private ImageView frontIdcardImage;
-    private LinearLayout frontUIdCardLayout; //身份证正面
+    private RelativeLayout frontUIdCardLayout; //身份证正面
     private ImageView certificateImage;
-    private LinearLayout certificateLayout;
+    private RelativeLayout certificateLayout;
     private String imageVersoPath;   //个人注册身份证反面路径
     private String frontImagePath; //个人注册身份证正面路径
     private String personageImagePath; //个人注册个人照片路径
@@ -162,15 +161,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText companyIntroduceEdit;    //简介输入框
     private TextView companyAddressTextView;   //地址
     private ImageView  companyFrontImage;//身份证正面
-    private LinearLayout companyFrontLayout;//身份证正面layout
-    private ImageView companyVersoImage;//身份证反面
-    private LinearLayout companyVersoLayout;//身份证反面layout
+    private RelativeLayout companyFrontLayout;//身份证正面layout
     private ImageView  companyPersongeImage;//个人照片
-    private LinearLayout companyPersongeLayout;//个人layout
+    private RelativeLayout companyPersongeLayout;//个人layout
     private ImageView  companyTradingImage;//营业执照
-    private LinearLayout companyTradingLayout;//营业执照layout
-    private ImageView  companyStatusImage;//证书
-    private LinearLayout companyStatusLayout;//证书layout
+    private RelativeLayout companyTradingLayout;//营业执照layout
 
     private View vMaskerCompany;
     private OptionsPickerView pvOptionsCompany;  //地区选择
@@ -255,16 +250,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         companyAddressTextView= (TextView) companyRisterView.findViewById(R.id.company_address_text);
 
         companyFrontImage= (ImageView) companyRisterView.findViewById(R.id.company_front_image);//身份证正面
-        companyFrontLayout= (LinearLayout) companyRisterView.findViewById(R.id.company_front_layout);//身份证正面layout
-        companyVersoImage= (ImageView) companyRisterView.findViewById(R.id.company_verso_image);//身份证反面
-        companyVersoLayout= (LinearLayout) companyRisterView.findViewById(R.id.company_verso_layout);//身份证反面layout
+        companyFrontLayout= (RelativeLayout) companyRisterView.findViewById(R.id.company_front_layout);//身份证正面layout
         companyPersongeImage= (ImageView) companyRisterView.findViewById(R.id.company_personge_image);//个人照片
-        companyPersongeLayout= (LinearLayout) companyRisterView.findViewById(R.id.company_personge_layout);//个人照片layout
+        companyPersongeLayout= (RelativeLayout) companyRisterView.findViewById(R.id.company_personge_layout);//个人照片layout
         companyTradingImage= (ImageView) companyRisterView.findViewById(R.id.company_trading_image);//营业执照
-        companyTradingLayout= (LinearLayout) companyRisterView.findViewById(R.id.company_trading_layout);//营业执照layout
-        companyStatusImage= (ImageView) companyRisterView.findViewById(R.id.company_status_image);//证书
-        companyStatusLayout= (LinearLayout) companyRisterView.findViewById(R.id.company_status_layout);//证书layout
-
+        companyTradingLayout= (RelativeLayout) companyRisterView.findViewById(R.id.company_trading_layout);//营业执照layout
         controlKeyboardLayout(rootTlayout,submitButton);
         vMaskerCompany=companyRisterView.findViewById(R.id.company_vMasker);
         companyCodeButton.setOnClickListener(new View.OnClickListener() {
@@ -293,14 +283,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 showDialog(ConstantSet.TAKEPICTURE2,ConstantSet.SELECTPICTURE2,imageUri);
             }
         });
-        //身份证反面拍照
-        companyVersoLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(ConstantSet.TAKEPICTURE3,ConstantSet.SELECTPICTURE3,imageUri);
 
-            }
-        });
         //个人照片拍照
         companyPersongeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -315,14 +298,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(View v) {
 
                 showDialog(ConstantSet.TAKEPICTURE5,ConstantSet.SELECTPICTURE5,imageUri);
-            }
-        });
-        //证书拍照
-        companyStatusLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog(ConstantSet.TAKEPICTURE6,ConstantSet.SELECTPICTURE6,imageUri);
-
             }
         });
 
@@ -372,12 +347,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         abstractEdit= (EditText) personageRisterView.findViewById(R.id.abstract_edit);
         addressTextView= (TextView) personageRisterView.findViewById(R.id.address_textview);
         vMasker= personageRisterView.findViewById(R.id.vMasker);
-        idCardImage= (ImageView) personageRisterView.findViewById(R.id.id_card_image);//身份证反面
-        idCardZhengLayout= (LinearLayout) personageRisterView.findViewById(R.id.id_card_zheng_layout);//身份证反面layout
         frontIdcardImage= (ImageView) personageRisterView.findViewById(R.id.front_idcard_image);//身份证正面
-        frontUIdCardLayout= (LinearLayout) personageRisterView.findViewById(R.id.front_idcard_layout);//身份证正面layout
+        frontUIdCardLayout= (RelativeLayout) personageRisterView.findViewById(R.id.front_idcard_layout);//身份证正面layout
         certificateImage= (ImageView) personageRisterView.findViewById(R.id.certificate_image);//证书
-        certificateLayout= (LinearLayout) personageRisterView.findViewById(R.id.certificate_layout);//证书layout
+        certificateLayout= (RelativeLayout) personageRisterView.findViewById(R.id.certificate_layout);//证书layout
         controlKeyboardLayout(rootTlayout,submitButton);
         //选项选择器
         pvOptions = new OptionsPickerView(RegisterActivity.this);
@@ -401,14 +374,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
         intiPvTime();
-        idCardZhengLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                showDialog(ConstantSet.TAKEPICTURE0,ConstantSet.SELECTPICTURE0,vesonUri);
-
-            }
-        });
         frontUIdCardLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -551,48 +517,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 byte[] bis = data.getByteArrayExtra("result");
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bis, 0, bis.length);
                 if (bitmap!=null){
-                    frontIdcardImage.setImageBitmap(bitmap);
-                }
                 //data.getStringExtra("uri");
                 String frontName = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                  File frontFile=  getFile(bis,Environment.getExternalStorageDirectory()+"/zhongJiYun",frontName);
                 if (!TextUtils.isEmpty(frontFile.getPath())){
-                    frontImagePath=frontFile.getPath();
+                    //frontImagePath=frontFile.getPath();
+                    upterImageData(1,bitmap,BitmapUtils.bitmapToString(frontFile.getPath()));
+                }
+                }else {
+                    MyAppliction.showToast("上传照片失败");
                 }
 
                 break;
-            case ConstantSet.TAKEPICTURE0:
-                Intent tcutIntentOne = new Intent(RegisterActivity.this, ClippingPageActivity.class);
-                tcutIntentOne.putExtra("type", "takePicture");
-                startActivityForResult(tcutIntentOne, ConstantSet.CROPPICTURE0);
 
-
-
-                break;
-
-            case ConstantSet.SELECTPICTURE0:
-                Intent scutIntentOne = new Intent(RegisterActivity.this, ClippingPageActivity.class);
-                scutIntentOne.putExtra("type", "selectPicture");
-                scutIntentOne.putExtra("path",data.getStringExtra("path"));
-                startActivityForResult(scutIntentOne, ConstantSet.CROPPICTURE0);
-
-
-                break;
-
-
-            case ConstantSet.CROPPICTURE0:
-                byte[] biss = data.getByteArrayExtra("result");
-                Bitmap bitmaps = BitmapFactory.decodeByteArray(biss, 0, biss.length);
-                 if (bitmaps!=null){
-                     idCardImage.setImageBitmap(bitmaps);
-                 }
-                String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File file2=  getFile(biss,Environment.getExternalStorageDirectory()+"/zhongJiYun",name);
-                if (!TextUtils.isEmpty(file2.getPath())){
-                   imageVersoPath= file2.getPath();
-                }
-
-                break;
             case ConstantSet.TAKEPICTURE1:
                 Intent persongeTakIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
                 persongeTakIntent.putExtra("type", "takePicture");
@@ -614,12 +551,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 byte[] bisPersonge = data.getByteArrayExtra("result");
                 Bitmap bitmapPersonge = BitmapFactory.decodeByteArray(bisPersonge, 0, bisPersonge.length);
                 if (bitmapPersonge!=null){
-                    certificateImage.setImageBitmap(bitmapPersonge);
-                }
                 String namePersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                 File filePersonge=  getFile(bisPersonge,Environment.getExternalStorageDirectory()+"/zhongJiYun",namePersonge);
                 if (!TextUtils.isEmpty(filePersonge.getPath())){
-                    personageImagePath= filePersonge.getPath();
+                    upterImageData(2,bitmapPersonge,BitmapUtils.bitmapToString(filePersonge.getPath()));
+                }
+                }else {
+                    MyAppliction.showToast("上传照片失败");
                 }
 
                 break;
@@ -646,46 +584,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 byte[] forntBis = data.getByteArrayExtra("result");
                 Bitmap frontBitmap = BitmapFactory.decodeByteArray(forntBis, 0, forntBis.length);
                 if (frontBitmap!=null){
-                    companyFrontImage.setImageBitmap(frontBitmap);
-                }
                 String nameFront = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                 File fileFront=  getFile(forntBis,Environment.getExternalStorageDirectory()+"/zhongJiYun",nameFront);
                 if (!TextUtils.isEmpty( fileFront.getPath())){
-                    companyFrontPath=  fileFront.getPath();
+                    upterImageData(3,frontBitmap,BitmapUtils.bitmapToString(fileFront.getPath()));
+                }
+                }else {
+                    MyAppliction.showToast("上传照片失败");
                 }
 
                 break;
-            case ConstantSet.TAKEPICTURE3:
-                Intent companyVesonTakIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
-                companyVesonTakIntent.putExtra("type", "takePicture");
-                startActivityForResult(companyVesonTakIntent, ConstantSet.CROPPICTURE3);
 
-
-
-                break;
-
-            case ConstantSet.SELECTPICTURE3:
-                Intent companyVesonScutIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
-                companyVesonScutIntent.putExtra("type", "selectPicture");
-                companyVesonScutIntent.putExtra("path",data.getStringExtra("path"));
-                startActivityForResult(companyVesonScutIntent, ConstantSet.CROPPICTURE3);
-
-
-                break;
-
-
-            case ConstantSet.CROPPICTURE3:
-                byte[] vesonBis = data.getByteArrayExtra("result");
-                Bitmap vesonBitmap = BitmapFactory.decodeByteArray(vesonBis, 0, vesonBis.length);
-                if (vesonBitmap!=null){
-                    companyVersoImage.setImageBitmap(vesonBitmap);
-                }
-                String nameVeson = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileVeson=  getFile(vesonBis,Environment.getExternalStorageDirectory()+"/zhongJiYun",nameVeson);
-                if (!TextUtils.isEmpty( fileVeson.getPath())){
-                    companyVesonPath=fileVeson.getPath();
-                }
-                break;
 
             case ConstantSet.TAKEPICTURE4:
                 Intent companyPersongeTakIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
@@ -710,12 +619,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 byte[] comopanyPersongeBis = data.getByteArrayExtra("result");
                 Bitmap companyPersongeBitmap = BitmapFactory.decodeByteArray(comopanyPersongeBis, 0, comopanyPersongeBis.length);
                 if (companyPersongeBitmap!=null){
-                    companyPersongeImage.setImageBitmap(companyPersongeBitmap);
-                }
                 String nameCompanyPersonge = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
                 File fileCompanyPersonge=  getFile(comopanyPersongeBis,Environment.getExternalStorageDirectory()+"/zhongJiYun",nameCompanyPersonge);
                 if (!TextUtils.isEmpty( fileCompanyPersonge.getPath())){
                     companyPersongePath= fileCompanyPersonge.getPath();
+                    upterImageData(4,companyPersongeBitmap,BitmapUtils.bitmapToString(fileCompanyPersonge.getPath()));
+                }
+                }else {
+                    MyAppliction.showToast("上传照片失败");
                 }
                 break;
             case ConstantSet.TAKEPICTURE5:
@@ -740,52 +651,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case ConstantSet.CROPPICTURE5:
                 byte[] tradingBis = data.getByteArrayExtra("result");
                 Bitmap tradingBitmap = BitmapFactory.decodeByteArray(tradingBis, 0, tradingBis.length);
-                if (tradingBitmap!=null){
-                    companyTradingImage.setImageBitmap(tradingBitmap);
+                if (tradingBitmap!=null) {
+                    if (tradingBitmap != null) {
+
+                        String tradingString = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+                        File fileCompanyStringrading = getFile(tradingBis, Environment.getExternalStorageDirectory() + "/zhongJiYun", tradingString);
+                        if (!TextUtils.isEmpty(fileCompanyStringrading.getPath())) {
+                            upterImageData(5, tradingBitmap, BitmapUtils.bitmapToString(fileCompanyStringrading.getPath()));
+                        }
+
+                    }
+                }else {
+
                 }
-                String nameTrading = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileTrading=  getFile(tradingBis,Environment.getExternalStorageDirectory()+"/zhongJiYun",nameTrading);
-                if (!TextUtils.isEmpty(fileTrading.getPath())){
-                    companyTradingPath=fileTrading.getPath();
-                }
-                break;
-
-            case ConstantSet.TAKEPICTURE6:
-                Intent companyStatusTakIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
-                companyStatusTakIntent.putExtra("type", "takePicture");
-                startActivityForResult(companyStatusTakIntent, ConstantSet.CROPPICTURE6);
-
-
-
-                break;
-
-            case ConstantSet.SELECTPICTURE6:
-                Intent companyStatusScutIntent = new Intent(RegisterActivity.this, ClippingPageActivity.class);
-                companyStatusScutIntent.putExtra("type", "selectPicture");
-                companyStatusScutIntent.putExtra("path",data.getStringExtra("path"));
-                startActivityForResult(companyStatusScutIntent, ConstantSet.CROPPICTURE6);
-
 
                 break;
 
 
-            case ConstantSet.CROPPICTURE6:
-                byte[] statusBis = data.getByteArrayExtra("result");
-                Bitmap statusBitmap = BitmapFactory.decodeByteArray(statusBis, 0, statusBis.length);
-                if (statusBitmap!=null){
-                    companyStatusImage.setImageBitmap(statusBitmap);
-                }
-                String nameStatus = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
-                File fileStatus=  getFile(statusBis,Environment.getExternalStorageDirectory()+"/zhongJiYun",nameStatus);
-                if (!TextUtils.isEmpty(fileStatus.getPath())){
-                    companyStatusPath=fileStatus.getPath();
-                }
-                break;
-            case 30:
-                finish();
-                overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 
-                break;
+
 
 
 
@@ -793,6 +677,77 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
     }
+
+    /**
+     * 上传照片
+     */
+    private void upterImageData(final int tage, final Bitmap bitmap, String photoString) {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requeatParams=new RequestParams();
+        requeatParams.addBodyParameter("fileByte",photoString);
+        mSVProgressHUD.showWithStatus("正在上传中...", SVProgressHUD.SVProgressHUDMaskType.Black);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegistImageData(),requeatParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                    //Log.e("注册上传图片onSuccess",responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    //mSVProgressHUD.dismiss();
+                    AppPhotoBean appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppPhotoBean>(){});
+                    if (appDataBean!=null){
+                        if (appDataBean.getResult().equals("success")){
+                            PhotoDataBean photoDataBean=appDataBean.getData();
+                            if (photoDataBean!=null){
+                                if (tage==1){
+                                    MyAppliction.setIdCardFrontId(photoDataBean.getId());
+                                    frontIdcardImage.setImageBitmap(bitmap);
+
+                                }else if (tage==2){
+                                    MyAppliction.setCertificateId(photoDataBean.getId());
+                                    certificateImage.setImageBitmap(bitmap);
+                                }else if (tage==3){
+                                    MyAppliction.setCompanyFrontId(photoDataBean.getId());
+                                    companyFrontImage.setImageBitmap(bitmap);
+
+                                }else if (tage==4){
+                                    MyAppliction.setCompanyPersongeId(photoDataBean.getId());
+                                    companyPersongeImage.setImageBitmap(bitmap);
+                                }else if (tage==5){
+                                    MyAppliction.setCompanyTradingId(photoDataBean.getId());
+                                    companyTradingImage.setImageBitmap(bitmap);
+                                }
+
+                            }
+                            MyAppliction.showToast("上传照片成功");
+                            mSVProgressHUD.dismiss();
+                        }else {
+                            MyAppliction.showToast(appDataBean.getMsg());
+                            mSVProgressHUD.dismiss();
+
+                        }
+
+                    }else {
+                        MyAppliction.showToast("上传照片失败");
+                    }
+                }else {
+                    MyAppliction.showToast("上传照片失败");
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("注册上传图片onFailure",s);
+                mSVProgressHUD.dismiss();
+            }
+        });
+
+
+
+
+
+    }
+
 
     //企业注册数据提交
     private void submitCompanyData() {
@@ -803,24 +758,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                         if (!TextUtils.isEmpty(companyIdCardEdit.getText().toString())){
 
-                            if (companyIdCardEdit.getText().toString().length()==18){
                                 if (!TextUtils.isEmpty(companyAddressTextView.getText().toString())){
 
                                     if (!TextUtils.isEmpty(companyIntroduceEdit.getText().toString())){
 
-                                        if (!TextUtils.isEmpty(companyFrontPath)){
-                                            companyListPath.add(companyFrontPath);
+                                        if (!TextUtils.isEmpty(MyAppliction.getCompanyFrontId())){
 
-                                            if (!TextUtils.isEmpty(companyVesonPath)){
-                                                companyListPath.add(companyVesonPath);
-
-                                                if (!TextUtils.isEmpty(companyPersongePath)){
-                                                    companyListPath.add(companyPersongePath);
-                                                    if (!TextUtils.isEmpty(companyTradingPath)){
-                                                        companyListPath.add(companyTradingPath);
-
-                                                        if (!TextUtils.isEmpty(companyStatusPath)){
-                                                            companyListPath.add(companyStatusPath);
+                                                if (!TextUtils.isEmpty(MyAppliction.getCompanyPersongeId())){
+                                                    if (!TextUtils.isEmpty(MyAppliction.getCompanyTradingId())){
                                                             HttpUtils httpUtils=new HttpUtils();
                                                             RequestParams requestParams=new RequestParams();
                                                             requestParams.addBodyParameter("phoneNumber",companyPhoneEdit.getText().toString());
@@ -834,11 +779,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                             requestParams.addBodyParameter("city",companyCity);
                                                             requestParams.addBodyParameter("Summary",companyIntroduceEdit.getText().toString());
                                                             requestParams.addBodyParameter("BossType","2");
-                                                            requestParams.addBodyParameter("IdCardImage1","photo.jpg");
-                                                            requestParams.addBodyParameter("IdCardImage2","photo.jpg");
-                                                            requestParams.addBodyParameter("Photo","photo.jpg");
-                                                            requestParams.addBodyParameter("Qualification","photo.jpg");
-                                                            requestParams.addBodyParameter("BusinessLicence","photo.jpg");
+                                                            requestParams.addBodyParameter("IdCardImage1Id",MyAppliction.getCompanyFrontId());
+                                                            requestParams.addBodyParameter("PhotoId",MyAppliction.getCompanyPersongeId());
+                                                            requestParams.addBodyParameter("BusinessLicenceId",MyAppliction.getCompanyTradingId());
                                                             mSVProgressHUD.showWithStatus("正在提交中...");
                                                             httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegisterData(),requestParams, new RequestCallBack<String>() {
                                                                 @Override
@@ -847,7 +790,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                                     //Log.e("企业注册",responseInfo.result);
                                                                     AppBean<RegisterBean> appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RegisterBean>>(){});
                                                                     if ((appDataBean.getResult()).equals("success")){
-                                                                        RegisterBean registerBean=   appDataBean.getData();
+                                                                       /* RegisterBean registerBean=   appDataBean.getData();
                                                                        if (companyListPath!=null&&companyListPath.size()==5){
                                                                             if (!TextUtils.isEmpty(registerBean.getId())){
 
@@ -857,9 +800,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                                                                 }
                                                                             }
-                                                                        }
+                                                                        }*/
 
-
+                                                                        MyAppliction.showToast("提交成功，请耐心等待审核");
+                                                                        Intent intent=new Intent(RegisterActivity.this,RegisterFishActivity.class);
+                                                                        startActivity(intent);
+                                                                        finish();
+                                                                        mSVProgressHUD.dismiss();
 
 
                                                                     }else {
@@ -879,30 +826,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
 
+
                                                         }else {
 
-                                                            MyAppliction.showToast("请选择证书照片");
-                                                        }
-                                                        }else {
-
-                                                            MyAppliction.showToast("请选择营业执照照片");
+                                                            MyAppliction.showToast("请上传营业执照或者资格证书照片");
                                                         }
 
                                                     }else {
 
-                                                    MyAppliction.showToast("请选择个人照片");
+                                                    MyAppliction.showToast("请上传个人照片");
                                                 }
 
-                                                }else {
 
-                                                    MyAppliction.showToast("请选择身份证反面照片");
-                                                }
-                                                }else {
+                                        }else {
+                                         MyAppliction.showToast("请上传身份证正面照片");
 
-                                                    MyAppliction.showToast("请选择身份证正面照片");
-
-
-                                                }
+                                        }
 
                                     }else {
 
@@ -917,11 +856,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                 }
 
-                            }else {
 
-                                MyAppliction.showToast("请输入长度为18位的身份证号码");
-
-                            }
 
                         }else {
 
@@ -1050,15 +985,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                          if (!TextUtils.isEmpty(abstractEdit.getText().toString())){
 
-                                         if (!TextUtils.isEmpty(frontImagePath)){
-                                                imagePathList.add(frontImagePath);
+                                         if (!TextUtils.isEmpty(MyAppliction.getIdCardFrontId())){
 
-                                             if (!TextUtils.isEmpty(imageVersoPath)){
-                                                 imagePathList.add(imageVersoPath);
-
-                                             if (!TextUtils.isEmpty(personageImagePath)){
-                                                 imagePathList.add(personageImagePath);
-
+                                             if (!TextUtils.isEmpty(MyAppliction.getCertificateId())){
                                              HttpUtils httpUtils=new HttpUtils();
                                              RequestParams requestParams=new RequestParams();
                                              requestParams.addBodyParameter("phoneNumber",phoneEdit.getText().toString());
@@ -1072,17 +1001,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                              requestParams.addBodyParameter("city",city);
                                              requestParams.addBodyParameter("summary",abstractEdit.getText().toString());
                                              requestParams.addBodyParameter("bossType","1");
-                                             requestParams.addBodyParameter("idCardImage1","photo.jpg");
-                                             requestParams.addBodyParameter("idCardImage2","photo.jpg");
-                                             requestParams.addBodyParameter("photo","photo.jpg");
-                                                 mSVProgressHUD.showWithStatus("正在提交中...");
+                                             requestParams.addBodyParameter("IdCardImage1Id",MyAppliction.getIdCardFrontId());
+                                             requestParams.addBodyParameter("PhotoId",MyAppliction.getCertificateId());
+                                             mSVProgressHUD.showWithStatus("正在提交中...");
                                              httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getRegisterData(), requestParams,new RequestCallBack<String>() {
                                                  @Override
                                                  public void onSuccess(ResponseInfo<String> responseInfo) {
                                                      //Log.e("注册信息",responseInfo.result);
                                                      AppBean<RegisterBean> appDataBean= JSONObject.parseObject(responseInfo.result,new TypeReference<AppBean<RegisterBean>>(){});
                                                      if ((appDataBean.getResult()).equals("success")){
-                                                         RegisterBean registerBean=   appDataBean.getData();
+                                                         /*RegisterBean registerBean=   appDataBean.getData();
                                                          if (imagePathList!=null&&imagePathList.size()!=0){
                                                              int[] imageType={1,2,0};
                                                              for (int i = 0; i <imagePathList.size() ; i++) {
@@ -1090,7 +1018,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                              }
                                                          }else {
                                                              mSVProgressHUD.dismiss();
-                                                         }
+                                                         }*/
+                                                         MyAppliction.showToast("提交成功，请耐心等待审核");
+                                                         Intent intent=new Intent(RegisterActivity.this,RegisterFishActivity.class);
+                                                         startActivity(intent);
+                                                         finish();
+                                                         mSVProgressHUD.dismiss();
                                                      }else {
 
                                                          MyAppliction.showToast(appDataBean.getMsg());
@@ -1110,17 +1043,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
                                              }else {
-                                                 MyAppliction.showToast("请选择一张本人照片");
+                                                 MyAppliction.showToast("请上传本人照片");
 
                                              }
-
                                              }else {
-                                                 MyAppliction.showToast("请选择一张身份证反面照片");
-
-                                             }
-
-                                             }else {
-                                                 MyAppliction.showToast("请选择一张身份证正面照片");
+                                                 MyAppliction.showToast("请上传身份证正面照片");
 
                                              }
 
@@ -1436,7 +1363,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         if (!TextUtils.isEmpty(phoneNumber)) {
             if (phoneNumber.length()==11){
-            if (isMobileNO(phoneNumber)){
             HttpUtils httpUtils=new HttpUtils();
             RequestParams requestParams=new RequestParams();
             requestParams.addBodyParameter("PhoneNumber",phoneNumber);
@@ -1469,9 +1395,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     MyAppliction.showToast("网络异常,请稍后重试");
                 }
             });
-            }else {
-                MyAppliction.showToast("请输入正确的手机号码");
-            }
+
             }else {
                 MyAppliction.showToast("请输入长度为11位的手机号码");
 
@@ -1485,11 +1409,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    public static boolean isMobileNO(String mobiles) {
-        String telRegex = "13\\d{9}|14[57]\\d{8}|15[012356789]\\d{8}|18[01256789]\\d{8}|17[0678]\\d{8}";
-        if (TextUtils.isEmpty(mobiles)) return false;
-        else return mobiles.matches(telRegex);
-    }
+
 
     /**
      * 根据byte数组，生成文件
@@ -1740,4 +1660,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyAppliction.setIdCardFrontId(null);
+        MyAppliction.setCertificateId(null);
+        MyAppliction.setCompanyFrontId(null);
+        MyAppliction.setCompanyPersongeId(null);
+        MyAppliction.setCompanyTradingId(null);
+    }
 }

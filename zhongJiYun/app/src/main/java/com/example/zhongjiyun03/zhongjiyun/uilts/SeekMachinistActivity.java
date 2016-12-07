@@ -34,6 +34,7 @@ import com.example.zhongjiyun03.zhongjiyun.R;
 import com.example.zhongjiyun03.zhongjiyun.adapter.SeekMachinistListAdapter;
 import com.example.zhongjiyun03.zhongjiyun.bean.AppBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.SeekMachinisBean;
+import com.example.zhongjiyun03.zhongjiyun.bean.SekkDrilingDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.SekkMachinisDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.home.AppListDataBean;
 import com.example.zhongjiyun03.zhongjiyun.bean.select.FacillyDataBean;
@@ -164,6 +165,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     private List<FacillyDataBean> facillyDataBeens;//设备厂商数据
     @ViewInject(R.id.drilling_select_layout)
     private RelativeLayout drillingSelectLayout;// 筛选布局
+    private String drillingTage;
 
 
     @Override
@@ -219,6 +221,10 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
      * 初始化View
      */
     private void initView() {
+        String uid= SQLHelperUtils.queryId(SeekMachinistActivity.this);
+        if (!TextUtils.isEmpty(uid)) {
+            initDrillingListData();
+        }
         facillyDataBeens=new ArrayList<>();
         networkRemindLayout.setOnClickListener(this);
         comtintJobText.setOnClickListener(this);
@@ -243,6 +249,47 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
     }
 
     /**
+     * 获取钻机数据
+     */
+    private void initDrillingListData() {
+        HttpUtils httpUtils=new HttpUtils();
+        RequestParams requestParams=new RequestParams();
+
+            //步骤1：创建一个SharedPreferences接口对象
+        SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
+            //步骤2：获取文件中的值
+        String sesstionId = read.getString("code","");
+        requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
+        httpUtils.send(HttpRequest.HttpMethod.POST, AppUtilsUrl.getSeekDrllingData(),requestParams, new RequestCallBack<String>() {
+            @Override
+            public void onSuccess(ResponseInfo<String> responseInfo) {
+                 //Log.e("获取钻机onSuccess",responseInfo.result);
+                if (!TextUtils.isEmpty(responseInfo.result)){
+                    SekkDrilingDataBean sekkDrilingDataBean=JSONObject.parseObject(responseInfo.result,new TypeReference<SekkDrilingDataBean>(){});
+                    if (sekkDrilingDataBean!=null){
+                        if (sekkDrilingDataBean.getResult().equals("success")){
+                            if (sekkDrilingDataBean.getData()!=null){
+                                if (!TextUtils.isEmpty(sekkDrilingDataBean.getData().getHaveBossPassDevice())){
+                                    drillingTage=sekkDrilingDataBean.getData().getHaveBossPassDevice();
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                Log.e("获取钻机onFailure",s);
+            }
+        });
+
+
+    }
+
+    /**
      * 列表数据
      * @param pageIndex
      */
@@ -256,6 +303,7 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
             SharedPreferences read = getSharedPreferences("lock", MODE_WORLD_READABLE);
             //步骤2：获取文件中的值
             String sesstionId = read.getString("code","");
+            //Log.e("2222222",sesstionId);
             requestParams.setHeader("Cookie", "ASP.NET_SessionId=" + sesstionId);
         }
 
@@ -750,9 +798,18 @@ public class SeekMachinistActivity extends AppCompatActivity implements PullToRe
                 break;
             case R.id.register_tv:
                 if (!TextUtils.isEmpty(uid)){
-                    Intent releaseintent = new Intent(SeekMachinistActivity.this,ReleaseJobActivity.class);
-                    startActivity(releaseintent);
-                    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                    if (!TextUtils.isEmpty(drillingTage)){
+                        if (drillingTage.equals("1")) {
+                            Intent releaseintent = new Intent(SeekMachinistActivity.this, ReleaseJobActivity.class);
+                            startActivity(releaseintent);
+                            overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                        }else {
+                            MyAppliction.showToast("您还没有审核通过的钻机，暂时不能发布招聘");
+                        }
+                    }else {
+                        MyAppliction.showToast("请添加钻机再发布招聘");
+                    }
+
                 }else {
                     Intent releaseintent = new Intent(SeekMachinistActivity.this,LoginActivity.class);
                     startActivity(releaseintent);
