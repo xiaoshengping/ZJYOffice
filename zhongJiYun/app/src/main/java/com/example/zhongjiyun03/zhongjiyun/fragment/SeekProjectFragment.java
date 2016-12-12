@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 资讯
  * A simple {@link Fragment} subclass.
  */
 public class SeekProjectFragment extends Fragment implements View.OnClickListener {

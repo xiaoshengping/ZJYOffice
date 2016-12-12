@@ -354,7 +354,7 @@ public class HomeActivity extends AppCompatActivity {
                 intent.putExtra("Key_Down_Url",url);
                 startService(intent);
                 MyAppliction.showToast("已开始下载应用包，可以在通知栏查看下载进度");
-                //finish();
+                finish();
                 dlg.cancel();
             }
         });

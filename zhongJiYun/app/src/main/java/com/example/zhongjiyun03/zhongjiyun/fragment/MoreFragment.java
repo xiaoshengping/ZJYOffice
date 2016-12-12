@@ -17,6 +17,7 @@ import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
+ * 更多
  * A simple {@link Fragment} subclass.
  */
 public class MoreFragment extends Fragment {

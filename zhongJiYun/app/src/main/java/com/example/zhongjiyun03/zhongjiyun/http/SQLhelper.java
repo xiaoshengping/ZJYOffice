@@ -5,14 +5,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class SQLhelper extends SQLiteOpenHelper{
-	private static final String DBNAME="zhongjiyun.db";
-	public static final String tableName="user";
-	public static final String UID="uid";
-	public static final String PHONENUMBER="PhoneNumber";
-	public static final String NAME="Name";
-	public static final String STARRATE="StarRate";
-	public static final String HEADTHUMB="Headthumb";
-	public static final String ROLE="Role";
+	private static final String DBNAME="zhongjiyun.db";  //数据库名字
+	public static final String tableName="user";   //数据库表
+	public static final String UID="uid";      //uid
+	public static final String PHONENUMBER="PhoneNumber";   //手机号码
+	public static final String NAME="Name";    //名字
+	public static final String STARRATE="StarRate";  //星级
+	public static final String HEADTHUMB="Headthumb";   //头像链接
+	public static final String ROLE="Role";   //角色
 
 
 

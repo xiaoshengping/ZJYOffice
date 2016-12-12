@@ -77,6 +77,7 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
+ * 首页fragment
  */
 public class HomeFragment extends Fragment implements View.OnClickListener,PullToRefreshBase.OnRefreshListener {
 
